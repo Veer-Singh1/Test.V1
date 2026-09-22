@@ -1,0 +1,20 @@
+# --- Core data & math ---
+numpy
+pandas
+scipy
+statsmodels
+scikit-learn
+
+# --- Plotting ---
+matplotlib
+
+# --- Market data ---
+yfinance        # free stock / ETF / FX / crypto prices from Yahoo Finance
+ccxt            # unified API for 100+ crypto exchanges (Binance, Kraken, Coinbase, ...)
+
+# --- Quant tools ---
+arch            # volatility models (GARCH)
+PyPortfolioOpt  # portfolio optimisation (mean-variance, efficient frontier)
+
+# --- Notebooks ---
+jupyterlab
