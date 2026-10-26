@@ -1,0 +1,463 @@
+1
+00:00:00,450 --> 00:00:04,774
+A lightning bolt heats the air to
+around thirty thousand degrees Celsius
+
+2
+00:00:04,814 --> 00:00:08,397
+— about five times hotter
+than the surface of the Sun.
+
+3
+00:00:08,437 --> 00:00:11,862
+Now zoom out: an entire
+city, glowing at night.
+
+4
+00:00:11,902 --> 00:00:15,967
+Zoom in: the phone on your
+bedside table, quietly charging.
+
+5
+00:00:16,007 --> 00:00:18,547
+Wildly different scales… same thing.
+
+6
+00:00:18,587 --> 00:00:19,927
+Electricity.
+
+7
+00:00:19,967 --> 00:00:21,717
+We use it every day.
+
+8
+00:00:21,757 --> 00:00:24,197
+But what actually makes it move?
+
+9
+00:00:29,183 --> 00:00:35,083
+It starts with electrons: tiny, negatively
+charged particles inside every atom.
+
+10
+00:00:35,123 --> 00:00:38,352
+In metals like copper,
+some electrons roam freely
+
+11
+00:00:38,392 --> 00:00:41,705
+between atoms, making
+metals good conductors.
+
+12
+00:00:41,745 --> 00:00:47,431
+In rubber, glass or plastic, electrons
+are held tightly — those are insulators.
+
+13
+00:00:47,471 --> 00:00:51,248
+That's why wires are copper
+inside and plastic outside.
+
+14
+00:00:51,288 --> 00:00:55,983
+But for current to flow, charge
+needs a complete path: a closed loop.
+
+15
+00:00:56,023 --> 00:00:59,093
+Open a switch, and the
+flow stops everywhere.
+
+16
+00:00:59,983 --> 00:01:03,280
+So what pushes charge
+around the loop? Voltage.
+
+17
+00:01:03,320 --> 00:01:05,655
+Think of a battery as a charge pump:
+
+18
+00:01:05,695 --> 00:01:10,030
+chemical reactions give each
+bit of charge a boost of energy.
+
+19
+00:01:10,070 --> 00:01:13,367
+Voltage is that energy per unit of charge.
+
+20
+00:01:13,407 --> 00:01:19,080
+One volt is one joule per coulomb — the
+charge of about six quintillion electrons.
+
+21
+00:01:19,230 --> 00:01:22,084
+Voltage is always a
+difference between two points
+
+22
+00:01:22,124 --> 00:01:25,151
+— that's why it's called
+potential difference.
+
+23
+00:01:25,191 --> 00:01:27,955
+A AA battery: one and a half volts.
+
+24
+00:01:27,995 --> 00:01:33,875
+A wall socket: 120 or 230,
+depending on where you live.
+
+25
+00:01:33,915 --> 00:01:37,102
+Transmission lines: hundreds of thousands.
+
+26
+00:01:37,817 --> 00:01:41,517
+Current is how much charge
+flows past a point each second.
+
+27
+00:01:41,557 --> 00:01:45,064
+One ampere, or amp,
+is one coulomb per second.
+
+28
+00:01:45,214 --> 00:01:49,187
+Early scientists guessed current
+flows from positive to negative,
+
+29
+00:01:49,227 --> 00:01:52,747
+and we still draw it that way:
+conventional current.
+
+30
+00:01:52,787 --> 00:01:58,389
+But in metal wires, the moving charges
+are electrons, drifting the opposite way.
+
+31
+00:01:58,429 --> 00:02:00,851
+Both pictures give the same answers.
+
+32
+00:02:00,891 --> 00:02:03,437
+Surprisingly, those electrons are slow —
+
+33
+00:02:03,477 --> 00:02:07,601
+a fraction of a millimetre per
+second, slower than a snail.
+
+34
+00:02:07,641 --> 00:02:12,435
+Yet the light comes on almost instantly:
+the wire is already full of electrons,
+
+35
+00:02:12,475 --> 00:02:16,802
+and the push races along it at
+more than half the speed of light.
+
+36
+00:02:17,617 --> 00:02:21,326
+Resistance is opposition to
+current, measured in ohms
+
+37
+00:02:21,366 --> 00:02:24,647
+— after Georg Ohm — with the symbol omega.
+
+38
+00:02:24,687 --> 00:02:26,237
+Four things set it.
+
+39
+00:02:26,277 --> 00:02:31,877
+Material: copper barely resists;
+nichrome, used in toasters, resists a lot.
+
+40
+00:02:31,917 --> 00:02:34,595
+Length: longer wire, more resistance.
+
+41
+00:02:34,635 --> 00:02:38,371
+Thickness: thicker wire, less
+— more lanes for traffic.
+
+42
+00:02:38,411 --> 00:02:41,876
+Temperature: most metals
+resist more as they heat up.
+
+43
+00:02:42,126 --> 00:02:47,261
+Resistance is also useful: push current
+through a high-resistance wire and it
+
+44
+00:02:47,301 --> 00:02:52,759
+gets hot enough to glow — like a toaster
+element or an old-style light bulb.
+
+45
+00:02:53,550 --> 00:02:57,540
+Picture water in a closed loop
+of pipe, driven by a pump.
+
+46
+00:02:57,580 --> 00:03:00,010
+The pump's pressure is like voltage.
+
+47
+00:03:00,050 --> 00:03:02,644
+The water's flow rate is like current.
+
+48
+00:03:02,684 --> 00:03:05,823
+And a narrow section of
+pipe is like resistance.
+
+49
+00:03:05,863 --> 00:03:09,221
+More pressure, more flow;
+narrower pipe, less flow.
+
+50
+00:03:09,471 --> 00:03:11,771
+But here's where the analogy breaks.
+
+51
+00:03:11,811 --> 00:03:16,342
+Cut a water pipe and water spills out;
+cut a wire and current stops.
+
+52
+00:03:16,492 --> 00:03:20,224
+And in a pipe, the water carries
+the energy; in a circuit,
+
+53
+00:03:20,264 --> 00:03:25,037
+energy travels through electric and
+magnetic fields around the wire.
+
+54
+00:03:25,950 --> 00:03:27,960
+Ohm's law connects all three.
+
+55
+00:03:28,000 --> 00:03:32,134
+For many materials — like a
+metal wire at steady temperature
+
+56
+00:03:32,174 --> 00:03:36,449
+— current is proportional to
+voltage: V equals I times R.
+
+57
+00:03:36,489 --> 00:03:40,682
+Memory trick: draw a triangle
+— V on top, I and R below.
+
+58
+00:03:40,722 --> 00:03:42,222
+Cover what you want.
+
+59
+00:03:42,262 --> 00:03:44,332
+Cover V: I times R.
+
+60
+00:03:44,372 --> 00:03:46,462
+Cover I: V over R.
+
+61
+00:03:46,502 --> 00:03:48,702
+Cover R: V over I.
+
+62
+00:03:48,952 --> 00:03:50,352
+Example one.
+
+63
+00:03:50,392 --> 00:03:55,097
+An ideal nine-volt battery is
+connected to a three-ohm resistor.
+
+64
+00:03:55,137 --> 00:03:56,587
+Find the current.
+
+65
+00:03:56,737 --> 00:04:01,101
+I equals V over R:
+nine divided by three… three amps.
+
+66
+00:04:01,551 --> 00:04:02,961
+Example two.
+
+67
+00:04:03,001 --> 00:04:06,096
+A small twelve-volt car
+bulb draws half an amp.
+
+68
+00:04:06,136 --> 00:04:07,906
+Find its resistance.
+
+69
+00:04:08,056 --> 00:04:14,170
+R equals V over I: twelve divided by
+zero point five… twenty-four ohms.
+
+70
+00:04:15,183 --> 00:04:18,916
+Bonus formula: power —
+how fast energy is delivered
+
+71
+00:04:18,956 --> 00:04:22,299
+— equals voltage times current, in watts.
+
+72
+00:04:22,339 --> 00:04:26,096
+Our nine-volt, three-amp
+circuit? Twenty-seven watts.
+
+73
+00:04:26,136 --> 00:04:32,761
+A kettle on a 230-volt socket draws
+about ten amps — over two thousand watts.
+
+74
+00:04:32,801 --> 00:04:35,540
+Big currents mean big
+heating, so fuses and
+
+75
+00:04:35,580 --> 00:04:38,798
+breakers cut the power
+before wires overheat.
+
+76
+00:04:38,838 --> 00:04:42,945
+It's current through your body that
+harms you — and voltage drives it.
+
+77
+00:04:42,985 --> 00:04:47,985
+As little as a tenth of an amp
+across the chest can be fatal.
+
+78
+00:04:48,025 --> 00:04:51,519
+Never poke anything into sockets,
+keep water away from
+
+79
+00:04:51,559 --> 00:04:55,181
+electricity, and stay clear
+of fallen power lines.
+
+80
+00:04:56,483 --> 00:04:58,223
+Let's bust three myths.
+
+81
+00:04:58,263 --> 00:05:00,941
+Myth one: batteries store electrons.
+
+82
+00:05:00,981 --> 00:05:06,027
+They don't — they store chemical energy;
+the electrons are already in the circuit.
+
+83
+00:05:06,067 --> 00:05:08,671
+Myth two: a bulb uses up current.
+
+84
+00:05:08,711 --> 00:05:14,248
+In a simple loop, the same current flows
+in and out. What the bulb uses is energy.
+
+85
+00:05:14,288 --> 00:05:17,168
+Myth three: voltage flows. It doesn't.
+
+86
+00:05:17,208 --> 00:05:20,971
+Current flows through things;
+voltage is across them.
+
+87
+00:05:21,883 --> 00:05:23,163
+Quick recap.
+
+88
+00:05:23,203 --> 00:05:26,991
+Voltage is the push:
+energy per charge, in volts.
+
+89
+00:05:27,031 --> 00:05:30,391
+Current is the flow:
+charge per second, in amps.
+
+90
+00:05:30,431 --> 00:05:33,451
+Resistance is the opposition, in ohms.
+
+91
+00:05:33,491 --> 00:05:37,203
+And Ohm's law ties them
+together: V equals I R.
+
+92
+00:05:37,553 --> 00:05:40,043
+Your turn — pause if you need to.
+
+93
+00:05:40,083 --> 00:05:45,619
+One: a twelve-volt battery is connected
+to a six-ohm resistor. What's the current?
+
+94
+00:05:45,659 --> 00:05:49,681
+Two: in the water analogy,
+what does a narrow pipe represent?
+
+95
+00:05:49,721 --> 00:05:53,281
+Three: true or false —
+a bulb uses up current.
+
+96
+00:05:58,331 --> 00:05:59,471
+Answers!
+
+97
+00:05:59,511 --> 00:06:02,511
+One: twelve divided by six — two amps.
+
+98
+00:06:02,551 --> 00:06:04,131
+Two: resistance.
+
+99
+00:06:04,171 --> 00:06:08,663
+Three: false — the current is the same;
+it's energy that's transferred.
+
+100
+00:06:08,703 --> 00:06:12,703
+Nail all three, and you've got
+the foundation of every circuit.

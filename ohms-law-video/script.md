@@ -173,7 +173,7 @@ The title card comes straight after the hook (a cold open), so the hook still op
 - Myth 2: ammeters before and after the bulb both read the same value (e.g. "0.5 A" | "0.5 A")
 - Myth 3: voltmeter probes across the resistor vs a current arrow through it
 
-**On-screen text:** "MYTH: Batteries store electrons" → "FACT: They store chemical energy" · "MYTH: Current gets used up" → "FACT: Same current in and out" · "MYTH: Voltage flows" → "FACT: Voltage is across; current flows through"
+**On-screen text:** "MYTH: Batteries store electrons" → "FACT: Batteries store chemical energy" · "MYTH: Current gets used up" → "FACT: Same current in and out" · "MYTH: Voltage flows" → "FACT: Voltage: across · Current: through"
 
 ---
 

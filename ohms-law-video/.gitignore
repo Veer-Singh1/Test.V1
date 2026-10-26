@@ -8,3 +8,6 @@ media/
 *.wav
 *.mp3
 !credits.csv
+models/
+!assets/selected.json
+preview.mp4
