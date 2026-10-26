@@ -1,0 +1,10 @@
+# Video media and build outputs (deliver separately)
+assets/*
+!assets/credits.csv
+build/
+renders/
+media/
+*.mp4
+*.wav
+*.mp3
+!credits.csv
