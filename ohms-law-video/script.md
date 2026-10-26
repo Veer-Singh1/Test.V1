@@ -1,40 +1,42 @@
-# Voltage, Current & Resistance — Narration Script (v1, for approval)
+# Voltage, Current & Resistance — Narration Script (v2, approved)
 
-**Format:** 1920×1080, 30 fps, ~6 min · **Voice:** warm, clear US female, documentary pace (~145 wpm)
+**Status:** approved 26 Oct 2026 · trimmed to ~6:20 · 230 V examples · UK spelling
+**Format:** 1920×1080, 30 fps · **Voice:** warm, clear US female (Kokoro `af_heart`), documentary pace (~145 wpm)
 **Palette:** navy background `#0B1A33` · current = cyan `#22D3EE` · voltage = amber `#FBBF24` · resistance = coral `#FB7185` · text = off-white `#F1F5F9`
 **Font:** Inter (one sans-serif throughout) · **Subtitles:** burned in, white with a soft shadow, bottom-centre
 
-Durations below are estimates from word count at 145 wpm. The final cut syncs each scene to its real narration length, with about 0.4 s of breathing room between ideas.
+Durations are estimates: spoken words at 145 wpm, plus 0.4 s of breathing room per narration block. The final cut is timed from the real voiceover, and the voice speed may be nudged a few percent (staying natural) to land on 6:20.
 
-| # | Scene | Est. duration | Running time |
-|---|-------|---------------|--------------|
-| 1 | Hook (cold open) | 0:28 | 0:00 – 0:28 |
-| 2 | Title card | 0:04 | 0:28 – 0:32 |
-| 3 | Charge & circuits | 0:32 | 0:32 – 1:04 |
-| 4 | Voltage | 0:38 | 1:04 – 1:42 |
-| 5 | Current | 0:40 | 1:42 – 2:22 |
-| 6 | Resistance | 0:36 | 2:22 – 2:58 |
-| 7 | Water analogy | 0:36 | 2:58 – 3:34 |
-| 8 | Ohm's law + 2 examples | 0:52 | 3:34 – 4:26 |
-| 9 | Bonus: power & safety | 0:34 | 4:26 – 5:00 |
-| 10 | Misconceptions | 0:27 | 5:00 – 5:27 |
-| 11 | Recap + quiz + answers | 0:50 | 5:27 – 6:17 |
-| 12 | End card + credits | 0:08 | 6:17 – 6:25 |
+The title card comes straight after the hook (a cold open), so the hook still opens the video.
 
-> The title card comes right after the hook (a cold open), so the hook still runs 0:00–0:30 as you asked.
+| # | Scene | Spoken words | Est. duration | Running time |
+|---|---|---|---|---|
+| 1 | Hook (cold open) | 58 | 0:24 | 0:00 – 0:24 |
+| 2 | Title card | — | 0:04 | 0:24 – 0:28 |
+| 3 | Charge & circuits | 67 | 0:28 | 0:28 – 0:57 |
+| 4 | Voltage | 94 | 0:39 | 0:57 – 1:36 |
+| 5 | Current | 101 | 0:42 | 1:36 – 2:18 |
+| 6 | Resistance | 80 | 0:34 | 2:18 – 2:52 |
+| 7 | The water analogy | 84 | 0:35 | 2:52 – 3:27 |
+| 8 | Ohm's law + worked examples | 113 | 0:48 | 3:27 – 4:15 |
+| 9 | Bonus: power & safety | 99 | 0:41 | 4:15 – 4:56 |
+| 10 | Common misconceptions | 60 | 0:25 | 4:56 – 5:21 |
+| 11 | Recap + quiz | 110 | 0:52 | 5:21 – 6:13 |
+| 12 | End card | — | 0:07 | 6:13 – 6:20 |
+| | **Total** | **866** | **6:20** | |
 
 ---
 
-## Scene 1 — Hook · ~0:28
+## Scene 1 — Hook (cold open) · ~0:24
 
 **Narration:**
-> A lightning bolt heats the air to around thirty thousand degrees Celsius — about five times hotter than the surface of the Sun. Now zoom out: an entire city, glowing at night. Zoom in: the phone on your nightstand, quietly charging. Wildly different scales… same thing. Electricity. We use it every second of every day. But what actually makes it move?
+> A lightning bolt heats the air to around thirty thousand degrees Celsius — about five times hotter than the surface of the Sun. Now zoom out: an entire city, glowing at night. Zoom in: the phone on your bedside table, quietly charging. Wildly different scales… same thing. Electricity. We use it every day. But what actually makes it move?
 
 **Visuals:**
 - 0–7 s: slow-motion lightning over a dark landscape (Pexels/Pixabay video)
-- 7–14 s: aerial time-lapse of city lights at night (video), slow push-in
-- 14–21 s: close-up of a phone charging on a bedside table (video or Ken Burns photo)
-- 21–28 s: the shots dissolve into a single glowing cyan dot that pulses (Manim). Whoosh SFX.
+- 7–13 s: aerial time-lapse of city lights at night (video), slow push-in
+- 13–19 s: close-up of a phone charging on a bedside table (video or Ken Burns photo)
+- 19–24 s: the shots dissolve into a single glowing cyan dot that pulses (Manim). Whoosh SFX.
 
 **On-screen text:**
 - "≈ 30,000 °C" (amber, beside the lightning, 4 s)
@@ -52,13 +54,13 @@ Durations below are estimates from word count at 145 wpm. The final cut syncs ea
 
 ---
 
-## Scene 3 — Charge & circuits · ~0:32
+## Scene 3 — Charge & circuits · ~0:28
 
 **Narration:**
-> Everything is made of atoms, and atoms contain electrons — tiny particles with negative charge. In metals like copper, some electrons aren't tied to any one atom. They roam freely, so metals are good conductors. In rubber, glass, or plastic, electrons are held tightly — those are insulators. That's why wires are copper inside and plastic outside. But free electrons alone don't make a current. They need a complete path: a closed loop. Open a switch, and the flow stops all the way around.
+> It starts with electrons: tiny, negatively charged particles inside every atom. In metals like copper, some electrons roam freely between atoms, making metals good conductors. In rubber, glass or plastic, electrons are held tightly — those are insulators. That's why wires are copper inside and plastic outside. But for current to flow, charge needs a complete path: a closed loop. Open a switch, and the flow stops everywhere.
 
 **Visuals:**
-- Manim: an atom (nucleus plus electron cloud) → a copper lattice with free cyan electrons jittering between ions
+- Manim: an atom (nucleus plus electron cloud) → a copper lattice with free cyan electrons wandering between ions
 - Split screen: "Conductor" (electrons wander) vs "Insulator" (electrons locked in place)
 - Real photo: a stripped copper wire with plastic insulation (Ken Burns)
 - Manim: battery, bulb, and switch in a loop. Electrons circulate and the bulb glows. The switch opens, the flow stops everywhere and the bulb goes dark.
@@ -67,25 +69,25 @@ Durations below are estimates from word count at 145 wpm. The final cut syncs ea
 
 ---
 
-## Scene 4 — Voltage · ~0:38
+## Scene 4 — Voltage · ~0:39
 
 **Narration:**
-> So what pushes charge around the loop? Voltage. Think of a battery as a charge pump: chemical reactions inside give each bit of charge a boost of energy. Voltage measures exactly that — energy per unit of charge. One volt means one joule for every coulomb, and a coulomb is about six quintillion electrons. Crucially, voltage is always a *difference* between two points — that's why it's called potential difference. A AA battery: one and a half volts. A USB charger: five. A wall outlet: 120 or 230, depending on where you live. Transmission lines: hundreds of thousands.
+> So what pushes charge around the loop? Voltage. Think of a battery as a charge pump: chemical reactions give each bit of charge a boost of energy. Voltage is that energy per unit of charge. One volt is one joule per coulomb — the charge of about six quintillion electrons. Voltage is always a *difference* between two points — that's why it's called potential difference. A AA battery: one and a half volts. A wall socket: 120 or 230, depending on where you live. Transmission lines: hundreds of thousands.
 
 **Visuals:**
 - Manim: the battery "pumps" charges uphill on an energy ladder, with an amber glow on the + terminal
 - Equation builds: **V = E / Q** → **1 V = 1 J / C**
 - Two probe points labelled A and B, with "ΔV" between them
-- Real footage or photos, quick montage with labels: AA batteries → USB charger → wall outlet → high-voltage transmission towers (Ken Burns)
+- Real footage or photos, quick montage with labels: AA batteries → wall socket → high-voltage transmission towers (Ken Burns)
 
-**On-screen text:** "Voltage = energy per charge" · "1 V = 1 J/C" · "1 C ≈ 6.24 × 10¹⁸ electrons" · "Potential difference" · labels "1.5 V", "5 V", "120 V / 230 V", "100,000s of V"
+**On-screen text:** "Voltage = energy per charge" · "1 V = 1 J/C" · "1 C = charge of ≈ 6.24 × 10¹⁸ electrons" · "Potential difference" · labels "1.5 V", "120 V / 230 V", "100,000s of V"
 
 ---
 
-## Scene 5 — Current · ~0:40
+## Scene 5 — Current · ~0:42
 
 **Narration:**
-> Current is how much charge flows past a point each second. One ampere — one amp — is one coulomb per second. Here's a historical twist: early scientists guessed current flows from positive to negative, and we still draw it that way. That's conventional current. In metal wires, though, the moving charges are electrons, and they drift the opposite way. Both pictures give the same answers. And here's the surprise: those electrons are slow — a fraction of a millimetre per second, slower than a snail. The light still comes on instantly, because the wire is already full of electrons, and the push travels through them at close to the speed of light.
+> Current is how much charge flows past a point each second. One ampere, or amp, is one coulomb per second. Early scientists guessed current flows from positive to negative, and we still draw it that way: conventional current. But in metal wires, the moving charges are electrons, drifting the opposite way. Both pictures give the same answers. Surprisingly, those electrons are slow — a fraction of a millimetre per second, slower than a snail. Yet the light comes on almost instantly: the wire is already full of electrons, and the push races along it at more than half the speed of light.
 
 **Visuals:**
 - Manim: a gate on the wire counts charges passing per second, with a counter ticking ("coulombs per second")
@@ -93,14 +95,14 @@ Durations below are estimates from word count at 145 wpm. The final cut syncs ea
 - Manim: the same loop with cyan arrows "+ → −" (conventional current) and small dots moving "− → +" (electron flow), labelled side by side
 - Snail photo (Ken Burns) next to a slow electron drifting. Then a wave pulse races along the wire and the bulb lights.
 
-**On-screen text:** "Current = charge per second" · "1 A = 1 C/s" · "Conventional current: + → −" · "Electron flow: − → +" · "Drift speed ≈ 0.1 mm/s" · "Signal ≈ near light speed"
+**On-screen text:** "Current = charge per second" · "1 ampere (A) = 1 C/s" · "Conventional current: + → −" · "Electron flow: − → +" · "Electron drift: < 1 mm/s" · "Signal: > ½ the speed of light"
 
 ---
 
-## Scene 6 — Resistance · ~0:36
+## Scene 6 — Resistance · ~0:34
 
 **Narration:**
-> Resistance is how strongly something opposes current. It's measured in ohms, after Georg Ohm, written with the Greek letter omega. Four things set it. Material: copper resists very little; nichrome, used in toasters, resists a lot. Length: longer wire, more resistance. Thickness: thicker wire, less — more lanes for traffic. And temperature: in most metals, resistance rises as they heat up. Resistance is also useful. Push current through a high-resistance wire and energy turns into heat and light — the orange glow of a toaster, or the filament of an old-fashioned bulb.
+> Resistance is opposition to current, measured in ohms — after Georg Ohm — with the symbol omega. Four things set it. Material: copper barely resists; nichrome, used in toasters, resists a lot. Length: longer wire, more resistance. Thickness: thicker wire, less — more lanes for traffic. Temperature: most metals resist more as they heat up. Resistance is also useful: push current through a high-resistance wire and it gets hot enough to glow — like a toaster element or an old-style light bulb.
 
 **Visuals:**
 - Manim: a resistor symbol in coral. Electrons squeeze through, slow down, and the resistor glows warmer.
@@ -112,58 +114,59 @@ Durations below are estimates from word count at 145 wpm. The final cut syncs ea
 
 ---
 
-## Scene 7 — The water analogy · ~0:36
+## Scene 7 — The water analogy · ~0:35
 
 **Narration:**
-> Here's a picture that helps. Imagine water in a closed loop of pipe, driven by a pump. The pump's pressure is like voltage. The amount of water flowing past each second is like current. And a narrow section of pipe is like resistance. More pressure, more flow; narrower pipe, less flow. But analogies have limits. Cut a water pipe and water spills out; cut a wire and current simply stops. Wires aren't empty tubes waiting to be filled — they're full of charge from the start. And the energy actually travels through electric and magnetic fields around the wire.
+> Picture water in a closed loop of pipe, driven by a pump. The pump's pressure is like voltage. The water's flow rate is like current. And a narrow section of pipe is like resistance. More pressure, more flow; narrower pipe, less flow. But here's where the analogy breaks. Cut a water pipe and water spills out; cut a wire and current stops. And in a pipe, the water carries the energy; in a circuit, energy travels through electric and magnetic fields around the wire.
 
 **Visuals:**
 - Manim split screen. **Left:** pump, pipe loop, and a narrow section, with blue water particles flowing and an amber pressure gauge. **Right:** battery, wire loop, and resistor, with cyan electrons. Matching parts highlight together (pump↔battery, flow↔current, narrow pipe↔resistor).
 - Pressure goes up → both flows speed up. The pipe narrows → both slow down.
-- "Where it breaks" beat: the pipe is cut and water sprays out, while the wire is cut and the electrons just stop (red ✕).
+- First break: the pipe is cut and water sprays out, while the wire is cut and the electrons just stop (coral ✕).
+- Second break: faint field lines bloom around the wire and carry a glow to the bulb while the electrons barely move.
 
-**On-screen text:** "Pressure ↔ Voltage" · "Flow rate ↔ Current" · "Narrow pipe ↔ Resistance" · "⚠ Where the analogy breaks"
+**On-screen text:** "Pressure ↔ Voltage" · "Flow rate ↔ Current" · "Narrow pipe ↔ Resistance" · "⚠ Where the analogy breaks" · "Cut pipe → water spills · Cut wire → current stops" · "Pipe: water carries energy · Circuit: fields carry energy"
 
 ---
 
-## Scene 8 — Ohm's law + worked examples · ~0:52
+## Scene 8 — Ohm's law + worked examples · ~0:48
 
 **Narration:**
-> Now let's connect all three. For many materials — like a metal wire at steady temperature — current is proportional to voltage. That's Ohm's law: V equals I times R. To remember it, draw a triangle: V on top, I and R below. Cover what you want. Cover V: I times R. Cover I: V over R. Cover R: V over I.
+> Ohm's law connects all three. For many materials — like a metal wire at steady temperature — current is proportional to voltage: V equals I times R. Memory trick: draw a triangle — V on top, I and R below. Cover what you want. Cover V: I times R. Cover I: V over R. Cover R: V over I.
 > Example one. An ideal nine-volt battery is connected to a three-ohm resistor. Find the current. I equals V over R: nine divided by three… three amps.
-> Example two. A twelve-volt car lamp draws half an amp. Find its resistance. R equals V over I: twelve divided by zero point five… twenty-four ohms.
+> Example two. A small twelve-volt car bulb draws half an amp. Find its resistance. R equals V over I: twelve divided by zero point five… twenty-four ohms.
 
 **Visuals:**
 - Manim: **V = I × R** with each letter in its colour (V amber, I cyan, R coral)
-- The triangle draws itself, and a hand-drawn "cover" card slides over each letter in turn to reveal the rearranged formula
+- The triangle draws itself, and a "cover" card slides over each letter in turn to reveal the rearranged formula
 - Worked example 1, building line by line (click SFX on each line):
   `Given: V = 9 V, R = 3 Ω` → `I = V / R` → `I = 9 V / 3 Ω` → **`I = 3 A`** (boxed), next to a circuit diagram
-- Worked example 2, line by line:
+- Worked example 2, line by line, next to a small car interior bulb icon:
   `Given: V = 12 V, I = 0.5 A` → `R = V / I` → `R = 12 V / 0.5 A` → **`R = 24 Ω`** (boxed)
 
 **On-screen text:** as above, plus the footnote "Ideal battery = no internal resistance" (example 1, held ≥ 3 s)
 
 ---
 
-## Scene 9 — Bonus: power & safety · ~0:34
+## Scene 9 — Bonus: power & safety · ~0:41
 
 **Narration:**
-> One bonus formula: power — how fast energy is delivered — equals voltage times current. P equals V times I, in watts. Our nine-volt, three-amp circuit? Twenty-seven watts. A kettle on a 230-volt outlet draws about ten amps — over two thousand watts. Big currents mean big heating, which is why fuses and breakers cut the power before wires overheat. It's current through your body that harms you, and voltage is what drives it. As little as a tenth of an amp across the chest can stop a heart. So never poke anything into outlets, keep water away from electricity, and stay well clear of fallen power lines.
+> Bonus formula: power — how fast energy is delivered — equals voltage times current, in watts. Our nine-volt, three-amp circuit? Twenty-seven watts. A kettle on a 230-volt socket draws about ten amps — over two thousand watts. Big currents mean big heating, so fuses and breakers cut the power before wires overheat. It's current through your body that harms you — and voltage drives it. As little as a tenth of an amp across the chest can be fatal. Never poke anything into sockets, keep water away from electricity, and stay clear of fallen power lines.
 
 **Visuals:**
 - Manim: **P = V × I** builds. `9 V × 3 A = 27 W`.
 - Real footage: kettle boiling, with the label `230 V × 10 A ≈ 2,300 W`
-- Photo: a household breaker panel or fuse (Ken Burns)
+- Photo: a household fuse box or breaker panel (Ken Burns)
 - Safety card (coral border, warning icon) with three bullets
 
-**On-screen text:** "P = V × I (watts)" · "27 W" · "≈ 2,300 W" · **SAFETY:** "Never poke into outlets" · "Keep water away" · "Stay clear of fallen power lines; call emergency services" (card held ≥ 5 s)
+**On-screen text:** "P = V × I (watts)" · "27 W" · "≈ 2,300 W" · **SAFETY:** "Never poke anything into sockets" · "Keep water away from electricity" · "Stay clear of fallen power lines; call emergency services" (card held ≥ 5 s)
 
 ---
 
-## Scene 10 — Common misconceptions · ~0:27
+## Scene 10 — Common misconceptions · ~0:25
 
 **Narration:**
-> Let's bust three myths. Myth one: batteries store electrons. They don't — they store chemical energy; the electrons are already in the wires. Myth two: a bulb uses up current. Nope — in a simple loop, the same current flows in and out. What the bulb uses is energy. Myth three: voltage flows. It doesn't. Current flows *through* things; voltage is *across* them.
+> Let's bust three myths. Myth one: batteries store electrons. They don't — they store chemical energy; the electrons are already in the circuit. Myth two: a bulb uses up current. In a simple loop, the same current flows in and out. What the bulb uses is energy. Myth three: voltage flows. It doesn't. Current flows *through* things; voltage is *across* them.
 
 **Visuals:**
 - Each myth appears in a card and gets a coral "MYTH" stamp, then flips to a cyan "FACT"
@@ -174,26 +177,26 @@ Durations below are estimates from word count at 145 wpm. The final cut syncs ea
 
 ---
 
-## Scene 11 — Recap + quiz · ~0:50 (including the pause)
+## Scene 11 — Recap + quiz · ~0:52 (including the pause)
 
 **Narration (recap):**
 > Quick recap. Voltage is the push: energy per charge, in volts. Current is the flow: charge per second, in amps. Resistance is the opposition, in ohms. And Ohm's law ties them together: V equals I R.
 
 **Narration (quiz):**
-> Your turn — pause if you need more time. One: a twelve-volt battery is connected to a six-ohm resistor. What's the current? Two: in the water analogy, what does a narrow pipe represent? Three: true or false — current gets used up as it passes through a bulb.
+> Your turn — pause if you need to. One: a twelve-volt battery is connected to a six-ohm resistor. What's the current? Two: in the water analogy, what does a narrow pipe represent? Three: true or false — a bulb uses up current.
 
 *(5-second on-screen countdown, music only)*
 
 **Narration (answers):**
-> Answers! One: twelve divided by six — two amps. Two: resistance. Three: false — the current is the same; it's energy that's transferred. Nail all three, and you've got the foundation of every circuit ever built.
+> Answers! One: twelve divided by six — two amps. Two: resistance. Three: false — the current is the same; it's energy that's transferred. Nail all three, and you've got the foundation of every circuit.
 
 **Visuals:** Recap: three colour-coded cards plus the V = IR triangle. Quiz: numbered question cards that stay on screen through the countdown (5…1 ring). Answers: each card flips with a green ✓ and a click SFX.
 
-**On-screen text:** Q1 "12 V battery, 6 Ω resistor. Current = ?" · Q2 "Water analogy: narrow pipe = ?" · Q3 "True or false: current is used up in a bulb" · A1 "I = 12 / 6 = 2 A" · A2 "Resistance" · A3 "False: energy is transferred, current is the same"
+**On-screen text:** Q1 "12 V battery, 6 Ω resistor. Current = ?" · Q2 "Water analogy: a narrow pipe = ?" · Q3 "True or false: a bulb uses up current" · A1 "I = 12 V / 6 Ω = 2 A" · A2 "Resistance" · A3 "False: same current in and out; energy is transferred"
 
 ---
 
-## Scene 12 — End card · ~0:08
+## Scene 12 — End card · ~0:07
 
 **Narration:** *(none, music resolves)*
 
@@ -206,26 +209,30 @@ Durations below are estimates from word count at 145 wpm. The final cut syncs ea
 | Claim | Status | Note |
 |---|---|---|
 | Lightning heats air to ~30,000 °C, ~5× the Sun's surface (~5,500 °C) | ✅ | The commonly cited figure is ~27,700 °C (50,000 °F), so "around 30,000" is fair. |
-| Free electrons in metals → conductors; bound electrons → insulators | ✅ | Simplified band picture, appropriate for this level. |
-| 1 V = 1 J/C; 1 A = 1 C/s; 1 C ≈ 6.24 × 10¹⁸ electrons ("six quintillion") | ✅ | Exact definitions (SI). |
-| AA = 1.5 V; USB = 5 V; outlets 120 / 230 V; transmission 100s of kV | ✅ | ⚠ USB Power Delivery can go up to 20–48 V, so "a basic USB charger: 5 V" is the accurate wording. Narration says "a USB charger: five", which I can change to "a basic USB port" if you want it strict. |
-| Conventional current + → −, electrons − → + | ✅ | |
-| Drift speed is a fraction of a mm/s, slower than a snail (~1 mm/s) | ✅ | ~0.02–0.1 mm/s for typical household currents in copper. Depends on current and wire gauge. |
-| The signal travels at "close to the speed of light" | ⚠ | In real cables it's ~50–99% of c depending on the insulation. "Close to" is fair; the on-screen text says "near light speed". |
-| R = ρL/A; most metals' R rises with temperature | ✅ | "Most metals" is deliberate: semiconductors and carbon behave the opposite way. |
-| Nichrome is used in toaster elements | ✅ | |
-| Energy flows in the fields around the wire | ✅ | The Poynting-vector picture, kept qualitative. |
-| Ohm's law holds for ohmic materials (e.g. metals at constant temperature) | ✅ | Explicitly qualified, since a filament is non-ohmic over its warm-up. Example 2's 24 Ω is the lamp's *operating* resistance, which is fine. |
-| Example 1: 9 V / 3 Ω = 3 A (ideal battery) | ✅ | ⚠ A real 9 V battery (~1–2 Ω internal resistance) couldn't supply 3 A, hence the "ideal battery" footnote. |
-| Example 2: 12 V / 0.5 A = 24 Ω | ✅ | |
-| P = VI; 9 V × 3 A = 27 W; kettle 230 V × ~10 A ≈ 2.3 kW | ✅ | 120 V kettles are ~1.5 kW at ~12.5 A. The script uses the 230 V case. |
-| ~0.1 A across the chest can cause fatal fibrillation | ✅ | The standard figure (50–100 mA, 60 Hz AC, hand-to-hand/chest). |
+| Free electrons in metals → conductors; tightly bound electrons → insulators | ✅ | Simplified picture, right for this level. |
+| 1 V = 1 J/C; 1 A = 1 C/s; 1 C = charge of ≈ 6.24 × 10¹⁸ electrons | ✅ | SI definitions. |
+| AA = 1.5 V; wall sockets 120 or 230 V; transmission lines at 100s of kV | ✅ | A few countries differ (Japan uses 100 V), but "120 or 230" covers most viewers. |
+| Conventional current + → −; electrons drift − → + | ✅ | Franklin's convention. |
+| Electron drift is a fraction of a mm/s, slower than a snail (~1 mm/s) | ✅ | ~0.02–0.1 mm/s at household currents in copper. Depends on current and wire gauge. |
+| The signal travels at more than half the speed of light | ✅ | Cable velocity factors are typically ~0.6–0.95 c. v1 said "close to the speed of light"; this wording is safer. |
+| R = ρL/A; most metals resist more when hotter | ✅ | "Most metals" is deliberate: semiconductors and carbon go the other way. |
+| Nichrome toaster elements glow when current flows | ✅ | |
+| Pipe: the water carries the energy; circuit: energy travels via fields around the wire | ✅ | Qualitative Poynting-vector picture, the standard way this break in the analogy is described. |
+| Ohm's law holds for ohmic materials (e.g. metals at steady temperature) | ✅ | Explicitly qualified. Example 2's 24 Ω is the bulb's *operating* resistance. |
+| Example 1: 9 V ÷ 3 Ω = 3 A (ideal battery) | ✅ | ⚠ A real 9 V battery (~1–2 Ω internal resistance) couldn't deliver 3 A, hence the on-screen "ideal battery" footnote. |
+| Example 2: small 12 V car bulb at 0.5 A → 24 Ω (≈ 6 W) | ✅ | Matches a typical interior bulb (5–6 W). Headlamps draw ~4–5 A. |
+| P = VI; 9 V × 3 A = 27 W; kettle 230 V × ~10 A ≈ 2.3 kW | ✅ | UK/EU kettles are rated 2–3 kW. |
+| ~0.1 A across the chest can be fatal | ✅ | The standard figure for mains AC (50–100 mA can cause ventricular fibrillation). |
 | Same current enters and leaves a bulb in a series loop | ✅ | Conservation of charge (Kirchhoff's current law). |
-| Quiz: 12 V / 6 Ω = 2 A | ✅ | |
+| Quiz: 12 V ÷ 6 Ω = 2 A | ✅ | |
 
-**Word count:** ~930 words of narration → ~6:25 spoken, ~6:45 including the title, countdown and end card. The scene table above runs slightly short; real timings will come from the audio.
+## Changes from v1
+- Trimmed from ~930 to 844 written words (866 spoken, since numbers like "230" take several words to say). The estimate is now 6:20.
+- Cut the USB line from the voltage examples.
+- Replaced the weakest analogy break ("wires aren't empty tubes": a closed pipe loop is full of water too) with an explicit energy contrast: water carries its energy, while a circuit's energy travels in the fields.
+- Accuracy: "more than half the speed of light", "a small car bulb", "can be fatal" (instead of "can stop a heart"), "one joule per coulomb" (matches the definition).
+- UK wording: "socket" instead of "outlet", "bedside table" instead of "nightstand".
 
-## Open questions for you
-1. **Outlet voltage:** the kettle example uses 230 V (most of the world, including Europe, South Africa, India and Australia). Switch it to 120 V (North America)?
-2. **Units/spelling:** I've used "millimetre" and °C. Switch to US spelling or °F?
-3. **Length:** it's ~6:45 against your ~6 min target. Should I trim ~60 words (~25 s) to land nearer 6:20, e.g. by tightening the hook, the voltage examples list and the power scene? Or keep it as is?
+## Notes for production
+- Voiceover text: "AA" is read as "double-A". Subtitles keep numerals ("230 V").
+- Every on-screen text element stays up for at least 2 s.
