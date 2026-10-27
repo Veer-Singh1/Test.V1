@@ -12,7 +12,8 @@ class S04Map(Shot):
         m = SAMap(centre=(-3.2, 0.45), k=0.4)
         shapes = m.shapes()
         head = T("South Africa's mineral wealth", 34, ORE, BOLD).move_to([3.6, 3.42, 0])
-        note = T("map not to scale", 20, MUTED).next_to(shapes, DOWN, buff=0.08)
+        note = T("map not to scale", 20, MUTED)
+        note.move_to(shapes.get_corner(DR) + [-note.width / 2 - 0.1, note.height / 2 + 0.1, 0])  # in the sea, clear of subtitles
         self.at(0, -0.3)
         self.play(DrawBorderThenFill(shapes[0]), FadeIn(shapes[1]), FadeIn(head), FadeIn(note), run_time=1.4)
         minerals = [  # (segment, fraction, name, place, colour, [(lon, lat), ...])

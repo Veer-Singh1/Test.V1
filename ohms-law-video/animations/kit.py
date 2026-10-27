@@ -299,20 +299,32 @@ class Shot(Scene):
         self._sfx.append({"t": round(self.time, 3), "kind": kind, "gain_db": gain_db})
 
     # track on-screen text for the QC report
+    def _shown(self, m):
+        for t in m.get_family():
+            if isinstance(t, (Text, MarkupText)) and id(t) not in self._texts:
+                box = [float(t.get_left()[0]), float(t.get_right()[0]), float(t.get_bottom()[1]), float(t.get_top()[1])]
+                self._texts[id(t)] = [self.time, None, getattr(t, "text", ""), box]
+
+    def _hidden(self, m, keep=()):
+        for t in m.get_family():
+            if id(t) in self._texts and self._texts[id(t)][1] is None and id(t) not in keep:
+                self._texts[id(t)][1] = self.time
+
     def add(self, *mobjects):
         for m in mobjects:
-            for t in m.get_family():
-                if isinstance(t, (Text, MarkupText)) and id(t) not in self._texts:
-                    box = [float(t.get_left()[0]), float(t.get_right()[0]), float(t.get_bottom()[1]), float(t.get_top()[1])]
-                    self._texts[id(t)] = [self.time, None, getattr(t, "text", ""), box]
+            self._shown(m)
         return super().add(*mobjects)
 
     def remove(self, *mobjects):
         for m in mobjects:
-            for t in m.get_family():
-                if id(t) in self._texts and self._texts[id(t)][1] is None:
-                    self._texts[id(t)][1] = self.time
+            self._hidden(m)
         return super().remove(*mobjects)
+
+    def replace(self, old_mobject, new_mobject):
+        # ReplacementTransform swaps mobjects through replace(), not add/remove
+        self._hidden(old_mobject, keep={id(t) for t in new_mobject.get_family()})
+        self._shown(new_mobject)
+        return super().replace(old_mobject, new_mobject)
 
     def finish(self):
         self.to(self.D + self.tail)

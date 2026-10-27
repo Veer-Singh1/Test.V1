@@ -63,10 +63,11 @@ class S03Ores(Shot):
         scale = always_redraw(beam)
         verdict = pill("ORE ✓ worth mining", GOOD, 30).move_to([0, -2.0, 0])
         verdict2 = pill("Too little mineral → not an ore", HARM, 30).move_to([0, -2.0, 0])
-        self.at(3)
+        self.at(2, 0.5)  # "worth the cost"
         self.play(definition.animate.scale(0.8).move_to([0, 2.45, 0]), run_time=0.5)
         self.play(FadeIn(post), FadeIn(scale), run_time=0.4)
         self.play(tilt.animate.set_value(0.22), run_time=0.7)
+        self.at(2, 0.85)  # "is called an ore"
         self.play(FadeIn(verdict, shift=UP * 0.1), run_time=0.3)
         self.at(3, 0.5)
         self.play(tilt.animate.set_value(-0.22), ReplacementTransform(verdict, verdict2), run_time=0.8)

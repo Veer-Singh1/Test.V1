@@ -88,7 +88,7 @@ class S06OpenPit(Shot):
         self.play(FadeIn(pit), FadeIn(heap, shift=RIGHT * 0.3), run_time=1.4)
         bench = pill("Benches: steps in the pit wall", GOLD, 26).move_to([0, 1.75, 0])
         arrow = Arrow(bench.get_bottom() + LEFT * 1.0, [-3.8, 0.05, 0], buff=0.1, color=GOLD, stroke_width=4)
-        self.at(0, 0.75)
+        self.at(0, 0.7)
         self.play(ReplacementTransform(ov_lbl, bench), GrowArrow(arrow), run_time=0.6)
 
         # --- panning
@@ -103,7 +103,7 @@ class S06OpenPit(Shot):
         info = VGroup(pill("Panning: riverbed gold & diamonds", ORE, 24),
                       T("heavy particles sink", 26, GOLD), T("lighter sand washes over the edge", 26, INK))
         info.arrange(DOWN, aligned_edge=LEFT, buff=0.22).move_to([0, 0.3, 0]).align_to([0.7, 0, 0], LEFT)
-        self.at(1, -0.05)
+        self.at(1)
         self.play(FadeOut(VGroup(rock, ore, over, pit, heap, bench, arrow, head)), run_time=0.5)
         self.play(FadeIn(pan), FadeIn(light), FadeIn(heavy), FadeIn(info[0]), run_time=0.6)
         swirl.add_updater(lambda m, dt: m.rotate(1.6 * dt, about_point=pan_c))
