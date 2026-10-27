@@ -1,0 +1,525 @@
+1
+00:00:00,450 --> 00:00:05,470
+The phone in your pocket contains gold,
+copper and dozens of other metals,
+
+2
+00:00:05,510 --> 00:00:09,170
+and every gram of them
+was dug out of the ground.
+
+3
+00:00:09,210 --> 00:00:15,133
+In South Africa, the deepest gold mines
+reach about four kilometres underground.
+
+4
+00:00:15,173 --> 00:00:20,114
+And from one tonne of gold ore,
+you get only about five grams of gold.
+
+5
+00:00:20,154 --> 00:00:23,511
+So how do we find these metals,
+get them out of the rock
+
+6
+00:00:23,551 --> 00:00:25,984
+— and what does it cost the planet?
+
+7
+00:00:26,024 --> 00:00:27,474
+Let's dig in.
+
+8
+00:00:32,483 --> 00:00:34,683
+Most metals aren't found pure.
+
+9
+00:00:34,723 --> 00:00:40,729
+In rock, they're chemically joined to
+other elements, usually oxygen or sulphur.
+
+10
+00:00:40,769 --> 00:00:44,481
+A rock that contains enough
+of a useful mineral to be
+
+11
+00:00:44,521 --> 00:00:48,866
+worth the cost of mining and
+processing is called an ore.
+
+12
+00:00:48,906 --> 00:00:50,887
+The key words are 'worth the cost':
+
+13
+00:00:50,927 --> 00:00:54,356
+if there's too little of the
+mineral, it isn't an ore.
+
+14
+00:00:54,396 --> 00:00:57,342
+Refining is the set of
+processes that separate
+
+15
+00:00:57,382 --> 00:01:00,783
+the pure metal from
+everything else in the ore.
+
+16
+00:01:01,583 --> 00:01:06,203
+South Africa is one of the richest
+mining countries in the world.
+
+17
+00:01:06,243 --> 00:01:09,011
+Gold comes from the Witwatersrand basin,
+
+18
+00:01:09,051 --> 00:01:12,590
+across Gauteng,
+the Free State and North West.
+
+19
+00:01:12,630 --> 00:01:15,683
+Platinum and chrome come from the Bushveld
+
+20
+00:01:15,723 --> 00:01:19,127
+Igneous Complex in Limpopo and North West.
+
+21
+00:01:19,167 --> 00:01:22,483
+Iron ore is mined at Sishen,
+and manganese in
+
+22
+00:01:22,523 --> 00:01:26,263
+the Kalahari field,
+both in the Northern Cape.
+
+23
+00:01:26,303 --> 00:01:30,856
+Coal comes mainly from Mpumalanga
+and Limpopo, diamonds from
+
+24
+00:01:30,896 --> 00:01:35,723
+Kimberley and coastal deposits,
+and copper from Phalaborwa.
+
+25
+00:01:35,763 --> 00:01:40,934
+Mining brings jobs, foreign income
+and raw materials for industry.
+
+26
+00:01:41,850 --> 00:01:47,852
+These minerals end up all around you: gold
+in jewellery, electronics and medicine;
+
+27
+00:01:47,892 --> 00:01:50,283
+platinum in catalytic converters,
+
+28
+00:01:50,323 --> 00:01:54,041
+which clean car exhaust;
+chrome in stainless steel,
+
+29
+00:01:54,081 --> 00:01:56,767
+and manganese to make steel stronger;
+
+30
+00:01:56,807 --> 00:02:00,377
+iron in the steel itself;
+coal in power stations;
+
+31
+00:02:00,417 --> 00:02:06,072
+diamonds in cutting and drilling tools;
+and copper in electrical wiring.
+
+32
+00:02:06,983 --> 00:02:11,197
+How a mineral is mined depends
+on how deep the ore lies.
+
+33
+00:02:11,237 --> 00:02:16,622
+For deep ore, like gold and platinum,
+we use shaft mining: a vertical shaft
+
+34
+00:02:16,662 --> 00:02:22,107
+is sunk into the ground, and horizontal
+tunnels are dug out to the ore.
+
+35
+00:02:22,147 --> 00:02:27,034
+Miners, machines and ore travel
+up and down in cages and lifts.
+
+36
+00:02:27,074 --> 00:02:30,431
+For ore close to the surface,
+like iron, coal,
+
+37
+00:02:30,471 --> 00:02:34,104
+copper and diamonds,
+we use open cast mining.
+
+38
+00:02:34,144 --> 00:02:38,782
+The soil and rock on top, called
+the overburden, is stripped away,
+
+39
+00:02:38,822 --> 00:02:44,236
+and the ore is dug from a huge pit
+that deepens in steps called benches.
+
+40
+00:02:44,276 --> 00:02:49,672
+And for small deposits of gold and
+diamonds in riverbeds, there's panning:
+
+41
+00:02:49,712 --> 00:02:54,079
+gravel is swirled with water
+in a pan, heavy particles sink,
+
+42
+00:02:54,119 --> 00:02:57,554
+and the lighter sand washes over the edge.
+
+43
+00:02:58,450 --> 00:03:01,448
+Once the ore is out, refining begins.
+
+44
+00:03:01,488 --> 00:03:07,537
+Stage one is physical separation, which
+doesn't change the substances chemically.
+
+45
+00:03:07,577 --> 00:03:12,537
+The rock is crushed and ground
+into small pieces or a fine powder.
+
+46
+00:03:12,577 --> 00:03:16,599
+Useless rock is sorted out
+by hand or sifted away.
+
+47
+00:03:16,639 --> 00:03:20,485
+Then washing, sieving and gravity
+— panning or sluicing
+
+48
+00:03:20,525 --> 00:03:24,691
+— separate heavy mineral
+particles from lighter waste.
+
+49
+00:03:25,483 --> 00:03:27,473
+Stage two is chemical.
+
+50
+00:03:27,513 --> 00:03:32,965
+Many metals occur as metal oxides,
+so we need to remove the oxygen.
+
+51
+00:03:33,005 --> 00:03:39,992
+Removing oxygen from a compound is called
+reduction; gaining oxygen is oxidation.
+
+52
+00:03:40,032 --> 00:03:45,099
+The most common reducing agent
+is carbon, as coke or charcoal.
+
+53
+00:03:45,139 --> 00:03:51,068
+At high temperatures, carbon attracts the
+oxygen more strongly than the metal does,
+
+54
+00:03:51,108 --> 00:03:55,661
+so it takes the oxygen and
+leaves pure molten metal behind.
+
+55
+00:03:55,701 --> 00:04:00,768
+Take lead: lead oxide plus carbon
+gives lead plus carbon monoxide.
+
+56
+00:04:00,808 --> 00:04:04,617
+The lead oxide loses oxygen,
+so it's reduced.
+
+57
+00:04:04,657 --> 00:04:08,175
+The carbon gains oxygen, so it's oxidised.
+
+58
+00:04:09,083 --> 00:04:11,623
+Iron is made in a blast furnace.
+
+59
+00:04:11,663 --> 00:04:14,882
+Iron ore, coke and
+limestone go in at the top,
+
+60
+00:04:14,922 --> 00:04:17,923
+and hot air is blown in at the bottom.
+
+61
+00:04:17,963 --> 00:04:21,257
+The carbon burns to form carbon monoxide,
+
+62
+00:04:21,297 --> 00:04:25,185
+which reduces the iron
+oxide to molten iron.
+
+63
+00:04:25,225 --> 00:04:28,542
+The limestone removes
+sandy impurities as slag,
+
+64
+00:04:28,582 --> 00:04:32,534
+which floats on the molten
+iron and is drained off.
+
+65
+00:04:32,574 --> 00:04:37,063
+For lead, the ore galena —
+lead sulphide — is crushed and
+
+66
+00:04:37,103 --> 00:04:42,100
+roasted in air, forming lead
+oxide and sulphur dioxide gas.
+
+67
+00:04:42,140 --> 00:04:45,480
+The lead oxide is then reduced with coke.
+
+68
+00:04:46,383 --> 00:04:49,674
+Copper ore is crushed
+and heated with oxygen,
+
+69
+00:04:49,714 --> 00:04:52,837
+giving copper sulphide and iron oxide.
+
+70
+00:04:52,877 --> 00:04:55,926
+Silica is added, which combines with the
+
+71
+00:04:55,966 --> 00:04:59,673
+iron oxide to form slag,
+and that's removed.
+
+72
+00:04:59,713 --> 00:05:05,410
+Heating the copper sulphide in air gives
+impure copper, which is then purified.
+
+73
+00:05:05,450 --> 00:05:07,150
+Gold is different.
+
+74
+00:05:07,190 --> 00:05:11,545
+The ore is crushed, washed and
+filtered, then a cyanide solution
+
+75
+00:05:11,585 --> 00:05:16,289
+dissolves the gold, and zinc
+brings it back out of the solution.
+
+76
+00:05:16,329 --> 00:05:19,867
+With only about five grams
+per tonne, producing one
+
+77
+00:05:19,907 --> 00:05:24,466
+kilogram of gold means processing
+two hundred tonnes of ore.
+
+78
+00:05:25,550 --> 00:05:27,963
+Mining comes at a cost, and because the
+
+79
+00:05:28,003 --> 00:05:31,270
+Earth's spheres are linked,
+the damage spreads.
+
+80
+00:05:31,310 --> 00:05:34,981
+Mines use huge amounts
+of water and electricity.
+
+81
+00:05:35,021 --> 00:05:38,417
+Chemicals and acid drainage
+from old mines leak
+
+82
+00:05:38,457 --> 00:05:42,131
+into rivers and groundwater
+— the hydrosphere.
+
+83
+00:05:42,171 --> 00:05:47,612
+Pits, waste rock and mine dumps change
+the land permanently — the lithosphere.
+
+84
+00:05:47,652 --> 00:05:53,295
+Dust and gases from blasting, crushing
+and smelting pollute the atmosphere.
+
+85
+00:05:53,335 --> 00:05:58,809
+And habitats are destroyed,
+threatening biodiversity in the biosphere.
+
+86
+00:05:58,849 --> 00:06:04,698
+Follow one chain to the end: blasting
+releases dust, the dust settles on leaves,
+
+87
+00:06:04,738 --> 00:06:11,051
+it blocks sunlight, photosynthesis drops,
+and a nearby farmer's crop yield falls.
+
+88
+00:06:12,050 --> 00:06:14,940
+For people, mining is a mixed blessing.
+
+89
+00:06:14,980 --> 00:06:17,858
+It creates jobs, builds roads and towns,
+
+90
+00:06:17,898 --> 00:06:21,565
+and earns billions of
+rands in foreign income.
+
+91
+00:06:21,605 --> 00:06:25,906
+But mine work is dangerous,
+and breathing in fine dust
+
+92
+00:06:25,946 --> 00:06:30,919
+causes lung diseases such as
+silicosis and pneumoconiosis.
+
+93
+00:06:30,959 --> 00:06:35,865
+That's why, by law, mining companies
+must rehabilitate the land when
+
+94
+00:06:35,905 --> 00:06:40,666
+mining stops: make the site safe
+and stable, remove pollutants and
+
+95
+00:06:40,706 --> 00:06:46,339
+treat the water, reshape the land and
+replace the topsoil stored at the start,
+
+96
+00:06:46,379 --> 00:06:51,021
+replant indigenous plants,
+and restore rivers and wetlands.
+
+97
+00:06:52,017 --> 00:06:53,377
+Quick recap.
+
+98
+00:06:53,417 --> 00:06:55,947
+An ore is worth the cost of mining.
+
+99
+00:06:55,987 --> 00:07:01,545
+Shaft mining reaches deep ore; open
+cast mining takes ore near the surface.
+
+100
+00:07:01,585 --> 00:07:06,631
+Refining separates the metal physically,
+then chemically by reduction.
+
+101
+00:07:06,671 --> 00:07:10,267
+And mines must be
+rehabilitated when they close.
+
+102
+00:07:10,617 --> 00:07:13,367
+Your turn — pause if you need to.
+
+103
+00:07:13,407 --> 00:07:16,933
+One: in lead oxide plus
+carbon gives lead plus
+
+104
+00:07:16,973 --> 00:07:20,693
+carbon monoxide,
+which substance is reduced?
+
+105
+00:07:20,733 --> 00:07:26,441
+Two: at five grams per tonne, how many
+tonnes of ore give one kilogram of gold?
+
+106
+00:07:26,481 --> 00:07:30,421
+Three: which mining method
+suits coal close to the surface?
+
+107
+00:07:35,471 --> 00:07:36,711
+Answers!
+
+108
+00:07:36,751 --> 00:07:40,667
+One: the lead oxide,
+because it loses oxygen.
+
+109
+00:07:40,707 --> 00:07:42,677
+Two: two hundred tonnes.
+
+110
+00:07:42,717 --> 00:07:45,017
+Three: open cast mining.
+
+111
+00:07:45,057 --> 00:07:49,603
+Nail those, and you're ready for
+the mining questions in your exam.
