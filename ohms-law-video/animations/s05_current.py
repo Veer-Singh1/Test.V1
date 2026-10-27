@@ -53,7 +53,7 @@ class S05Current(Shot):
         # --- seg 1: I = Q / t, 1 A = 1 C/s
         eq = M(f"{ci()} = Q / t", 72, INK, BOLD).move_to([0, -1.75, 0])
         amp = M(f"1 ampere ({ci('A')}) = 1 C/s", 56, INK, BOLD).move_to([0, -1.75, 0])
-        self.at(1)
+        self.at(0, 0.72)
         self.sfx("click")
         self.play(per_sec.animate.shift(UP * 0.2), FadeIn(eq, shift=UP * 0.15), run_time=0.5)
         self.at(1, 0.38)

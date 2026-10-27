@@ -20,6 +20,7 @@ class S08Law(Shot):
         self.at(0, -0.2)
         self.play(FadeIn(head, shift=DOWN * 0.2), LaggedStart(*[FadeIn(w, shift=UP * 0.2) for w in words], lag_ratio=0.25),
                   run_time=0.9)
+        self.at(1, -0.05)  # hold the three words through "connects all three"
         self.sfx("click")
         self.play(ReplacementTransform(words, law), run_time=0.7)
 
