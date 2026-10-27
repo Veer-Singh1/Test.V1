@@ -24,12 +24,13 @@ class S12People(Shot):
             g = VGroup(*[VGroup(Dot(radius=0.08, color=colr), T(r, 28, INK)).arrange(RIGHT, buff=0.22) for r in rows])
             return g.arrange(DOWN, aligned_edge=LEFT, buff=0.3).next_to(anchor, DOWN, buff=0.4)
 
-        gi = items(["Jobs", "Roads and towns", "Billions of rands in foreign income"], GOOD, gt)
+        gi = items(["Jobs", "Roads and towns", "Billions of rands in", "foreign income"], GOOD, gt)
+        gi[3][0].set_opacity(0)
         bi = items(["Dangerous work", "Dust → lung diseases:", "silicosis, pneumoconiosis"], HARM, bt)
         bi[2][0].set_opacity(0)
         for k, frac in enumerate((0.05, 0.3, 0.55)):
             self.at(1, frac)
-            self.play(FadeIn(gi[k], shift=RIGHT * 0.1), run_time=0.4)
+            self.play(FadeIn(gi[k:k + 2] if k == 2 else gi[k], shift=RIGHT * 0.1), run_time=0.4)
         for k, frac in enumerate((0.05, 0.35, 0.55)):
             self.at(2, frac)
             self.play(FadeIn(bi[k], shift=RIGHT * 0.1), run_time=0.4)

@@ -39,7 +39,7 @@ class S04Map(Shot):
             self.play(LaggedStart(*[GrowFromCenter(mk) for mk in marks], lag_ratio=0.3), FadeIn(row, shift=LEFT * 0.15),
                       run_time=0.6)
             self.play(*[mk[1].animate.scale(1.6).set_stroke(opacity=0) for mk in marks], run_time=0.5)
-        gains = pill("Jobs · foreign income · raw materials", GOOD, 26).move_to([3.7, -1.95, 0])
+        gains = pill("Jobs · foreign income · raw materials", GOOD, 24).move_to([0, -1.95, 0]).align_to([6.8, 0, 0], RIGHT)
         self.at(5)
         self.play(FadeIn(gains, shift=UP * 0.12), run_time=0.5)
         self.finish()

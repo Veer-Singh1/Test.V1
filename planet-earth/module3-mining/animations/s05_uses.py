@@ -26,6 +26,9 @@ class S05Uses(Shot):
             disc = Circle(radius=0.22, fill_color=colr, fill_opacity=1, stroke_color=WHITE, stroke_width=2)
             title = VGroup(disc, T(name, 30, colr, BOLD)).arrange(RIGHT, buff=0.2).move_to(c.get_top() + DOWN * 0.45)
             body = VGroup(*[T(u, 22, INK) for u in uses]).arrange(DOWN, buff=0.08).next_to(title, DOWN, buff=0.3)
+            for m in (title, body):
+                if m.width > c.width - 0.4:
+                    m.scale_to_fit_width(c.width - 0.4)
             cards.append((text.index(key) / len(text), VGroup(c, title, body)))
         self.at(0, -0.25)
         self.play(FadeIn(head, shift=DOWN * 0.2), run_time=0.5)

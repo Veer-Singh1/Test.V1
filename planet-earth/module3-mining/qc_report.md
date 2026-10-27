@@ -1,6 +1,6 @@
 # QC report: final_video.mp4
 
-Length 7:56.9. 2 check(s) need attention.
+Length 7:56.9. 1 check(s) need attention.
 
 ## Format and sync
 - ✅ video 1920x1080 @ 30/1 fps, h264
@@ -13,8 +13,7 @@ Length 7:56.9. 2 check(s) need attention.
 - ✅ stretches of near-silence (< -50 dB for 2 s+): 0
 
 ## On-screen text
-- ❌ Manim text on screen for ≥ 2s: 1 exception(s)
-  - s03a 'ORE✓worthmining' 1.67s
+- ✅ Manim text on screen for ≥ 2s: 0 exception(s)
 - ✅ Manim text inside the frame: 0 exception(s)
 - ✅ Manim text clear of the subtitle area: 0 exception(s)
 - ✅ footage/photo labels ≥ 2s: 3 labels, shortest 3.35s

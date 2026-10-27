@@ -27,6 +27,8 @@ class S11Environment(Shot):
             c = card(3.3, 2.25, colr, stroke=3).move_to([-5.1 + 3.4 * k, 0.75, 0])
             t = T(name, 30, colr, BOLD).move_to(c.get_top() + DOWN * 0.35)
             b = VGroup(*[T(r, 22, INK) for r in rows]).arrange(DOWN, buff=0.06).next_to(t, DOWN, buff=0.18)
+            if b.width > c.width - 0.4:
+                b.scale_to_fit_width(c.width - 0.4)
             cards.append(VGroup(c, t, b))
         for k in range(4):
             self.at(2 + k)
@@ -42,6 +44,8 @@ class S11Environment(Shot):
             t = VGroup(*[T(x, 22, INK, SEMIBOLD) for x in s.split("\n")]).arrange(DOWN, buff=0.04)
             b = RoundedRectangle(corner_radius=0.12, width=2.3, height=0.95, fill_color=PANEL, fill_opacity=1,
                                  stroke_color=HARM if k == 4 else INK, stroke_width=3)
+            if t.width > b.width - 0.3:
+                t.scale_to_fit_width(b.width - 0.3)
             boxes.append(VGroup(b, t.move_to(b)).move_to([-5.35 + 2.675 * k, -1.45, 0]))
         arrows = [Arrow(a.get_right(), b.get_left(), buff=0.05, color=HARM, stroke_width=5,
                         max_tip_length_to_length_ratio=0.4) for a, b in zip(boxes, boxes[1:])]

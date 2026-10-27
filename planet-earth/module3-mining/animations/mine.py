@@ -17,6 +17,8 @@ def atom(sym, color, r=0.36, text_color=NAVY):
 
 def flow_box(text, color=PROC, w=5.6, size=26):
     t = VGroup(*[T(s, size, INK, MEDIUM) for s in text.split("\n")]).arrange(DOWN, buff=0.06)
+    if t.width > w - 0.4:
+        t.scale_to_fit_width(w - 0.4)
     box = RoundedRectangle(corner_radius=0.14, width=w, height=t.height + 0.32, fill_color=PANEL, fill_opacity=1,
                            stroke_color=color, stroke_width=3)
     return VGroup(box, t.move_to(box))
