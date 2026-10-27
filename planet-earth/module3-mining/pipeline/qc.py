@@ -67,7 +67,7 @@ def main():
         for t in json.loads(f.read_text()):
             dur = t["end"] - t["start"]
             name = t["text"][:40].replace("\n", " ")
-            if shot == "s11b" and re.fullmatch(r"[1-5]", t["text"]):
+            if re.fullmatch(r"[1-5]", t["text"]) and 0.95 <= dur < MIN_TEXT_SECONDS:
                 continue  # countdown digits change every second by design; the ring and cards stay up 5 s
             if dur < MIN_TEXT_SECONDS:
                 short.append(f"{shot} '{name}' {dur:.2f}s")
