@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veer Singh | Sharp Mind. Heavy Hands.</title>
+  <meta name="description" content="The personal website of Veer Singh: 15 years old, built on brains, discipline and knockout ambition." />
+
+  <!-- Tailwind CSS (CDN build: no install needed) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Extend Tailwind with the site's brand palette and fonts
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#07070a',
+            coal: '#111116',
+            steel: '#1b1b22',
+            gold: '#d6a84f',
+            goldlight: '#f3d48b',
+            crimson: '#c8102e',
+          },
+          fontFamily: {
+            display: ['Montserrat', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Google Fonts: Montserrat (power), Playfair Display (elegance), Inter (readability) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       BASE
+       ========================================================= */
+    :root {
+      --gold: #d6a84f;
+      --gold-light: #f3d48b;
+      --crimson: #c8102e;
+      --ink: #07070a;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--ink);
+      color: #f5f5f5;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    ::selection { background: var(--gold); color: #000; }
+
+    /* Gold gradient text */
+    .text-gold-grad {
+      background: linear-gradient(100deg, #b8862f 0%, var(--gold-light) 45%, #b8862f 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Subtle circuit-board grid used as a background texture */
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(214,168,79,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(214,168,79,0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Film-grain noise overlay for a premium, textured feel */
+    .noise::after {
+      content: '';
+      position: absolute; inset: 0;
+      pointer-events: none;
+      opacity: .06;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* =========================================================
+       SCROLL PROGRESS BAR (scroll animation #1)
+       ========================================================= */
+    #progress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+      transform-origin: 0 50%; transform: scaleX(0);
+      background: linear-gradient(90deg, var(--crimson), var(--gold));
+      z-index: 60;
+    }
+
+    /* =========================================================
+       NAVBAR: shrinks + blurs on scroll (scroll animation #2)
+       ========================================================= */
+    #nav { transition: padding .4s ease, background .4s ease, border-color .4s ease; }
+    #nav.scrolled {
+      padding-top: .6rem; padding-bottom: .6rem;
+      background: rgba(7,7,10,.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-color: rgba(214,168,79,.18);
+    }
+    .nav-link { position: relative; transition: color .3s; }
+    .nav-link::after {
+      content: ''; position: absolute; left: 0; bottom: -6px; height: 2px; width: 100%;
+      background: var(--gold); transform: scaleX(0); transform-origin: left;
+      transition: transform .35s ease;
+    }
+    .nav-link:hover, .nav-link.active { color: #fff; }
+    .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+
+    /* =========================================================
+       HERO MONOGRAM: glowing gold/crimson "VS"
+       ========================================================= */
+    .monogram {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      line-height: .8;
+      letter-spacing: -0.06em;
+      color: #15151b;
+      -webkit-text-stroke: 2px var(--gold);
+      text-shadow:
+        0 0 18px rgba(214,168,79,.45),
+        0 0 60px rgba(200,16,46,.35);
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0%,100% { filter: drop-shadow(0 0 6px rgba(214,168,79,.35)); }
+      50%     { filter: drop-shadow(0 0 22px rgba(200,16,46,.55)); }
+    }
+
+    /* Hero entrance: letters slam in on load */
+    span.slam { display: inline-block; } /* inline words need a box to transform; block elements keep their own display */
+    .slam { opacity: 0; transform: translateY(40px) scale(1.4); animation: slam .8s cubic-bezier(.2,1.4,.4,1) forwards; }
+    @keyframes slam { to { opacity: 1; transform: none; } }
+
+    /* Motion streak lines behind the hero (like a punch trail) */
+    .streak {
+      position: absolute; height: 2px; border-radius: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: .0; animation: streak 3.2s ease-in-out infinite;
+    }
+    @keyframes streak {
+      0%   { transform: translateX(-60vw) scaleX(.4); opacity: 0; }
+      30%  { opacity: .9; }
+      100% { transform: translateX(60vw) scaleX(1); opacity: 0; }
+    }
+
+    /* Scroll cue mouse */
+    .mouse { width: 24px; height: 38px; border: 2px solid rgba(255,255,255,.4); border-radius: 14px; position: relative; }
+    .mouse::after { content: ''; position: absolute; left: 50%; top: 7px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: var(--gold); animation: wheel 1.6s infinite; }
+    @keyframes wheel { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(12px); } }
+
+    /* =========================================================
+       REVEAL-ON-SCROLL VARIANTS (scroll animations #3–#7)
+       JS adds .in when the element enters the viewport.
+       data-delay="200" staggers elements (ms).
+       ========================================================= */
+    .reveal { transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1), clip-path 1.1s cubic-bezier(.7,0,.2,1), filter .9s ease; will-change: transform, opacity; }
+    .reveal-up    { opacity: 0; transform: translateY(60px); }
+    .reveal-left  { opacity: 0; transform: translateX(-80px); }
+    .reveal-right { opacity: 0; transform: translateX(80px); }
+    .reveal-zoom  { opacity: 0; transform: scale(.82); filter: blur(6px); }
+    .reveal-clip  { clip-path: inset(0 100% 0 0); }             /* curtain wipe */
+    .reveal-flip  { opacity: 0; transform: perspective(900px) rotateX(35deg) translateY(40px); transform-origin: top; }
+    .reveal.in    { opacity: 1; transform: none; filter: none; clip-path: inset(0 0 0 0); }
+    .reveal-clip.in { clip-path: inset(-40px); }                /* open past the edges so decorative frames show */
+
+    /* Section heading: animated underline that draws in */
+    .heading-bar { height: 3px; width: 0; background: linear-gradient(90deg, var(--crimson), var(--gold)); transition: width 1.1s cubic-bezier(.7,0,.2,1) .2s; }
+    .in .heading-bar, .heading-bar.in { width: 96px; }
+
+    /* =========================================================
+       SCROLL-DRIVEN MARQUEE (scroll animation #8)
+       ========================================================= */
+    .marquee-row { white-space: nowrap; will-change: transform; }
+    .outline-text { color: transparent; -webkit-text-stroke: 1.5px rgba(214,168,79,.55); }
+
+    /* =========================================================
+       CARDS
+       ========================================================= */
+    .card {
+      background: linear-gradient(160deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+      border: 1px solid rgba(255,255,255,.07);
+      transition: transform .5s cubic-bezier(.2,.7,.2,1), border-color .4s, box-shadow .4s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(214,168,79,.45);
+      box-shadow: 0 20px 50px -20px rgba(214,168,79,.35);
+    }
+
+    /* Tilt cards follow the mouse (JS sets --rx / --ry) */
+    .tilt { transform: perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)); transition: transform .25s ease-out; }
+
+    /* =========================================================
+       EMMA WATSON PORTRAIT
+       ========================================================= */
+    .portrait-frame { position: relative; }
+    .portrait-frame::before {
+      content: ''; position: absolute; inset: -14px; border: 1px solid rgba(243,212,139,.55);
+      transform: translate(18px, 18px); z-index: 0; transition: transform .6s ease;
+    }
+    .portrait-frame:hover::before { transform: translate(8px, 8px); }
+    .portrait-frame img { position: relative; z-index: 1; filter: grayscale(.25) contrast(1.05); transition: filter .6s ease; }
+    .portrait-frame:hover img { filter: grayscale(0) contrast(1.05); }
+
+    /* =========================================================
+       SKILL BARS: fill on scroll (scroll animation #9)
+       ========================================================= */
+    .bar-track { height: 8px; background: rgba(255,255,255,.07); border-radius: 99px; overflow: hidden; }
+    .bar-fill  { height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, var(--crimson), var(--gold)); transition: width 1.6s cubic-bezier(.2,.7,.2,1); box-shadow: 0 0 14px rgba(214,168,79,.5); }
+
+    /* =========================================================
+       TIMELINE: line draws as you scroll (scroll animation #10)
+       ========================================================= */
+    #timeline-line { transform-origin: top; transform: scaleY(0); }
+    .tl-dot { transition: background .4s, box-shadow .4s, transform .4s; }
+    .tl-dot.lit { background: var(--gold); box-shadow: 0 0 0 6px rgba(214,168,79,.18), 0 0 22px var(--gold); transform: scale(1.15); }
+
+    /* =========================================================
+       PUNCH METER (interactive)
+       ========================================================= */
+    #punch-btn { transition: transform .08s ease; }
+    #punch-btn:active { transform: scale(.92); }
+    .shake { animation: shake .25s; }
+    @keyframes shake { 0%,100%{transform:translate(0)} 25%{transform:translate(-6px,2px)} 50%{transform:translate(5px,-3px)} 75%{transform:translate(-3px,1px)} }
+    .pow {
+      position: absolute; pointer-events: none; font-family: 'Montserrat'; font-weight: 900;
+      color: var(--gold-light); text-shadow: 0 0 12px var(--crimson);
+      animation: pow .8s ease-out forwards;
+    }
+    @keyframes pow { 0% { opacity: 1; transform: translate(-50%,-50%) scale(.6) rotate(var(--r)); } 100% { opacity: 0; transform: translate(-50%,-160%) scale(1.4) rotate(var(--r)); } }
+
+    /* Form inputs */
+    .field {
+      width: 100%; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1);
+      border-radius: .75rem; padding: .9rem 1rem; color: #fff; outline: none; transition: border-color .3s, box-shadow .3s;
+    }
+    .field:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(214,168,79,.15); }
+
+    /* Shimmering gold button */
+    .btn-gold {
+      position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #2a2116, #120e09);
+      border: 1px solid rgba(214,168,79,.65);
+      box-shadow: 0 0 0 0 rgba(214,168,79,.0), inset 0 0 20px rgba(214,168,79,.12);
+      transition: box-shadow .35s, transform .35s;
+    }
+    .btn-gold:hover { box-shadow: 0 0 30px -4px rgba(214,168,79,.6), inset 0 0 20px rgba(214,168,79,.2); transform: translateY(-2px); }
+    .btn-gold::before {
+      content: ''; position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
+      background: linear-gradient(110deg, transparent, rgba(255,255,255,.25), transparent);
+      transition: left .7s ease;
+    }
+    .btn-gold:hover::before { left: 130%; }
+
+    /* Accessibility: honour reduced-motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; clip-path: none !important; filter: none !important; }
+      .slam { opacity: 1; transform: none; }
+      .bar-fill { width: var(--w) !important; }
+      #timeline-line { transform: scaleY(1) !important; }
+    }
+  </style>
+</head>
+
+<body class="font-body antialiased">
+
+  <!-- Scroll progress bar -->
+  <div id="progress" aria-hidden="true"></div>
+
+  <!-- =========================================================
+       NAVIGATION
+       ========================================================= -->
+  <header id="nav" class="fixed top-0 inset-x-0 z-50 py-5 border-b border-transparent">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-2 group" aria-label="Veer Singh home">
+        <span class="font-display font-black text-2xl text-gold-grad tracking-tighter group-hover:scale-110 transition-transform">VS</span>
+        <span class="font-display font-bold tracking-[0.25em] text-sm hidden sm:inline">VEER&nbsp;SINGH</span>
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="hidden md:flex items-center gap-8 text-xs font-display font-semibold tracking-[0.2em] text-white/60">
+        <li><a class="nav-link" href="#home">HOME</a></li>
+        <li><a class="nav-link" href="#about">ABOUT</a></li>
+        <li><a class="nav-link" href="#inspiration">HALL OF FAME</a></li>
+        <li><a class="nav-link" href="#skills">SKILLS</a></li>
+        <li><a class="nav-link" href="#connect">CONNECT</a></li>
+      </ul>
+
+      <!-- Mobile menu toggle -->
+      <button id="menu-btn" class="md:hidden w-10 h-10 grid place-items-center rounded-lg border border-white/10" aria-label="Open menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+      </button>
+    </nav>
+
+    <!-- Mobile dropdown -->
+    <div id="mobile-menu" class="md:hidden hidden mx-4 mt-3 rounded-2xl bg-coal/95 backdrop-blur border border-white/10">
+      <ul class="flex flex-col p-4 gap-1 font-display font-semibold tracking-[0.2em] text-sm">
+        <li><a class="block px-3 py-3 rounded-lg hover:bg-white/5" href="#home">HOME</a></li>
+        <li><a class="block px-3 py-3 rounded-lg hover:bg-white/5" href="#about">ABOUT</a></li>
+        <li><a class="block px-3 py-3 rounded-lg hover:bg-white/5" href="#inspiration">HALL OF FAME</a></li>
+        <li><a class="block px-3 py-3 rounded-lg hover:bg-white/5" href="#skills">SKILLS</a></li>
+        <li><a class="block px-3 py-3 rounded-lg hover:bg-white/5" href="#connect">CONNECT</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <!-- =========================================================
+         1. HERO
+         ========================================================= -->
+    <section id="home" class="relative min-h-[100svh] flex items-center justify-center overflow-hidden noise">
+      <!-- Background layers (parallax via data-speed) -->
+      <div class="absolute inset-0 grid-bg" data-speed="0.15" aria-hidden="true"></div>
+      <div class="absolute -top-40 -left-40 w-[520px] h-[520px] rounded-full bg-crimson/25 blur-[120px]" data-speed="0.35" aria-hidden="true"></div>
+      <div class="absolute -bottom-40 -right-40 w-[560px] h-[560px] rounded-full bg-gold/20 blur-[130px]" data-speed="0.25" aria-hidden="true"></div>
+      <canvas id="sparks" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
+
+      <!-- Punch-trail streaks -->
+      <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <span class="streak" style="top:32%; left:50%; width:40vw; animation-delay:.2s"></span>
+        <span class="streak" style="top:58%; left:50%; width:30vw; animation-delay:1.4s"></span>
+        <span class="streak" style="top:72%; left:50%; width:50vw; animation-delay:2.3s"></span>
+      </div>
+
+      <div class="relative z-10 text-center px-4 pt-24 pb-16">
+        <p class="font-display font-bold tracking-[0.5em] text-xs sm:text-sm text-white/70 mb-6">
+          <span class="slam" style="animation-delay:.1s">BRAINS</span>
+          <span class="text-crimson mx-2 slam" style="animation-delay:.25s">×</span>
+          <span class="slam" style="animation-delay:.4s">BRAWN</span>
+        </p>
+
+        <!-- Giant monogram (moves at its own scroll speed) -->
+        <div id="hero-mono" data-speed="-0.2" class="select-none">
+          <h1 class="sr-only">Veer Singh</h1>
+          <div class="monogram text-[38vw] sm:text-[28vw] lg:text-[20rem]" aria-hidden="true">
+            <span class="slam" style="animation-delay:.5s">V</span><span class="slam" style="animation-delay:.65s">S</span>
+          </div>
+        </div>
+
+        <p class="font-display font-black text-4xl sm:text-6xl lg:text-7xl tracking-tight -mt-2 sm:-mt-6">
+          <span class="slam" style="animation-delay:.9s">VEER</span>
+          <span class="slam text-gold-grad" style="animation-delay:1.05s">SINGH</span>
+        </p>
+
+        <p class="mt-5 font-display font-semibold tracking-[0.3em] text-[11px] sm:text-sm text-white/70 slam" style="animation-delay:1.3s">
+          SHARP MIND. HEAVY HANDS. UNBREAKABLE WILL.
+        </p>
+
+        <!-- Typewriter line: rotates through identities -->
+        <p class="mt-6 text-lg sm:text-xl text-white/80 h-8 slam" style="animation-delay:1.5s">
+          15 years old. <span id="typed" class="text-goldlight font-semibold"></span><span class="animate-pulse text-gold">|</span>
+        </p>
+
+        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center slam" style="animation-delay:1.7s">
+          <a href="#about" class="btn-gold rounded-xl px-8 py-4 font-display font-bold tracking-widest text-sm">
+            ENTER THE RING <span aria-hidden="true">→</span>
+          </a>
+          <a href="#connect" class="rounded-xl px-8 py-4 font-display font-bold tracking-widest text-sm border border-white/15 hover:border-crimson hover:text-white text-white/80 transition">
+            CONNECT
+          </a>
+        </div>
+      </div>
+
+      <a href="#about" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[10px] tracking-[0.4em] text-white/40" aria-label="Scroll down">
+        <span class="mouse"></span>
+        SCROLL
+      </a>
+    </section>
+
+    <!-- =========================================================
+         SCROLL-DRIVEN MARQUEE (moves with scroll, opposite directions)
+         ========================================================= -->
+    <section class="py-10 border-y border-white/5 overflow-hidden bg-coal" aria-hidden="true">
+      <div class="marquee-row font-display font-black text-5xl sm:text-7xl" data-marquee="-1">
+        DISCIPLINE <span class="text-crimson">•</span> <span class="outline-text">INTELLECT</span> <span class="text-crimson">•</span> POWER <span class="text-crimson">•</span> <span class="outline-text">FOCUS</span> <span class="text-crimson">•</span>
+        DISCIPLINE <span class="text-crimson">•</span> <span class="outline-text">INTELLECT</span> <span class="text-crimson">•</span> POWER <span class="text-crimson">•</span> <span class="outline-text">FOCUS</span> <span class="text-crimson">•</span>
+      </div>
+      <div class="marquee-row font-display font-black text-5xl sm:text-7xl mt-2" data-marquee="1" style="transform:translateX(-40%)">
+        <span class="outline-text">AMBITION</span> <span class="text-gold">•</span> GRIT <span class="text-gold">•</span> <span class="outline-text">CLASS</span> <span class="text-gold">•</span> HUNGER <span class="text-gold">•</span>
+        <span class="outline-text">AMBITION</span> <span class="text-gold">•</span> GRIT <span class="text-gold">•</span> <span class="outline-text">CLASS</span> <span class="text-gold">•</span> HUNGER <span class="text-gold">•</span>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         2. ABOUT / BIO
+         ========================================================= -->
+    <section id="about" class="relative py-24 sm:py-32 px-4 sm:px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="reveal reveal-up mb-14">
+          <p class="font-display tracking-[0.4em] text-xs text-gold mb-3">01 — THE FIGHTER'S FILE</p>
+          <h2 class="font-display font-black text-4xl sm:text-6xl leading-tight">BRAINS <span class="text-white/30">&amp;</span> <span class="text-gold-grad">BRAWN</span></h2>
+          <div class="heading-bar mt-5"></div>
+        </div>
+
+        <div class="grid lg:grid-cols-5 gap-10 items-start">
+          <!-- Bio text -->
+          <div class="lg:col-span-3 space-y-6 text-lg text-white/75 leading-relaxed">
+            <p class="reveal reveal-left">
+              I'm <strong class="text-white">Veer Singh</strong>: fifteen, restless, and allergic to average.
+              I believe the sharpest people in the room should also be the hardest to knock down,
+              so I train both: the mind in the books, the body in the gym.
+            </p>
+            <p class="reveal reveal-left" data-delay="150">
+              In the classroom I'm the one asking <em class="text-goldlight not-italic">"but why?"</em>
+              until the answer actually makes sense. Right now that curiosity is pointed at
+              <strong class="text-white">Python, quantitative finance and crypto markets</strong>:
+              turning numbers into decisions.
+            </p>
+            <p class="reveal reveal-left" data-delay="300">
+              Outside it, I'm a student of combat sports. MMA taught me that talent opens the door,
+              but <strong class="text-white">discipline</strong> is what keeps you standing in the
+              championship rounds. Same rule applies to everything else.
+            </p>
+          </div>
+
+          <!-- Brains vs Brawn split card -->
+          <div class="lg:col-span-2 grid grid-cols-2 gap-4">
+            <div class="card tilt rounded-2xl p-6 reveal reveal-zoom" data-delay="100">
+              <div class="text-3xl mb-3" aria-hidden="true">🧠</div>
+              <h3 class="font-display font-bold tracking-widest text-sm text-gold mb-2">THE MIND</h3>
+              <p class="text-sm text-white/65">Analytical, curious, fast learner. Strategy over impulse.</p>
+            </div>
+            <div class="card tilt rounded-2xl p-6 reveal reveal-zoom" data-delay="250">
+              <div class="text-3xl mb-3" aria-hidden="true">🥊</div>
+              <h3 class="font-display font-bold tracking-widest text-sm text-crimson mb-2">THE BODY</h3>
+              <p class="text-sm text-white/65">Strength training, conditioning and fight-ready fitness.</p>
+            </div>
+            <div class="card tilt rounded-2xl p-6 col-span-2 reveal reveal-flip" data-delay="400">
+              <p class="font-serif italic text-xl text-white/90 leading-snug">
+                "Train the brain like a muscle. Train the muscle like it has a brain."
+              </p>
+              <p class="mt-3 font-display text-xs tracking-[0.3em] text-gold">VEER'S RULE #1</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         3. INSPIRATION WALL / HALL OF FAME
+         ========================================================= -->
+    <section id="inspiration" class="relative py-24 sm:py-32 px-4 sm:px-6 bg-coal overflow-hidden noise">
+      <div class="absolute inset-0 grid-bg opacity-60" aria-hidden="true"></div>
+
+      <div class="relative max-w-7xl mx-auto">
+        <div class="text-center mb-16 reveal reveal-up">
+          <p class="font-display tracking-[0.4em] text-xs text-gold mb-3">02 — HALL OF FAME</p>
+          <h2 class="font-display font-black text-4xl sm:text-6xl">THE INSPIRATION WALL</h2>
+          <div class="heading-bar mt-5 mx-auto"></div>
+          <p class="mt-6 text-white/60 max-w-2xl mx-auto">Two very different legends. One shared lesson: become undeniable.</p>
+        </div>
+
+        <!-- ---------- MIKE TYSON & MMA ---------- -->
+        <article class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-28">
+          <div class="relative reveal reveal-left">
+            <!-- Typographic "poster" tribute: bold, no photo needed -->
+            <div class="relative aspect-[4/5] rounded-3xl overflow-hidden border border-crimson/30 bg-gradient-to-br from-[#1a0508] via-ink to-black">
+              <div class="absolute inset-0 grid-bg" aria-hidden="true"></div>
+              <div class="absolute -right-24 -top-24 w-80 h-80 bg-crimson/40 blur-[90px] rounded-full" aria-hidden="true"></div>
+              <div class="absolute inset-0 flex flex-col justify-between p-8 sm:p-10">
+                <span class="font-display text-xs tracking-[0.4em] text-crimson">IRON MIKE</span>
+                <div>
+                  <p class="font-display font-black leading-[.85] text-[18vw] sm:text-[8rem] lg:text-[7.5rem] text-white">KNOCK<br><span class="outline-text">OUT</span><br><span class="text-crimson">POWER</span></p>
+                </div>
+                <div class="flex items-center justify-between font-display text-xs tracking-[0.3em] text-white/50">
+                  <span>YOUNGEST HEAVYWEIGHT CHAMP</span>
+                  <span class="text-gold">AGE 20</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <h3 class="font-display font-black text-3xl sm:text-5xl reveal reveal-right">MIKE TYSON <span class="text-crimson">&amp;</span> MMA</h3>
+            <p class="text-white/70 text-lg leading-relaxed reveal reveal-right" data-delay="100">
+              Tyson made himself the youngest heavyweight champion in history through relentless,
+              obsessive discipline. Elite MMA fighters take that same mentality and add a chess game
+              of striking, wrestling and grappling. That's the blueprint: power with a plan.
+            </p>
+            <blockquote class="border-l-4 border-crimson pl-5 reveal reveal-clip" data-delay="200">
+              <p class="font-display font-bold text-xl sm:text-2xl leading-snug">"Everybody has a plan until they get punched in the mouth."</p>
+              <cite class="block mt-2 text-sm not-italic tracking-widest text-white/50">MIKE TYSON</cite>
+            </blockquote>
+            <div class="grid grid-cols-3 gap-3 pt-2">
+              <div class="card rounded-xl p-4 text-center reveal reveal-up" data-delay="250"><p class="font-display font-black text-crimson text-xl">GRIT</p><p class="text-xs text-white/50 mt-1">Never quit mid-round</p></div>
+              <div class="card rounded-xl p-4 text-center reveal reveal-up" data-delay="350"><p class="font-display font-black text-crimson text-xl">DISCIPLINE</p><p class="text-xs text-white/50 mt-1">Show up daily</p></div>
+              <div class="card rounded-xl p-4 text-center reveal reveal-up" data-delay="450"><p class="font-display font-black text-crimson text-xl">MINDSET</p><p class="text-xs text-white/50 mt-1">Fear is fuel</p></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ---------- EMMA WATSON ---------- -->
+        <article class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div class="space-y-6 order-2 lg:order-1">
+            <h3 class="font-serif text-4xl sm:text-5xl reveal reveal-left">Emma <em class="text-gold-grad">Watson</em></h3>
+            <p class="text-white/70 text-lg leading-relaxed reveal reveal-left" data-delay="100">
+              Actor, Brown University graduate, UN Women Goodwill Ambassador and founder of the
+              feminist book club <em>Our Shared Shelf</em>. Emma proves that intelligence is
+              elegant, that conviction can be quiet, and that real class is using your platform for something bigger
+              than yourself.
+            </p>
+            <blockquote class="border-l-4 border-gold pl-5 reveal reveal-clip" data-delay="200">
+              <p class="font-serif italic text-2xl sm:text-3xl leading-snug text-white/90">"If not me, who? If not now, when?"</p>
+              <cite class="block mt-2 text-sm not-italic tracking-widest text-white/50">EMMA WATSON · HeForShe, UN 2014</cite>
+            </blockquote>
+            <div class="flex flex-wrap gap-3 pt-2">
+              <span class="reveal reveal-up rounded-full border border-gold/40 px-4 py-2 text-sm text-goldlight" data-delay="250">Sharp Intellect</span>
+              <span class="reveal reveal-up rounded-full border border-gold/40 px-4 py-2 text-sm text-goldlight" data-delay="330">Grace</span>
+              <span class="reveal reveal-up rounded-full border border-gold/40 px-4 py-2 text-sm text-goldlight" data-delay="410">Activism</span>
+              <span class="reveal reveal-up rounded-full border border-gold/40 px-4 py-2 text-sm text-goldlight" data-delay="490">Timeless Class</span>
+            </div>
+          </div>
+
+          <!-- Photo: curtain-wipe reveal + slow scroll zoom -->
+          <div class="order-1 lg:order-2 flex justify-center">
+            <figure class="portrait-frame w-full max-w-sm reveal reveal-clip">
+              <div class="overflow-hidden rounded-sm">
+                <img id="emma-img" src="assets/emma-watson.jpg" alt="Emma Watson smiling at a red-carpet event in a navy gown"
+                     class="w-full h-auto block" loading="lazy" width="416" height="594" />
+              </div>
+              <figcaption class="relative z-[1] mt-4 text-center font-serif italic text-white/50 text-sm">Grace under the spotlight.</figcaption>
+            </figure>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         STAT COUNTERS (count up when scrolled into view)
+         EDIT ME: replace the data-target numbers with Veer's real stats.
+         ========================================================= -->
+    <section class="py-20 px-4 sm:px-6 border-b border-white/5">
+      <div class="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="card rounded-2xl p-6 sm:p-8 text-center reveal reveal-zoom">
+          <p class="font-display font-black text-4xl sm:text-6xl text-gold-grad"><span class="counter" data-target="15">0</span></p>
+          <p class="mt-2 text-xs tracking-[0.3em] text-white/50 font-display">YEARS OLD</p>
+        </div>
+        <div class="card rounded-2xl p-6 sm:p-8 text-center reveal reveal-zoom" data-delay="120">
+          <p class="font-display font-black text-4xl sm:text-6xl text-gold-grad"><span class="counter" data-target="500">0</span>+</p>
+          <p class="mt-2 text-xs tracking-[0.3em] text-white/50 font-display">ROUNDS TRAINED</p>
+        </div>
+        <div class="card rounded-2xl p-6 sm:p-8 text-center reveal reveal-zoom" data-delay="240">
+          <p class="font-display font-black text-4xl sm:text-6xl text-gold-grad"><span class="counter" data-target="40">0</span>+</p>
+          <p class="mt-2 text-xs tracking-[0.3em] text-white/50 font-display">BOOKS READ</p>
+        </div>
+        <div class="card rounded-2xl p-6 sm:p-8 text-center reveal reveal-zoom" data-delay="360">
+          <p class="font-display font-black text-4xl sm:text-6xl text-gold-grad"><span class="counter" data-target="100">0</span>%</p>
+          <p class="mt-2 text-xs tracking-[0.3em] text-white/50 font-display">EFFORT</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         4. SKILLS & AMBITIONS
+         ========================================================= -->
+    <section id="skills" class="relative py-24 sm:py-32 px-4 sm:px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="reveal reveal-up mb-14">
+          <p class="font-display tracking-[0.4em] text-xs text-gold mb-3">03 — THE ARSENAL</p>
+          <h2 class="font-display font-black text-4xl sm:text-6xl">SKILLS <span class="text-white/30">&amp;</span> <span class="text-gold-grad">AMBITIONS</span></h2>
+          <div class="heading-bar mt-5"></div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-16">
+          <!-- Skill bars (EDIT ME: adjust data-w percentages) -->
+          <div class="space-y-7">
+            <h3 class="font-display font-bold tracking-[0.3em] text-sm text-white/60 reveal reveal-left">SKILL METER</h3>
+            <div class="reveal reveal-left" data-delay="50">
+              <div class="flex justify-between mb-2 font-display text-sm font-semibold"><span>Critical Thinking</span><span class="text-gold">95%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="95"></div></div>
+            </div>
+            <div class="reveal reveal-left" data-delay="120">
+              <div class="flex justify-between mb-2 font-display text-sm font-semibold"><span>Math &amp; Problem Solving</span><span class="text-gold">90%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="90"></div></div>
+            </div>
+            <div class="reveal reveal-left" data-delay="190">
+              <div class="flex justify-between mb-2 font-display text-sm font-semibold"><span>Strength &amp; Conditioning</span><span class="text-gold">88%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="88"></div></div>
+            </div>
+            <div class="reveal reveal-left" data-delay="260">
+              <div class="flex justify-between mb-2 font-display text-sm font-semibold"><span>Striking Technique</span><span class="text-gold">80%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
+            </div>
+            <div class="reveal reveal-left" data-delay="330">
+              <div class="flex justify-between mb-2 font-display text-sm font-semibold"><span>Python &amp; Quant Finance</span><span class="text-gold">70%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="70"></div></div>
+            </div>
+            <div class="reveal reveal-left" data-delay="400">
+              <div class="flex justify-between mb-2 font-display text-sm font-semibold"><span>Discipline</span><span class="text-gold">100%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="100"></div></div>
+            </div>
+          </div>
+
+          <!-- Ambitions timeline: the gold line draws as you scroll -->
+          <div>
+            <h3 class="font-display font-bold tracking-[0.3em] text-sm text-white/60 mb-8 reveal reveal-right">THE ROAD AHEAD</h3>
+            <div id="timeline" class="relative pl-10">
+              <div class="absolute left-[11px] top-2 bottom-2 w-[2px] bg-white/10" aria-hidden="true"></div>
+              <div id="timeline-line" class="absolute left-[11px] top-2 bottom-2 w-[2px] bg-gradient-to-b from-crimson to-gold" aria-hidden="true"></div>
+
+              <div class="tl-item relative mb-10 reveal reveal-right">
+                <span class="tl-dot absolute -left-10 top-1 w-6 h-6 rounded-full border-2 border-gold bg-ink"></span>
+                <p class="font-display text-xs tracking-[0.3em] text-gold">NOW</p>
+                <h4 class="font-display font-bold text-xl mt-1">Dominate the Fundamentals</h4>
+                <p class="text-white/60 mt-1">Top grades, daily training, and coding projects that compound every week.</p>
+              </div>
+              <div class="tl-item relative mb-10 reveal reveal-right" data-delay="100">
+                <span class="tl-dot absolute -left-10 top-1 w-6 h-6 rounded-full border-2 border-gold bg-ink"></span>
+                <p class="font-display text-xs tracking-[0.3em] text-gold">NEXT</p>
+                <h4 class="font-display font-bold text-xl mt-1">Compete &amp; Build</h4>
+                <p class="text-white/60 mt-1">Step into amateur competition and ship real quant-finance tools.</p>
+              </div>
+              <div class="tl-item relative mb-10 reveal reveal-right" data-delay="200">
+                <span class="tl-dot absolute -left-10 top-1 w-6 h-6 rounded-full border-2 border-gold bg-ink"></span>
+                <p class="font-display text-xs tracking-[0.3em] text-gold">UNIVERSITY</p>
+                <h4 class="font-display font-bold text-xl mt-1">A World-Class Education</h4>
+                <p class="text-white/60 mt-1">Aim for a top university in mathematics, economics or computer science.</p>
+              </div>
+              <div class="tl-item relative reveal reveal-right" data-delay="300">
+                <span class="tl-dot absolute -left-10 top-1 w-6 h-6 rounded-full border-2 border-gold bg-ink"></span>
+                <p class="font-display text-xs tracking-[0.3em] text-crimson">THE TITLE SHOT</p>
+                <h4 class="font-display font-bold text-xl mt-1">Build Something Undeniable</h4>
+                <p class="text-white/60 mt-1">Lead, create and make an impact, with the work ethic of a champion.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         5. INTERACTIVE: PUNCH METER + CONNECT
+         ========================================================= -->
+    <section id="connect" class="relative py-24 sm:py-32 px-4 sm:px-6 bg-coal overflow-hidden noise">
+      <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-crimson/20 blur-[140px] rounded-full" aria-hidden="true"></div>
+
+      <div class="relative max-w-6xl mx-auto">
+        <div class="text-center mb-16 reveal reveal-up">
+          <p class="font-display tracking-[0.4em] text-xs text-gold mb-3">04 — STEP INTO THE RING</p>
+          <h2 class="font-display font-black text-4xl sm:text-6xl">CONNECT WITH <span class="text-gold-grad">VEER</span></h2>
+          <div class="heading-bar mt-5 mx-auto"></div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-8">
+          <!-- Punch meter mini-game -->
+          <div class="card rounded-3xl p-8 text-center reveal reveal-left">
+            <h3 class="font-display font-bold tracking-[0.3em] text-sm text-white/60">THE PUNCH METER</h3>
+            <p class="text-white/50 text-sm mt-2">Land as many hits as you can in 10 seconds. Click, tap, or press <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-xs">Space</kbd>.</p>
+
+            <div class="relative my-8 flex justify-center">
+              <button id="punch-btn" class="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full font-display font-black text-2xl tracking-widest
+                       bg-gradient-to-br from-crimson to-[#6d0717] shadow-[0_0_60px_-10px_rgba(200,16,46,.8)] border-4 border-gold/60" aria-label="Punch">
+                PUNCH
+              </button>
+              <div id="pow-layer" class="absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 font-display">
+              <div class="rounded-xl bg-black/30 p-3"><p class="text-3xl font-black text-goldlight" id="hits">0</p><p class="text-[10px] tracking-[0.3em] text-white/40">HITS</p></div>
+              <div class="rounded-xl bg-black/30 p-3"><p class="text-3xl font-black" id="timer">10.0</p><p class="text-[10px] tracking-[0.3em] text-white/40">SECONDS</p></div>
+              <div class="rounded-xl bg-black/30 p-3"><p class="text-3xl font-black text-crimson" id="best">0</p><p class="text-[10px] tracking-[0.3em] text-white/40">BEST</p></div>
+            </div>
+            <p id="rank" class="mt-5 font-display tracking-[0.2em] text-sm text-gold h-5" aria-live="polite"></p>
+          </div>
+
+          <!-- Contact form (front-end only; see README to wire it up) -->
+          <form id="contact-form" class="card rounded-3xl p-8 space-y-4 reveal reveal-right" data-delay="150" novalidate>
+            <h3 class="font-display font-bold tracking-[0.3em] text-sm text-white/60 mb-2">SEND A MESSAGE</h3>
+            <div>
+              <label for="name" class="sr-only">Name</label>
+              <input id="name" name="name" class="field" placeholder="Your name" required />
+            </div>
+            <div>
+              <label for="email" class="sr-only">Email</label>
+              <input id="email" name="email" type="email" class="field" placeholder="Your email" required />
+            </div>
+            <div>
+              <label for="msg" class="sr-only">Message</label>
+              <textarea id="msg" name="message" rows="5" class="field resize-none" placeholder="Talk training, books, tech or big ideas…" required></textarea>
+            </div>
+            <button type="submit" class="btn-gold w-full rounded-xl py-4 font-display font-bold tracking-[0.25em] text-sm">
+              SEND IT <span aria-hidden="true">→</span>
+            </button>
+            <p id="form-status" class="text-sm text-center h-5" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+  <footer class="py-12 px-4 text-center border-t border-white/5">
+    <p class="font-display font-black text-3xl text-gold-grad reveal reveal-zoom">VS</p>
+    <p class="mt-3 font-display tracking-[0.35em] text-xs text-white/40">SHARP MIND · HEAVY HANDS · UNBREAKABLE WILL</p>
+    <p class="mt-4 text-xs text-white/30">© <span id="year"></span> Veer Singh. Built with discipline.</p>
+  </footer>
+
+  <!-- Toast notification -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 transition-all duration-500 z-50
+       rounded-xl bg-coal border border-gold/50 px-6 py-3 font-display text-sm tracking-widest" role="status"></div>
+
+  <script>
+    /* =========================================================
+       HELPERS
+       ========================================================= */
+    const $  = (s, c = document) => c.querySelector(s);
+    const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    $('#year').textContent = new Date().getFullYear();
+
+    /* =========================================================
+       MOBILE MENU
+       ========================================================= */
+    const menuBtn = $('#menu-btn'), mobileMenu = $('#mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('hidden') === false;
+      menuBtn.setAttribute('aria-expanded', open);
+    });
+    $$('#mobile-menu a').forEach(a => a.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }));
+
+    /* =========================================================
+       TYPEWRITER (hero)
+       ========================================================= */
+    (function typewriter() {
+      const words = ['Exceptionally smart.', 'Built strong.', 'Fight-ready.', 'Future quant.', 'Unstoppable.'];
+      const el = $('#typed');
+      let w = 0, i = 0, deleting = false;
+      function tick() {
+        const word = words[w];
+        el.textContent = word.slice(0, i);
+        if (!deleting && i === word.length) { deleting = true; return setTimeout(tick, 1600); }
+        if (deleting && i === 0) { deleting = false; w = (w + 1) % words.length; }
+        i += deleting ? -1 : 1;
+        setTimeout(tick, deleting ? 40 : 85);
+      }
+      setTimeout(tick, 1800);
+    })();
+
+    /* =========================================================
+       REVEAL ON SCROLL (IntersectionObserver)
+       Adds .in to .reveal elements, honouring data-delay for stagger.
+       Also triggers skill bars, counters and heading bars.
+       ========================================================= */
+    // A fully clipped element never counts as "visible", so clip reveals
+    // are triggered by their parent instead (trigger -> elements to reveal).
+    const revealTargets = new Map();
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        revealTargets.get(entry.target).forEach(el => {
+          const delay = +el.dataset.delay || 0;
+          setTimeout(() => {
+            el.classList.add('in');
+            // Fill any skill bars inside this element
+            $$('.bar-fill', el).forEach(bar => bar.style.width = bar.dataset.w + '%');
+          }, delay);
+        });
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    $$('.reveal').forEach(el => {
+      const trigger = el.classList.contains('reveal-clip') ? el.parentElement : el;
+      if (!revealTargets.has(trigger)) { revealTargets.set(trigger, []); revealObserver.observe(trigger); }
+      revealTargets.get(trigger).push(el);
+    });
+
+    /* =========================================================
+       COUNT-UP STATS (ease-out when visible)
+       ========================================================= */
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target, target = +el.dataset.target;
+        const duration = reduceMotion ? 0 : 1800, start = performance.now();
+        (function step(now) {
+          const p = duration ? Math.min((now - start) / duration, 1) : 1;
+          el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(step);
+        })(start);
+        counterObserver.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    $$('.counter').forEach(c => counterObserver.observe(c));
+
+    /* =========================================================
+       SCROLL-LINKED EFFECTS (one rAF-throttled handler):
+       progress bar, navbar state, parallax, marquee,
+       Emma portrait zoom, timeline line draw, active nav link.
+       ========================================================= */
+    const progress = $('#progress'), nav = $('#nav');
+    const parallaxEls = $$('[data-speed]');
+    const marquees = $$('[data-marquee]');
+    const emmaImg = $('#emma-img');
+    const timeline = $('#timeline'), tlLine = $('#timeline-line'), tlDots = $$('.tl-dot');
+    const sections = $$('main section[id]');
+    const navLinks = $$('.nav-link');
+    let ticking = false;
+
+    function onScroll() {
+      const y = window.scrollY, vh = window.innerHeight;
+      const docH = document.documentElement.scrollHeight - vh;
+
+      // 1. Progress bar
+      progress.style.transform = `scaleX(${docH > 0 ? y / docH : 0})`;
+
+      // 2. Navbar shrink/blur
+      nav.classList.toggle('scrolled', y > 40);
+
+      if (!reduceMotion) {
+        // 3. Parallax layers: each moves at its own data-speed
+        parallaxEls.forEach(el => {
+          const speed = parseFloat(el.dataset.speed);
+          el.style.transform = `translate3d(0, ${y * speed}px, 0)`;
+        });
+
+        // 4. Marquee rows slide horizontally with scroll (opposite directions)
+        marquees.forEach(row => {
+          const dir = +row.dataset.marquee;
+          const rect = row.getBoundingClientRect();
+          const offset = (vh - rect.top) * 0.6 * dir;
+          row.style.transform = `translate3d(${(dir > 0 ? -40 : 0)}%, 0, 0) translateX(${offset}px)`;
+        });
+
+        // 5. Emma portrait: gentle zoom-out as it passes through the viewport
+        if (emmaImg) {
+          const r = emmaImg.getBoundingClientRect();
+          const p = Math.min(Math.max(1 - (r.top + r.height / 2) / (vh + r.height / 2), 0), 1);
+          emmaImg.style.transform = `scale(${1.18 - p * 0.18})`;
+        }
+      }
+
+      // 6. Timeline: line height follows scroll, dots light up as the line passes them
+      if (timeline) {
+        const r = timeline.getBoundingClientRect();
+        const p = Math.min(Math.max((vh * 0.65 - r.top) / r.height, 0), 1);
+        tlLine.style.transform = `scaleY(${reduceMotion ? 1 : p})`;
+        tlDots.forEach(dot => {
+          const dr = dot.getBoundingClientRect();
+          dot.classList.toggle('lit', dr.top < vh * 0.65);
+        });
+      }
+
+      // 7. Highlight the nav link for the section currently in view
+      let current = sections[0].id;
+      sections.forEach(s => { if (s.getBoundingClientRect().top < vh * 0.4) current = s.id; });
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(onScroll); ticking = true; } }, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
+
+    /* =========================================================
+       3D TILT CARDS (desktop pointer only)
+       ========================================================= */
+    if (window.matchMedia('(hover: hover)').matches && !reduceMotion) {
+      $$('.tilt').forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5;
+          const y = (e.clientY - r.top) / r.height - 0.5;
+          card.style.setProperty('--ry', `${x * 10}deg`);
+          card.style.setProperty('--rx', `${-y * 10}deg`);
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.setProperty('--rx', '0deg');
+          card.style.setProperty('--ry', '0deg');
+        });
+      });
+    }
+
+    /* =========================================================
+       HERO SPARKS (lightweight canvas particle field)
+       ========================================================= */
+    (function sparks() {
+      if (reduceMotion) return;
+      const canvas = $('#sparks'), ctx = canvas.getContext('2d');
+      let w, h, particles = [];
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      function resize() {
+        w = canvas.clientWidth; h = canvas.clientHeight;
+        canvas.width = w * dpr; canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const count = Math.min(Math.floor(w / 18), 80);
+        particles = Array.from({ length: count }, () => ({
+          x: Math.random() * w, y: Math.random() * h,
+          r: Math.random() * 1.6 + .3,
+          vy: -(Math.random() * .4 + .1), vx: (Math.random() - .5) * .2,
+          a: Math.random() * .6 + .2,
+          c: Math.random() > .75 ? '200,16,46' : '214,168,79',
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        particles.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.y < -5) { p.y = h + 5; p.x = Math.random() * w; }
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${p.c},${p.a})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      window.addEventListener('resize', resize);
+      resize(); draw();
+    })();
+
+    /* =========================================================
+       PUNCH METER MINI-GAME
+       ========================================================= */
+    (function punchMeter() {
+      const btn = $('#punch-btn'), layer = $('#pow-layer');
+      const hitsEl = $('#hits'), timerEl = $('#timer'), bestEl = $('#best'), rankEl = $('#rank');
+      const words = ['POW!', 'BAM!', 'JAB!', 'HOOK!', 'KO!', 'WHAM!'];
+      let hits = 0, running = false, endAt = 0, best = 0;
+
+      try { best = +localStorage.getItem('veer-best') || 0; } catch (e) {}
+      bestEl.textContent = best;
+
+      function rank(n) {
+        if (n >= 80) return 'UNDISPUTED CHAMPION 🏆';
+        if (n >= 60) return 'IRON MIKE MODE';
+        if (n >= 40) return 'CONTENDER';
+        if (n >= 20) return 'AMATEUR';
+        return 'KEEP TRAINING';
+      }
+
+      function loop() {
+        const left = Math.max(endAt - performance.now(), 0);
+        timerEl.textContent = (left / 1000).toFixed(1);
+        if (left > 0) return requestAnimationFrame(loop);
+        running = false;
+        if (hits > best) {
+          best = hits; bestEl.textContent = best;
+          try { localStorage.setItem('veer-best', best); } catch (e) {}
+        }
+        rankEl.textContent = `${hits} HITS: ${rank(hits)}`;
+        btn.textContent = 'AGAIN';
+      }
+
+      function punch(e) {
+        if (!running) {
+          hits = 0; // each new round starts from zero
+          running = true; endAt = performance.now() + 10000;
+          rankEl.textContent = ''; btn.textContent = 'PUNCH';
+          requestAnimationFrame(loop);
+        }
+        hits++; hitsEl.textContent = hits;
+
+        // Shake + floating "POW!" text
+        btn.classList.remove('shake'); void btn.offsetWidth; btn.classList.add('shake');
+        const pow = document.createElement('span');
+        pow.className = 'pow text-xl sm:text-2xl';
+        pow.textContent = words[Math.floor(Math.random() * words.length)];
+        pow.style.left = `${30 + Math.random() * 40}%`;
+        pow.style.top  = `${30 + Math.random() * 40}%`;
+        pow.style.setProperty('--r', `${(Math.random() - .5) * 30}deg`);
+        layer.appendChild(pow);
+        setTimeout(() => pow.remove(), 800);
+      }
+
+      btn.addEventListener('click', punch);
+      // Space bar punches only while the meter is on screen
+      window.addEventListener('keydown', e => {
+        if (e.code !== 'Space' || e.target.matches('input, textarea, button')) return;
+        const r = btn.getBoundingClientRect();
+        if (r.top < innerHeight && r.bottom > 0) { e.preventDefault(); punch(); }
+      });
+    })();
+
+    /* =========================================================
+       CONTACT FORM (front-end validation + toast)
+       To actually receive messages, point the form at a service
+       like Formspree: see README.md.
+       ========================================================= */
+    const toast = $('#toast');
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      setTimeout(() => toast.classList.add('translate-y-24', 'opacity-0'), 3000);
+    }
+    $('#contact-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const form = e.target, status = $('#form-status');
+      if (!form.checkValidity()) {
+        status.textContent = 'Fill in every field with a valid email.';
+        status.className = 'text-sm text-center h-5 text-crimson';
+        return;
+      }
+      status.textContent = '';
+      form.reset();
+      showToast('🥊 MESSAGE LANDED. TALK SOON!');
+    });
+  </script>
+</body>
+</html>
