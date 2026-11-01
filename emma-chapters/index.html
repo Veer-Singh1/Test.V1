@@ -38,7 +38,7 @@ window.CONFIG = {
       display: '"Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif', body: '"Figtree", "Helvetica Neue", Arial, sans-serif',
       url: 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Figtree:ital,wght@0,300..700;1,300..700&display=swap' }
   },
-  fontSet: 'literary',
+  fontSet: 'couture',          // official: Bodoni Moda & Manrope
 
   // Colour schemes. Each chapter repaints the whole page as you scroll into it, and the pinned
   // quote scene moves through voiceScenes (night, dusk, dawn). Pick one with palette.
@@ -90,7 +90,7 @@ window.CONFIG = {
         style:    { bg: '#0b0b0b', fg: '#f5f5f5', muted: '#a8a8a8', accent: '#b6ff3b' },
         voice:    { bg: '#0a0a2e', fg: '#f4f4ff', muted: '#a9a9d6', accent: '#22e4ff' }
       },
-      voiceScenes: [{ bg: '#0a0a2e', fg: '#f4f4ff', accent: '#22e4ff' }, { bg: '#2a0a3d', fg: '#fdf0ff', accent: '#ff4fe0' }, { bg: '#ffe8f6', fg: '#1a0a1f', accent: '#a3106f' }]
+      voiceScenes: [{ bg: '#0a0a2e', fg: '#f4f4ff', accent: '#22e4ff' }, { bg: '#2a0a3d', fg: '#fdf0ff', accent: '#ff4fe0' }, { bg: '#2a1206', fg: '#fff3e6', accent: '#ffb547' }]
     },
     pastel: {
       label: 'Pastel Pop', note: 'Bright sorbet colours with punchy ink',
@@ -105,7 +105,7 @@ window.CONFIG = {
       voiceScenes: [{ bg: '#cfdcff', fg: '#14163b', accent: '#3730a3' }, { bg: '#ffd0e0', fg: '#3a0a1f', accent: '#9d174d' }, { bg: '#fff0a0', fg: '#2a2000', accent: '#9a4a06' }]
     }
   },
-  palette: 'original',
+  palette: 'neon',             // official: Neon Noir
 
   // src     = path to the photo (relative to this page). Empty = labelled placeholder.
   // ratio   = width/height the placeholder is drawn at. label = what the placeholder says.
@@ -158,14 +158,10 @@ window.CONFIG = {
   }
 };
 
-/* Apply the config before first paint: the chosen palette and fonts become CSS variables.
-   A choice made in the page's Design panel is remembered on this device and wins over the defaults above. */
+/* Apply the config before first paint: the chosen palette and fonts become CSS variables. */
 (function applyConfig() {
   const C = window.CONFIG, root = document.documentElement, s = root.style;
-  let saved = {};
-  try { saved = JSON.parse(localStorage.getItem('ew-design') || '{}') || {}; } catch (e) {}
-  if (C.palettes[saved.palette]) C.palette = saved.palette;
-  if (C.fontSets[saved.fontSet]) C.fontSet = saved.fontSet;
+  try { localStorage.removeItem('ew-design'); } catch (e) {}   // clear picks saved by the old preview switcher
   const rgba = (h, a) => `rgba(${h.replace('#', '').match(/../g).map(x => parseInt(x, 16)).join(',')},${a})`;
 
   window.loadFontCss = url => {                       // add a Google Fonts stylesheet once
@@ -259,30 +255,7 @@ window.CONFIG = {
   .brand { font-family: var(--font-display); font-style: italic; font-size: 1.45rem; text-decoration: none; justify-self: start; letter-spacing: -.02em; }
   .bar-chapter { margin: 0; font: 600 .68rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
   .bar-actions { justify-self: end; display: flex; align-items: center; gap: 1.4rem; }
-  .menu-btn, .design-btn { font: 600 .72rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; padding: .7rem 0; }
-  .db-short { display: none; font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0; text-transform: none; }
-  @media (max-width: 560px) { .db-long { display: none; } .db-short { display: inline; } .bar-actions { gap: 1rem; } }
-
-  /* ---------- Design panel: live colour + type switcher ---------- */
-  #design { position: fixed; z-index: 125; top: calc(62px + env(safe-area-inset-top, 0px)); right: var(--gutter-r); width: min(390px, calc(100vw - 32px));
-    max-height: calc(100svh - 80px - env(safe-area-inset-top, 0px)); overflow-y: auto; overscroll-behavior: contain; padding: 1.1rem 1.1rem 1rem;
-    background: rgba(17,15,13,.95); color: #f5efe6; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; box-shadow: 0 30px 80px rgba(0,0,0,.45);
-    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); font-family: var(--font-body); }
-  .d-head { display: flex; justify-content: space-between; align-items: center; }
-  .d-head h2 { font: 600 .72rem var(--font-body); letter-spacing: .18em; text-transform: uppercase; }
-  .d-close { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,.22); font-size: 1.1rem; line-height: 1; }
-  .d-label { margin: 1.1rem 0 .55rem; font: 600 .64rem var(--font-body); letter-spacing: .18em; text-transform: uppercase; color: rgba(245,239,230,.62); }
-  .d-list { display: grid; gap: .45rem; }
-  .d-opt { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: .85rem; align-items: center; width: 100%; text-align: left; padding: .55rem .65rem;
-    border-radius: 10px; border: 1px solid rgba(255,255,255,.1); transition: border-color .3s, background-color .3s; }
-  .d-opt:hover { border-color: rgba(255,255,255,.38); }
-  .d-opt[aria-pressed="true"] { border-color: #f5efe6; background: rgba(255,255,255,.08); }
-  .d-sw { display: flex; height: 36px; border-radius: 6px; overflow: hidden; }
-  .d-sw i { flex: 1; }
-  .d-aa { height: 36px; display: grid; place-items: center; border-radius: 6px; background: rgba(255,255,255,.07); font-size: 1.45rem; line-height: 1; }
-  .d-name { display: block; font-weight: 600; font-size: .92rem; }
-  .d-desc { display: block; font-size: .78rem; line-height: 1.35; color: rgba(245,239,230,.66); }
-  .d-note { margin: 1rem 0 0; font-size: .74rem; color: rgba(245,239,230,.58); }
+  .menu-btn { font: 600 .72rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; padding: .7rem 0; }
 
   /* ---------- Cursor (fine pointers only) ---------- */
   #cursor { display: none; }
@@ -595,19 +568,9 @@ window.CONFIG = {
   <a href="#hero" class="brand" data-magnetic data-nav="Prologue" aria-label="Back to the beginning">E.W.</a>
   <p class="bar-chapter"><span class="sr-only">Current chapter: </span><span id="chapter-now">Prologue</span></p>
   <div class="bar-actions">
-    <button class="design-btn" id="design-btn" data-magnetic aria-expanded="false" aria-controls="design" aria-label="Colours and type"><span class="db-long" data-scramble>Design</span><span class="db-short" aria-hidden="true">Aa</span></button>
     <button class="menu-btn" id="menu-btn" data-magnetic aria-expanded="false" aria-controls="menu"><span data-scramble>Menu</span></button>
   </div>
 </header>
-
-<div id="design" role="dialog" aria-labelledby="design-title" data-lenis-prevent hidden>
-  <div class="d-head"><h2 id="design-title">Colours &amp; type</h2><button class="d-close" id="design-close" type="button" aria-label="Close">×</button></div>
-  <p class="d-label" id="d-pal-label">Colour scheme</p>
-  <div class="d-list" id="d-palettes" role="group" aria-labelledby="d-pal-label"></div>
-  <p class="d-label" id="d-font-label">Typeface</p>
-  <div class="d-list" id="d-fonts" role="group" aria-labelledby="d-font-label"></div>
-  <p class="d-note">Your choice is remembered on this device.</p>
-</div>
 
 <div id="menu" role="dialog" aria-modal="true" aria-label="Chapters" hidden>
   <div class="m-panels" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -1201,70 +1164,8 @@ window.CONFIG = {
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
-  /* =====================================================================
-     COLOURS & TYPE: live switcher. The choice is remembered on this device.
-     ===================================================================== */
-  const design = $('#design'), designBtn = $('#design-btn');
   let paintVoice = null;                                  // set by the voice scene when motion is on
-  let designOpen = false;
-  const saveDesign = () => { try { localStorage.setItem('ew-design', JSON.stringify({ palette: C.palette, fontSet: C.fontSet })); } catch (e) {} };
-  const markDesign = () => {
-    $$('[data-palette]', design).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.palette === C.palette)));
-    $$('[data-fontset]', design).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.fontset === C.fontSet)));
-    $('#credit-type').textContent = C.fonts.pair;
-  };
-  function setPalette(name) {
-    if (!C.palettes[name] || name === C.palette) return;
-    C.palette = name; window.applyPaletteVars();
-    $$('.m-list a').forEach(a => a.style.setProperty('--m-accent', C.chapters[a.dataset.accent].accent));
-    const current = theme; theme = null; applyTheme(current, null, true);
-    if (paintVoice) paintVoice();
-    saveDesign(); markDesign();
-  }
-  function setFontSet(name) {
-    if (!C.fontSets[name] || name === C.fontSet) return;
-    C.fontSet = name; window.applyFontVars();
-    saveDesign(); markDesign();
-    if (HAS_GSAP) { setTimeout(() => ScrollTrigger.refresh(), 400); if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh()); }
-  }
-  const option = (attr, key, swatch, name, desc, onPick) => {
-    const b = document.createElement('button');
-    b.type = 'button'; b.className = 'd-opt'; b.dataset[attr] = key;
-    const txt = document.createElement('span');
-    const n = document.createElement('span'); n.className = 'd-name'; n.textContent = name;
-    const d = document.createElement('span'); d.className = 'd-desc'; d.textContent = desc;
-    txt.append(n, d); b.append(swatch, txt);
-    b.addEventListener('click', onPick);
-    return b;
-  };
-  Object.entries(C.palettes).forEach(([key, P]) => {
-    const sw = document.createElement('span'); sw.className = 'd-sw'; sw.setAttribute('aria-hidden', 'true');
-    ['prologue', 'actress', 'activist', 'reader', 'style', 'voice'].forEach(ch => {
-      const c = P.chapters[ch], i = document.createElement('i');
-      i.style.background = `linear-gradient(${c.bg} 68%, ${c.accent} 68%)`; sw.append(i);
-    });
-    $('#d-palettes').append(option('palette', key, sw, P.label, P.note, () => setPalette(key)));
-  });
-  Object.entries(C.fontSets).forEach(([key, F]) => {
-    const aa = document.createElement('span'); aa.className = 'd-aa'; aa.setAttribute('aria-hidden', 'true');
-    aa.textContent = 'Aa'; aa.style.fontFamily = F.display;
-    $('#d-fonts').append(option('fontset', key, aa, F.label, F.pair, () => setFontSet(key)));
-  });
-  markDesign();
-  function toggleDesign(open, returnFocus = true) {
-    if (open === designOpen) return;
-    designOpen = open; design.hidden = !open; designBtn.setAttribute('aria-expanded', String(open));
-    if (open) {
-      Object.values(C.fontSets).forEach(F => window.loadFontCss(F.url));   // so each "Aa" sample shows its own face
-      if (MOTION) gsap.fromTo(design, { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: .45, ease: 'expo.out' });
-      requestAnimationFrame(() => $('.d-opt[aria-pressed="true"]', design).focus({ preventScroll: true }));
-    } else if (returnFocus) designBtn.focus({ preventScroll: true });
-  }
-  designBtn.addEventListener('click', () => toggleDesign(!designOpen));
-  $('#design-close').addEventListener('click', () => toggleDesign(false));
-  document.addEventListener('keydown', e => { if (designOpen && e.key === 'Escape') toggleDesign(false); });
-  document.addEventListener('pointerdown', e => { if (designOpen && !design.contains(e.target) && !designBtn.contains(e.target)) toggleDesign(false, false); });
-  menuBtn.addEventListener('click', () => toggleDesign(false, false));
+  $('#credit-type').textContent = C.fonts.pair;
 
   /* =====================================================================
      SVG CURTAIN between chapters (menu links, logo, back to top)
