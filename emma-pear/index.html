@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Emma Watson Turns the Page</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="An unofficial fan tribute to Emma Watson, set inside a living neoclassical painting.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..600&family=Geist:wght@300..600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* Layout: one living painting fixed behind the page; a camera glides to a new part of it for each section.
+     Content sits in a 1180px column between two hairline guides, on glass panels where the painting is busy. */
+  :root {
+    --sky: #174593;          /* ultramarine sampled from the painting's sky */
+    --sky-deep: #0e2c6b;
+    --ink: #0b0c10;          /* buttons */
+    --paper: #ffffff;
+    --mist: rgba(255,255,255,.78);
+    --hair: rgba(255,255,255,.28);
+    --gold: #e7c27a;
+    --glass: rgba(16, 38, 104, .44);
+    --glass-edge: rgba(255,255,255,.34);
+
+    --serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+    --sans: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+    --mono: 'Geist Mono', ui-monospace, Menlo, monospace;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --gl: max(20px, env(safe-area-inset-left, 0px));
+    --gr: max(20px, env(safe-area-inset-right, 0px));
+    --guide: clamp(36px, 5vw, 72px);    /* where the two vertical hairlines sit */
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body { margin: 0; background: var(--sky); color: var(--paper); font-family: var(--sans); font-size: 1.02rem; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  button, input, textarea { font: inherit; color: inherit; }
+  button { background: none; border: 0; padding: 0; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .sr-only { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .skip { position: fixed; z-index: 100; left: 16px; top: -60px; background: var(--paper); color: var(--ink); padding: .6rem 1rem; border-radius: 6px; text-decoration: none; }
+  .skip:focus { top: calc(12px + env(safe-area-inset-top, 0px)); }
+
+  /* ---------- The living painting ---------- */
+  #stage { position: fixed; inset: 0; z-index: 0; background: var(--sky); }
+  #stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  #stage .fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 100%; }
+  #stage.gl-on .fallback { display: none; }
+  #stars { pointer-events: none; }
+  .scrim { position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(180deg, rgba(14,44,107,.55) 0%, rgba(14,44,107,0) 22%, rgba(14,44,107,0) 55%, rgba(10,30,80,.55) 100%); }
+
+  /* ---------- Frame: hairline guides, sparkles, header ---------- */
+  .guides { position: fixed; inset: 0; z-index: 3; pointer-events: none; }
+  .guides i { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--hair); }
+  .guides i:nth-child(1) { left: var(--guide); }
+  .guides i:nth-child(2) { right: var(--guide); }
+  .guides b { position: absolute; left: 0; right: 0; top: calc(78px + env(safe-area-inset-top, 0px)); height: 1px; background: var(--hair); }
+  .spark { position: fixed; z-index: 4; width: 22px; height: 22px; margin: -11px 0 0 -11px; pointer-events: none; color: #fff; filter: drop-shadow(0 0 6px rgba(255,255,255,.9)); }
+  .spark svg { width: 100%; height: 100%; animation: twinkle 3.4s ease-in-out infinite; }
+  .spark.s1 { left: var(--guide); top: calc(78px + env(safe-area-inset-top, 0px)); }
+  .spark.s2 { right: calc(var(--guide) - 22px); top: 64vh; }
+  .spark.s2 svg { animation-delay: -1.7s; }
+  @keyframes twinkle { 0%, 100% { transform: scale(.55) rotate(0); opacity: .55; } 50% { transform: scale(1) rotate(45deg); opacity: 1; } }
+
+  .bar { position: fixed; z-index: 20; inset: 0 0 auto; height: calc(78px + env(safe-area-inset-top, 0px)); padding: env(safe-area-inset-top, 0px) var(--gr) 0 var(--gl);
+    display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: inline-flex; align-items: center; gap: .7rem; margin-left: calc(var(--guide) - var(--gl) + 18px); text-decoration: none; }
+  .logo svg { width: 30px; height: 30px; }
+  .logo span { font-family: var(--mono); font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; opacity: .85; }
+  .menu-btn { margin-right: calc(var(--guide) - var(--gr) + 12px); width: 44px; height: 44px; display: grid; place-items: center; }
+  .menu-btn svg { width: 22px; height: 22px; transition: transform .6s var(--ease); }
+  .menu-btn[aria-expanded="true"] svg { transform: rotate(45deg); }
+
+  #menu { position: fixed; inset: 0; z-index: 15; display: grid; align-content: center; padding: 90px calc(var(--guide) + 22px) 40px;
+    background: rgba(14, 40, 104, .55); backdrop-filter: blur(22px) saturate(1.3); -webkit-backdrop-filter: blur(22px) saturate(1.3); }
+  #menu[hidden] { display: none; }
+  #menu ol { list-style: none; margin: 0; padding: 0; counter-reset: m; }
+  #menu li { overflow: hidden; border-bottom: 1px solid var(--hair); }
+  #menu a { display: flex; align-items: baseline; gap: 1rem; padding: .35em 0; text-decoration: none; font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 7vw, 4.6rem); line-height: 1.05; letter-spacing: -.02em; transition: padding-left .6s var(--ease), color .3s; }
+  #menu a:hover, #menu a:focus-visible { padding-left: .6rem; color: var(--gold); }
+  #menu a small { font-family: var(--mono); font-size: .68rem; letter-spacing: .18em; color: var(--mist); }
+  #menu p { margin: 2rem 0 0; font-size: .85rem; color: var(--mist); max-width: 46ch; }
+
+  /* ---------- Shared type ---------- */
+  main { position: relative; z-index: 5; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding-left: calc(var(--guide) + 22px); padding-right: calc(var(--guide) + 22px); }
+  section { position: relative; min-height: 100svh; padding-block: clamp(7rem, 16vh, 11rem) clamp(5rem, 12vh, 8rem); }
+  .label { display: inline-block; margin: 0 0 1.1rem; padding: .42rem .7rem; font-family: var(--mono); font-weight: 400; font-size: .7rem; letter-spacing: .22em; text-transform: uppercase;
+    background: rgba(8, 14, 34, .28); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  h1, h2 { margin: 0; font-family: var(--serif); font-weight: 300; letter-spacing: -.025em; text-wrap: balance; text-shadow: 0 2px 30px rgba(8, 20, 60, .35); }
+  h2 { font-size: clamp(2.4rem, 6.4vw, 5rem); line-height: 1.02; max-width: 15ch; }
+  h2 em, h1 em { font-style: italic; color: var(--gold); }
+  .lede { font-family: var(--serif); font-size: clamp(1.2rem, 2.2vw, 1.5rem); line-height: 1.3; font-weight: 300; margin: 1.2rem 0 0; max-width: 34ch; text-shadow: 0 1px 18px rgba(8, 20, 60, .5); }
+  .body { max-width: 52ch; margin: 1rem 0 0; color: var(--paper); text-shadow: 0 1px 14px rgba(8, 20, 60, .55); }
+
+  .glass { background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 22px;
+    backdrop-filter: blur(16px) saturate(1.25); -webkit-backdrop-filter: blur(16px) saturate(1.25);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -1px 0 rgba(255,255,255,.08), 0 30px 60px -30px rgba(5, 15, 50, .6); }
+
+  .btn { display: inline-flex; align-items: center; gap: 1.1rem; min-height: 52px; padding: .55rem .6rem .55rem 1.2rem; background: var(--ink); color: #fff; border-radius: 6px;
+    text-decoration: none; font-family: var(--mono); font-size: .78rem; letter-spacing: .2em; text-transform: uppercase; transition: transform .5s var(--ease), background-color .3s; }
+  .btn i { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.4); border-radius: 4px; font-style: normal; letter-spacing: 0; transition: transform .5s var(--ease); }
+  .btn:hover { background: #000; }
+  .btn:hover i { transform: translateX(4px); }
+
+  /* ---------- Hero ---------- */
+  .hero { display: flex; align-items: flex-end; padding-bottom: clamp(3rem, 10vh, 6rem); }
+  .hero .wrap { width: 100%; }
+  .hero .lede, .hero .body { text-shadow: 0 1px 2px rgba(6, 16, 50, .55), 0 0 28px rgba(6, 16, 50, .6); }
+  .glance { padding: 1rem 1.2rem 1.1rem; }
+  .hero h1 { font-size: clamp(3rem, 9.5vw, 7.6rem); line-height: .96; max-width: 11ch; position: relative; }
+  .hero h1 .streak { position: absolute; z-index: -1; left: 58%; top: 52%; width: 46%; height: .5em; transform: translateY(-50%); filter: blur(10px); mix-blend-mode: screen; opacity: .8;
+    background: linear-gradient(90deg, transparent, #ff4d6d 18%, #ffd166 34%, #4dffb8 52%, #4da3ff 70%, #c86bff 86%, transparent); animation: streak 7s var(--ease) infinite; }
+  @keyframes streak { 0%, 62% { transform: translate(-30%, -50%) scaleX(.2); opacity: 0; } 70% { opacity: .85; } 86% { transform: translate(20%, -50%) scaleX(1); opacity: .6; } 100% { transform: translate(60%, -50%) scaleX(.4); opacity: 0; } }
+  .hero-row { display: flex; flex-wrap: wrap; gap: 2.4rem; align-items: flex-end; justify-content: space-between; margin-top: 2rem; }
+  .hero-row .body { max-width: 40ch; margin: 0; }
+  .glance { max-width: 40ch; }
+  .glance .label { margin-bottom: .7rem; }
+
+  /* ---------- Films ---------- */
+  .films-panel { margin-top: 2.6rem; padding: .4rem 1.4rem; max-width: 780px; }
+  .films-list { list-style: none; margin: 0; padding: 0; }
+  .films-list li { display: grid; grid-template-columns: 5.2rem minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: .95rem 0; border-bottom: 1px solid rgba(255,255,255,.16); transition: padding-left .5s var(--ease); }
+  .films-list li:last-child { border-bottom: 0; }
+  .films-list li:hover { padding-left: .4rem; }
+  .films-list .y { font-family: var(--mono); font-size: .74rem; letter-spacing: .12em; color: var(--mist); font-variant-numeric: tabular-nums; }
+  .films-list .t { font-family: var(--serif); font-size: clamp(1.15rem, 2.4vw, 1.5rem); line-height: 1.2; min-width: 0; }
+  .films-list .r { font-size: .86rem; color: var(--mist); text-align: right; }
+  @media (max-width: 600px) { .films-list li { grid-template-columns: 4rem minmax(0, 1fr); } .films-list .r { grid-column: 2; text-align: left; margin-top: -.6rem; } }
+
+  /* ---------- Activism: constellation milestones ---------- */
+  .milestones { list-style: none; margin: 2.6rem 0 0; padding: 0; display: grid; gap: 1rem; max-width: 980px; }
+  .milestones li { padding: 1.2rem 1.3rem 1.3rem; display: grid; gap: .3rem; }
+  .milestones .d { font-family: var(--mono); font-size: .74rem; letter-spacing: .16em; color: var(--gold); }
+  .milestones h3 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 1.45rem; line-height: 1.15; }
+  .milestones p { margin: 0; color: var(--mist); font-size: .95rem; }
+  @media (min-width: 820px) { .milestones { grid-template-columns: repeat(2, minmax(0, 1fr)); } .milestones li:nth-child(even) { transform: translateY(2.4rem); } }
+
+  /* ---------- Reader ---------- */
+  .read-grid { display: grid; gap: 2rem; margin-top: 2.4rem; max-width: 980px; }
+  .read-card { padding: 1.4rem 1.4rem 1.5rem; }
+  .read-card .d { font-family: var(--mono); font-size: .72rem; letter-spacing: .16em; color: var(--gold); }
+  .read-card p { margin: .5rem 0 0; }
+  .read-card cite { font-family: var(--serif); font-style: italic; font-size: 1.08em; }
+  @media (min-width: 820px) { .read-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+  /* ---------- Portraits ---------- */
+  .rail { -webkit-mask-image: linear-gradient(90deg, #000 80%, transparent); mask-image: linear-gradient(90deg, #000 80%, transparent); display: flex; gap: 1.1rem; margin-top: 2.6rem; padding: 0 0 1rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .rail::-webkit-scrollbar { display: none; }
+  .frame { flex: 0 0 min(260px, 66vw); scroll-snap-align: start; margin: 0; }
+  .frame .pic { position: relative; aspect-ratio: 4 / 5; max-width: 100%; overflow: hidden; border: 1px solid var(--glass-edge); border-radius: 14px; background: var(--sky-deep); }
+  .frame img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.08); transition: transform 1.4s var(--ease); }
+  @property --dot { syntax: '<percentage>'; inherits: false; initial-value: 72%; }
+  .frame .pic::after { content: ''; position: absolute; inset: 0; pointer-events: none;      /* halftone veil that dissolves on reveal */
+    background-image: radial-gradient(circle, var(--sky) var(--dot), transparent calc(var(--dot) + 1%)); background-size: 9px 9px;
+    transition: --dot 1.5s var(--ease), opacity 1.5s ease; transition-delay: calc(var(--i, 0) * 90ms); }
+  .frame.in .pic::after { --dot: 0%; opacity: 0; }
+  .frame.in img { transform: scale(1); }
+  .frame figcaption { margin-top: .7rem; font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mist); }
+  .rail-hint { margin: .4rem 0 0; font-family: var(--mono); font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--mist); }
+
+  /* ---------- Voice ---------- */
+  .quotes { display: grid; gap: clamp(3rem, 10vh, 6rem); margin-top: 3rem; }
+  .quotes blockquote { margin: 0; }
+  .quotes p { margin: 0; font-family: var(--serif); font-weight: 300; font-style: italic; font-size: clamp(2rem, 5.6vw, 4.2rem); line-height: 1.06; letter-spacing: -.02em; max-width: 19ch; text-wrap: balance; text-shadow: 0 2px 24px rgba(8, 20, 60, .45); }
+  .quotes .w { display: inline-block; }
+  .cite { margin-top: 1.2rem; font-family: var(--mono); font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--mist); }
+
+  /* ---------- Notes (glass form, like a letter sent into the painting) ---------- */
+  .notes-grid { display: grid; gap: 2.4rem; margin-top: 2.4rem; }
+  .form { perspective: 1100px; display: grid; gap: 1rem; max-width: 640px; }
+  .field { position: relative; display: block; padding: 1rem 1.2rem 1.1rem; transform-style: preserve-3d; transition: transform .8s var(--ease), border-color .3s; }
+  .field:nth-of-type(1) { transform: rotateX(8deg) rotateZ(-1.2deg); }
+  .field:nth-of-type(2) { transform: rotateX(8deg) rotateZ(1.4deg) translateX(4%); }
+  .field:nth-of-type(3) { transform: rotateX(6deg) rotateZ(-.6deg); }
+  .field:focus-within { transform: none; border-color: rgba(255,255,255,.7); }
+  .field span { display: flex; align-items: center; gap: .55rem; font-size: .92rem; color: var(--mist); }
+  .field svg { width: 15px; height: 15px; flex: none; }
+  .field input, .field textarea { display: block; width: 100%; margin-top: .4rem; padding: 0; background: transparent; border: 0; outline: none; color: #fff; font-size: 1.05rem; resize: none; }
+  .field textarea { min-height: 5.5rem; }
+  .form-foot { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; margin-top: .4rem; }
+  .count { font-family: var(--mono); font-size: .7rem; letter-spacing: .14em; color: var(--mist); }
+  .status { min-height: 1.4em; margin: 0; font-size: .9rem; color: var(--mist); }
+  .wall { display: grid; gap: .8rem; align-content: start; }
+  .note { padding: 1rem 1.1rem; position: relative; }
+  .note.new { animation: rise .9s var(--ease) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+  .note p { margin: 0 0 .6rem; font-family: var(--serif); font-size: 1.12rem; line-height: 1.35; overflow-wrap: anywhere; }
+  .note footer { display: flex; gap: .6rem; flex-wrap: wrap; font-family: var(--mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mist); }
+  .note footer b { color: var(--gold); font-weight: 400; }
+  .note .rm { position: absolute; top: .55rem; right: .6rem; font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; padding: .25rem .5rem; border: 1px solid var(--hair); border-radius: 999px; color: var(--mist); }
+  .empty { padding: 1.3rem; color: var(--mist); font-size: .95rem; }
+  @media (min-width: 900px) { .notes-grid { grid-template-columns: 1.1fr 1fr; align-items: start; } }
+
+  /* ---------- Footer ---------- */
+  .foot { min-height: 80svh; display: flex; flex-direction: column; justify-content: flex-end; }
+  .foot h2 { font-size: clamp(3rem, 10vw, 8rem); max-width: none; }
+  .credits { display: grid; gap: .9rem; margin-top: 2.4rem; padding: 1.3rem 1.4rem; max-width: 760px; font-size: .9rem; }
+  .credits p { margin: 0; color: var(--mist); }
+  .credits strong { color: #fff; font-weight: 500; }
+  .top-link { margin-top: 2rem; }
+
+  /* ---------- Reveal ---------- */
+  .rv { opacity: 0; transform: translateY(36px); }
+  .no-motion .rv { opacity: 1; transform: none; }
+  .split .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .12em; margin-bottom: -.12em; }
+  .split .wi { display: inline-block; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+    .frame .pic::after { display: none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- The living painting: WebGL shader with drifting pixel clouds, gold glints and a scroll camera -->
+<div id="stage" role="img" aria-label="A neoclassical painting: under a deep blue sky, a woman in a Greek robe turns the page of a giant golden book on a marble plinth, while another woman reads on the marble steps.">
+  <img class="fallback" src="images/painting.jpg" alt="">
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <canvas id="stars" aria-hidden="true"></canvas>
+</div>
+<div class="scrim" aria-hidden="true"></div>
+<div class="guides" aria-hidden="true"><i></i><i></i><b></b></div>
+<div class="spark s1" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c.7 6.6 5.4 11.3 12 12-6.6.7-11.3 5.4-12 12-.7-6.6-5.4-11.3-12-12C6.6 11.3 11.3 6.6 12 0z"/></svg></div>
+<div class="spark s2" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c.7 6.6 5.4 11.3 12 12-6.6.7-11.3 5.4-12 12-.7-6.6-5.4-11.3-12-12C6.6 11.3 11.3 6.6 12 0z"/></svg></div>
+
+<header class="bar">
+  <a class="logo" href="#hero" aria-label="Emma Watson fan tribute, back to the top">
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M16 8c-3-2.2-7-2.6-11-1.6v18c4-1 8-.6 11 1.6 3-2.2 7-2.6 11-1.6v-18c-4-1-8-.6-11 1.6z"/><path d="M16 8v18"/></svg>
+    <span>Fan tribute</span>
+  </a>
+  <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open the menu">
+    <svg viewBox="0 0 22 22" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="5" height="5"/><rect x="14" y="3" width="5" height="5"/><rect x="3" y="14" width="5" height="5"/><rect x="14" y="14" width="5" height="5"/></svg>
+  </button>
+</header>
+
+<nav id="menu" aria-label="Sections" hidden>
+  <ol>
+    <li><a href="#films"><small>01</small>The roles</a></li>
+    <li><a href="#cause"><small>02</small>The cause</a></li>
+    <li><a href="#reader"><small>03</small>The reader</a></li>
+    <li><a href="#portraits"><small>04</small>Portraits</a></li>
+    <li><a href="#words"><small>05</small>In her words</a></li>
+    <li><a href="#notes"><small>06</small>Leave a note</a></li>
+  </ol>
+  <p>Unofficial fan site. Not affiliated with Emma Watson or her representatives.</p>
+</nav>
+
+<main id="main" tabindex="-1">
+  <!-- Camera stops: data-cam="x y zoom" are points in the painting (0–1 across, 0–1 down; below 0 is the open sky above it) -->
+  <section id="hero" class="hero" data-cam="0.6 1 1" aria-labelledby="hero-title">
+    <div class="wrap">
+      <p class="label rv">Unofficial fan site</p>
+      <h1 id="hero-title" class="split-me">Emma Watson turns the <em>page</em>.<span class="streak" aria-hidden="true"></span></h1>
+      <p class="lede rv">Not a celebrity page.<br>A fan's tribute to an actor, an activist and a reader.</p>
+      <div class="hero-row">
+        <a class="btn rv" href="#films">Enter the story <i aria-hidden="true">→</i></a>
+        <div class="glance glass rv">
+          <p class="label">At a glance</p>
+          <p class="body">Born in Paris on 15 April 1990 and cast as Hermione Granger at nine. A Brown University graduate and, since 2014, a UN Women Goodwill Ambassador.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="films" data-cam="0.6 0.5 1.45" aria-labelledby="films-title">
+    <div class="wrap">
+      <p class="label rv">01 · The roles</p>
+      <h2 id="films-title" class="split-me">Twenty years, one <em>page</em> at a time.</h2>
+      <div class="films-panel glass rv">
+        <ol class="films-list">
+          <li><span class="y">2001–11</span><span class="t">Harry Potter, eight films</span><span class="r">Hermione Granger</span></li>
+          <li><span class="y">2007</span><span class="t">Ballet Shoes</span><span class="r">Pauline Fossil · TV film</span></li>
+          <li><span class="y">2008</span><span class="t">The Tale of Despereaux</span><span class="r">Princess Pea · voice</span></li>
+          <li><span class="y">2011</span><span class="t">My Week with Marilyn</span><span class="r">Lucy</span></li>
+          <li><span class="y">2012</span><span class="t">The Perks of Being a Wallflower</span><span class="r">Sam</span></li>
+          <li><span class="y">2013</span><span class="t">The Bling Ring</span><span class="r">Nicki</span></li>
+          <li><span class="y">2013</span><span class="t">This Is the End</span><span class="r">Herself</span></li>
+          <li><span class="y">2014</span><span class="t">Noah</span><span class="r">Ila</span></li>
+          <li><span class="y">2015</span><span class="t">Colonia</span><span class="r">Lena</span></li>
+          <li><span class="y">2015</span><span class="t">Regression</span><span class="r">Angela Gray</span></li>
+          <li><span class="y">2017</span><span class="t">Beauty and the Beast</span><span class="r">Belle</span></li>
+          <li><span class="y">2017</span><span class="t">The Circle</span><span class="r">Mae Holland</span></li>
+          <li><span class="y">2019</span><span class="t">Little Women</span><span class="r">Meg March</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="cause" data-cam="0.34 -0.45 1" data-sky aria-labelledby="cause-title">
+    <div class="wrap">
+      <p class="label rv">02 · The cause</p>
+      <h2 id="cause-title" class="split-me">A speech that became a <em>movement</em>.</h2>
+      <p class="lede rv">Each star is a milestone in her work for gender equality.</p>
+      <ol class="milestones">
+        <li class="glass rv"><span class="d">July 2014</span><h3>UN Women Goodwill Ambassador</h3><p>Appointed by UN Women to champion gender equality and young women's education.</p></li>
+        <li class="glass rv"><span class="d">20 September 2014</span><h3>HeForShe</h3><p>Launches the campaign with a speech at UN headquarters in New York, inviting men and boys to stand up for equality.</p></li>
+        <li class="glass rv"><span class="d">January 2015</span><h3>Davos</h3><p>Speaks at the World Economic Forum to launch the HeForShe IMPACT 10x10x10 initiative.</p></li>
+        <li class="glass rv"><span class="d">2018</span><h3>Justice and Equality Fund</h3><p>Donates £1 million to the UK Justice and Equality Fund, set up in support of the Time's Up movement.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="reader" data-cam="0.18 0.82 1.55" aria-labelledby="reader-title">
+    <div class="wrap">
+      <p class="label rv">03 · The reader</p>
+      <h2 id="reader-title" class="split-me">A shelf shared with <em>strangers</em>.</h2>
+      <div class="read-grid">
+        <article class="read-card glass rv"><span class="d">January 2016</span><p>Starts <strong>Our Shared Shelf</strong>, a feminist book club that met online. The first pick is Gloria Steinem's <cite>My Life on the Road</cite>.</p></article>
+        <article class="read-card glass rv"><span class="d">November 2016</span><p>Hides copies of Maya Angelou's <cite>Mom &amp; Me &amp; Mom</cite> on the London Underground with <strong>Books on the Underground</strong>, each with a handwritten note.</p></article>
+        <article class="read-card glass rv"><span class="d">2014</span><p>Graduates from <strong>Brown University</strong> with a degree in English literature.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="portraits" data-cam="0.79 0.3 1.6" aria-labelledby="portraits-title">
+    <div class="wrap">
+      <p class="label rv">04 · Portraits</p>
+      <h2 id="portraits-title" class="split-me">Gold in every <em>frame</em>.</h2>
+      <div class="rail" id="rail" tabindex="0" aria-label="Portraits, scroll sideways">
+        <figure class="frame"><div class="pic"><img src="images/portrait-blazer.jpg" alt="Black-and-white portrait of Emma Watson in a black blazer and a silver choker" loading="lazy"></div><figcaption>Portrait</figcaption></figure>
+        <figure class="frame"><div class="pic"><img src="images/wonderland-laugh.jpg" alt="Emma Watson laughing with her eyes shut, in a pleated top and a dark skirt" loading="lazy"></div><figcaption>Wonderland</figcaption></figure>
+        <figure class="frame"><div class="pic"><img src="images/hero.jpg" alt="Black-and-white portrait of Emma Watson looking back over her shoulder in a knitted cardigan" loading="lazy"></div><figcaption>Studio</figcaption></figure>
+        <figure class="frame"><div class="pic"><img src="images/talk-show.jpg" alt="Emma Watson smiling in a cream dress, seated in a talk-show guest chair" loading="lazy"></div><figcaption>On air</figcaption></figure>
+        <figure class="frame"><div class="pic"><img src="images/wonderland-profile.jpg" alt="Black-and-white profile of Emma Watson with her eyes closed" loading="lazy"></div><figcaption>Wonderland</figcaption></figure>
+        <figure class="frame"><div class="pic"><img src="images/hollywood-authentic.jpg" alt="Emma Watson shouting with joy on a pickleball court, on a magazine cover" loading="lazy"></div><figcaption>Hollywood Authentic, 2025</figcaption></figure>
+        <figure class="frame"><div class="pic"><img src="images/interview.jpg" alt="Emma Watson smiling with shoulder-length wavy hair" loading="lazy"></div><figcaption>Candid</figcaption></figure>
+        <figure class="frame"><div class="pic"><img src="images/portrait-bob.jpg" alt="Black-and-white close-up of Emma Watson with a short bob" loading="lazy"></div><figcaption>Portrait</figcaption></figure>
+      </div>
+      <p class="rail-hint">Swipe or scroll sideways</p>
+    </div>
+  </section>
+
+  <section id="words" data-cam="0.3 -0.7 1.05" data-sky aria-labelledby="words-title">
+    <div class="wrap">
+      <p class="label rv">05 · In her words</p>
+      <h2 id="words-title" class="sr-only">Quotes from her HeForShe speech</h2>
+      <div class="quotes">
+        <blockquote><p class="q">Both men and women should feel free to be sensitive. Both men and women should feel free to be strong.</p></blockquote>
+        <blockquote><p class="q">Gender equality is your issue too.</p></blockquote>
+        <blockquote><p class="q">If not me, who? If not now, when?</p><p class="cite">Emma Watson · HeForShe speech · United Nations, New York · 20 September 2014</p></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section id="notes" data-cam="0.7 0.66 1.2" aria-labelledby="notes-title">
+    <div class="wrap">
+      <p class="label rv">06 · Leave a note</p>
+      <h2 id="notes-title" class="split-me">Write something in <em>gold</em>.</h2>
+      <p class="lede rv">Notes go on a shared wall that everyone with this page can read.</p>
+      <div class="notes-grid">
+        <form class="form" id="note-form" novalidate>
+          <label class="field glass">
+            <span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="8" cy="5.5" r="2.6"/><path d="M2.8 14c.6-2.8 2.7-4.3 5.2-4.3s4.6 1.5 5.2 4.3"/></svg>Your name</span>
+            <input id="n-name" name="name" maxlength="40" autocomplete="nickname" required>
+          </label>
+          <label class="field glass">
+            <span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M8 14.5s5-4.4 5-8.2a5 5 0 1 0-10 0c0 3.8 5 8.2 5 8.2z"/><circle cx="8" cy="6.3" r="1.8"/></svg>Where you're writing from</span>
+            <input id="n-place" name="place" maxlength="40" autocomplete="address-level2">
+          </label>
+          <label class="field glass">
+            <span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M2.5 3h11v7.5H6.2L3.5 13v-2.5h-1z"/></svg>What does her work mean to you?</span>
+            <textarea id="n-msg" name="message" maxlength="280" required></textarea>
+          </label>
+          <div class="form-foot">
+            <button class="btn" type="submit">Send the note <i aria-hidden="true">→</i></button>
+            <span class="count" id="n-count">0 / 280</span>
+          </div>
+          <p class="status" id="n-status" aria-live="polite"></p>
+        </form>
+        <div class="wall" id="wall" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="end" class="foot" data-cam="0.6 1 1" aria-labelledby="end-title">
+    <div class="wrap">
+      <h2 id="end-title" class="split-me">The next page is <em>hers</em>.</h2>
+      <div class="credits glass rv">
+        <p><strong>Unofficial fan site.</strong> Not affiliated with Emma Watson or her representatives, UN Women or HeForShe. Made by Veer Singh.</p>
+        <p>The painting is an original artwork made for this tribute with Artlist; its figures are anonymous, not portraits. Photographs belong to their photographers and publishers, including Wonderland and Hollywood Authentic. Quotes are from her HeForShe speech at the United Nations on 20 September 2014.</p>
+      </div>
+      <a class="btn top-link" href="#hero">Back to the top <i aria-hidden="true">↑</i></a>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+  'use strict';
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const HAS_GSAP = !!(window.gsap && window.ScrollTrigger);
+  const MOTION = HAS_GSAP && !REDUCE;
+  if (!MOTION) document.documentElement.classList.add('no-motion');
+  if (HAS_GSAP) gsap.registerPlugin(ScrollTrigger);
+
+  /* Painting facts, in image coordinates (0–1 across, 0–1 down) */
+  // video: optional path to a looping clip of the same painting (e.g. made with image-to-video). When set it replaces
+  // the still, and the clouds, gold sheen and camera play on top of it. Keep it muted, short and under ~8 MB.
+  const PAINT = { src: 'images/painting.jpg', video: '', book: [0.6, 0.05, 0.97, 0.5], horizon: 0.74 };
+
+  /* ===================================================================
+     CAMERA: each section names a point in the painting and a zoom.
+     Scrolling blends from one stop to the next (and back again).
+     =================================================================== */
+  const sections = $$('main section[data-cam]');
+  const stops = sections.map(s => s.dataset.cam.split(' ').map(Number));
+  const blend = new Array(sections.length).fill(0);         // 0..1 per section boundary
+  const ease = t => t * t * (3 - 2 * t);
+  function cameraTarget() {
+    let [x, y, z] = stops[0];
+    for (let i = 1; i < stops.length; i++) {
+      const k = ease(blend[i]);
+      x += (stops[i][0] - x) * k; y += (stops[i][1] - y) * k; z += (stops[i][2] - z) * k;
+    }
+    return [x, y, z];
+  }
+  // sky amount: how far the camera has risen above the painting (drives the constellations)
+  const skyAmount = y => Math.min(1, Math.max(0, (0.05 - y) / 0.45));
+
+  /* ===================================================================
+     THE LIVING PAINTING (Three.js shader)
+     =================================================================== */
+  const stage = $('#stage'), glCanvas = $('#gl');
+  const mouse = { x: -1, y: -1, push: 0 };
+  let camNow = cameraTarget();
+
+  const GL = (() => {
+    if (!window.THREE) return null;
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas: glCanvas, antialias: false, powerPreference: 'high-performance' }); } catch (e) { return null; }
+    const coarse = matchMedia('(pointer: coarse)').matches;
+    const dpr = Math.min(window.devicePixelRatio || 1, coarse ? 1.25 : 1.5);
+    renderer.setPixelRatio(dpr);
+    const scene = new THREE.Scene(), camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const U = {
+      uTex: { value: null }, uImg: { value: new THREE.Vector2(2560, 1428) }, uRes: { value: new THREE.Vector2(1, 1) },
+      uCam: { value: new THREE.Vector3(.6, .5, 1) }, uTime: { value: 0 }, uMouse: { value: new THREE.Vector2(-9, -9) }, uPush: { value: 0 },
+      uBook: { value: new THREE.Vector4(...PAINT.book) }, uHorizon: { value: PAINT.horizon }, uDpr: { value: dpr }
+    };
+    const mat = new THREE.ShaderMaterial({
+      uniforms: U,
+      vertexShader: 'void main(){ gl_Position = vec4(position, 1.0); }',
+      fragmentShader: `
+        precision highp float;
+        uniform sampler2D uTex; uniform vec2 uImg, uRes, uMouse; uniform vec3 uCam; uniform vec4 uBook;
+        uniform float uTime, uPush, uHorizon, uDpr;
+
+        float hash(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
+        float noise(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+          return mix(mix(hash(i), hash(i + vec2(1, 0)), f.x), mix(hash(i + vec2(0, 1)), hash(i + vec2(1, 1)), f.x), f.y); }
+        float fbm(vec2 p){ float v = 0.0, a = 0.5; for (int i = 0; i < 4; i++) { v += a * noise(p); p *= 2.03; a *= 0.5; } return v; }
+
+        // screen pixel (top-left origin) -> painting coordinates (0..1 across, 0..1 down; v < 0 is open sky)
+        vec2 toImg(vec2 s){ return (s - uRes * 0.5) / (uImg * uCam.z) + uCam.xy; }
+
+        vec3 paint(vec2 uv){
+          vec2 c = vec2(clamp(uv.x, 0.001, 0.999), clamp(uv.y, 0.002, 0.999));
+          vec3 col = texture2D(uTex, vec2(c.x, 1.0 - c.y)).rgb;
+          if (uv.y < 0.0) {                                   // extend the sky upward, deepening slightly
+            vec3 top = texture2D(uTex, vec2(c.x, 1.0 - 0.004)).rgb;
+            col = mix(top, top * vec3(0.78, 0.8, 0.9), clamp(-uv.y * 0.45, 0.0, 0.55));
+          }
+          return col;
+        }
+        float skyMask(vec3 c){ return smoothstep(0.08, 0.2, c.b - max(c.r, c.g)) * smoothstep(0.3, 0.45, c.b); }
+
+        void main(){
+          vec2 sp = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);
+          vec2 uv = toImg(sp);
+
+          // cursor ripple (desktop) — a soft lens that follows the pointer
+          vec2 d = sp - uMouse; float dist = length(d);
+          uv += (d / max(dist, 1.0)) * sin(dist * 0.06 - uTime * 4.0) * exp(-dist * 0.012) * 0.0035 * uPush;
+
+          vec3 col = paint(uv);
+          float sky = skyMask(col) * step(uv.y, uHorizon - 0.01);
+
+          // gold: a slow sheen sweeps across the book; the brightest gold breathes
+          vec4 b = uBook;
+          float inBook = smoothstep(b.x, b.x + 0.03, uv.x) * smoothstep(b.z, b.z - 0.03, uv.x) * smoothstep(b.y, b.y + 0.03, uv.y) * smoothstep(b.w, b.w - 0.04, uv.y);
+          float gold = smoothstep(0.16, 0.34, col.r - col.b) * smoothstep(0.45, 0.75, col.r) * inBook;
+          float phase = mod(uTime * 0.09, 1.9) - 0.45;
+          float band = exp(-pow(((uv.x - b.x) / (b.z - b.x) - (uv.y - b.y) * 0.9 - phase) * 7.0, 2.0));
+          col += vec3(1.0, 0.86, 0.58) * gold * (band * 0.55 + 0.06 * sin(uTime * 0.8 + uv.x * 9.0));
+
+          // pixel clouds: halftone squares on a screen grid, sampled from drifting noise in painting space
+          float cell = 7.0 * uDpr;
+          vec2 cid = floor(sp / cell), local = fract(sp / cell) - 0.5;
+          vec2 cuv = toImg((cid + 0.5) * cell);
+          vec2 q = vec2(cuv.x * (uImg.x / uImg.y), cuv.y * 2.4) * 1.25 + vec2(uTime * 0.018, 0.0);
+          float n = fbm(q) + 0.18 * fbm(q * 3.1 - uTime * 0.01);
+          float dens = smoothstep(0.62, 0.86, n);
+          float cellSky = skyMask(paint(cuv)) * step(cuv.y, uHorizon - 0.02);
+          float sq = step(max(abs(local.x), abs(local.y)), dens * 0.47) * step(0.02, dens);
+          float shade = mix(0.74, 1.0, smoothstep(0.62, 0.95, n));
+          col = mix(col, vec3(shade, shade, shade * 1.02), sq * cellSky * 0.95);
+
+          // finish: soft vignette, film grain
+          vec2 vq = gl_FragCoord.xy / uRes - 0.5;
+          col *= 1.0 - dot(vq, vq) * 0.35;
+          col += (hash(sp + fract(uTime) * 100.0) - 0.5) * 0.035;
+          gl_FragColor = vec4(col, 1.0);
+        }`
+    });
+    scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
+
+    const useTexture = (t, w, h) => {
+      t.minFilter = THREE.LinearFilter; t.generateMipmaps = false; t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping;
+      U.uImg.value.set(w, h); U.uTex.value = t; stage.classList.add('gl-on'); frame(0);
+    };
+    const loadStill = () => new THREE.TextureLoader().load(PAINT.src, t => useTexture(t, t.image.width, t.image.height));
+    if (PAINT.video && !REDUCE) {
+      const v = Object.assign(document.createElement('video'), { src: PAINT.video, muted: true, loop: true, playsInline: true, autoplay: true, crossOrigin: 'anonymous' });
+      v.addEventListener('loadeddata', () => { useTexture(new THREE.VideoTexture(v), v.videoWidth, v.videoHeight); v.play().catch(() => {}); }, { once: true });
+      v.addEventListener('error', loadStill, { once: true });
+    } else loadStill();
+    function resize() { renderer.setSize(innerWidth, innerHeight, false); U.uRes.value.set(innerWidth * dpr, innerHeight * dpr); }
+    addEventListener('resize', resize); resize();
+    // A camera stop becomes pixels. The image always covers the width and never shows its bottom edge;
+    // on tall screens it sits lower, so the open sky above it holds the headline.
+    function placeCamera([fx, fy, zoom]) {
+      const W = innerWidth, H = innerHeight, iw = U.uImg.value.x, ih = U.uImg.value.y;
+      const scale = Math.max(W / iw, (H * (W > H ? 1 : 0.6)) / ih) * zoom;
+      const halfW = (W / 2) / (iw * scale), halfH = (H / 2) / (ih * scale);
+      U.uCam.value.set(Math.min(Math.max(fx, halfW), 1 - halfW), Math.min(fy, 1 - halfH), scale * dpr);
+    }
+    function draw(cam, t) {
+      if (!U.uTex.value) return;
+      placeCamera(cam);
+      U.uTime.value = t; U.uMouse.value.set(mouse.x * dpr, mouse.y * dpr); U.uPush.value = mouse.push;
+      renderer.render(scene, camera);
+    }
+    return { draw };
+  })();
+
+  /* ===================================================================
+     CONSTELLATIONS + STARS (2D canvas over the sky sections)
+     =================================================================== */
+  const starCanvas = $('#stars'), sctx = starCanvas.getContext('2d');
+  const STAR_DPR = Math.min(window.devicePixelRatio || 1, 2);
+  let causeProgress = 0;
+  const field = Array.from({ length: 46 }, (_, i) => ({ x: Math.random(), y: Math.random() * 0.92, r: Math.random() * 1.4 + .4, p: Math.random() * 6.28 }));
+  const constellation = [[.18, .30], [.34, .22], [.47, .38], [.62, .26], [.78, .42], [.66, .62], [.5, .72], [.86, .2]];
+  function sizeStars() { starCanvas.width = innerWidth * STAR_DPR; starCanvas.height = innerHeight * STAR_DPR; sctx.setTransform(STAR_DPR, 0, 0, STAR_DPR, 0, 0); }
+  function sparkle(x, y, r, a) {
+    const g = sctx.createRadialGradient(x, y, 0, x, y, r * 7);
+    g.addColorStop(0, `rgba(255,252,240,${a})`); g.addColorStop(.25, `rgba(255,240,210,${a * .35})`); g.addColorStop(1, 'rgba(255,240,210,0)');
+    sctx.fillStyle = g; sctx.beginPath(); sctx.arc(x, y, r * 7, 0, Math.PI * 2); sctx.fill();
+    sctx.strokeStyle = `rgba(255,255,255,${a * .9})`; sctx.lineWidth = .8;
+    sctx.beginPath(); sctx.moveTo(x - r * 6, y); sctx.lineTo(x + r * 6, y); sctx.moveTo(x, y - r * 6); sctx.lineTo(x, y + r * 6); sctx.stroke();
+    sctx.fillStyle = `rgba(255,255,255,${a})`; sctx.beginPath(); sctx.arc(x, y, r, 0, Math.PI * 2); sctx.fill();
+  }
+  function drawStars(t, sky) {
+    const W = innerWidth, H = innerHeight;
+    sctx.clearRect(0, 0, W, H);
+    if (sky < .01) return;
+    field.forEach(s => sparkle(s.x * W, s.y * H, s.r * .7, sky * (.35 + .35 * Math.sin(t * 1.3 + s.p))));
+    // dashed orbit arcs, like an astronomer's chart
+    sctx.save(); sctx.setLineDash([3, 7]); sctx.strokeStyle = `rgba(255,255,255,${.22 * sky})`; sctx.lineWidth = 1;
+    [[.95, .1, .62], [.95, .1, .82]].forEach(([cx, cy, r]) => { sctx.beginPath(); sctx.arc(cx * W, cy * H, r * Math.max(W, H), Math.PI * .55, Math.PI * 1.02); sctx.stroke(); });
+    sctx.restore();
+    // the constellation draws itself as you read the milestones
+    const pts = constellation.map(([x, y]) => [x * W, y * H]);
+    const along = causeProgress * (pts.length - 1);
+    sctx.strokeStyle = `rgba(255,255,255,${.7 * sky})`; sctx.lineWidth = 1.2; sctx.beginPath(); sctx.moveTo(...pts[0]);
+    for (let i = 1; i < pts.length; i++) {
+      const k = Math.min(1, Math.max(0, along - (i - 1)));
+      if (k <= 0) break;
+      sctx.lineTo(pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * k, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * k);
+    }
+    sctx.stroke();
+    pts.forEach(([x, y], i) => { const lit = along >= i - .05 ? 1 : .35; sparkle(x, y, 2.2, sky * lit * (.8 + .2 * Math.sin(t * 2 + i))); });
+  }
+  sizeStars(); addEventListener('resize', sizeStars);
+
+  /* ===================================================================
+     RENDER LOOP: the painting keeps moving even when you don't
+     =================================================================== */
+  let running = false;
+  function frame(time) {
+    const target = cameraTarget();
+    const k = MOTION ? .08 : 1;
+    camNow = camNow.map((v, i) => v + (target[i] - v) * k);
+    // a gentle hand-held drift so the frame is never perfectly still
+    const drift = MOTION ? [Math.sin(time * .11) * .006, Math.cos(time * .09) * .005, 1 + Math.sin(time * .07) * .012] : [0, 0, 1];
+    const cam = [camNow[0] + drift[0], camNow[1] + drift[1], camNow[2] * drift[2]];
+    mouse.push *= .96;
+    if (GL) GL.draw(cam, time);
+    drawStars(time, skyAmount(cam[1]));
+  }
+  if (MOTION) {
+    gsap.ticker.add(t => { if (!document.hidden) frame(t); });
+  } else {
+    // still frames: redraw only when the section changes or the window resizes
+    const still = () => frame(0);
+    addEventListener('resize', still); setTimeout(still, 300);
+    window.__still = still;
+  }
+  addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    const moved = Math.hypot(e.clientX - mouse.x, e.clientY - mouse.y);
+    mouse.x = e.clientX; mouse.y = e.clientY; mouse.push = Math.min(1, mouse.push + moved / 120);
+  }, { passive: true });
+
+  /* ===================================================================
+     SCROLL: smooth scrolling, camera blends, reveals
+     =================================================================== */
+  let lenis = null;
+  if (MOTION && window.Lenis) {
+    lenis = new Lenis({ duration: 1.2, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0);
+  }
+  if (HAS_GSAP) {
+    sections.forEach((sec, i) => {
+      if (!i) return;
+      ScrollTrigger.create({ trigger: sec, start: 'top 95%', end: 'top 25%', scrub: true,
+        onUpdate: s => { blend[i] = s.progress; if (!MOTION && window.__still) window.__still(); },
+        onRefresh: s => { blend[i] = s.progress; } });
+    });
+    ScrollTrigger.create({ trigger: '#cause .milestones', start: 'top 85%', end: 'bottom 55%', scrub: true, onUpdate: s => { causeProgress = s.progress; } });
+  } else {
+    // no GSAP: pick the stop of whichever section is in view
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const i = sections.indexOf(e.target); blend.fill(0); for (let k = 1; k <= i; k++) blend[k] = 1; causeProgress = 1; } }), { threshold: .4 });
+    sections.forEach(s => io.observe(s));
+  }
+  $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const target = $(a.getAttribute('href')); if (!target) return;
+    e.preventDefault(); closeMenu(false);
+    if (lenis) lenis.scrollTo(target, { duration: 1.6 }); else target.scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth' });
+    target.setAttribute('tabindex', '-1'); setTimeout(() => target.focus({ preventScroll: true }), REDUCE ? 0 : 900);
+  }));
+
+  // headings rise word by word out of their own masks
+  function splitWords(el) {
+    const text = el.textContent.replace(/\s+/g, ' ').trim();
+    const sr = document.createElement('span'); sr.className = 'sr-only'; sr.textContent = text;
+    const vis = document.createElement('span'); vis.className = 'split'; vis.setAttribute('aria-hidden', 'true');
+    const walk = (node, parent) => node.childNodes.forEach(n => {
+      if (n.nodeType === 3) n.textContent.split(/(\s+)/).forEach(part => {
+        if (!part) return; if (/^\s+$/.test(part)) { parent.append(' '); return; }
+        const w = document.createElement('span'); w.className = 'w'; const wi = document.createElement('span'); wi.className = 'wi'; wi.textContent = part; w.append(wi); parent.append(w);
+      });
+      else if (n.nodeType === 1) { const c = n.cloneNode(false); parent.append(c); if (!n.classList.contains('streak')) walk(n, c); }
+    });
+    walk(el, vis); el.textContent = ''; el.append(sr, vis);
+  }
+  if (MOTION) {
+    $$('.split-me').forEach(h => {
+      splitWords(h);
+      gsap.fromTo($$('.wi', h), { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: .07, duration: 1.2, ease: 'expo.out',
+        scrollTrigger: { trigger: h, start: 'top 85%', toggleActions: 'play none none reverse' } });
+    });
+    $$('.rv').forEach(el => gsap.to(el, { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out',
+      scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none reverse' } }));
+    // quotes light up word by word as you scroll through them
+    $$('.q').forEach(q => {
+      q.innerHTML = q.textContent.split(' ').map(w => `<span class="w">${w}</span>`).join(' ');
+      gsap.fromTo($$('.w', q), { opacity: .18 }, { opacity: 1, stagger: .1, ease: 'none', scrollTrigger: { trigger: q, start: 'top 80%', end: 'bottom 50%', scrub: true } });
+    });
+    // portrait frames: the halftone veil dissolves and the photo settles, one frame after another
+    $$('.frame').forEach((f, i) => f.style.setProperty('--i', i));
+    ScrollTrigger.create({ trigger: '#rail', start: 'top 80%', onEnter: () => $$('.frame').forEach(f => f.classList.add('in')), onLeaveBack: () => $$('.frame').forEach(f => f.classList.remove('in')) });
+    // the hero streak and camera ease in on load
+    gsap.from('.bar, .guides, .spark', { opacity: 0, duration: 1.4, delay: .2 });
+  } else {
+    $$('.frame').forEach(f => f.classList.add('in'));
+  }
+
+  /* ===================================================================
+     MENU
+     =================================================================== */
+  const menu = $('#menu'), menuBtn = $('#menu-btn');
+  function openMenu() {
+    menu.hidden = false; menuBtn.setAttribute('aria-expanded', 'true'); menuBtn.setAttribute('aria-label', 'Close the menu');
+    if (lenis) lenis.stop();
+    if (MOTION) gsap.fromTo($$('#menu a'), { yPercent: 110 }, { yPercent: 0, duration: 1, stagger: .06, ease: 'expo.out' });
+    requestAnimationFrame(() => $('#menu a').focus({ preventScroll: true }));
+  }
+  function closeMenu(focusBtn = true) {
+    if (menu.hidden) return;
+    menu.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.setAttribute('aria-label', 'Open the menu');
+    if (lenis) lenis.start();
+    if (focusBtn) menuBtn.focus({ preventScroll: true });
+  }
+  menuBtn.addEventListener('click', () => (menu.hidden ? openMenu() : closeMenu()));
+  document.addEventListener('keydown', e => {
+    if (menu.hidden) return;
+    if (e.key === 'Escape') { closeMenu(); return; }
+    if (e.key !== 'Tab') return;
+    const f = [menuBtn, ...$$('#menu a')], first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  /* ===================================================================
+     NOTES WALL: shared when the page can reach its database,
+     otherwise kept in this browser
+     =================================================================== */
+  const wall = $('#wall'), form = $('#note-form'), statusEl = $('#n-status'), msgEl = $('#n-msg');
+  const setStatus = t => { statusEl.textContent = t; };
+  let db = null, canWrite = null, isOwner = false, shared = [], local = [], seen = new Set(), firstPaint = true;
+  try { local = JSON.parse(localStorage.getItem('ew-notes') || '[]'); } catch (e) { local = []; }
+  const saveLocal = () => { try { localStorage.setItem('ew-notes', JSON.stringify(local.slice(0, 20))); } catch (e) {} };
+  function renderWall() {
+    const all = [...shared.map(n => ({ ...n, shared: true })), ...local.map(n => ({ ...n, shared: false }))].sort((a, b) => (b.at || 0) - (a.at || 0)).slice(0, 12);
+    wall.textContent = '';
+    if (!all.length) { const e = document.createElement('p'); e.className = 'empty glass'; e.textContent = 'No notes yet. The first page is yours.'; wall.append(e); return; }
+    all.forEach((n, i) => {
+      const key = (n.shared ? 's' : 'l') + n.id, card = document.createElement('article');
+      card.className = 'note glass' + ((!seen.has(key) && !REDUCE) ? ' new' : '');
+      if (firstPaint) card.style.animationDelay = (i * .08) + 's';
+      seen.add(key);
+      const p = document.createElement('p'); p.textContent = n.message;
+      const f = document.createElement('footer'); const b = document.createElement('b'); b.textContent = n.name; f.append(b);
+      if (n.place) { const s = document.createElement('span'); s.textContent = n.place; f.append(s); }
+      const d = document.createElement('span'); d.textContent = (n.shared ? '' : 'This device · ') + new Date(n.at).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }); f.append(d);
+      card.append(p, f);
+      if (n.shared && isOwner) {
+        const rm = document.createElement('button'); rm.className = 'rm'; rm.type = 'button'; rm.textContent = 'Remove'; rm.setAttribute('aria-label', `Remove the note from ${n.name}`);
+        rm.addEventListener('click', () => db.collection('notes').doc(n.id).delete().catch(() => setStatus('That note could not be removed. Try again.')));
+        card.append(rm);
+      }
+      wall.append(card);
+    });
+    firstPaint = false;
+  }
+  renderWall();
+  (async () => {
+    if (!window.claude || !window.claude.use) { setStatus('Notes are kept in this browser.'); return; }
+    let user = null;
+    try { [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]); } catch (e) { db = null; }
+    if (user) { try { canWrite = await user.can('data.write'); } catch (e) {} try { isOwner = !!(await user.isOwner()); } catch (e) {} }
+    if (!db) { setStatus('Notes are kept in this browser.'); return; }
+    setStatus('Loading the wall…');
+    const timer = setTimeout(() => setStatus("The shared wall can't be reached yet. New notes are kept in this browser."), 10000);
+    db.collection('notes').orderBy('at', 'desc').limit(40).onSnapshot(snap => {
+      if (!snap.metadata.fromCache) { clearTimeout(timer); setStatus(canWrite === false ? 'You can read the wall. Notes you write are kept in this browser.' : ''); }
+      shared = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderWall();
+    }, () => { clearTimeout(timer); db = null; setStatus('The shared wall is unavailable right now. Notes are kept in this browser.'); });
+  })();
+  msgEl.addEventListener('input', () => { $('#n-count').textContent = `${msgEl.value.length} / 280`; });
+  let posting = false;
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = $('#n-name').value.trim(), place = $('#n-place').value.trim(), message = msgEl.value.trim();
+    if (!name || !message) { setStatus('Add your name and a message, then send.'); (name ? msgEl : $('#n-name')).focus(); return; }
+    if (posting) return; posting = true;
+    const note = { name: name.slice(0, 40), place: place.slice(0, 40), message: message.slice(0, 280), at: Date.now() };
+    let ok = false;
+    if (db && canWrite !== false) {
+      try { await db.collection('notes').add(note); ok = true; setStatus('Your note is on the wall.'); }
+      catch (err) { if (err && err.code === 'invalid_argument') canWrite = false; if (err && err.code === 'quota_exceeded') setStatus('The wall is full. Your note is kept in this browser.'); }
+    }
+    if (!ok) {
+      local.unshift({ id: String(note.at), ...note }); saveLocal(); renderWall();
+      if (!/full/.test(statusEl.textContent)) setStatus(db ? 'Only people this page is shared with as Contributors can post to the shared wall. Your note is kept in this browser.' : 'Your note is kept in this browser.');
+    }
+    form.reset(); $('#n-count').textContent = '0 / 280'; posting = false;
+  });
+})();
+</script>
+</body>
+</html>
