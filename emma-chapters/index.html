@@ -256,6 +256,16 @@ window.CONFIG = {
   .bar-chapter { margin: 0; font: 600 .68rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
   .bar-actions { justify-self: end; display: flex; align-items: center; gap: 1.4rem; }
   .menu-btn { font: 600 .72rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; padding: .7rem 0; }
+  .sound-btn { display: inline-flex; align-items: center; gap: .6rem; min-width: 32px; padding: .7rem 0; font: 600 .72rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; }
+  .eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
+  .eq i { width: 2px; height: 5px; background: currentColor; opacity: .55; }
+  .eq i:nth-child(2) { height: 9px; } .eq i:nth-child(3) { height: 4px; } .eq i:nth-child(4) { height: 7px; }
+  .sound-btn.is-on .eq i { opacity: 1; height: 9px; animation: eq .9s ease-in-out infinite alternate; }
+  .sound-btn.is-on .eq i:nth-child(2) { height: 12px; animation-delay: -.35s; }
+  .sound-btn.is-on .eq i:nth-child(3) { height: 6px; animation-delay: -.6s; }
+  .sound-btn.is-on .eq i:nth-child(4) { height: 10px; animation-delay: -.15s; }
+  @keyframes eq { from { height: 3px; } to { height: 12px; } }
+  @media (max-width: 560px) { .sb-label { display: none; } }
 
   /* ---------- Cursor (fine pointers only) ---------- */
   #cursor { display: none; }
@@ -281,6 +291,17 @@ window.CONFIG = {
   .ld-bar { position: absolute; left: var(--wl, 38%); right: var(--wr, 38%); top: calc(100% - var(--wb, 34%) + 6px); height: 1px; background: color-mix(in srgb, var(--paper) 20%, transparent); }
   .ld-bar i { position: absolute; inset: 0; background: var(--paper); transform-origin: left; transform: scaleX(0); }
   .rm #loader { display: none; }
+  .ld-gate { position: absolute; right: var(--gutter-r); bottom: calc(40px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 1rem; justify-items: end; pointer-events: auto; }
+  .ld-gate[hidden] { display: none; }
+  .ld-gate-note { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 1.2rem; color: color-mix(in srgb, var(--paper) 82%, transparent); }
+  .ld-gate-btns { display: flex; flex-wrap: wrap; gap: .7rem; justify-content: flex-end; }
+  .ld-btn { position: relative; overflow: hidden; padding: 1rem 1.5rem; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--paper) 40%, transparent);
+    color: var(--paper); font: 600 .7rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; transition: background-color .3s, color .3s; }
+  .ld-btn:hover { background: color-mix(in srgb, var(--paper) 12%, transparent); }
+  .ld-btn.main { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  .ld-btn i { position: absolute; left: 0; bottom: 0; width: 100%; height: 2px; background: var(--paper); transform: scaleX(0); transform-origin: left; }
+  .ld-gate.counting .ld-btn i { transform: scaleX(1); transition: transform 8s linear; }
+  @media (max-width: 700px) { .ld-gate { left: var(--gutter-l); top: calc(100% - var(--wb, 34%) + 34px); bottom: auto; justify-items: start; } .ld-gate-btns { justify-content: flex-start; } }
 
   /* ---------- Fullscreen menu ---------- */
   #menu { position: fixed; inset: 0; z-index: 120; color: var(--paper); }
@@ -553,6 +574,13 @@ window.CONFIG = {
   <p class="ld-chapter" id="ld-chapter">Prologue</p>
   <div class="ld-bar"><i id="ld-bar"></i></div>
   <p class="ld-count" id="ld-num">000</p>
+  <div class="ld-gate" id="ld-gate" hidden>
+    <p class="ld-gate-note">This film has sound.</p>
+    <div class="ld-gate-btns">
+      <button class="ld-btn main" id="enter-sound" data-magnetic>Enter with sound</button>
+      <button class="ld-btn" id="enter-silent" data-magnetic>Enter in silence<i aria-hidden="true"></i></button>
+    </div>
+  </div>
 </div>
 
 <div class="grain" aria-hidden="true"></div>
@@ -568,6 +596,7 @@ window.CONFIG = {
   <a href="#hero" class="brand" data-magnetic data-nav="Prologue" aria-label="Back to the beginning">E.W.</a>
   <p class="bar-chapter"><span class="sr-only">Current chapter: </span><span id="chapter-now">Prologue</span></p>
   <div class="bar-actions">
+    <button class="sound-btn" id="sound-btn" data-magnetic aria-pressed="false" aria-label="Sound"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="sb-label">Sound off</span></button>
     <button class="menu-btn" id="menu-btn" data-magnetic aria-expanded="false" aria-controls="menu"><span data-scramble>Menu</span></button>
   </div>
 </header>
@@ -790,6 +819,7 @@ window.CONFIG = {
         <div><dt>In honour of</dt><dd>Emma Watson</dd></div>
         <div><dt>Typography</dt><dd id="credit-type"></dd></div>
         <div><dt>Motion</dt><dd>GSAP, ScrollTrigger, Lenis &amp; Three.js</dd></div>
+        <div><dt>Sound</dt><dd>An original score, synthesised live in your browser</dd></div>
         <div><dt>Photography</dt><dd>© the original photographers and publishers</dd></div>
       </dl>
       <p class="cr-note"><strong>Unofficial fan site.</strong> Not affiliated with, endorsed by or connected to Emma Watson, her representatives, UN Women or HeForShe. The quotes on this page come from her public HeForShe speech at the United Nations on 20 September 2014.</p>
@@ -964,12 +994,239 @@ window.CONFIG = {
   };
 
   /* =====================================================================
+     SOUND DESIGN: an original score and effects, synthesised live with the
+     Web Audio API (no audio files, no recordings). Silent until the visitor
+     chooses sound. Each chapter has its own chord, texture and rhythm.
+     ===================================================================== */
+  const Sound = (() => {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    const hz = m => 440 * Math.pow(2, (m - 69) / 12);            // MIDI note → frequency
+    // chord = MIDI notes (bass first) · bright = pad filter in Hz · texture = the chapter's extra layer
+    const SCORE = {
+      prologue: { chord: [38, 50, 57, 60, 65, 69], bright: 900,  texture: 'shimmer' },             // D minor 7: anticipation
+      actress:  { chord: [41, 53, 57, 60, 64, 67], bright: 1300, texture: 'projector' },           // F major 9: warm, filmic
+      activist: { chord: [36, 48, 55, 58, 63, 67], bright: 1600, texture: 'heartbeat', bpm: 96 }, // C minor 7: resolve
+      reader:   { chord: [43, 55, 59, 62, 66, 71], bright: 1100, texture: 'bells' },               // G major 7: gentle
+      style:    { chord: [33, 45, 52, 57, 60, 71], bright: 2100, texture: 'runway', bpm: 116 },    // A minor add 9: night drive
+      voice:    { chord: [38, 50, 57, 60, 65, 69], bright: 700,  texture: 'none' },                // moves with VOICE below
+      fin:      { chord: [38, 50, 57, 61, 64, 69], bright: 1200, texture: 'shimmer' }              // D major 9: resolution
+    };
+    const VOICE = [[38, 50, 57, 60, 65, 69], [34, 46, 53, 57, 62, 65], [41, 53, 57, 60, 65, 67]];  // night Dm7 → dusk B♭maj7 → dawn F add 9
+    const PATTERNS = {                                               // one step = a 16th note; numbers are hit strength
+      heartbeat: { steps: 8,  kick: [1, 0, .6, 0, 0, 0, 0, 0], hat: [] },
+      runway:    { steps: 16, kick: [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0], hat: [0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, .5] }
+    };
+    let ctx, master, music, fx, verb, noise, padFilter, proj, air, airFilter, shimmerGain, timer = null;
+    const voices = [];
+    let on = false, current = 'prologue', voiceIdx = 0, nextStep = 0, step = 0, nextBell = 0, lastBlip = 0, lastPling = 0, quietUntil = 0;
+    const quiet = () => performance.now() < quietUntil;
+    const chordNow = () => (current === 'voice' ? VOICE[voiceIdx] : SCORE[current].chord);
+    const env = (param, t, peak, attack, release) => {
+      param.setValueAtTime(.0001, t); param.exponentialRampToValueAtTime(peak, t + attack); param.exponentialRampToValueAtTime(.0001, t + attack + release);
+    };
+    const loopNoise = () => { const n = ctx.createBufferSource(); n.buffer = noise; n.loop = true; n.start(0, Math.random() * 2); return n; };
+    const noiseHit = (t, dur) => { const n = ctx.createBufferSource(); n.buffer = noise; n.start(t, Math.random()); n.stop(t + dur); return n; };
+
+    function build() {
+      ctx = new AC();
+      const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 4;
+      master = ctx.createGain(); master.gain.value = 0;
+      master.connect(comp).connect(ctx.destination);
+      // reverb: a convolver fed with three seconds of decaying noise
+      verb = ctx.createConvolver();
+      const len = ctx.sampleRate * 3, ir = ctx.createBuffer(2, len, ctx.sampleRate);
+      for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3.2); }
+      verb.buffer = ir;
+      const wet = ctx.createGain(); wet.gain.value = .45; verb.connect(wet).connect(master);
+      music = ctx.createGain(); music.gain.value = .55; music.connect(master);
+      fx = ctx.createGain(); fx.gain.value = .8; fx.connect(master);
+      noise = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+      const nd = noise.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+
+      // PAD: six voices that glide between chords through one slowly breathing filter
+      padFilter = ctx.createBiquadFilter(); padFilter.type = 'lowpass'; padFilter.Q.value = .8; padFilter.frequency.value = SCORE.prologue.bright;
+      const lfo = ctx.createOscillator(), lfoAmt = ctx.createGain();
+      lfo.frequency.value = .06; lfoAmt.gain.value = 260; lfo.connect(lfoAmt).connect(padFilter.frequency); lfo.start();
+      const pad = ctx.createGain(), send = ctx.createGain(); send.gain.value = .6;
+      padFilter.connect(pad); pad.connect(music); pad.connect(send).connect(verb);
+      SCORE.prologue.chord.forEach((m, i) => {
+        const g = ctx.createGain(); g.gain.value = i === 0 ? .16 : .045; g.connect(padFilter);
+        voices.push((i === 0 ? ['sine', 'triangle'] : ['sawtooth', 'triangle']).map((type, k) => {
+          const o = ctx.createOscillator(); o.type = type; o.frequency.value = hz(m); o.detune.value = k ? 7 : -7;
+          o.connect(g); o.start(); return o;
+        }));
+      });
+      // PROJECTOR (Chapter I): filtered noise flickering at 24 frames a second
+      const band = ctx.createBiquadFilter(), flick = ctx.createGain(), rate = ctx.createOscillator(), depth = ctx.createGain();
+      band.type = 'bandpass'; band.frequency.value = 2400; band.Q.value = 2.5;
+      rate.type = 'square'; rate.frequency.value = 24; depth.gain.value = .5; flick.gain.value = .5;
+      rate.connect(depth).connect(flick.gain); rate.start();
+      proj = ctx.createGain(); proj.gain.value = 0;
+      loopNoise().connect(band).connect(flick).connect(proj).connect(music);
+      // AIR: wind that rises with scroll speed
+      airFilter = ctx.createBiquadFilter(); airFilter.type = 'bandpass'; airFilter.frequency.value = 700; airFilter.Q.value = .7;
+      air = ctx.createGain(); air.gain.value = 0;
+      loopNoise().connect(airFilter).connect(air).connect(fx);
+      // SHIMMER: bright air that follows the cursor ripple in the hero
+      const high = ctx.createBiquadFilter(); high.type = 'highpass'; high.frequency.value = 6500;
+      shimmerGain = ctx.createGain(); shimmerGain.gain.value = 0;
+      loopNoise().connect(high).connect(shimmerGain); shimmerGain.connect(fx); shimmerGain.connect(verb);
+    }
+
+    function kick(t, amt) {                                          // a soft, deep thump
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(42, t + .18);
+      env(g.gain, t, .5 * amt, .005, .38); o.connect(g).connect(music); o.start(t); o.stop(t + .5);
+    }
+    function hat(t, amt) {
+      const f = ctx.createBiquadFilter(), g = ctx.createGain(); f.type = 'highpass'; f.frequency.value = 8000;
+      env(g.gain, t, .06 * amt, .002, .05); noiseHit(t, .1).connect(f).connect(g).connect(music);
+    }
+    function bell(m, t, amt = 1) {                                   // glassy bell: three inharmonic partials
+      const out = ctx.createGain(); out.gain.value = amt; out.connect(fx); out.connect(verb);
+      [[1, .11, 2.2], [2.76, .04, 1.2], [5.4, .02, .6]].forEach(([ratio, peak, decay]) => {
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.frequency.value = hz(m) * ratio; env(g.gain, t, peak, .004, decay);
+        o.connect(g).connect(out); o.start(t); o.stop(t + decay + .1);
+      });
+    }
+    function whooshAt(t, up, dur) {                                  // filtered rush, rising or falling
+      const f = ctx.createBiquadFilter(), g = ctx.createGain(); f.type = 'bandpass'; f.Q.value = 1.4;
+      f.frequency.setValueAtTime(up ? 280 : 3200, t); f.frequency.exponentialRampToValueAtTime(up ? 3200 : 280, t + dur);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.22, t + dur * .6); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      noiseHit(t, dur + .05).connect(f).connect(g); g.connect(fx); g.connect(verb);
+    }
+    function clickAt(t) {                                            // projector shutter: two dry ticks and a low knock
+      [0, .045].forEach((d, i) => {
+        const f = ctx.createBiquadFilter(), g = ctx.createGain(); f.type = 'highpass'; f.frequency.value = 2500;
+        env(g.gain, t + d, i ? .12 : .2, .001, .03); noiseHit(t + d, .06).connect(f).connect(g).connect(fx);
+      });
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.frequency.setValueAtTime(180, t); o.frequency.exponentialRampToValueAtTime(70, t + .08);
+      env(g.gain, t, .12, .002, .12); o.connect(g).connect(fx); o.start(t); o.stop(t + .2);
+    }
+
+    function schedule() {                                            // look-ahead sequencer for rhythm and bells
+      const sc = SCORE[current], pat = PATTERNS[sc.texture], now = ctx.currentTime, ahead = now + .2;
+      if (pat) {
+        if (nextStep < now) nextStep = now + .05;
+        while (nextStep < ahead) {
+          const i = step % pat.steps;
+          if (pat.kick[i]) kick(nextStep, pat.kick[i]);
+          if (pat.hat[i]) hat(nextStep, pat.hat[i]);
+          nextStep += 60 / sc.bpm / 4; step++;
+        }
+      }
+      if (sc.texture === 'bells' || sc.texture === 'shimmer') {
+        const soft = sc.texture === 'shimmer';
+        if (nextBell < now) nextBell = now + .3 + Math.random();
+        if (nextBell < ahead) {
+          const top = chordNow().slice(2);
+          bell(top[(Math.random() * top.length) | 0] + (soft ? 24 : 12), nextBell, soft ? .3 : .7);
+          nextBell += soft ? 2.2 + Math.random() * 2.5 : .7 + Math.random() * 1.4;
+        }
+      }
+    }
+    function applyScore(secs) {
+      const t = ctx.currentTime, chord = chordNow();
+      voices.forEach((oscs, i) => oscs.forEach(o => o.frequency.setTargetAtTime(hz(chord[i]), t, secs / 3)));
+      padFilter.frequency.setTargetAtTime(current === 'voice' ? 700 + voiceIdx * 750 : SCORE[current].bright, t, secs / 2);
+      proj.gain.setTargetAtTime(SCORE[current].texture === 'projector' ? .05 : 0, t, .6);
+      step = 0;
+    }
+    const startClock = () => { clearInterval(timer); timer = setInterval(schedule, 50); };
+
+    async function enable() {
+      if (!ctx) build();
+      try { await ctx.resume(); } catch (e) { return false; }
+      on = true; applyScore(.03);
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setTargetAtTime(.9, ctx.currentTime, .8);
+      startClock();
+      return ctx.state === 'running';
+    }
+    function disable() {
+      on = false; clearInterval(timer);
+      if (!ctx) return;
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setTargetAtTime(0, ctx.currentTime, .12);
+      setTimeout(() => { if (!on) ctx.suspend(); }, 600);
+    }
+    document.addEventListener('visibilitychange', () => {           // stay silent in a background tab
+      if (!ctx || !on) return;
+      if (document.hidden) { clearInterval(timer); ctx.suspend(); } else { ctx.resume(); startClock(); }
+    });
+
+    return {
+      get on() { return on; },
+      enable, disable,
+      hush(ms) { quietUntil = performance.now() + ms; },              // mute effects during jumps between chapters
+      chapter(name, label) {
+        const key = label === 'Credits' ? 'fin' : (SCORE[name] ? name : 'prologue');
+        if (key === current) return;
+        current = key;
+        if (!on) return;
+        applyScore(2.4);
+        if (!quiet()) clickAt(ctx.currentTime + .02);
+      },
+      voice(p) {                                                     // the quote scene: night → dusk → dawn
+        const i = Math.min(VOICE.length - 1, Math.round(p * (VOICE.length - 1)));
+        if (i === voiceIdx) return;
+        voiceIdx = i;
+        if (!on || current !== 'voice') return;
+        applyScore(1.6); bell(VOICE[i][5] + 12, ctx.currentTime + .05, .8);
+      },
+      whoosh(up = true, dur = .9) { if (on && !quiet()) whooshAt(ctx.currentTime + .01, up, dur); },
+      click() { if (on) clickAt(ctx.currentTime + .01); },
+      blip(i) {                                                      // soft hover note from the current chord
+        if (!on || quiet()) return;
+        const now = performance.now(); if (now - lastBlip < 70) return; lastBlip = now;
+        const top = chordNow().slice(2);
+        bell(top[(i === undefined ? (Math.random() * top.length) | 0 : i) % top.length] + 24, ctx.currentTime + .005, .22);
+      },
+      pling(x, amt = 1) {                                            // trail photos: higher notes to the right
+        if (!on || quiet()) return;
+        const now = performance.now(); if (now - lastPling < 110) return; lastPling = now;
+        const top = chordNow().slice(1);
+        bell(top[Math.max(0, Math.min(top.length - 1, Math.floor(x * top.length)))] + 24, ctx.currentTime + .005, .5 * amt);
+      },
+      air(v) {
+        if (!on) return; const a = Math.abs(v), t = ctx.currentTime;
+        air.gain.setTargetAtTime(Math.min(.09, a / 30000), t, .15);
+        airFilter.frequency.setTargetAtTime(500 + Math.min(2500, a / 4), t, .2);
+      },
+      shimmer(s) { if (on) shimmerGain.gain.setTargetAtTime(Math.min(.05, s * .05), ctx.currentTime, .1); },
+      swell() {                                                      // the entrance: a rising rush into a deep boom
+        if (!on) return; const t = ctx.currentTime;
+        whooshAt(t, true, 1.6);
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.frequency.setValueAtTime(70, t + 1.45); o.frequency.exponentialRampToValueAtTime(32, t + 3.2);
+        env(g.gain, t + 1.45, .55, .02, 2.2); o.connect(g); g.connect(music); g.connect(verb); o.start(t + 1.4); o.stop(t + 4);
+        bell(81, t + 1.5, .8); bell(88, t + 1.78, .5);
+      }
+    };
+  })();
+
+  const soundBtn = $('#sound-btn');
+  async function setSound(want) {
+    if (!Sound) return;
+    if (want) want = await Sound.enable(); else Sound.disable();
+    soundBtn.classList.toggle('is-on', want);
+    soundBtn.setAttribute('aria-pressed', String(want));
+    scramble($('.sb-label', soundBtn), want ? 'Sound on' : 'Sound off');
+  }
+  if (Sound) soundBtn.addEventListener('click', () => setSound(!Sound.on));
+  else soundBtn.hidden = true;
+
+  /* =====================================================================
      CHAPTER THEMES: each section repaints the page as it takes the screen
      ===================================================================== */
   const chapterNow = $('#chapter-now');
   let theme = 'prologue';
   const isLightBg = hex => { const [r, g, b] = hex.replace('#', '').match(/../g).map(x => parseInt(x, 16) / 255); return .2126 * r + .7152 * g + .0722 * b > .5; };
   function applyTheme(name, label, instant) {
+    if (Sound) Sound.chapter(name, label);
     if (label && chapterNow.dataset.text !== label) scramble(chapterNow, label);
     if (name === theme) return;
     theme = name;
@@ -1065,6 +1322,7 @@ window.CONFIG = {
       uniforms.uMouse.value.lerp(target, .08);
       uniforms.uStrength.value += (push - uniforms.uStrength.value) * .08;
       push *= .95;
+      if (Sound) Sound.shimmer(Math.max(0, uniforms.uStrength.value - .35) / .65 * (1 - uniforms.uScroll.value)); // only when the visitor stirs it
       renderer.render(scene, camera);
     };
     const setActive = on => {
@@ -1077,7 +1335,7 @@ window.CONFIG = {
     let heroVisible = true;
     resize();
     hero.classList.add('gl-on');
-    return { uniforms, setActive: on => { heroVisible = on; setActive(on); } };
+    return { uniforms, setActive: on => { heroVisible = on; setActive(on); if (!on && Sound) Sound.shimmer(0); } };
   })();
   if (!GL) fillImg($('.hero-fallback'));
   else GL.setActive(true);
@@ -1107,6 +1365,10 @@ window.CONFIG = {
     document.addEventListener('mouseout', e => { if (!e.relatedTarget) cursor.style.visibility = 'hidden'; });
     document.addEventListener('mouseover', () => { cursor.style.visibility = ''; });
 
+    // hover sounds: a soft note on links and buttons, rising notes down the chapter menu
+    $$('a, button, .film').filter(el => !el.closest('.m-list')).forEach(el => el.addEventListener('pointerenter', () => Sound && Sound.blip()));
+    $$('.m-list a').forEach((a, i) => a.addEventListener('pointerenter', () => Sound && Sound.blip(i)));
+
     // magnetic pull on the element itself
     $$('[data-magnetic]').forEach(el => {
       const mx = gsap.quickTo(el, 'x', { duration: .6, ease: 'power3' }), my = gsap.quickTo(el, 'y', { duration: .6, ease: 'power3' });
@@ -1132,6 +1394,7 @@ window.CONFIG = {
     if (menuOpen) return; menuOpen = true;
     menu.hidden = false; menuBtn.setAttribute('aria-expanded', 'true');
     main.inert = true; bar.inert = true; lenis && lenis.stop();
+    if (Sound) Sound.whoosh(true, .8);
     if (MOTION) {
       gsap.timeline()
         .fromTo('.m-panels i', { scaleY: 0 }, { scaleY: 1, duration: .7, stagger: .08, ease: 'expo.inOut' })
@@ -1145,6 +1408,7 @@ window.CONFIG = {
     menuBtn.setAttribute('aria-expanded', 'false');
     const done = () => { menu.hidden = true; main.inert = false; bar.inert = false; lenis && lenis.start(); };
     if (MOTION && !instant) {
+      if (Sound) Sound.whoosh(false, .7);
       gsap.timeline({ onComplete: () => { done(); menuBtn.focus({ preventScroll: true }); } })
         .to('.m-list a', { yPercent: -120, duration: .45, stagger: .03, ease: 'power3.in' })
         .to(['.m-close', '.m-note'], { opacity: 0, duration: .25 }, '<')
@@ -1176,14 +1440,16 @@ window.CONFIG = {
     if (!MOTION) { closeMenu(true); scrollToEl(target, true); target.focus && target.setAttribute('tabindex', '-1'); target.focus({ preventScroll: true }); return; }
     if (wiping) return; wiping = true;
     wipeTitle.textContent = label || '';
+    if (Sound) Sound.whoosh(true, .8);
     gsap.timeline({ onComplete: () => { wiping = false; } })
       .set(wipe, { autoAlpha: 1 })
       .fromTo(wipePath, { attr: { d: 'M0 100 V100 Q50 100 100 100 V100 z' } }, { attr: { d: 'M0 100 V50 Q50 0 100 50 V100 z' }, duration: .45, ease: 'power2.in' })
       .to(wipePath, { attr: { d: 'M0 100 V0 Q50 0 100 0 V100 z' }, duration: .35, ease: 'power2.out' })
       .fromTo(wipeTitle, { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: .6, ease: 'expo.out' }, '-=.25')
-      .add(() => { closeMenu(true); scrollToEl(target, true); ScrollTrigger.update(); })
+      .add(() => { if (Sound) Sound.hush(700); closeMenu(true); scrollToEl(target, true); ScrollTrigger.update(); })
       .to(wipeTitle, { yPercent: -60, autoAlpha: 0, duration: .45, ease: 'power2.in' }, '+=.35')
       .set(wipePath, { attr: { d: 'M0 0 V100 Q50 100 100 100 V0 z' } })
+      .add(() => { if (Sound) { Sound.click(); Sound.whoosh(false, .8); } })
       .to(wipePath, { attr: { d: 'M0 0 V50 Q50 100 100 50 V0 z' }, duration: .35, ease: 'power2.in' })
       .to(wipePath, { attr: { d: 'M0 0 V0 Q50 0 100 0 V0 z' }, duration: .45, ease: 'power2.out' })
       .set(wipe, { autoAlpha: 0 })
@@ -1239,6 +1505,22 @@ window.CONFIG = {
     await new Promise(r => gsap.to(count, { v: 84, duration: 1.7, ease: 'power2.inOut', onUpdate: paint, onComplete: r }));
     await fontsReady;
     await new Promise(r => gsap.to(count, { v: 100, duration: .5, ease: 'power2.out', onUpdate: paint, onComplete: r }));
+    // The film has sound: ask first (browsers only play audio after a click or key press).
+    // With no answer in 8 seconds it enters in silence; the header button turns sound on later.
+    if (Sound) {
+      const gate = $('#ld-gate');
+      $('#loader').removeAttribute('aria-hidden'); gate.hidden = false;
+      gsap.to('#ld-num', { opacity: .14, duration: .8 });       // the count has done its job: hand focus to the choice
+      gsap.fromTo(gate.children, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: .8, stagger: .1, ease: 'expo.out' });
+      requestAnimationFrame(() => { gate.classList.add('counting'); $('#enter-sound').focus({ preventScroll: true }); });
+      const withSound = await new Promise(r => {
+        const t = setTimeout(() => r(false), 8000);
+        $('#enter-sound').addEventListener('click', () => { clearTimeout(t); r(true); }, { once: true });
+        $('#enter-silent').addEventListener('click', () => { clearTimeout(t); r(false); }, { once: true });
+      });
+      if (withSound) { await setSound(true); Sound.swell(); }
+      gsap.to(gate, { autoAlpha: 0, y: -20, duration: .5, ease: 'expo.in' });
+    }
     gsap.timeline({ onComplete: () => { $('#loader').remove(); root.classList.remove('is-loading'); lenis && lenis.start(); ScrollTrigger.refresh(); } })
       .to(['#ld-num', '#ld-chapter', '.ld-top', '.ld-bar'], { yPercent: -80, autoAlpha: 0, duration: .7, ease: 'expo.in', stagger: .05 })
       .to('#hero-media', { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut' }, '-=.35')
@@ -1283,6 +1565,7 @@ window.CONFIG = {
 
   /* ---------- Chapter cards: five different wipes ---------- */
   $$('.cc').forEach(cc => {
+    ScrollTrigger.create({ trigger: cc, start: 'top 70%', onEnter: () => Sound && Sound.whoosh(true, 1.1), onLeaveBack: () => Sound && Sound.whoosh(false, .9) });
     const fill = $('.cc-fill', cc), kind = cc.dataset.wipe, st = sc(cc, 'top bottom', 'top top', { scrub: .5 });
     if (kind === 'circle') gsap.fromTo(fill, { clipPath: 'circle(0% at 50% 100%)' }, { clipPath: 'circle(142% at 50% 100%)', ease: 'none', scrollTrigger: st });
     if (kind === 'blinds') gsap.fromTo(fill.children, { scaleY: 0, transformOrigin: (i) => (i % 2 ? '50% 0%' : '50% 100%') }, { scaleY: 1, stagger: .1, ease: 'none', scrollTrigger: st });
@@ -1333,8 +1616,9 @@ window.CONFIG = {
     const prep = new IntersectionObserver(es => { if (es[0].isIntersecting) { prep.disconnect(); fontsReady.then(() => { srcs = C.images.moments.map((_, i) => srcFor(`moments.${i}`, 520)); }); } }, { rootMargin: '600px 0px' });
     prep.observe(sec);
     let n = 0, z = 1, last = null;
-    const spawn = (x, y) => {
+    const spawn = (x, y, auto) => {
       if (!srcs.length) return;
+      if (Sound) Sound.pling(x / sec.clientWidth, auto ? .4 : 1);
       const img = pool[n % pool.length]; img.src = srcs[n % srcs.length]; n++;
       gsap.killTweensOf(img);
       gsap.set(img, { x, y, xPercent: -50, yPercent: -50, scale: .3, opacity: 1, rotate: gsap.utils.random(-12, 12), zIndex: z++ });
@@ -1358,7 +1642,7 @@ window.CONFIG = {
         if (!on) return; t += dt;
         if (t < 150) return; t = 0;
         const w = sec.clientWidth, h = sec.clientHeight;
-        spawn(w / 2 + Math.sin(time * 1.1) * w * .34, h / 2 + Math.sin(time * 1.7) * h * .3);
+        spawn(w / 2 + Math.sin(time * 1.1) * w * .34, h / 2 + Math.sin(time * 1.7) * h * .3, true);
       });
     }
     gsap.fromTo('.mo-title', { scale: .7, opacity: 0, letterSpacing: '.2em' }, { scale: 1, opacity: 1, letterSpacing: '-.05em', ease: 'none', scrollTrigger: sc(sec, 'top 85%', 'top 20%') });
@@ -1438,7 +1722,7 @@ window.CONFIG = {
     gsap.fromTo(words[0], { yPercent: 115, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: .05, ease: 'none', scrollTrigger: sc('#voice', 'top 75%', 'top top') });
     gsap.fromTo(imgs[0], { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.3 }, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, ease: 'none', scrollTrigger: sc('#voice', 'top 80%', 'top top') });
     const tl = gsap.timeline({ scrollTrigger: { trigger: '#voice', start: 'top top', end: () => '+=' + innerHeight * quotes.length * 1.1, pin: stage, scrub: 1, invalidateOnRefresh: true,
-      onUpdate: s => { const i = Math.min(quotes.length - 1, Math.round(s.progress * (quotes.length - 1))); counter.textContent = String(i + 1).padStart(2, '0'); } } });
+      onUpdate: s => { const i = Math.min(quotes.length - 1, Math.round(s.progress * (quotes.length - 1))); counter.textContent = String(i + 1).padStart(2, '0'); if (Sound) Sound.voice(s.progress); } } });
     tl.to({}, { duration: .6 });
     for (let i = 1; i < quotes.length; i++) {
       tl.addLabel(`s${i}`)
@@ -1470,6 +1754,7 @@ window.CONFIG = {
     ScrollTrigger.create({ start: 0, end: 'max', onUpdate: s => { vel = s.getVelocity(); dir = s.direction; } });
     gsap.ticker.add((time, dt) => {
       vel *= .9;
+      if (Sound) Sound.air(vel);
       const skew = gsap.utils.clamp(-16, 16, vel / -160);
       list.forEach(m => {
         if (!m.on) return;
