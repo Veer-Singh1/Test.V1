@@ -91,7 +91,8 @@
   .statement .w.amber { color: var(--amber-ink); }
 
   /* ---------- 3. Film ---------- */
-  .film-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-dark); border: 1px solid var(--line-dark); margin-top: 3rem; }
+  .film-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 3rem; }
+  .film-grid .tile { outline: 1px solid var(--line-dark); }
   .tile { position: relative; aspect-ratio: 3 / 4; max-width: 100%; overflow: hidden; background: var(--black); cursor: pointer; border: 0; padding: 0; text-align: left; color: var(--white); }
   .tile .art { position: absolute; inset: 0; transition: transform 1.2s var(--ease); }
   .tile:hover .art, .tile.show .art { transform: scale(1.06); }
@@ -229,6 +230,10 @@
   @media (hover: hover) and (pointer: fine) { body.has-cursor .cursor, body.has-cursor .cursor-ring { display: block; } }
 
   .distort-on { filter: url(#distort); }
+  .mask { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
+  .wi { display: inline-block; transform-origin: 0 100%; }
+  #progress { position: fixed; inset: 0 0 auto; height: 2px; z-index: 65; background: var(--amber); transform: scaleX(0); transform-origin: 0 50%; pointer-events: none; }
+  .outline-name:hover, .outline-name:focus-visible { background-position: 0 0 !important; }
 
   /* The hero source is small: soften it so the grain hides the JPEG blocks when it is blown up */
   .hero-media img { filter: sepia(.55) saturate(1.5) brightness(.82) contrast(1.08) blur(.8px); }
@@ -254,6 +259,7 @@
   <filter id="distort"><feTurbulence id="turb" type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="2" seed="4"/><feDisplacementMap id="disp" in="SourceGraphic" scale="0"/></filter>
 </svg>
 
+<div id="progress" aria-hidden="true"></div>
 <div class="cursor" aria-hidden="true"></div>
 <div class="cursor-ring" aria-hidden="true"></div>
 
@@ -516,33 +522,89 @@
   if (window.gsap && window.ScrollTrigger && !reduce) {
     gsap.registerPlugin(ScrollTrigger);
     const ease = 'power4.out'; // closest GSAP curve to cubic-bezier(0.22, 1, 0.36, 1)
+    // Every scroll motion below is scrubbed: it is tied to the scroll position, so scrolling back up rewinds it.
+    const scrub = (trigger, start, end, extra = {}) => ({ trigger, start, end, scrub: 0.8, ...extra });
 
-    // Hero title fades up letter by letter, then parallax on scroll
+    // Page progress line
+    gsap.to('#progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
+
+    // HERO: letters rise in on load; on scroll the photo pushes in and darkens, letters blur apart, copy lifts away
     gsap.from('#hero-title .ch', { yPercent: 110, opacity: 0, duration: 1.4, ease, stagger: 0.045, delay: 0.2 });
     gsap.from('.hero-sub', { opacity: 0, y: 20, duration: 1.2, ease, delay: 0.9 });
-    gsap.to('#hero-media', { yPercent: 14, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-    gsap.to('.hero-copy', { yPercent: -30, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+    const heroST = scrub('.hero', 'top top', 'bottom top', { scrub: true });
+    gsap.to('#hero-media', { yPercent: 18, scale: 1.12, filter: 'brightness(.45)', ease: 'none', scrollTrigger: heroST });
+    gsap.to('#hero-title', { letterSpacing: '0.04em', ease: 'none', scrollTrigger: heroST });
+    gsap.to('#hero-title .ch', { filter: 'blur(10px)', y: (i) => -20 - (i % 5) * 14, stagger: 0.03, ease: 'none', scrollTrigger: heroST });
+    gsap.to('.hero-copy', { yPercent: -35, opacity: 0, ease: 'none', scrollTrigger: heroST });
 
-    // Statement: words reveal as you scroll
-    gsap.fromTo('#statement-text .w', { opacity: 0.12, y: 12 }, { opacity: 1, y: 0, stagger: 0.12, ease: 'none',
-      scrollTrigger: { trigger: '#statement', start: 'top 70%', end: 'bottom 70%', scrub: 0.6 } });
+    // Eyebrow labels type themselves out as they enter, and un-type on the way back
+    $$('.eyebrow').forEach(el => {
+      const full = el.textContent;
+      ScrollTrigger.create({ trigger: el, start: 'top 92%', end: 'top 70%', scrub: true,
+        onUpdate: st => { el.textContent = full.slice(0, Math.round(full.length * st.progress)) || ' '; } });
+    });
 
-    // Generic reveals
-    $$('.reveal').forEach(el => gsap.from(el, { y: 40, opacity: 0, duration: 1.3, ease, scrollTrigger: { trigger: el, start: 'top 88%' } }));
+    // Section headings: each word slides up out of its own mask
+    $$('.h2').forEach(h => {
+      h.classList.remove('reveal');
+      h.innerHTML = h.innerHTML.split('<br>').map(line =>
+        line.trim().split(/\s+/).map(w => `<span class="mask"><span class="wi">${w}</span></span>`).join(' ')).join('<br>');
+      gsap.fromTo(h.querySelectorAll('.wi'), { yPercent: 115, rotate: 4 }, { yPercent: 0, rotate: 0, stagger: 0.12, ease: 'none',
+        scrollTrigger: scrub(h, 'top 95%', 'top 60%') });
+    });
 
-    // Film tiles: staggered mask wipes
-    gsap.fromTo('.tile', { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease, stagger: 0.15,
-      scrollTrigger: { trigger: '.film-grid', start: 'top 80%' } });
-    gsap.from('.tile .art', { scale: 1.3, duration: 1.8, ease, stagger: 0.15, scrollTrigger: { trigger: '.film-grid', start: 'top 80%' } });
+    // STATEMENT: pinned while the words light up and the line settles from wide to tight
+    gsap.timeline({ scrollTrigger: { trigger: '#statement', start: 'top top', end: '+=120%', scrub: 0.8, pin: true } })
+      .fromTo('#statement-text .w', { opacity: 0.08, y: 30, filter: 'blur(6px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', stagger: 0.15, ease: 'none' })
+      .fromTo('#statement-text', { letterSpacing: '0.02em', scale: 0.94 }, { letterSpacing: '-0.05em', scale: 1, ease: 'none' }, 0);
 
-    // Texture scales slowly through the biography section
-    gsap.fromTo('#texture', { scale: 1.35 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '#detail', start: 'top bottom', end: 'bottom top', scrub: true } });
+    // Generic reveals (paragraphs, list rows): fade up with the scroll
+    $$('.reveal').filter(el => !el.closest('.highlights')).forEach((el, i) => gsap.fromTo(el, { y: 50, opacity: 0, x: el.closest('.causes-list') ? (i % 2 ? 40 : -40) : 0 },
+      { y: 0, x: 0, opacity: 1, ease: 'none', scrollTrigger: scrub(el, 'top 95%', 'top 70%') }));
 
-    // Gallery figures rise in
-    gsap.from('.masonry figure', { y: 60, opacity: 0, duration: 1.2, ease, stagger: 0.1, scrollTrigger: { trigger: '#masonry', start: 'top 85%' } });
+    // FILM: tiles wipe open in turn, artwork zooms out, columns drift apart
+    gsap.timeline({ scrollTrigger: scrub('.film-grid', 'top 90%', 'top 25%') })
+      .fromTo('.tile', { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', stagger: 0.18, ease: 'none' })
+      .fromTo('.tile .art', { scale: 1.4 }, { scale: 1, stagger: 0.18, ease: 'none' }, 0)
+      .fromTo('.tile .big', { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: 0.18, ease: 'none' }, 0.1);
+    gsap.fromTo('.tile:nth-child(odd)', { y: 40 }, { y: -40, ease: 'none', scrollTrigger: scrub('.film-grid', 'top bottom', 'bottom top', { scrub: true }) });
+    gsap.fromTo('.tile:nth-child(even)', { y: -20 }, { y: 60, ease: 'none', scrollTrigger: scrub('.film-grid', 'top bottom', 'bottom top', { scrub: true }) });
 
-    // Orbit spins up into place
-    gsap.from('#orbit', { scale: 0.7, opacity: 0, rotate: -40, duration: 1.8, ease, scrollTrigger: { trigger: '#orbit', start: 'top 85%' } });
+    // DETAIL: texture scales and turns slowly; highlight cards deal in like a hand of cards
+    gsap.fromTo('#texture', { scale: 1.45, rotate: -4 }, { scale: 1, rotate: 2, ease: 'none', scrollTrigger: scrub('#detail', 'top bottom', 'bottom top', { scrub: true }) });
+    gsap.fromTo('.highlights li', { opacity: 0, y: 80, rotate: (i) => (i % 2 ? 6 : -6) }, { opacity: 1, y: 0, rotate: 0, stagger: 0.2, ease: 'none',
+      scrollTrigger: scrub('.highlights', 'top 95%', 'top 45%') });
+
+    // TIMELINE: pinned; scrolling down walks the timeline sideways, scrolling up walks it back
+    const tlEl = $('#tl'), tlDistance = () => tlEl.scrollWidth - tlEl.clientWidth;
+    ScrollTrigger.create({ trigger: '#timeline', start: 'top top', end: () => '+=' + Math.max(tlDistance(), 1), pin: true, scrub: true, invalidateOnRefresh: true,
+      onToggle: st => { tlEl.style.scrollSnapType = st.isActive ? 'none' : ''; },
+      onUpdate: st => { tlEl.scrollLeft = st.progress * tlDistance(); } });
+    gsap.fromTo('.tl-item .yr', { opacity: 0.15 }, { opacity: 1, stagger: 0.1, ease: 'none', scrollTrigger: scrub('#timeline', 'top 80%', 'top top') });
+
+    // CAUSES: the orbit grows and turns into place, the core glows up
+    gsap.fromTo('#orbit', { scale: 0.55, rotate: -90, opacity: 0 }, { scale: 1, rotate: 0, opacity: 1, ease: 'none', scrollTrigger: scrub('#orbit', 'top 100%', 'center 55%') });
+    gsap.fromTo('.orbit-core', { boxShadow: '0 0 0px rgba(217,154,78,0)' }, { boxShadow: '0 0 90px rgba(217,154,78,.45)', ease: 'none', scrollTrigger: scrub('#orbit', 'top 70%', 'center 50%') });
+    gsap.fromTo('.orbit-ring', { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, stagger: 0.2, ease: 'none', scrollTrigger: scrub('#orbit', 'top 90%', 'center 60%') });
+
+    // GALLERY: frames rise at different speeds per column, photos settle inside their frames
+    $$('.masonry figure').forEach((f, i) => {
+      gsap.fromTo(f, { y: 120 + (i % 3) * 60, opacity: 0 }, { y: 0, opacity: 1, ease: 'none', scrollTrigger: scrub(f, 'top 105%', 'top 65%') });
+      gsap.fromTo(f.querySelector('button'), { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', scrollTrigger: scrub(f, 'top 100%', 'top 70%') });
+    });
+
+    // FAN WALL: form fields slide in from the left, cards drift up from below
+    gsap.fromTo('.wall-form > *', { x: -60, opacity: 0 }, { x: 0, opacity: 1, stagger: 0.15, ease: 'none', scrollTrigger: scrub('.wall-form', 'top 95%', 'top 55%') });
+    gsap.fromTo('#cards', { y: 100, opacity: 0 }, { y: 0, opacity: 1, ease: 'none', scrollTrigger: scrub('#cards', 'top 100%', 'top 65%') });
+
+    // FOOTER: the giant outline name slides together and fills with amber as you reach the bottom
+    gsap.fromTo('.outline-name', { xPercent: -12, letterSpacing: '0.04em' }, { xPercent: 0, letterSpacing: '-0.06em', ease: 'none', scrollTrigger: scrub('.site-footer', 'top bottom', 'bottom bottom', { scrub: true }) });
+    gsap.fromTo('.outline-name', { backgroundPosition: '100% 0' }, { backgroundPosition: '0% 0', ease: 'none', scrollTrigger: scrub('.site-footer', 'top 60%', 'bottom bottom', { scrub: true }) });
+
+    // Band colour wash: the page background warms slightly through the dark sections
+    $$('.band.dark').forEach(b => gsap.fromTo(b, { backgroundColor: '#0b0b0c' }, { backgroundColor: '#14100c', ease: 'none', scrollTrigger: scrub(b, 'top center', 'bottom center', { scrub: true }) }));
+
+    addEventListener('load', () => ScrollTrigger.refresh());
   }
 
   /* ---------- Film tiles: tap toggles the caption on touch screens ---------- */
