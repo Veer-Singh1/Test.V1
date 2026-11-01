@@ -23,28 +23,89 @@
 window.CONFIG = {
   credit: 'Veer Singh',                       // shown in the closing credits
 
-  fonts: {
-    display: '"Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif',
-    body: '"Hanken Grotesk", "Helvetica Neue", Arial, sans-serif',
-    googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Hanken+Grotesk:wght@300..700&display=swap'
+  // Font pairings: display face for headlines, body face for text. Pick one with fontSet.
+  fontSets: {
+    literary: { label: 'Literary', pair: 'Fraunces & Hanken Grotesk',
+      display: '"Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif', body: '"Hanken Grotesk", "Helvetica Neue", Arial, sans-serif',
+      url: 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Hanken+Grotesk:wght@300..700&display=swap' },
+    classic:  { label: 'Classic', pair: 'Playfair Display & DM Sans',
+      display: '"Playfair Display", Georgia, serif', body: '"DM Sans", "Helvetica Neue", Arial, sans-serif',
+      url: 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap' },
+    couture:  { label: 'Couture', pair: 'Bodoni Moda & Manrope',
+      display: '"Bodoni Moda", Didot, Georgia, serif', body: '"Manrope", "Helvetica Neue", Arial, sans-serif',
+      url: 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Manrope:wght@300..700&display=swap' },
+    playful:  { label: 'Playful', pair: 'Bricolage Grotesque & Figtree',
+      display: '"Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif', body: '"Figtree", "Helvetica Neue", Arial, sans-serif',
+      url: 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Figtree:ital,wght@0,300..700;1,300..700&display=swap' }
   },
+  fontSet: 'literary',
 
-  // Each chapter shifts the whole page to its own palette as you scroll into it.
-  chapters: {
-    prologue: { bg: '#0e0c0a', fg: '#f2ebe1', muted: '#aaa195', accent: '#e0b56a', line: 'rgba(242,235,225,0.14)' }, // candlelit ink
-    actress:  { bg: '#1c0b10', fg: '#f4e7d7', muted: '#bba696', accent: '#e6b873', line: 'rgba(244,231,215,0.14)' }, // velvet curtain + marquee gold
-    activist: { bg: '#f1eee8', fg: '#16131c', muted: '#585266', accent: '#5b2a86', line: 'rgba(22,19,28,0.16)', second: '#2f6b47' }, // suffragette purple, white, green
-    reader:   { bg: '#efe5d2', fg: '#2a2016', muted: '#655441', accent: '#2f5442', line: 'rgba(42,32,22,0.18)' },  // library paper + green baize
-    style:    { bg: '#0f0f0f', fg: '#ebe6de', muted: '#9c978f', accent: '#a9b8a2', line: 'rgba(235,230,222,0.14)' }, // monochrome editorial + sage
-    voice:    { bg: '#101a2c', fg: '#f3eee6', muted: '#aab1bf', accent: '#f0c27b', line: 'rgba(243,238,230,0.16)' }  // night before the speech
+  // Colour schemes. Each chapter repaints the whole page as you scroll into it, and the pinned
+  // quote scene moves through voiceScenes (night, dusk, dawn). Pick one with palette.
+  // Every pair here passes contrast checks: text at least 7:1, small accent text at least 4.5:1.
+  palettes: {
+    original: {
+      label: 'Original', note: 'Candlelit and literary: the first design',
+      chapters: {
+        prologue: { bg: '#0e0c0a', fg: '#f2ebe1', muted: '#aaa195', accent: '#e0b56a', line: 'rgba(242,235,225,0.14)' }, // candlelit ink
+        actress:  { bg: '#1c0b10', fg: '#f4e7d7', muted: '#bba696', accent: '#e6b873', line: 'rgba(244,231,215,0.14)' }, // velvet curtain + marquee gold
+        activist: { bg: '#f1eee8', fg: '#16131c', muted: '#585266', accent: '#5b2a86', line: 'rgba(22,19,28,0.16)', second: '#2f6b47' }, // suffragette purple, white, green
+        reader:   { bg: '#efe5d2', fg: '#2a2016', muted: '#655441', accent: '#2f5442', line: 'rgba(42,32,22,0.18)' },  // library paper + green baize
+        style:    { bg: '#0f0f0f', fg: '#ebe6de', muted: '#9c978f', accent: '#a9b8a2', line: 'rgba(235,230,222,0.14)' }, // monochrome editorial + sage
+        voice:    { bg: '#101a2c', fg: '#f3eee6', muted: '#aab1bf', accent: '#f0c27b', line: 'rgba(243,238,230,0.16)' }  // night before the speech
+      },
+      voiceScenes: [{ bg: '#101a2c', fg: '#f3eee6', accent: '#f0c27b' }, { bg: '#3a1c2c', fg: '#f7ece6', accent: '#f2a98a' }, { bg: '#ecd9b4', fg: '#1e1a14', accent: '#7a3b1d' }]
+    },
+    technicolor: {
+      label: 'Technicolor', note: 'Saturated cinema colour, chapter by chapter',
+      chapters: {
+        prologue: { bg: '#170a2e', fg: '#fff4e8', muted: '#c9bce0', accent: '#ff7a7a' },
+        actress:  { bg: '#93102a', fg: '#fff1e6', muted: '#f6cfcf', accent: '#ffd447' },
+        activist: { bg: '#f3eaff', fg: '#22094d', muted: '#574776', accent: '#6a1fd1', second: '#1f9d55' },
+        reader:   { bg: '#0c5446', fg: '#fdf3d8', muted: '#c3e3d3', accent: '#ffbf5e' },
+        style:    { bg: '#ff7fb2', fg: '#1c0412', muted: '#3e0a25', accent: '#2b0a6b' },
+        voice:    { bg: '#1b1464', fg: '#fff4e8', muted: '#c3bfea', accent: '#ffd447' }
+      },
+      voiceScenes: [{ bg: '#1b1464', fg: '#fff4e8', accent: '#ffd447' }, { bg: '#9e1430', fg: '#fff7ef', accent: '#ffe08a' }, { bg: '#ffd166', fg: '#2a1500', accent: '#8a0f26' }]
+    },
+    riviera: {
+      label: 'Riviera', note: 'Sunlit cobalt, lemon and tomato',
+      chapters: {
+        prologue: { bg: '#0b1e5b', fg: '#fff8ec', muted: '#bcc6ea', accent: '#ffe14d' },
+        actress:  { bg: '#9e2410', fg: '#fff8ec', muted: '#ffd9cc', accent: '#ffe14d' },
+        activist: { bg: '#ffe14d', fg: '#1a1442', muted: '#4a4325', accent: '#5b21b6', second: '#15803d' },
+        reader:   { bg: '#a8ebe1', fg: '#0a2e3a', muted: '#1f5560', accent: '#1d3fd6' },
+        style:    { bg: '#1d3fd6', fg: '#fff8ec', muted: '#d3dbff', accent: '#ffb3d9' },
+        voice:    { bg: '#0b1e5b', fg: '#fff8ec', muted: '#bcc6ea', accent: '#ffe14d' }
+      },
+      voiceScenes: [{ bg: '#0b1e5b', fg: '#fff8ec', accent: '#ffe14d' }, { bg: '#9e2410', fg: '#fff8ec', accent: '#ffe14d' }, { bg: '#ffe14d', fg: '#1a1442', accent: '#9a2a12' }]
+    },
+    neon: {
+      label: 'Neon Noir', note: 'Night-time darks lit by electric colour',
+      chapters: {
+        prologue: { bg: '#07070f', fg: '#f4f4ff', muted: '#a7a7c6', accent: '#22e4ff' },
+        actress:  { bg: '#14001f', fg: '#fdf0ff', muted: '#c9acd8', accent: '#ff4fe0' },
+        activist: { bg: '#120427', fg: '#f6efff', muted: '#bba8db', accent: '#c99bff', second: '#3dff8b' },
+        reader:   { bg: '#001a24', fg: '#e9fbff', muted: '#9fc7d2', accent: '#ffd60a' },
+        style:    { bg: '#0b0b0b', fg: '#f5f5f5', muted: '#a8a8a8', accent: '#b6ff3b' },
+        voice:    { bg: '#0a0a2e', fg: '#f4f4ff', muted: '#a9a9d6', accent: '#22e4ff' }
+      },
+      voiceScenes: [{ bg: '#0a0a2e', fg: '#f4f4ff', accent: '#22e4ff' }, { bg: '#2a0a3d', fg: '#fdf0ff', accent: '#ff4fe0' }, { bg: '#ffe8f6', fg: '#1a0a1f', accent: '#a3106f' }]
+    },
+    pastel: {
+      label: 'Pastel Pop', note: 'Bright sorbet colours with punchy ink',
+      chapters: {
+        prologue: { bg: '#fff1e6', fg: '#1c1530', muted: '#584d6c', accent: '#d01c55' },
+        actress:  { bg: '#ffd3dd', fg: '#2b0f1e', muted: '#653548', accent: '#a8102f' },
+        activist: { bg: '#e6dbff', fg: '#1f1147', muted: '#4b3d78', accent: '#5b21b6', second: '#15803d' },
+        reader:   { bg: '#d4f3e2', fg: '#0f3320', muted: '#365f4a', accent: '#b23a08' },
+        style:    { bg: '#fff0a0', fg: '#1a1a1a', muted: '#4d4a30', accent: '#1d4ed8' },
+        voice:    { bg: '#cfdcff', fg: '#14163b', muted: '#3f4270', accent: '#3730a3' }
+      },
+      voiceScenes: [{ bg: '#cfdcff', fg: '#14163b', accent: '#3730a3' }, { bg: '#ffd0e0', fg: '#3a0a1f', accent: '#9d174d' }, { bg: '#fff0a0', fg: '#2a2000', accent: '#9a4a06' }]
+    }
   },
-
-  // The pinned quote scene moves from night to dawn, one palette per quote.
-  voiceScenes: [
-    { bg: '#101a2c', fg: '#f3eee6', accent: '#f0c27b' },
-    { bg: '#3a1c2c', fg: '#f7ece6', accent: '#f2a98a' },
-    { bg: '#ecd9b4', fg: '#1e1a14', accent: '#7a3b1d' }
-  ],
+  palette: 'original',
 
   // src     = path to the photo (relative to this page). Empty = labelled placeholder.
   // ratio   = width/height the placeholder is drawn at. label = what the placeholder says.
@@ -97,23 +158,43 @@ window.CONFIG = {
   }
 };
 
-/* Apply the config before first paint: CSS variables + the font stylesheet. */
+/* Apply the config before first paint: the chosen palette and fonts become CSS variables.
+   A choice made in the page's Design panel is remembered on this device and wins over the defaults above. */
 (function applyConfig() {
-  const C = window.CONFIG, s = document.documentElement.style;
-  s.setProperty('--font-display', C.fonts.display);
-  s.setProperty('--font-body', C.fonts.body);
+  const C = window.CONFIG, root = document.documentElement, s = root.style;
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem('ew-design') || '{}') || {}; } catch (e) {}
+  if (C.palettes[saved.palette]) C.palette = saved.palette;
+  if (C.fontSets[saved.fontSet]) C.fontSet = saved.fontSet;
+  const rgba = (h, a) => `rgba(${h.replace('#', '').match(/../g).map(x => parseInt(x, 16)).join(',')},${a})`;
+
+  window.loadFontCss = url => {                       // add a Google Fonts stylesheet once
+    if (document.querySelector(`link[data-font="${url}"]`)) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet'; link.href = url; link.dataset.font = url;
+    document.head.appendChild(link);
+  };
+  window.applyPaletteVars = () => {                   // C.chapters / C.voiceScenes follow the palette
+    const P = C.palettes[C.palette];
+    C.chapters = P.chapters; C.voiceScenes = P.voiceScenes;
+    Object.entries(C.chapters).forEach(([name, c]) => {
+      if (!c.line) c.line = rgba(c.fg, .16);
+      s.setProperty(`--c-${name}`, c.bg); s.setProperty(`--c-${name}-fg`, c.fg); s.setProperty(`--c-${name}-ac`, c.accent);
+    });
+    s.setProperty('--c-activist-2', C.chapters.activist.second || C.chapters.activist.accent);
+    s.setProperty('--ink', C.chapters.prologue.bg); s.setProperty('--paper', C.chapters.prologue.fg);   // menu, curtain, preloader
+    const v = C.voiceScenes[0];
+    s.setProperty('--vbg', v.bg); s.setProperty('--vfg', v.fg); s.setProperty('--vac', v.accent);
+  };
+  window.applyFontVars = () => {
+    C.fonts = C.fontSets[C.fontSet];
+    s.setProperty('--font-display', C.fonts.display); s.setProperty('--font-body', C.fonts.body);
+    window.loadFontCss(C.fonts.url);
+  };
+  window.applyPaletteVars(); window.applyFontVars();
   const p = C.chapters.prologue;
-  s.setProperty('--bg', p.bg); s.setProperty('--fg', p.fg); s.setProperty('--muted', p.muted);
-  s.setProperty('--accent', p.accent); s.setProperty('--line', p.line);
-  Object.entries(C.chapters).forEach(([name, pal]) => {
-    s.setProperty(`--c-${name}`, pal.bg); s.setProperty(`--c-${name}-fg`, pal.fg); s.setProperty(`--c-${name}-ac`, pal.accent);
-  });
-  const v = C.voiceScenes[0];
-  s.setProperty('--vbg', v.bg); s.setProperty('--vfg', v.fg); s.setProperty('--vac', v.accent);
-  const link = document.createElement('link');
-  link.rel = 'stylesheet'; link.href = C.fonts.googleFontsUrl;
-  document.head.appendChild(link);
-  document.documentElement.classList.add('js', 'is-loading');
+  ['bg', 'fg', 'muted', 'accent', 'line'].forEach(k => s.setProperty(`--${k}`, p[k]));
+  root.classList.add('js', 'is-loading');
 })();
 </script>
 
@@ -177,7 +258,31 @@ window.CONFIG = {
     padding: calc(16px + env(safe-area-inset-top, 0px)) var(--gutter-r) 16px var(--gutter-l); color: #fff; mix-blend-mode: difference; }
   .brand { font-family: var(--font-display); font-style: italic; font-size: 1.45rem; text-decoration: none; justify-self: start; letter-spacing: -.02em; }
   .bar-chapter { margin: 0; font: 600 .68rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
-  .menu-btn { justify-self: end; font: 600 .72rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; padding: .7rem 0 .7rem 1rem; }
+  .bar-actions { justify-self: end; display: flex; align-items: center; gap: 1.4rem; }
+  .menu-btn, .design-btn { font: 600 .72rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; padding: .7rem 0; }
+  .db-short { display: none; font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0; text-transform: none; }
+  @media (max-width: 560px) { .db-long { display: none; } .db-short { display: inline; } .bar-actions { gap: 1rem; } }
+
+  /* ---------- Design panel: live colour + type switcher ---------- */
+  #design { position: fixed; z-index: 125; top: calc(62px + env(safe-area-inset-top, 0px)); right: var(--gutter-r); width: min(390px, calc(100vw - 32px));
+    max-height: calc(100svh - 80px - env(safe-area-inset-top, 0px)); overflow-y: auto; overscroll-behavior: contain; padding: 1.1rem 1.1rem 1rem;
+    background: rgba(17,15,13,.95); color: #f5efe6; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; box-shadow: 0 30px 80px rgba(0,0,0,.45);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); font-family: var(--font-body); }
+  .d-head { display: flex; justify-content: space-between; align-items: center; }
+  .d-head h2 { font: 600 .72rem var(--font-body); letter-spacing: .18em; text-transform: uppercase; }
+  .d-close { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,.22); font-size: 1.1rem; line-height: 1; }
+  .d-label { margin: 1.1rem 0 .55rem; font: 600 .64rem var(--font-body); letter-spacing: .18em; text-transform: uppercase; color: rgba(245,239,230,.62); }
+  .d-list { display: grid; gap: .45rem; }
+  .d-opt { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: .85rem; align-items: center; width: 100%; text-align: left; padding: .55rem .65rem;
+    border-radius: 10px; border: 1px solid rgba(255,255,255,.1); transition: border-color .3s, background-color .3s; }
+  .d-opt:hover { border-color: rgba(255,255,255,.38); }
+  .d-opt[aria-pressed="true"] { border-color: #f5efe6; background: rgba(255,255,255,.08); }
+  .d-sw { display: flex; height: 36px; border-radius: 6px; overflow: hidden; }
+  .d-sw i { flex: 1; }
+  .d-aa { height: 36px; display: grid; place-items: center; border-radius: 6px; background: rgba(255,255,255,.07); font-size: 1.45rem; line-height: 1; }
+  .d-name { display: block; font-weight: 600; font-size: .92rem; }
+  .d-desc { display: block; font-size: .78rem; line-height: 1.35; color: rgba(245,239,230,.66); }
+  .d-note { margin: 1rem 0 0; font-size: .74rem; color: rgba(245,239,230,.58); }
 
   /* ---------- Cursor (fine pointers only) ---------- */
   #cursor { display: none; }
@@ -187,7 +292,7 @@ window.CONFIG = {
   .c-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: #fff; mix-blend-mode: difference; transition: opacity .3s; }
   .c-ring { width: 42px; height: 42px; margin: -21px 0 0 -21px; border: 1px solid rgba(255,255,255,.85); mix-blend-mode: difference; display: grid; place-items: center;
     transition: width .5s var(--ease), height .5s var(--ease), margin .5s var(--ease), background-color .4s, border-color .4s; }
-  .c-label { font: 600 .64rem var(--font-body); letter-spacing: .16em; text-transform: uppercase; color: #15120f; opacity: 0; transition: opacity .3s; }
+  .c-label { font: 600 .64rem var(--font-body); letter-spacing: .16em; text-transform: uppercase; color: var(--ink); opacity: 0; transition: opacity .3s; }
   #cursor.is-view .c-ring { width: 104px; height: 104px; margin: -52px 0 0 -52px; background: var(--paper); border-color: var(--paper); mix-blend-mode: normal; }
   #cursor.is-view .c-label { opacity: 1; }
   #cursor.is-view .c-dot, #cursor.is-magnet .c-dot { opacity: 0; }
@@ -196,11 +301,11 @@ window.CONFIG = {
   /* ---------- Preloader ---------- */
   #loader { position: fixed; inset: 0; z-index: 130; pointer-events: none; color: var(--paper); }
   .ld-top { position: absolute; left: var(--gutter-l); right: var(--gutter-r); top: calc(20px + env(safe-area-inset-top, 0px)); display: flex; justify-content: space-between; gap: 1rem;
-    font: 600 .68rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; color: rgba(243,236,226,.7); }
+    font: 600 .68rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; color: color-mix(in srgb, var(--paper) 72%, transparent); }
   .ld-chapter { position: absolute; left: var(--wl, 38%); right: var(--wr, 38%); top: calc(var(--wt, 34%) - 2.4rem); margin: 0; text-align: center; white-space: nowrap; font-family: var(--font-display); font-style: italic; font-size: 1.15rem; }
   .ld-count { position: absolute; left: var(--gutter-l); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); font-family: var(--font-display); font-weight: 200;
     font-size: clamp(5rem, 24vw, 17rem); line-height: .8; letter-spacing: -.05em; font-variant-numeric: tabular-nums; font-variation-settings: "opsz" 144; }
-  .ld-bar { position: absolute; left: var(--wl, 38%); right: var(--wr, 38%); top: calc(100% - var(--wb, 34%) + 6px); height: 1px; background: rgba(243,236,226,.2); }
+  .ld-bar { position: absolute; left: var(--wl, 38%); right: var(--wr, 38%); top: calc(100% - var(--wb, 34%) + 6px); height: 1px; background: color-mix(in srgb, var(--paper) 20%, transparent); }
   .ld-bar i { position: absolute; inset: 0; background: var(--paper); transform-origin: left; transform: scaleX(0); }
   .rm #loader { display: none; }
 
@@ -211,13 +316,13 @@ window.CONFIG = {
   .m-inner { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 5rem var(--gutter-r) 3rem var(--gutter-l); max-width: 1320px; margin: 0 auto; }
   .m-close { position: absolute; top: calc(16px + env(safe-area-inset-top, 0px)); right: var(--gutter-r); font: 600 .72rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; padding: .7rem 0 .7rem 1rem; }
   .m-list { list-style: none; margin: 0; padding: 0; }
-  .m-list li { overflow: hidden; border-top: 1px solid rgba(243,236,226,.14); }
-  .m-list li:last-child { border-bottom: 1px solid rgba(243,236,226,.14); }
+  .m-list li { overflow: hidden; border-top: 1px solid color-mix(in srgb, var(--paper) 15%, transparent); }
+  .m-list li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--paper) 15%, transparent); }
   .m-list a { display: flex; align-items: baseline; gap: 1.2rem; padding: .28em 0; text-decoration: none; font-family: var(--font-display); font-style: italic; font-weight: 200;
     font-size: clamp(2rem, min(7.6vw, 8.2svh), 6rem); line-height: 1.05; letter-spacing: -.02em; transition: color .4s, padding-left .7s var(--ease); }
   .m-list a:hover, .m-list a:focus-visible { color: var(--m-accent, #e0b56a); padding-left: 1rem; }
-  .m-num { font: 600 .7rem var(--font-body); letter-spacing: .16em; color: rgba(243,236,226,.55); min-width: 2.6rem; font-style: normal; }
-  .m-note { margin: 2rem 0 0; color: rgba(243,236,226,.62); font-size: .85rem; max-width: 46ch; }
+  .m-num { font: 600 .7rem var(--font-body); letter-spacing: .16em; color: color-mix(in srgb, var(--paper) 62%, transparent); min-width: 2.6rem; font-style: normal; }
+  .m-note { margin: 2rem 0 0; color: color-mix(in srgb, var(--paper) 68%, transparent); font-size: .85rem; max-width: 46ch; }
 
   /* ---------- SVG page wipe ---------- */
   #wipe { position: fixed; inset: 0; z-index: 140; pointer-events: none; visibility: hidden; }
@@ -357,7 +462,7 @@ window.CONFIG = {
   .tricolor i { display: block; width: 3.2rem; height: 6px; transform-origin: left; }
   .tricolor i:nth-child(1) { background: var(--c-activist-ac); }
   .tricolor i:nth-child(2) { background: color-mix(in srgb, var(--fg) 12%, transparent); }
-  .tricolor i:nth-child(3) { background: #2f6b47; }
+  .tricolor i:nth-child(3) { background: var(--c-activist-2); }
   .act-grid { display: grid; gap: clamp(2.5rem, 6vw, 5rem); }
   .act-fig .mask { aspect-ratio: 4 / 5; max-width: 100%; }
   .act-rows { list-style: none; margin: 0; padding: 0; }
@@ -489,8 +594,20 @@ window.CONFIG = {
 <header class="bar" id="bar">
   <a href="#hero" class="brand" data-magnetic data-nav="Prologue" aria-label="Back to the beginning">E.W.</a>
   <p class="bar-chapter"><span class="sr-only">Current chapter: </span><span id="chapter-now">Prologue</span></p>
-  <button class="menu-btn" id="menu-btn" data-magnetic aria-expanded="false" aria-controls="menu"><span data-scramble>Menu</span></button>
+  <div class="bar-actions">
+    <button class="design-btn" id="design-btn" data-magnetic aria-expanded="false" aria-controls="design" aria-label="Colours and type"><span class="db-long" data-scramble>Design</span><span class="db-short" aria-hidden="true">Aa</span></button>
+    <button class="menu-btn" id="menu-btn" data-magnetic aria-expanded="false" aria-controls="menu"><span data-scramble>Menu</span></button>
+  </div>
 </header>
+
+<div id="design" role="dialog" aria-labelledby="design-title" data-lenis-prevent hidden>
+  <div class="d-head"><h2 id="design-title">Colours &amp; type</h2><button class="d-close" id="design-close" type="button" aria-label="Close">×</button></div>
+  <p class="d-label" id="d-pal-label">Colour scheme</p>
+  <div class="d-list" id="d-palettes" role="group" aria-labelledby="d-pal-label"></div>
+  <p class="d-label" id="d-font-label">Typeface</p>
+  <div class="d-list" id="d-fonts" role="group" aria-labelledby="d-font-label"></div>
+  <p class="d-note">Your choice is remembered on this device.</p>
+</div>
 
 <div id="menu" role="dialog" aria-modal="true" aria-label="Chapters" hidden>
   <div class="m-panels" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -708,7 +825,7 @@ window.CONFIG = {
       <dl class="cr-list">
         <div><dt>A fan tribute by</dt><dd id="credit-name"></dd></div>
         <div><dt>In honour of</dt><dd>Emma Watson</dd></div>
-        <div><dt>Typography</dt><dd>Fraunces &amp; Hanken Grotesk</dd></div>
+        <div><dt>Typography</dt><dd id="credit-type"></dd></div>
         <div><dt>Motion</dt><dd>GSAP, ScrollTrigger, Lenis &amp; Three.js</dd></div>
         <div><dt>Photography</dt><dd>© the original photographers and publishers</dd></div>
       </dl>
@@ -888,15 +1005,16 @@ window.CONFIG = {
      ===================================================================== */
   const chapterNow = $('#chapter-now');
   let theme = 'prologue';
-  function applyTheme(name, label) {
+  const isLightBg = hex => { const [r, g, b] = hex.replace('#', '').match(/../g).map(x => parseInt(x, 16) / 255); return .2126 * r + .7152 * g + .0722 * b > .5; };
+  function applyTheme(name, label, instant) {
     if (label && chapterNow.dataset.text !== label) scramble(chapterNow, label);
     if (name === theme) return;
     theme = name;
     const p = C.chapters[name];
     const vars = { '--bg': p.bg, '--fg': p.fg, '--muted': p.muted, '--accent': p.accent, '--line': p.line };
-    root.style.setProperty('color-scheme', ['activist', 'reader'].includes(name) ? 'light' : 'dark');
-    if (MOTION) gsap.to(root, { ...vars, duration: .9, ease: 'power2.out', overwrite: 'auto' });
-    else Object.entries(vars).forEach(([k, v]) => root.style.setProperty(k, v));
+    root.style.setProperty('color-scheme', isLightBg(p.bg) ? 'light' : 'dark');
+    if (MOTION && !instant) gsap.to(root, { ...vars, duration: .9, ease: 'power2.out', overwrite: 'auto' });
+    else { if (HAS_GSAP) gsap.killTweensOf(root); Object.entries(vars).forEach(([k, v]) => root.style.setProperty(k, v)); }
   }
 
   /* =====================================================================
@@ -1082,6 +1200,71 @@ window.CONFIG = {
     else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
+
+  /* =====================================================================
+     COLOURS & TYPE: live switcher. The choice is remembered on this device.
+     ===================================================================== */
+  const design = $('#design'), designBtn = $('#design-btn');
+  let paintVoice = null;                                  // set by the voice scene when motion is on
+  let designOpen = false;
+  const saveDesign = () => { try { localStorage.setItem('ew-design', JSON.stringify({ palette: C.palette, fontSet: C.fontSet })); } catch (e) {} };
+  const markDesign = () => {
+    $$('[data-palette]', design).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.palette === C.palette)));
+    $$('[data-fontset]', design).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.fontset === C.fontSet)));
+    $('#credit-type').textContent = C.fonts.pair;
+  };
+  function setPalette(name) {
+    if (!C.palettes[name] || name === C.palette) return;
+    C.palette = name; window.applyPaletteVars();
+    $$('.m-list a').forEach(a => a.style.setProperty('--m-accent', C.chapters[a.dataset.accent].accent));
+    const current = theme; theme = null; applyTheme(current, null, true);
+    if (paintVoice) paintVoice();
+    saveDesign(); markDesign();
+  }
+  function setFontSet(name) {
+    if (!C.fontSets[name] || name === C.fontSet) return;
+    C.fontSet = name; window.applyFontVars();
+    saveDesign(); markDesign();
+    if (HAS_GSAP) { setTimeout(() => ScrollTrigger.refresh(), 400); if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh()); }
+  }
+  const option = (attr, key, swatch, name, desc, onPick) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'd-opt'; b.dataset[attr] = key;
+    const txt = document.createElement('span');
+    const n = document.createElement('span'); n.className = 'd-name'; n.textContent = name;
+    const d = document.createElement('span'); d.className = 'd-desc'; d.textContent = desc;
+    txt.append(n, d); b.append(swatch, txt);
+    b.addEventListener('click', onPick);
+    return b;
+  };
+  Object.entries(C.palettes).forEach(([key, P]) => {
+    const sw = document.createElement('span'); sw.className = 'd-sw'; sw.setAttribute('aria-hidden', 'true');
+    ['prologue', 'actress', 'activist', 'reader', 'style', 'voice'].forEach(ch => {
+      const c = P.chapters[ch], i = document.createElement('i');
+      i.style.background = `linear-gradient(${c.bg} 68%, ${c.accent} 68%)`; sw.append(i);
+    });
+    $('#d-palettes').append(option('palette', key, sw, P.label, P.note, () => setPalette(key)));
+  });
+  Object.entries(C.fontSets).forEach(([key, F]) => {
+    const aa = document.createElement('span'); aa.className = 'd-aa'; aa.setAttribute('aria-hidden', 'true');
+    aa.textContent = 'Aa'; aa.style.fontFamily = F.display;
+    $('#d-fonts').append(option('fontset', key, aa, F.label, F.pair, () => setFontSet(key)));
+  });
+  markDesign();
+  function toggleDesign(open, returnFocus = true) {
+    if (open === designOpen) return;
+    designOpen = open; design.hidden = !open; designBtn.setAttribute('aria-expanded', String(open));
+    if (open) {
+      Object.values(C.fontSets).forEach(F => window.loadFontCss(F.url));   // so each "Aa" sample shows its own face
+      if (MOTION) gsap.fromTo(design, { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: .45, ease: 'expo.out' });
+      requestAnimationFrame(() => $('.d-opt[aria-pressed="true"]', design).focus({ preventScroll: true }));
+    } else if (returnFocus) designBtn.focus({ preventScroll: true });
+  }
+  designBtn.addEventListener('click', () => toggleDesign(!designOpen));
+  $('#design-close').addEventListener('click', () => toggleDesign(false));
+  document.addEventListener('keydown', e => { if (designOpen && e.key === 'Escape') toggleDesign(false); });
+  document.addEventListener('pointerdown', e => { if (designOpen && !design.contains(e.target) && !designBtn.contains(e.target)) toggleDesign(false, false); });
+  menuBtn.addEventListener('click', () => toggleDesign(false, false));
 
   /* =====================================================================
      SVG CURTAIN between chapters (menu links, logo, back to top)
@@ -1340,7 +1523,12 @@ window.CONFIG = {
 
   /* ---------- V · Voice: pinned scenes that change colour, image and quote ---------- */
   (() => {
-    const stage = $('#vs-stage'), quotes = $$('.vs-q'), imgs = $$('.vs-media img'), counter = $('#vs-n'), S = C.voiceScenes;
+    const stage = $('#vs-stage'), quotes = $$('.vs-q'), imgs = $$('.vs-media img'), counter = $('#vs-n');
+    // scene colours are read from the live palette, so switching palettes repaints the scene
+    const vstate = { bg: 0, fg: 0 };
+    const sceneColour = (key, t) => { const S = C.voiceScenes, n = S.length - 1, a = Math.min(Math.floor(t), n - 1); return gsap.utils.interpolate(S[a][key], S[a + 1][key], Math.min(1, t - a)); };
+    paintVoice = () => { stage.style.setProperty('--vbg', sceneColour('bg', vstate.bg)); stage.style.setProperty('--vfg', sceneColour('fg', vstate.fg)); stage.style.setProperty('--vac', sceneColour('accent', vstate.fg)); };
+    paintVoice();
     quotes.forEach(q => split($('p', q), 'words', true));
     const words = quotes.map(q => $$('.wi', q));
     gsap.set(quotes.slice(1), { autoAlpha: 0 });
@@ -1354,8 +1542,8 @@ window.CONFIG = {
     for (let i = 1; i < quotes.length; i++) {
       tl.addLabel(`s${i}`)
         .to(words[i - 1], { yPercent: -115, opacity: 0, stagger: .02, duration: .5, ease: 'power2.in' }, `s${i}`)
-        .to(stage, { '--vbg': S[i].bg, duration: .5, ease: 'power2.inOut' }, `s${i}+=.2`)
-        .to(stage, { '--vfg': S[i].fg, '--vac': S[i].accent, duration: .1, ease: 'none' }, `s${i}+=.42`)
+        .to(vstate, { bg: i, duration: .5, ease: 'power2.inOut', onUpdate: paintVoice }, `s${i}+=.2`)
+        .to(vstate, { fg: i, duration: .1, ease: 'none', onUpdate: paintVoice }, `s${i}+=.42`)
         .fromTo(imgs[i], { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.3 }, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, duration: 1, ease: 'power2.inOut' }, `s${i}`)
         .set(quotes[i], { autoAlpha: 1 }, `s${i}+=.45`)
         .fromTo(words[i], { yPercent: 115, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: .05, duration: .6, ease: 'power3.out' }, `s${i}+=.45`)
