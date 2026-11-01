@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Emma Watson Fan Page</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="An unofficial, editorial-style fan page for Emma Watson: actor, activist, storyteller.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;400;500&family=Silkscreen&display=swap" rel="stylesheet">
+
+<style>
+  /* Layout: full-screen bands alternating white and near-black, one centred 1200px column, amber used once per band. */
+  :root {
+    --black: #0b0b0c;
+    --white: #ffffff;
+    --grey: #8a8a8f;        /* soft grey for secondary text on white */
+    --grey-dark: #a3a3a8;   /* secondary text on black */
+    --line-light: #e4e4e7;  /* 1px borders on white */
+    --line-dark: #2a2a2e;   /* 1px borders on black */
+    --amber: #d99a4e;       /* warm accent from the hero light (on black) */
+    --amber-ink: #8f5a17;   /* the same accent, dark enough for text on white */
+
+    --sans: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+    --pixel: 'Silkscreen', 'Courier New', monospace;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--white); color: var(--black); font-family: var(--sans); font-weight: 300; font-size: 1.05rem; line-height: 1.55; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+  .band { position: relative; padding-block: clamp(5rem, 14vw, 10rem); }
+  .band.dark { background: var(--black); color: var(--white); }
+  .band.dark.dots { background-image: radial-gradient(rgba(255,255,255,.09) 1px, transparent 1.2px); background-size: 22px 22px; }
+  .eyebrow { font-family: var(--pixel); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--grey); margin: 0 0 1.4rem; }
+  .dark .eyebrow { color: var(--grey-dark); }
+  .h2 { font-weight: 200; font-size: clamp(2.6rem, 8vw, 5.6rem); line-height: .98; letter-spacing: -.045em; margin: 0; text-wrap: balance; }
+  .lead { max-width: 52ch; color: var(--grey); margin: 1.4rem 0 0; }
+  .dark .lead { color: var(--grey-dark); }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: fixed; inset: 0 0 auto; z-index: 50;
+    padding: calc(18px + env(safe-area-inset-top, 0px)) max(20px, env(safe-area-inset-right, 0px)) 18px max(20px, env(safe-area-inset-left, 0px));
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--white); mix-blend-mode: difference;
+  }
+  .wordmark { font-family: var(--pixel); font-size: .78rem; letter-spacing: .04em; text-decoration: none; }
+  .menu-link { background: none; border: 0; padding: .4rem 0; cursor: pointer; font-weight: 400; font-size: .85rem; letter-spacing: .14em; }
+
+  #menu { position: fixed; inset: 0; z-index: 60; background: var(--black); color: var(--white); display: flex; flex-direction: column; justify-content: center;
+    clip-path: inset(0 0 100% 0); transition: clip-path .9s var(--ease); visibility: hidden; }
+  #menu.open { clip-path: inset(0 0 0 0); visibility: visible; }
+  #menu .close { position: absolute; top: calc(18px + env(safe-area-inset-top, 0px)); right: max(20px, env(safe-area-inset-right, 0px)); background: none; border: 0; cursor: pointer; font-size: .85rem; letter-spacing: .14em; font-weight: 400; }
+  #menu ol { list-style: none; margin: 0; padding: 0; counter-reset: m; }
+  #menu li { border-top: 1px solid var(--line-dark); }
+  #menu li:last-child { border-bottom: 1px solid var(--line-dark); }
+  #menu a { display: flex; justify-content: space-between; align-items: baseline; padding: .7rem 0; text-decoration: none; font-weight: 200; font-size: clamp(2rem, 8vw, 4.2rem); letter-spacing: -.04em; line-height: 1.05; transition: color .4s, padding .5s var(--ease); }
+  #menu a span { font-family: var(--pixel); font-size: .7rem; letter-spacing: 0; color: var(--grey-dark); }
+  #menu a:hover { color: var(--amber); padding-left: .6rem; }
+
+  /* ---------- 1. Hero ---------- */
+  .hero { position: relative; height: 100svh; min-height: 560px; overflow: hidden; background: var(--black); color: var(--white); }
+  .hero-media { position: absolute; inset: -6% 0 0; }
+  .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 28% 22%; filter: sepia(.55) saturate(1.5) brightness(.82) contrast(1.08); animation: kenburns 22s ease-in-out infinite alternate; transform-origin: 60% 30%; }
+  @keyframes kenburns { from { transform: scale(1.02); } to { transform: scale(1.16) translate(-1.5%, 1%); } }
+  .hero-media::after { content: ''; position: absolute; inset: 0;
+    background: radial-gradient(120% 80% at 70% 30%, rgba(217,154,78,.28), transparent 55%), linear-gradient(180deg, rgba(11,11,12,.25) 0%, rgba(11,11,12,0) 35%, rgba(11,11,12,.85) 100%); }
+  .grain { position: absolute; inset: 0; pointer-events: none; opacity: .14; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .hero-copy { position: absolute; left: 0; right: 0; bottom: 0; padding-bottom: calc(clamp(2.5rem, 7vw, 5rem) + env(safe-area-inset-bottom, 0px)); }
+  .hero h1 { margin: 0; font-weight: 200; font-size: clamp(3.4rem, 15vw, 11rem); line-height: .86; letter-spacing: -.06em; }
+  .hero h1 .ch { display: inline-block; }
+  .hero-sub { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: end; margin-top: 1.6rem; border-top: 1px solid rgba(255,255,255,.25); padding-top: 1rem; }
+  .hero-sub p { margin: 0; font-size: clamp(1.1rem, 2.6vw, 1.5rem); font-weight: 300; letter-spacing: -.02em; }
+  .hero-sub small { font-family: var(--pixel); font-size: .68rem; color: var(--grey-dark); }
+
+  /* ---------- 2. Statement ---------- */
+  #statement-text { margin: 0 auto; max-width: 16ch; text-align: center; font-weight: 200; font-size: clamp(2.6rem, 9vw, 6.4rem); line-height: 1.02; letter-spacing: -.05em; text-wrap: balance; }
+  .statement .w { display: inline-block; }
+  .statement .w.amber { color: var(--amber-ink); }
+
+  /* ---------- 3. Film ---------- */
+  .film-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-dark); border: 1px solid var(--line-dark); margin-top: 3rem; }
+  .tile { position: relative; aspect-ratio: 3 / 4; max-width: 100%; overflow: hidden; background: var(--black); cursor: pointer; border: 0; padding: 0; text-align: left; color: var(--white); }
+  .tile .art { position: absolute; inset: 0; transition: transform 1.2s var(--ease); }
+  .tile:hover .art, .tile.show .art { transform: scale(1.06); }
+  .tile .yr { position: absolute; top: 1rem; left: 1rem; font-family: var(--pixel); font-size: .68rem; color: rgba(255,255,255,.75); }
+  .tile .big { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; font-weight: 200; font-size: clamp(1.4rem, 4.6vw, 2.8rem); line-height: .95; letter-spacing: -.045em; }
+  .tile .cap { position: absolute; inset: auto 0 0; padding: 1rem; background: rgba(11,11,12,.86); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transform: translateY(101%); transition: transform .7s var(--ease); font-size: .92rem; }
+  .tile .cap b { display: block; font-weight: 400; }
+  .tile .cap span { color: var(--amber); font-family: var(--pixel); font-size: .66rem; }
+  .tile:hover .cap, .tile:focus-visible .cap, .tile.show .cap { transform: none; }
+  .art-hp   { background: radial-gradient(80% 60% at 30% 20%, #6a4a2a, transparent 60%), radial-gradient(70% 70% at 80% 90%, #2c2016, transparent), #120e0b; }
+  .art-perks{ background: linear-gradient(160deg, #2c3138 0%, #0f1114 60%), #0f1114; }
+  .art-perks::after { content: ''; position: absolute; inset: 18% -20% auto; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent); transform: rotate(-12deg); }
+  .art-beauty { background: radial-gradient(55% 45% at 50% 40%, #c79a52, transparent 70%), radial-gradient(90% 80% at 50% 120%, #3a2410, transparent), #140d07; }
+  .art-women  { background: repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 1px, transparent 1px 14px), linear-gradient(200deg, #3b3a36, #121211 70%); }
+
+  /* ---------- 4. Every detail holds ---------- */
+  .detail { overflow: hidden; }
+  .detail canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .55; }
+  .detail::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, var(--black) 0%, rgba(11,11,12,.55) 40%, rgba(11,11,12,.55) 60%, var(--black) 100%); pointer-events: none; }
+  .detail .wrap { position: relative; z-index: 1; }
+  .detail-grid { display: grid; gap: 3rem; margin-top: 3rem; }
+  .highlights { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--line-dark); border: 1px solid var(--line-dark); }
+  .highlights li { background: rgba(11,11,12,.82); padding: 1.4rem; min-width: 0; }
+  .highlights .k { font-family: var(--pixel); font-size: .68rem; color: var(--amber); display: block; margin-bottom: .6rem; }
+  .highlights .v { font-size: 1.15rem; font-weight: 300; letter-spacing: -.01em; line-height: 1.35; }
+
+  /* ---------- 5. Timeline ---------- */
+  .tl-wrap { margin-top: 3rem; position: relative; }
+  .tl { display: flex; gap: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 1rem; overscroll-behavior-x: contain; }
+  .tl::-webkit-scrollbar { display: none; }
+  .tl-item { flex: 0 0 min(78vw, 320px); scroll-snap-align: start; padding-right: 2rem; position: relative; }
+  .tl-item::before { content: ''; position: absolute; left: 0; right: 0; top: 7px; height: 1px; background: var(--line-light); }
+  .tl-dot { position: relative; display: block; width: 15px; height: 15px; border: 1px solid var(--black); border-radius: 50%; background: var(--white); transition: background .6s var(--ease), border-color .6s, transform .6s var(--ease); }
+  .tl-item.passed .tl-dot { background: var(--amber); border-color: var(--amber); transform: scale(1.15); }
+  .tl-item .yr { display: block; margin-top: 1.4rem; font-weight: 200; font-size: 3rem; letter-spacing: -.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .tl-item p { margin: .7rem 0 0; color: #4b4b50; max-width: 28ch; }
+  .tl-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.4rem; gap: 1rem; }
+  .tl-progress { flex: 1; height: 1px; background: var(--line-light); position: relative; }
+  .tl-progress i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--black); }
+  .tl-btns { display: flex; gap: .5rem; }
+
+  /* Shared pill button */
+  .pill { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 44px; padding: .65rem 1.4rem; border-radius: 999px; border: 1px solid currentColor; background: transparent; cursor: pointer; font-weight: 400; font-size: .9rem; text-decoration: none; transition: background .4s var(--ease), color .4s var(--ease), border-color .4s; }
+  .pill:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+  .dark .pill:hover, .glass .pill:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+  .pill.solid { background: var(--black); color: var(--white); border-color: var(--black); }
+  .dark .pill.solid, .glass .pill.solid { background: var(--white); color: var(--black); border-color: var(--white); }
+  .pill.solid:hover { background: var(--amber); border-color: var(--amber); color: var(--black); }
+  .pill.round { width: 44px; padding: 0; }
+
+  /* ---------- 6. Causes orbit ---------- */
+  #causes { overflow: hidden; }
+  .orbit-stage { position: relative; width: min(560px, 100%); aspect-ratio: 1; max-width: 100%; margin: 3rem auto 0; }
+  .orbit-ring { position: absolute; inset: 0; border: 1px solid var(--line-dark); border-radius: 50%; }
+  .orbit-ring { inset: 9%; }
+  .orbit-ring.inner { inset: 30%; }
+  .orbit-core { position: absolute; left: 50%; top: 50%; width: 26%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: 1px solid var(--amber); display: grid; place-items: center; text-align: center; font-family: var(--pixel); font-size: clamp(.9rem, 3vw, 1.3rem); color: var(--amber);
+    box-shadow: 0 0 60px rgba(217,154,78,.18), inset 0 0 30px rgba(217,154,78,.08); }
+  .orbit-rotor { position: absolute; inset: 0; animation: spin 60s linear infinite; }
+  .orbit-stage:hover .orbit-rotor, .orbit-stage:focus-within .orbit-rotor { animation-play-state: paused; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .cause { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
+  .cause a { position: absolute; width: clamp(64px, 17vw, 92px); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: 1px solid #3a3a40; background: #121214; display: grid; place-items: center; text-align: center; text-decoration: none; padding: .4rem; transition: border-color .4s, background .4s; }
+  .cause a:hover, .cause a:focus-visible { border-color: var(--amber); background: #1a150f; }
+  .cause .counter { animation: spin 60s linear infinite reverse; display: grid; place-items: center; gap: .2rem; }
+  .orbit-stage:hover .counter, .orbit-stage:focus-within .counter { animation-play-state: paused; }
+  .cause svg { width: 22px; height: 22px; stroke: var(--amber); fill: none; stroke-width: 1.4; }
+  .cause small { font-size: clamp(.58rem, 1.7vw, .7rem); line-height: 1.1; font-weight: 400; color: var(--white); }
+  .causes-list { list-style: none; padding: 0; margin: 3rem auto 0; max-width: 760px; display: grid; gap: 1px; background: var(--line-dark); border: 1px solid var(--line-dark); }
+  .causes-list li { background: var(--black); padding: 1rem 1.2rem; display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; }
+  .causes-list b { font-family: var(--pixel); font-weight: 400; font-size: .68rem; color: var(--amber); padding-top: .25rem; }
+  .causes-list span { color: var(--grey-dark); }
+  .causes-list strong { color: var(--white); font-weight: 400; }
+
+  /* ---------- 7. Gallery ---------- */
+  .masonry { columns: 2 160px; column-gap: 12px; margin-top: 3rem; }
+  .masonry figure { margin: 0 0 12px; break-inside: avoid; }
+  .masonry button { display: block; width: 100%; padding: 0; border: 1px solid var(--line-light); background: #f2f2f3; cursor: zoom-in; overflow: hidden; }
+  .masonry img { width: 100%; height: auto; filter: blur(18px) grayscale(.2); transform: scale(1.06); transition: filter 1.1s var(--ease), transform 1.4s var(--ease); }
+  .masonry img.loaded { filter: none; transform: none; }
+  .masonry figcaption { font-size: .82rem; color: #55555a; padding-top: .5rem; }
+
+  #lightbox { position: fixed; inset: 0; z-index: 70; background: var(--black); color: var(--white); display: grid; grid-template-rows: auto 1fr auto; opacity: 0; visibility: hidden; transition: opacity .5s var(--ease), visibility .5s; touch-action: pan-y; }
+  #lightbox.open { opacity: 1; visibility: visible; }
+  .lb-top, .lb-bottom { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: calc(14px + env(safe-area-inset-top, 0px)) max(20px, env(safe-area-inset-right, 0px)) 14px max(20px, env(safe-area-inset-left, 0px)); }
+  .lb-bottom { padding-top: 14px; padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px)); }
+  .lb-count { font-family: var(--pixel); font-size: .7rem; color: var(--grey-dark); }
+  .lb-stage { display: grid; place-items: center; overflow: hidden; min-height: 0; padding: 0 max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px)); }
+  .lb-stage img { max-height: 100%; max-width: 100%; object-fit: contain; transition: transform .45s var(--ease), opacity .3s; user-select: none; -webkit-user-drag: none; }
+  .lb-cap { font-size: .9rem; color: var(--grey-dark); margin: 0; min-width: 0; }
+
+  /* ---------- 8. Fan wall ---------- */
+  .wall-grid { display: grid; gap: 3rem; margin-top: 3rem; }
+  .wall-form { display: grid; gap: 1rem; align-content: start; }
+  .field label { display: block; font-family: var(--pixel); font-size: .66rem; color: var(--grey-dark); margin-bottom: .45rem; }
+  .field input, .field textarea { width: 100%; background: transparent; border: 0; border-bottom: 1px solid #3a3a40; color: var(--white); padding: .7rem 0; font: inherit; font-size: 1.1rem; outline: none; border-radius: 0; resize: vertical; transition: border-color .3s; }
+  .field input:focus, .field textarea:focus { border-color: var(--amber); }
+  .form-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .counter-chars { font-family: var(--pixel); font-size: .66rem; color: var(--grey-dark); }
+  .wall-status { font-size: .88rem; color: var(--grey-dark); min-height: 1.4em; margin: 0; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; align-content: start; }
+  .card { border: 1px solid var(--line-dark); background: rgba(255,255,255,.025); padding: 1.2rem; min-width: 0; position: relative; }
+  .card.new { animation: floatUp .9s var(--ease) both; }
+  @keyframes floatUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+  .card p { margin: 0 0 1rem; font-size: 1.05rem; overflow-wrap: anywhere; }
+  .card footer { display: flex; justify-content: space-between; gap: .5rem; font-family: var(--pixel); font-size: .62rem; color: var(--grey-dark); }
+  .card footer b { font-weight: 400; color: var(--amber); overflow-wrap: anywhere; }
+  .card .remove { position: absolute; top: .5rem; right: .5rem; background: none; border: 1px solid var(--line-dark); border-radius: 999px; color: var(--grey-dark); font-size: .7rem; padding: .2rem .6rem; cursor: pointer; }
+  .empty { border: 1px dashed var(--line-dark); padding: 2rem; color: var(--grey-dark); text-align: center; }
+
+  /* ---------- 9. Footer ---------- */
+  .site-footer { padding-block: clamp(4rem, 10vw, 7rem) calc(9rem + env(safe-area-inset-bottom, 0px)); overflow: hidden; }
+  .outline-name { display: block; font-weight: 400; font-size: clamp(3.6rem, 17vw, 15rem); letter-spacing: -.06em; line-height: .85; text-decoration: none;
+    color: transparent; -webkit-text-stroke: 1px var(--black);
+    background: linear-gradient(90deg, var(--amber) 0 50%, transparent 50% 100%); background-size: 200% 100%; background-position: 100% 0;
+    -webkit-background-clip: text; background-clip: text; transition: background-position 1.1s var(--ease); }
+  .outline-name:hover, .outline-name:focus-visible { background-position: 0 0; }
+  .foot-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--line-light); font-size: .9rem; color: #55555a; }
+  .foot-row .eyebrow { margin: 0; }
+
+  /* ---------- Glass consent card ---------- */
+  .glass { position: fixed; z-index: 55; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: min(520px, calc(100% - 32px));
+    transform: translate(-50%, 140%); transition: transform .9s var(--ease);
+    background: rgba(30,30,32,.55); color: var(--white); border: 1px solid rgba(255,255,255,.18); border-radius: 22px; padding: 1.1rem 1.2rem;
+    backdrop-filter: blur(22px) saturate(1.4); -webkit-backdrop-filter: blur(22px) saturate(1.4); box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+  .glass.show { transform: translate(-50%, 0); }
+  .glass p { margin: 0 0 1rem; font-size: .92rem; line-height: 1.45; }
+  .glass .btns { display: flex; gap: .6rem; justify-content: flex-end; }
+
+  /* ---------- Custom cursor (fine pointers only) ---------- */
+  .cursor, .cursor-ring { position: fixed; left: 0; top: 0; z-index: 90; pointer-events: none; border-radius: 50%; mix-blend-mode: difference; display: none; }
+  .cursor { width: 6px; height: 6px; background: #fff; margin: -3px 0 0 -3px; }
+  .cursor-ring { width: 36px; height: 36px; border: 1px solid #fff; margin: -18px 0 0 -18px; transition: width .35s var(--ease), height .35s var(--ease), margin .35s var(--ease); }
+  .cursor-ring.big { width: 72px; height: 72px; margin: -36px 0 0 -36px; }
+  @media (hover: hover) and (pointer: fine) { body.has-cursor .cursor, body.has-cursor .cursor-ring { display: block; } }
+
+  .distort-on { filter: url(#distort); }
+
+  /* The hero source is small: soften it so the grain hides the JPEG blocks when it is blown up */
+  .hero-media img { filter: sepia(.55) saturate(1.5) brightness(.82) contrast(1.08) blur(.8px); }
+  @media (min-width: 700px) { .hero-media img { filter: sepia(.55) saturate(1.5) brightness(.8) contrast(1.08) blur(2.2px); } .grain { opacity: .22; } }
+
+  @media (min-width: 860px) {
+    .detail-grid { grid-template-columns: 1fr 1.2fr; align-items: start; }
+    .wall-grid { grid-template-columns: 1fr 1.6fr; }
+    .masonry { columns: 3; }
+    .film-grid { gap: 1px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+    .masonry img { filter: none; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SVG filter used for the hover distortion on images -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="distort"><feTurbulence id="turb" type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="2" seed="4"/><feDisplacementMap id="disp" in="SourceGraphic" scale="0"/></filter>
+</svg>
+
+<div class="cursor" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<header class="nav">
+  <a class="wordmark" href="#top">EMMA WATSON · FAN PAGE</a>
+  <button class="menu-link" id="menu-open" aria-expanded="false" aria-controls="menu">MENU</button>
+</header>
+
+<div id="menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <button class="close" id="menu-close">CLOSE</button>
+  <nav class="wrap" aria-label="Sections">
+    <ol>
+      <li><a href="#statement">Statement <span>01</span></a></li>
+      <li><a href="#film">Film &amp; screen <span>02</span></a></li>
+      <li><a href="#detail">Every detail <span>03</span></a></li>
+      <li><a href="#timeline">Timeline <span>04</span></a></li>
+      <li><a href="#causes">Causes <span>05</span></a></li>
+      <li><a href="#gallery">Gallery <span>06</span></a></li>
+      <li><a href="#wall">Fan wall <span>07</span></a></li>
+    </ol>
+  </nav>
+</div>
+
+<main id="top">
+  <!-- 1. HERO -->
+  <section class="hero" aria-label="Introduction">
+    <div class="hero-media" id="hero-media">
+      <img src="assets/profile.jpg" alt="Black-and-white portrait of Emma Watson in profile with wet, slicked-back hair, warmly tinted" width="201" height="251" fetchpriority="high">
+      <div class="grain"></div>
+    </div>
+    <div class="hero-copy wrap">
+      <h1 id="hero-title" aria-label="Emma Watson">Emma<br>Watson</h1>
+      <div class="hero-sub">
+        <p>Actor. Activist. Storyteller.</p>
+        <small>An unofficial fan page</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. STATEMENT -->
+  <section class="band statement" id="statement">
+    <div class="wrap">
+      <p class="eyebrow" style="text-align:center">01 / Statement</p>
+      <p id="statement-text">A voice that carries beyond the screen.</p>
+    </div>
+  </section>
+
+  <!-- 3. FILM -->
+  <section class="band dark dots" id="film">
+    <div class="wrap">
+      <p class="eyebrow">02 / Film &amp; screen</p>
+      <h2 class="h2 reveal">Roles that<br>grew up with us.</h2>
+      <div class="film-grid">
+        <button class="tile" aria-label="Harry Potter series, 2001 to 2011, as Hermione Granger">
+          <div class="art art-hp"></div><span class="yr">2001–2011</span><span class="big">Harry<br>Potter</span>
+          <span class="cap"><b>Harry Potter series</b>Hermione Granger · 8 films <span>2001–2011</span></span>
+        </button>
+        <button class="tile" aria-label="The Perks of Being a Wallflower, 2012, as Sam">
+          <div class="art art-perks"></div><span class="yr">2012</span><span class="big">The Perks<br>of Being a<br>Wallflower</span>
+          <span class="cap"><b>The Perks of Being a Wallflower</b>Sam <span>2012</span></span>
+        </button>
+        <button class="tile" aria-label="Beauty and the Beast, 2017, as Belle">
+          <div class="art art-beauty"></div><span class="yr">2017</span><span class="big">Beauty<br>and the<br>Beast</span>
+          <span class="cap"><b>Beauty and the Beast</b>Belle <span>2017</span></span>
+        </button>
+        <button class="tile" aria-label="Little Women, 2019, as Meg March">
+          <div class="art art-women"></div><span class="yr">2019</span><span class="big">Little<br>Women</span>
+          <span class="cap"><b>Little Women</b>Meg March <span>2019</span></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. EVERY DETAIL HOLDS -->
+  <section class="band dark detail" id="detail">
+    <canvas id="texture" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <p class="eyebrow">03 / Biography</p>
+      <h2 class="h2 reveal">Every detail holds.</h2>
+      <div class="detail-grid">
+        <div>
+          <p class="lead reveal">Emma Charlotte Duerre Watson was born in Paris on 15 April 1990 and raised in Oxfordshire, England. She was cast as Hermione Granger at nine and played her in all eight Harry Potter films.</p>
+          <p class="lead reveal">Alongside her film work she studied English literature, then turned her public profile toward gender equality, reading and sustainable fashion.</p>
+        </div>
+        <ul class="highlights">
+          <li class="reveal"><span class="k">Education</span><span class="v">BA in English literature, Brown University, 2014</span></li>
+          <li class="reveal"><span class="k">United Nations</span><span class="v">UN Women Goodwill Ambassador from 2014</span></li>
+          <li class="reveal"><span class="k">Award</span><span class="v">Won the first gender-neutral MTV Movie Award for Best Actor in a Movie, 2017</span></li>
+          <li class="reveal"><span class="k">Board</span><span class="v">Joined the board of directors of Kering, 2020</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. TIMELINE -->
+  <section class="band" id="timeline">
+    <div class="wrap">
+      <p class="eyebrow">04 / Timeline</p>
+      <h2 class="h2 reveal">Milestones.</h2>
+      <div class="tl-wrap">
+        <div class="tl" id="tl" tabindex="0" aria-label="Career timeline, scroll sideways">
+          <article class="tl-item"><span class="tl-dot"></span><span class="yr">1990</span><p>Born in Paris on 15 April.</p></article>
+          <article class="tl-item"><span class="tl-dot"></span><span class="yr">1999</span><p>Cast as Hermione Granger at the age of nine.</p></article>
+          <article class="tl-item"><span class="tl-dot"></span><span class="yr">2001</span><p><em>Harry Potter and the Philosopher's Stone</em> is released.</p></article>
+          <article class="tl-item"><span class="tl-dot"></span><span class="yr">2011</span><p>The series ends with <em>Deathly Hallows – Part 2</em>.</p></article>
+          <article class="tl-item"><span class="tl-dot"></span><span class="yr">2012</span><p>Plays Sam in <em>The Perks of Being a Wallflower</em>.</p></article>
+          <article class="tl-item"><span class="tl-dot"></span><span class="yr">2014</span><p>Graduates from Brown University. Named UN Women Goodwill Ambassador and launches HeForShe at the UN on 20 September.</p></article>
+          <article class="tl-item"><span class="tl-dot"></span><span class="yr">2016</span><p>Starts the feminist book club Our Shared Shelf.</p></article>
+          <article class="tl-item"><span class="tl-dot"></span><span class="yr">2017</span><p>Plays Belle in <em>Beauty and the Beast</em>.</p></article>
+          <article class="tl-item"><span class="tl-dot"></span><span class="yr">2018</span><p>Donates £1 million to the UK Justice and Equality Fund, supporting the Time's Up UK movement.</p></article>
+          <article class="tl-item"><span class="tl-dot"></span><span class="yr">2019</span><p>Plays Meg March in Greta Gerwig's <em>Little Women</em>.</p></article>
+          <article class="tl-item"><span class="tl-dot"></span><span class="yr">2020</span><p>Joins the board of the luxury group Kering.</p></article>
+        </div>
+        <div class="tl-controls">
+          <div class="tl-progress" aria-hidden="true"><i id="tl-bar"></i></div>
+          <div class="tl-btns">
+            <button class="pill round magnetic" id="tl-prev" aria-label="Earlier milestones">←</button>
+            <button class="pill round magnetic" id="tl-next" aria-label="Later milestones">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. CAUSES -->
+  <section class="band dark dots" id="causes">
+    <div class="wrap">
+      <p class="eyebrow">05 / Causes</p>
+      <h2 class="h2 reveal">What she stands for.</h2>
+      <p class="lead reveal">Tap a cause to learn more. Links open the organisation's own site or its Wikipedia page.</p>
+
+      <div class="orbit-stage" id="orbit">
+        <div class="orbit-ring"></div>
+        <div class="orbit-ring inner"></div>
+        <div class="orbit-core" aria-hidden="true">EW</div>
+        <div class="orbit-rotor" id="rotor">
+          <!-- positions are set in JS around the ring -->
+          <div class="cause"><a href="https://www.unwomen.org" target="_blank" rel="noopener"><span class="counter">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/></svg><small>UN Women</small></span></a></div>
+          <div class="cause"><a href="https://www.heforshe.org" target="_blank" rel="noopener"><span class="counter">
+            <svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/></svg><small>HeForShe</small></span></a></div>
+          <div class="cause"><a href="https://en.wikipedia.org/wiki/Emma_Watson#Activism" target="_blank" rel="noopener"><span class="counter">
+            <svg viewBox="0 0 24 24"><path d="M4 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z"/></svg><small>Our Shared Shelf</small></span></a></div>
+          <div class="cause"><a href="https://en.wikipedia.org/wiki/Special:Search?search=Time%27s+Up+UK" target="_blank" rel="noopener"><span class="counter">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg><small>Time's Up UK</small></span></a></div>
+          <div class="cause"><a href="https://goodonyou.eco" target="_blank" rel="noopener"><span class="counter">
+            <svg viewBox="0 0 24 24"><path d="M5 19c0-8 6-13 14-14-1 8-6 14-14 14zM5 19l7-7"/></svg><small>Good On You</small></span></a></div>
+        </div>
+      </div>
+
+      <ul class="causes-list">
+        <li class="reveal"><b>2014–</b><span><strong>UN Women.</strong> Goodwill Ambassador working on gender equality and young women's education.</span></li>
+        <li class="reveal"><b>2014</b><span><strong>HeForShe.</strong> Launched the campaign with a speech at UN headquarters in New York.</span></li>
+        <li class="reveal"><b>2016</b><span><strong>Our Shared Shelf.</strong> A feminist book club she founded and ran online.</span></li>
+        <li class="reveal"><b>2018</b><span><strong>Time's Up UK.</strong> Donated £1 million to the UK Justice and Equality Fund.</span></li>
+        <li class="reveal"><b>2017</b><span><strong>Good On You.</strong> Shared the ethical-fashion rating app while promoting <em>Beauty and the Beast</em>.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7. GALLERY -->
+  <section class="band" id="gallery">
+    <div class="wrap">
+      <p class="eyebrow">06 / Gallery</p>
+      <h2 class="h2 reveal">Frames.</h2>
+      <div class="masonry" id="masonry">
+        <figure><button data-i="0" aria-label="Open photo 1 of 5"><img loading="lazy" src="assets/cover.jpg" width="495" height="619" alt="Emma Watson laughing on a pickleball court, holding a paddle, on a black-and-white magazine cover"></button><figcaption>Cover, <em>Hollywood Authentic</em>, 2025</figcaption></figure>
+        <figure><button data-i="1" aria-label="Open photo 2 of 5"><img loading="lazy" src="assets/portrait.jpg" width="204" height="204" alt="Black-and-white close-up portrait of Emma Watson with a short bob, looking into the camera"></button><figcaption>Portrait</figcaption></figure>
+        <figure><button data-i="2" aria-label="Open photo 3 of 5"><img loading="lazy" src="assets/smile.jpg" width="250" height="329" alt="Emma Watson smiling, with shoulder-length wavy hair and an off-the-shoulder black top"></button><figcaption>Interview</figcaption></figure>
+        <figure><button data-i="3" aria-label="Open photo 4 of 5"><img loading="lazy" src="assets/profile.jpg" width="201" height="251" alt="Black-and-white portrait of Emma Watson in profile with wet hair, a hoop earring and a chain necklace"></button><figcaption>Profile</figcaption></figure>
+        <figure><button data-i="4" aria-label="Open photo 5 of 5"><img loading="lazy" src="assets/red-carpet.jpg" width="416" height="594" alt="Emma Watson smiling over her shoulder in a navy gown at a red-carpet event"></button><figcaption>Red carpet · Getty Images / Bloomberg</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. FAN WALL -->
+  <section class="band dark dots" id="wall">
+    <div class="wrap">
+      <p class="eyebrow">07 / Fan wall</p>
+      <h2 class="h2 reveal">Leave a note.</h2>
+      <div class="wall-grid">
+        <form class="wall-form" id="wall-form" novalidate>
+          <div class="field"><label for="fan-name">Your name</label><input id="fan-name" name="name" maxlength="40" autocomplete="nickname" required></div>
+          <div class="field"><label for="fan-msg">Your message</label><textarea id="fan-msg" name="message" rows="4" maxlength="280" required></textarea></div>
+          <div class="form-row">
+            <span class="counter-chars" id="chars">0 / 280</span>
+            <button class="pill solid magnetic" type="submit">Post to the wall</button>
+          </div>
+          <p class="wall-status" id="wall-status" aria-live="polite"></p>
+        </form>
+        <div class="cards" id="cards" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- 9. FOOTER -->
+<footer class="site-footer">
+  <div class="wrap">
+    <a class="outline-name" href="#top" aria-label="Emma Watson, back to top">Emma<br>Watson</a>
+    <div class="foot-row">
+      <p class="eyebrow">Fan page · Made by Veer Singh</p>
+      <p style="margin:0">Unofficial fan site. Not affiliated with Emma Watson or her representatives.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Glass consent card -->
+<div class="glass" id="consent" role="region" aria-label="Storage choice">
+  <p>This fan page can remember your choices and keep a copy of your fan-wall notes in this browser. There is no tracking or advertising.</p>
+  <div class="btns">
+    <button class="pill" id="decline">Decline</button>
+    <button class="pill solid" id="accept">Accept</button>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <div class="lb-top"><span class="lb-count" id="lb-count"></span><button class="pill" id="lb-close">Close</button></div>
+  <div class="lb-stage" id="lb-stage"><img id="lb-img" alt=""></div>
+  <div class="lb-bottom">
+    <p class="lb-cap" id="lb-cap"></p>
+    <div class="tl-btns"><button class="pill round" id="lb-prev" aria-label="Previous photo">←</button><button class="pill round" id="lb-next" aria-label="Next photo">→</button></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { if (store.get('ew-consent') !== 'accepted' && k !== 'ew-consent') return; try { localStorage.setItem(k, v); } catch (e) {} },
+  };
+
+  /* ---------- Split text helpers ---------- */
+  const title = $('#hero-title');
+  title.innerHTML = title.innerHTML.split('<br>').map(line =>
+    [...line].map(c => `<span class="ch" aria-hidden="true">${c}</span>`).join('')).join('<br>');
+  const statement = $('#statement-text');
+  statement.innerHTML = statement.textContent.split(' ')
+    .map(w => `<span class="w${/carries|beyond/.test(w) ? ' amber' : ''}">${w}</span>`).join(' ');
+
+  /* ---------- Menu ---------- */
+  const menu = $('#menu'), openBtn = $('#menu-open');
+  function setMenu(open) {
+    menu.classList.toggle('open', open);
+    openBtn.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (open) $('#menu-close').focus(); else openBtn.focus({ preventScroll: true });
+  }
+  openBtn.addEventListener('click', () => setMenu(true));
+  $('#menu-close').addEventListener('click', () => setMenu(false));
+  $$('#menu a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+
+  /* ---------- Motion (GSAP + ScrollTrigger) ---------- */
+  const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+  if (window.gsap && window.ScrollTrigger && !reduce) {
+    gsap.registerPlugin(ScrollTrigger);
+    const ease = 'power4.out'; // closest GSAP curve to cubic-bezier(0.22, 1, 0.36, 1)
+
+    // Hero title fades up letter by letter, then parallax on scroll
+    gsap.from('#hero-title .ch', { yPercent: 110, opacity: 0, duration: 1.4, ease, stagger: 0.045, delay: 0.2 });
+    gsap.from('.hero-sub', { opacity: 0, y: 20, duration: 1.2, ease, delay: 0.9 });
+    gsap.to('#hero-media', { yPercent: 14, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+    gsap.to('.hero-copy', { yPercent: -30, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+
+    // Statement: words reveal as you scroll
+    gsap.fromTo('#statement-text .w', { opacity: 0.12, y: 12 }, { opacity: 1, y: 0, stagger: 0.12, ease: 'none',
+      scrollTrigger: { trigger: '#statement', start: 'top 70%', end: 'bottom 70%', scrub: 0.6 } });
+
+    // Generic reveals
+    $$('.reveal').forEach(el => gsap.from(el, { y: 40, opacity: 0, duration: 1.3, ease, scrollTrigger: { trigger: el, start: 'top 88%' } }));
+
+    // Film tiles: staggered mask wipes
+    gsap.fromTo('.tile', { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease, stagger: 0.15,
+      scrollTrigger: { trigger: '.film-grid', start: 'top 80%' } });
+    gsap.from('.tile .art', { scale: 1.3, duration: 1.8, ease, stagger: 0.15, scrollTrigger: { trigger: '.film-grid', start: 'top 80%' } });
+
+    // Texture scales slowly through the biography section
+    gsap.fromTo('#texture', { scale: 1.35 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '#detail', start: 'top bottom', end: 'bottom top', scrub: true } });
+
+    // Gallery figures rise in
+    gsap.from('.masonry figure', { y: 60, opacity: 0, duration: 1.2, ease, stagger: 0.1, scrollTrigger: { trigger: '#masonry', start: 'top 85%' } });
+
+    // Orbit spins up into place
+    gsap.from('#orbit', { scale: 0.7, opacity: 0, rotate: -40, duration: 1.8, ease, scrollTrigger: { trigger: '#orbit', start: 'top 85%' } });
+  }
+
+  /* ---------- Film tiles: tap toggles the caption on touch screens ---------- */
+  $$('.tile').forEach(t => t.addEventListener('click', () => {
+    const on = !t.classList.contains('show');
+    $$('.tile').forEach(o => o.classList.remove('show'));
+    t.classList.toggle('show', on);
+  }));
+
+  /* ---------- Macro fabric texture, painted once on a canvas ---------- */
+  (function paintTexture() {
+    const c = $('#texture'), W = 520, H = 520;
+    c.width = W; c.height = H;
+    const ctx = c.getContext('2d'), img = ctx.createImageData(W, H);
+    let s = 7; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+    const jitter = new Float32Array(W + H).map(() => rnd());
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const cellX = Math.floor(x / 8), cellY = Math.floor(y / 8);
+      const over = (cellX + cellY) % 2 === 0;               // plain weave: warp over weft, then under
+      const u = (x % 8) / 8, v = (y % 8) / 8;
+      const thread = over ? Math.sin(v * Math.PI) : Math.sin(u * Math.PI);
+      const fibre = over ? jitter[x] : jitter[W + y];
+      const lum = 18 + thread * 70 + fibre * 22 + rnd() * 12;
+      const i = (y * W + x) * 4;
+      img.data[i] = lum * 1.18; img.data[i + 1] = lum * 0.98; img.data[i + 2] = lum * 0.78; img.data[i + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+  })();
+
+  /* ---------- Timeline: scroll-snap, dots fill as you pass them ---------- */
+  const tl = $('#tl'), tlItems = $$('.tl-item'), tlBar = $('#tl-bar');
+  function updateTimeline() {
+    const max = tl.scrollWidth - tl.clientWidth;
+    const p = max > 0 ? tl.scrollLeft / max : 1;
+    tlBar.style.width = (p * 100) + '%';
+    const edge = tl.getBoundingClientRect().left + tl.clientWidth * 0.55;
+    tlItems.forEach(it => it.classList.toggle('passed', it.getBoundingClientRect().left < edge));
+  }
+  tl.addEventListener('scroll', updateTimeline, { passive: true });
+  addEventListener('resize', updateTimeline);
+  const stepTl = dir => tl.scrollBy({ left: dir * tlItems[0].offsetWidth, behavior: reduce ? 'auto' : 'smooth' });
+  $('#tl-prev').addEventListener('click', () => stepTl(-1));
+  $('#tl-next').addEventListener('click', () => stepTl(1));
+  tl.addEventListener('keydown', e => { if (e.key === 'ArrowRight') { e.preventDefault(); stepTl(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); stepTl(-1); } });
+  updateTimeline();
+
+  /* ---------- Orbit: place causes evenly around the ring ---------- */
+  const causes = $$('.cause');
+  function placeCauses() {
+    const r = $('#orbit').offsetWidth / 2 - causes[0].querySelector('a').offsetWidth / 2 - 4;
+    causes.forEach((c, i) => {
+      const a = (i / causes.length) * Math.PI * 2 - Math.PI / 2;
+      c.style.transform = `translate(${Math.cos(a) * r}px, ${Math.sin(a) * r}px)`;
+    });
+  }
+  placeCauses(); addEventListener('resize', placeCauses);
+
+  /* ---------- Gallery: blur-to-sharp, lightbox with swipe ---------- */
+  const thumbs = $$('#masonry img');
+  thumbs.forEach(img => { if (img.complete) img.classList.add('loaded'); else img.addEventListener('load', () => img.classList.add('loaded')); });
+  const shots = thumbs.map((img, i) => ({ src: img.src, alt: img.alt, cap: img.closest('figure').querySelector('figcaption').textContent }));
+  const lb = $('#lightbox'), lbImg = $('#lb-img');
+  let lbIndex = 0, lastFocus = null;
+  function showShot(i, dir = 0) {
+    lbIndex = (i + shots.length) % shots.length;
+    const s = shots[lbIndex];
+    lbImg.style.transition = 'none';
+    lbImg.style.transform = `translateX(${dir * 40}px)`; lbImg.style.opacity = 0;
+    lbImg.src = s.src; lbImg.alt = s.alt;
+    $('#lb-cap').textContent = s.cap;
+    $('#lb-count').textContent = `${lbIndex + 1} / ${shots.length}`;
+    requestAnimationFrame(() => requestAnimationFrame(() => { lbImg.style.transition = ''; lbImg.style.transform = ''; lbImg.style.opacity = 1; }));
+  }
+  function openLb(i) { lastFocus = document.activeElement; showShot(i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; $('#lb-close').focus(); }
+  function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; lastFocus && lastFocus.focus({ preventScroll: true }); }
+  $$('#masonry button').forEach(b => b.addEventListener('click', () => openLb(+b.dataset.i)));
+  $('#lb-close').addEventListener('click', closeLb);
+  $('#lb-prev').addEventListener('click', () => showShot(lbIndex - 1, -1));
+  $('#lb-next').addEventListener('click', () => showShot(lbIndex + 1, 1));
+  let touchX = null, dragX = 0;
+  const stage = $('#lb-stage');
+  stage.addEventListener('pointerdown', e => { touchX = e.clientX; dragX = 0; lbImg.style.transition = 'none'; });
+  stage.addEventListener('pointermove', e => { if (touchX === null) return; dragX = e.clientX - touchX; lbImg.style.transform = `translateX(${dragX}px)`; });
+  const endDrag = () => {
+    if (touchX === null) return;
+    touchX = null; lbImg.style.transition = '';
+    if (Math.abs(dragX) > 60) showShot(lbIndex + (dragX < 0 ? 1 : -1), dragX < 0 ? 1 : -1); else lbImg.style.transform = '';
+  };
+  stage.addEventListener('pointerup', endDrag); stage.addEventListener('pointercancel', endDrag); stage.addEventListener('pointerleave', endDrag);
+  stage.addEventListener('click', e => { if (e.target === stage) closeLb(); });
+
+  addEventListener('keydown', e => {
+    if (lb.classList.contains('open')) {
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowRight') showShot(lbIndex + 1, 1);
+      if (e.key === 'ArrowLeft') showShot(lbIndex - 1, -1);
+    } else if (e.key === 'Escape' && menu.classList.contains('open')) setMenu(false);
+  });
+
+  /* ---------- Consent card ---------- */
+  const consent = $('#consent');
+  if (!store.get('ew-consent')) setTimeout(() => consent.classList.add('show'), 2200);
+  $('#accept').addEventListener('click', () => { store.set('ew-consent', 'accepted'); consent.classList.remove('show'); saveLocal(); });
+  $('#decline').addEventListener('click', () => { store.set('ew-consent', 'declined'); consent.classList.remove('show'); });
+
+  /* ---------- Fan wall ---------- */
+  // Shared wall when the page can reach its database; otherwise notes stay in this browser.
+  const cardsEl = $('#cards'), statusEl = $('#wall-status'), form = $('#wall-form');
+  let db = null, canWrite = null, isOwner = false, shared = [], seen = new Set(), firstPaint = true;
+  let local = [];
+  try { local = JSON.parse(store.get('ew-wall') || '[]'); } catch (e) { local = []; }
+  function saveLocal() { store.set('ew-wall', JSON.stringify(local.slice(0, 20))); }
+  const setStatus = t => { statusEl.textContent = t; };
+
+  function renderWall() {
+    const all = [...shared.map(m => ({ ...m, shared: true })), ...local.map(m => ({ ...m, shared: false }))]
+      .sort((a, b) => (b.at || 0) - (a.at || 0));
+    cardsEl.textContent = '';
+    if (!all.length) {
+      const e = document.createElement('div'); e.className = 'empty';
+      e.textContent = 'No notes yet. Write the first one.';
+      cardsEl.append(e); return;
+    }
+    all.forEach(m => {
+      const card = document.createElement('article'); card.className = 'card';
+      const key = (m.shared ? 's:' : 'l:') + m.id;
+      if (!seen.has(key) && !firstPaint) card.classList.add('new');
+      if (firstPaint && !reduce) { card.classList.add('new'); card.style.animationDelay = Math.min(seen.size, 8) * 0.08 + 's'; }
+      seen.add(key);
+      const p = document.createElement('p'); p.textContent = m.message;
+      const f = document.createElement('footer');
+      const n = document.createElement('b'); n.textContent = m.name;
+      const d = document.createElement('span');
+      d.textContent = (m.shared ? '' : 'This device · ') + new Date(m.at).toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
+      f.append(n, d); card.append(p, f);
+      if (m.shared && isOwner) {
+        const r = document.createElement('button'); r.className = 'remove'; r.textContent = 'Remove';
+        r.setAttribute('aria-label', `Remove note from ${m.name}`);
+        r.addEventListener('click', () => db.collection('wall').doc(m.id).delete().catch(() => setStatus('Could not remove that note. Try again.')));
+        card.append(r);
+      }
+      cardsEl.append(card);
+    });
+    firstPaint = false;
+  }
+  renderWall();
+
+  (async () => {
+    if (!window.claude || !window.claude.use) { setStatus('Notes are kept in this browser.'); return; }
+    let user = null;
+    try { [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]); } catch (e) { db = null; }
+    if (user) {
+      try { canWrite = await user.can('data.write'); } catch (e) {}
+      try { isOwner = !!(await user.isOwner()); } catch (e) {}
+    }
+    if (!db) { setStatus('Notes are kept in this browser.'); return; }
+    setStatus('Loading the wall…');
+    const timer = setTimeout(() => setStatus("The shared wall can't be reached yet. New notes will be kept in this browser."), 10000);
+    db.collection('wall').orderBy('at', 'desc').limit(60).onSnapshot(snap => {
+      if (!snap.metadata.fromCache) { clearTimeout(timer); setStatus(canWrite === false ? 'You can read the wall. Your notes will be kept in this browser.' : ''); }
+      shared = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderWall();
+    }, err => { clearTimeout(timer); db = null; setStatus('The shared wall is unavailable right now. Notes are kept in this browser.'); });
+  })();
+
+  const msgEl = $('#fan-msg'), nameEl = $('#fan-name');
+  msgEl.addEventListener('input', () => { $('#chars').textContent = `${msgEl.value.length} / 280`; });
+  let posting = false;
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = nameEl.value.trim(), message = msgEl.value.trim();
+    if (!name || !message) { setStatus('Add your name and a message, then post.'); (name ? msgEl : nameEl).focus(); return; }
+    if (posting) return;
+    posting = true;
+    const note = { name: name.slice(0, 40), message: message.slice(0, 280), at: Date.now() };
+    let sharedOk = false;
+    if (db && canWrite !== false) {
+      try { await db.collection('wall').add(note); sharedOk = true; setStatus('Posted to the wall.'); }
+      catch (err) {
+        if (err && err.code === 'invalid_argument') canWrite = false;
+        if (err && err.code === 'quota_exceeded') setStatus('The wall is full. Your note is kept in this browser.');
+      }
+    }
+    if (!sharedOk) {
+      local.unshift({ id: String(note.at), ...note }); saveLocal(); renderWall();
+      if (!statusEl.textContent.startsWith('The wall is full')) setStatus(db ? 'Only people with Contributor access can post to the shared wall. Your note is kept in this browser.' : 'Your note is kept in this browser.');
+    }
+    form.reset(); $('#chars').textContent = '0 / 280';
+    posting = false;
+  });
+
+  /* ---------- Cursor, magnetic buttons, image distortion (desktop only) ---------- */
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce) {
+    document.body.classList.add('has-cursor');
+    const dot = $('.cursor'), ring = $('.cursor-ring');
+    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+    addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx}px, ${my}px)`; });
+    (function follow() { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.transform = `translate(${rx}px, ${ry}px)`; requestAnimationFrame(follow); })();
+    $$('a, button, .tile, input, textarea').forEach(el => {
+      el.addEventListener('pointerenter', () => ring.classList.add('big'));
+      el.addEventListener('pointerleave', () => ring.classList.remove('big'));
+    });
+
+    $$('.magnetic, .pill').forEach(b => {
+      b.addEventListener('pointermove', e => {
+        const r = b.getBoundingClientRect();
+        b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.25}px, ${(e.clientY - r.top - r.height / 2) * 0.35}px)`;
+      });
+      b.addEventListener('pointerleave', () => { b.style.transition = `transform .6s ${EASE}`; b.style.transform = ''; setTimeout(() => (b.style.transition = ''), 600); });
+    });
+
+    // Ripple the image through an SVG displacement filter while the pointer is over it
+    const disp = $('#disp');
+    let raf = null, amount = 0, target = 0, active = null;
+    function tick() {
+      amount += (target - amount) * 0.12;
+      disp.setAttribute('scale', amount.toFixed(2));
+      if (Math.abs(target - amount) > 0.1) raf = requestAnimationFrame(tick);
+      else { raf = null; if (target === 0 && active) { active.classList.remove('distort-on'); active = null; } }
+    }
+    $$('#masonry img, .tile .art').forEach(img => {
+      img.parentElement.addEventListener('pointerenter', () => {
+        if (active && active !== img) active.classList.remove('distort-on');
+        active = img; img.classList.add('distort-on'); amount = 22; target = 0;
+        if (!raf) raf = requestAnimationFrame(tick);
+      });
+    });
+  }
+</script>
+</body>
+</html>
