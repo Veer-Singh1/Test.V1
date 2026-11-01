@@ -46,10 +46,17 @@ window.CONFIG = {
     { bg: '#ecd9b4', fg: '#1e1a14', accent: '#7a3b1d' }
   ],
 
-  // ratio = width/height of the slot. label = what the placeholder says.
+  // src     = path to the photo (relative to this page). Empty = labelled placeholder.
+  // ratio   = width/height the placeholder is drawn at. label = what the placeholder says.
+  // focus   = [x, y] from 0 to 1: the point of the photo to keep in frame when it is cropped.
+  // These photos belong to their photographers and publishers. They are fine on a private page;
+  // get permission or licensed copies before sharing the site publicly.
   images: {
-    hero:  { src: '', alt: 'Portrait of Emma Watson', label: 'Hero portrait · landscape · 2400px wide or more', ratio: '16/10' },
-    intro: { src: '', alt: 'Portrait of Emma Watson', label: 'Intro portrait · 4:5', ratio: '4/5', caption: 'Portrait' },
+    hero:  { src: 'images/hero.jpg', alt: 'Black-and-white portrait of Emma Watson looking back over her shoulder, a knitted cardigan slipping off one shoulder',
+             label: 'Hero portrait', ratio: '1/1', focus: [0.56, 0.2], tone: 'light' },   // tone 'light' = dark type over a light photo
+    intro: { src: 'images/portrait-blazer.jpg', alt: 'Black-and-white portrait of Emma Watson in a black blazer and a silver choker, looking straight at the camera',
+             label: 'Intro portrait · 4:5', ratio: '4/5', caption: 'Portrait', focus: [0.5, 0.35] },
+    // Film stills: leave src empty and that film shows no hover preview or thumbnail.
     films: {
       hp:          { src: '', alt: 'Emma Watson as Hermione Granger', label: 'Harry Potter series', ratio: '4/5' },
       balletshoes: { src: '', alt: 'Still from Ballet Shoes', label: 'Ballet Shoes, 2007', ratio: '4/5' },
@@ -65,21 +72,27 @@ window.CONFIG = {
       circle:      { src: '', alt: 'Emma Watson as Mae Holland', label: 'The Circle, 2017', ratio: '4/5' },
       littlewomen: { src: '', alt: 'Emma Watson as Meg March', label: 'Little Women, 2019', ratio: '4/5' }
     },
-    moments: [1, 2, 3, 4, 5, 6, 7, 8].map(n => ({ src: '', alt: '', label: 'Moment 0' + n, ratio: '4/5' })),
-    activism: { src: '', alt: 'Emma Watson speaking at the United Nations', label: 'HeForShe speech, UN 2014 · 4:5', ratio: '4/5', caption: 'HeForShe launch · United Nations, New York · 2014' },
+    // The image trail in "Moments" cycles through these.
+    moments: ['wonderland-laugh', 'portrait-blazer', 'talk-show', 'wonderland-profile', 'interview', 'hollywood-authentic', 'portrait-bob', 'profile-wet']
+      .map(name => ({ src: `images/${name}.jpg`, alt: '', label: name, ratio: '4/5' })),
+    activism: { src: 'images/wonderland-profile.jpg', alt: 'Black-and-white profile of Emma Watson with her eyes closed and her hands folded against her chest',
+                label: 'Activism portrait · 4:5', ratio: '4/5', caption: 'Photographed for Wonderland', focus: [0.5, 0.3] },
+    // Photo cards in the style gallery. kicker / title / caption describe the photo itself.
     style: [
-      { src: '', alt: 'Burberry campaign image', label: 'Burberry, 2009', ratio: '3/4' },
-      { src: '', alt: 'People Tree collection image', label: 'People Tree, 2010', ratio: '3/4' },
-      { src: '', alt: 'Lancôme campaign image', label: 'Lancôme, 2011', ratio: '3/4' },
-      { src: '', alt: 'Emma Watson at the 2016 Met Gala', label: 'Met Gala, 2016', ratio: '3/4' },
-      { src: '', alt: 'Press-tour outfit from 2017', label: 'Beauty and the Beast press tour, 2017', ratio: '3/4' },
-      { src: '', alt: 'Emma Watson in 2020', label: 'Kering board, 2020', ratio: '3/4' },
-      { src: '', alt: 'Prada Paradoxe campaign image', label: 'Prada Paradoxe, 2022', ratio: '3/4' }
+      { src: 'images/wonderland-laugh.jpg', alt: 'Emma Watson laughing with her eyes shut, in a pleated bandeau top and a dark skirt',
+        ratio: '3/4', focus: [0.5, 0.25], kicker: 'Editorial', title: 'Wonderland', caption: 'Photographed for Wonderland magazine.' },
+      { src: 'images/talk-show.jpg', alt: 'Emma Watson smiling in a cream dress with black piping, seated in a talk-show guest chair',
+        ratio: '3/4', focus: [0.5, 0.3], kicker: 'On air', title: 'Talk show', caption: 'A guest appearance on a television talk show.' },
+      { src: 'images/hollywood-authentic.jpg', alt: 'Emma Watson shouting with joy on a pickleball court, on the cover of Hollywood Authentic',
+        ratio: '3/4', focus: [0.5, 0.45], kicker: '2025', title: 'Hollywood Authentic', caption: 'Cover of Digital Dispatch 8, "The Graduate".' },
+      { src: 'images/interview.jpg', alt: 'Emma Watson smiling, with shoulder-length wavy hair, in front of a pink patterned backdrop',
+        ratio: '3/4', focus: [0.5, 0.3], kicker: 'Candid', title: 'On camera', caption: 'Smiling to camera.' }
     ],
+    // One image per quote scene (night, dusk, dawn).
     voice: [
-      { src: '', alt: '', label: 'Voice scene 1 · night', ratio: '3/4' },
-      { src: '', alt: '', label: 'Voice scene 2 · dusk', ratio: '3/4' },
-      { src: '', alt: '', label: 'Voice scene 3 · dawn', ratio: '3/4' }
+      { src: 'images/profile-wet.jpg', alt: '', label: 'Voice scene 1 · night', ratio: '3/4' },
+      { src: 'images/portrait-bob.jpg', alt: '', label: 'Voice scene 2 · dusk', ratio: '3/4' },
+      { src: 'images/hero.jpg', alt: '', label: 'Voice scene 3 · dawn', ratio: '3/4', focus: [0.57, 0.22] }
     ]
   }
 };
@@ -184,10 +197,10 @@ window.CONFIG = {
   #loader { position: fixed; inset: 0; z-index: 130; pointer-events: none; color: var(--paper); }
   .ld-top { position: absolute; left: var(--gutter-l); right: var(--gutter-r); top: calc(20px + env(safe-area-inset-top, 0px)); display: flex; justify-content: space-between; gap: 1rem;
     font: 600 .68rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; color: rgba(243,236,226,.7); }
-  .ld-chapter { position: absolute; left: 0; right: 0; top: calc(30% - 1rem); text-align: center; font-family: var(--font-display); font-style: italic; font-size: 1.15rem; }
+  .ld-chapter { position: absolute; left: var(--wl, 38%); right: var(--wr, 38%); top: calc(var(--wt, 34%) - 2.4rem); margin: 0; text-align: center; white-space: nowrap; font-family: var(--font-display); font-style: italic; font-size: 1.15rem; }
   .ld-count { position: absolute; left: var(--gutter-l); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); font-family: var(--font-display); font-weight: 200;
     font-size: clamp(5rem, 24vw, 17rem); line-height: .8; letter-spacing: -.05em; font-variant-numeric: tabular-nums; font-variation-settings: "opsz" 144; }
-  .ld-bar { position: absolute; left: 38%; right: 38%; top: calc(66% + 6px); height: 1px; background: rgba(243,236,226,.2); }
+  .ld-bar { position: absolute; left: var(--wl, 38%); right: var(--wr, 38%); top: calc(100% - var(--wb, 34%) + 6px); height: 1px; background: rgba(243,236,226,.2); }
   .ld-bar i { position: absolute; inset: 0; background: var(--paper); transform-origin: left; transform: scaleX(0); }
   .rm #loader { display: none; }
 
@@ -219,6 +232,16 @@ window.CONFIG = {
   .hero-media canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .hero-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .hero.gl-on .hero-fallback { visibility: hidden; }
+  /* Light photo: dark type, pale shading */
+  .hero.is-light { color: #17130f; }
+  .hero.is-light .hero-media { background: #ece8e2; }
+  .hero.is-light .hero-shade { background: linear-gradient(180deg, rgba(240,236,229,.5) 0%, rgba(240,236,229,0) 25%, rgba(240,236,229,0) 50%, rgba(240,236,229,.78) 100%); }
+  .hero.is-light .hero-kicker { color: rgba(23,19,15,.72); }
+  .hero.is-light .hero-lede { color: rgba(23,19,15,.85); }
+  .hero.is-light .hero-foot { border-top-color: rgba(23,19,15,.25); }
+  .hero.is-light .badge { border-color: rgba(23,19,15,.45); }
+  .hero.is-light .scroll-cue { color: rgba(23,19,15,.7); }
+  .hero.is-light .scroll-cue i { background: rgba(23,19,15,.5); }
   .hero-shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(14,12,10,.55) 0%, rgba(14,12,10,0) 30%, rgba(14,12,10,0) 45%, rgba(14,12,10,.82) 100%); }
   .hero-kicker { position: absolute; left: var(--gutter-l); right: var(--gutter-r); top: calc(78px + env(safe-area-inset-top, 0px)); margin: 0; display: flex; justify-content: space-between; gap: 1rem;
     font: 600 .68rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; color: rgba(246,239,230,.82); }
@@ -303,6 +326,7 @@ window.CONFIG = {
   @media (hover: none), (pointer: coarse) {
     .film { grid-template-columns: 4.4rem minmax(0, 1fr) 56px; grid-template-areas: "y t p" "y r p"; }
     .f-thumb { display: block; grid-area: p; width: 56px; height: 70px; object-fit: cover; align-self: center; }
+    .film.no-img { grid-template-columns: 4.4rem minmax(0, 1fr); grid-template-areas: "y t" "y r"; }
   }
   @media (min-width: 900px) {
     .film { grid-template-columns: 8rem minmax(0, 1fr) 16rem; grid-template-areas: "y t r"; align-items: baseline; }
@@ -385,6 +409,10 @@ window.CONFIG = {
   .hs-yr { font: 600 .74rem var(--font-body); letter-spacing: .14em; color: var(--accent); padding-top: .2rem; font-variant-numeric: tabular-nums; }
   .hs-cap h4 { font: 700 1rem var(--font-body); text-transform: uppercase; letter-spacing: .02em; }
   .hs-cap p { grid-column: 2; margin: .2rem 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45; }
+  .hs-fact { flex: 0 0 auto; align-self: center; width: min(300px, 64vw); border-top: 1px solid var(--line); padding-top: 1.2rem; }
+  .hf-yr { display: block; font-family: var(--font-display); font-style: italic; font-weight: 200; font-size: clamp(3.4rem, 7vw, 5.6rem); line-height: .9; letter-spacing: -.04em; color: var(--accent); }
+  .hs-fact h4 { font: 700 1rem var(--font-body); text-transform: uppercase; letter-spacing: .02em; margin-top: .8rem; }
+  .hs-fact p { margin: .4rem 0 0; color: var(--muted); font-size: .9rem; line-height: 1.5; }
   .hs-end { flex: 0 0 auto; align-self: center; width: min(70vw, 360px); font-family: var(--font-display); font-style: italic; font-weight: 200; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.05; }
   .hs-end small { display: block; font: 600 .68rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-style: normal; margin-bottom: .8rem; }
   .hs-progress { position: absolute; left: var(--gutter-l); right: var(--gutter-r); bottom: calc(2vh + env(safe-area-inset-bottom, 0px)); height: 1px; background: var(--line); }
@@ -392,7 +420,7 @@ window.CONFIG = {
   .rm .hs-pin { height: auto; padding-block: 7rem 4rem; }
   .rm .hs-head { position: relative; top: 0; left: 0; right: 0; padding: 0 var(--gutter-r) 2.5rem var(--gutter-l); }
   .rm .hs-track { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1.4rem; }
-  .rm .hs-card { scroll-snap-align: start; }
+  .rm .hs-card, .rm .hs-fact { scroll-snap-align: start; }
   .rm .hs-progress, .rm .hs-bgword { display: none; }
 
   /* ---------- 7. Voice (pinned quotes) ---------- */
@@ -628,13 +656,17 @@ window.CONFIG = {
       <p class="hs-bgword" id="hs-bgword" aria-hidden="true">Style</p>
       <header class="hs-head"><p class="eyebrow">Style gallery</p><h3 class="sec-title" id="style-title">Fashion with a <em>conscience</em></h3></header>
       <div class="hs-track" id="hs-track">
-        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.0" alt="" loading="lazy"></div><div class="hs-cap"><span class="hs-yr">2009</span><h4>Burberry</h4><p>Fronts Burberry's autumn/winter 2009 campaign.</p></div></article>
-        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.1" alt="" loading="lazy"></div><div class="hs-cap"><span class="hs-yr">2010</span><h4>People Tree</h4><p>Designs a collection with the fair-trade label People Tree.</p></div></article>
-        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.2" alt="" loading="lazy"></div><div class="hs-cap"><span class="hs-yr">2011</span><h4>Lancôme</h4><p>Becomes a face of Lancôme.</p></div></article>
-        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.3" alt="" loading="lazy"></div><div class="hs-cap"><span class="hs-yr">2016</span><h4>Met Gala</h4><p>Wears a Calvin Klein gown made partly from recycled plastic bottles, created with Eco-Age for the Green Carpet Challenge.</p></div></article>
-        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.4" alt="" loading="lazy"></div><div class="hs-cap"><span class="hs-yr">2017</span><h4>The press tour</h4><p>Shares where her <em>Beauty and the Beast</em> press-tour outfits came from on the Instagram account @the_press_tour.</p></div></article>
-        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.5" alt="" loading="lazy"></div><div class="hs-cap"><span class="hs-yr">2020</span><h4>Kering</h4><p>Joins the board of the luxury group Kering and chairs its sustainability committee.</p></div></article>
-        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.6" alt="" loading="lazy"></div><div class="hs-cap"><span class="hs-yr">2022</span><h4>Prada Paradoxe</h4><p>Becomes the face of the Prada Paradoxe fragrance.</p></div></article>
+        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.0" alt="" loading="lazy"></div><div class="hs-cap" data-cap="style.0"><span class="hs-yr"></span><h4></h4><p></p></div></article>
+        <article class="hs-fact"><span class="hf-yr">2009</span><h4>Burberry</h4><p>Fronts Burberry's autumn/winter 2009 campaign.</p></article>
+        <article class="hs-fact"><span class="hf-yr">2010</span><h4>People Tree</h4><p>Designs a collection with the fair-trade label People Tree.</p></article>
+        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.1" alt="" loading="lazy"></div><div class="hs-cap" data-cap="style.1"><span class="hs-yr"></span><h4></h4><p></p></div></article>
+        <article class="hs-fact"><span class="hf-yr">2011</span><h4>Lancôme</h4><p>Becomes a face of Lancôme.</p></article>
+        <article class="hs-fact"><span class="hf-yr">2016</span><h4>Met Gala</h4><p>Wears a Calvin Klein gown made partly from recycled plastic bottles, created with Eco-Age for the Green Carpet Challenge.</p></article>
+        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.2" alt="" loading="lazy"></div><div class="hs-cap" data-cap="style.2"><span class="hs-yr"></span><h4></h4><p></p></div></article>
+        <article class="hs-fact"><span class="hf-yr">2017</span><h4>The press tour</h4><p>Shares where her <em>Beauty and the Beast</em> press-tour outfits came from on the Instagram account @the_press_tour.</p></article>
+        <article class="hs-fact"><span class="hf-yr">2020</span><h4>Kering</h4><p>Joins the board of the luxury group Kering and chairs its sustainability committee.</p></article>
+        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.3" alt="" loading="lazy"></div><div class="hs-cap" data-cap="style.3"><span class="hs-yr"></span><h4></h4><p></p></div></article>
+        <article class="hs-fact"><span class="hf-yr">2022</span><h4>Prada Paradoxe</h4><p>Becomes the face of the Prada Paradoxe fragrance.</p></article>
         <p class="hs-end"><small>Next</small>Chapter V, the voice.</p>
       </div>
       <div class="hs-progress" aria-hidden="true"><i id="hs-bar"></i></div>
@@ -678,7 +710,7 @@ window.CONFIG = {
         <div><dt>In honour of</dt><dd>Emma Watson</dd></div>
         <div><dt>Typography</dt><dd>Fraunces &amp; Hanken Grotesk</dd></div>
         <div><dt>Motion</dt><dd>GSAP, ScrollTrigger, Lenis &amp; Three.js</dd></div>
-        <div><dt>Photography</dt><dd>Your own or licensed images</dd></div>
+        <div><dt>Photography</dt><dd>© the original photographers and publishers</dd></div>
       </dl>
       <p class="cr-note"><strong>Unofficial fan site.</strong> Not affiliated with, endorsed by or connected to Emma Watson, her representatives, UN Women or HeForShe. The quotes on this page come from her public HeForShe speech at the United Nations on 20 September 2014.</p>
       <a href="#hero" class="cr-top" data-magnetic data-nav="Prologue"><span data-scramble>Back to the beginning</span> <span aria-hidden="true">↑</span></a>
@@ -768,8 +800,12 @@ window.CONFIG = {
   function fillImg(img) {
     const key = img.dataset.slot, slot = slotOf(key) || {};
     img.src = srcFor(key);
+    if (slot.src && slot.focus) img.style.objectPosition = `${slot.focus[0] * 100}% ${slot.focus[1] * 100}%`;
     if (!img.alt && slot.alt !== undefined && !img.closest('[aria-hidden="true"]')) img.alt = slot.src ? slot.alt : `Image placeholder: ${slot.label}`;
   }
+  $$('[data-cap]').forEach(cap => { const s = slotOf(cap.dataset.cap) || {}; $('.hs-yr', cap).textContent = s.kicker || ''; $('h4', cap).textContent = s.title || ''; $('p', cap).textContent = s.caption || ''; });
+  // films with no still get no preview, no thumbnail and no "View" cursor
+  $$('.film').forEach(row => { const s = slotOf(row.dataset.slot); if (!s || !s.src) { row.classList.add('no-img'); row.removeAttribute('data-cursor'); const t = $('.f-thumb', row); if (t) t.remove(); } });
   $$('[data-caption]').forEach(f => { const s = slotOf(f.dataset.caption); f.textContent = s && s.caption ? s.caption : ''; });
   const imgIO = new IntersectionObserver(entries => entries.forEach(e => {
     if (!e.isIntersecting) return;
@@ -867,6 +903,8 @@ window.CONFIG = {
      WEBGL HERO: ripple + RGB split that follows the cursor (Three.js)
      ===================================================================== */
   const hero = $('#hero');
+  if (C.images.hero.tone === 'light') hero.classList.add('is-light');
+  $('#hero-media').setAttribute('aria-label', C.images.hero.src ? C.images.hero.alt : `Image placeholder: ${C.images.hero.label}`);
   const GL = (() => {
     const canvas = $('#gl');
     if (!window.THREE) return null;
@@ -879,19 +917,21 @@ window.CONFIG = {
     tex.minFilter = THREE.LinearFilter; tex.magFilter = THREE.LinearFilter; tex.generateMipmaps = false;
     const uniforms = {
       uTex: { value: tex }, uRes: { value: new THREE.Vector2(1, 1) }, uImg: { value: new THREE.Vector2(16, 10) },
-      uMouse: { value: new THREE.Vector2(.5, .5) }, uStrength: { value: 0 }, uTime: { value: 0 }, uScroll: { value: 0 }
+      uMouse: { value: new THREE.Vector2(.5, .5) }, uStrength: { value: 0 }, uTime: { value: 0 }, uScroll: { value: 0 },
+      uFocus: { value: new THREE.Vector2((C.images.hero.focus || [.5, .5])[0], 1 - (C.images.hero.focus || [.5, .5])[1]) },
+      uLight: { value: C.images.hero.tone === 'light' ? 1 : 0 }
     };
     const material = new THREE.ShaderMaterial({
       uniforms,
       vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position, 1.0); }',
       fragmentShader: `
         precision highp float;
-        uniform sampler2D uTex; uniform vec2 uRes, uImg, uMouse; uniform float uStrength, uTime, uScroll;
+        uniform sampler2D uTex; uniform vec2 uRes, uImg, uMouse, uFocus; uniform float uStrength, uTime, uScroll, uLight;
         varying vec2 vUv;
         vec2 cover(vec2 uv){
           float rs = uRes.x / uRes.y, ri = uImg.x / uImg.y;
           vec2 s = rs < ri ? vec2(rs / ri, 1.0) : vec2(1.0, ri / rs);
-          return uv * s + (1.0 - s) * 0.5;
+          return uv * s + (1.0 - s) * uFocus;                                // crop around the focus point
         }
         void main(){
           vec2 uv = (vUv - 0.5) * (1.0 - uScroll * 0.14) + 0.5;               // scroll pushes the image in
@@ -904,9 +944,9 @@ window.CONFIG = {
           float g = texture2D(uTex, cover(uv + off)).g;
           float b = texture2D(uTex, cover(uv + off * 0.65)).b;
           vec3 col = vec3(r, g, b);
-          col += vec3(1.0, 0.82, 0.56) * exp(-d * 8.0) * 0.14 * uStrength;      // soft glow at the cursor
+          col += vec3(1.0, 0.82, 0.56) * exp(-d * 8.0) * 0.14 * uStrength * (1.0 - uLight * 0.6); // soft glow at the cursor
           float vig = smoothstep(1.25, 0.25, length(vUv - 0.5) * 1.45);
-          col *= mix(0.5, 1.0, vig) * (1.0 - uScroll * 0.6);
+          col *= mix(mix(0.5, 0.86, uLight), 1.0, vig) * (1.0 - uScroll * mix(0.6, 0.88, uLight)); // light photos fade to ink on scroll
           gl_FragColor = vec4(col, 1.0);
         }`
     });
@@ -1095,9 +1135,13 @@ window.CONFIG = {
   /* ---------- Preloader → hero ---------- */
   split($('#hero-title'), 'chars', true);
   const heroChars = $$('#hero-title .c');
-  gsap.set('#hero-media', { clipPath: 'inset(34% 38% 34% 38%)' });
+  // the preloader window (24% × 32% of the screen) opens over the photo's focus point
+  const [fx, fy] = (C.images.hero.focus || [.5, .5]).map(v => v * 100);
+  const wl = Math.min(Math.max(fx - 12, 4), 72), wt = Math.min(Math.max(fy - 14, 16), 52), wr = 100 - wl - 24, wb = 100 - wt - 32;
+  Object.entries({ '--wl': wl, '--wr': wr, '--wt': wt, '--wb': wb }).forEach(([k, v]) => $('#loader').style.setProperty(k, v + '%'));
+  gsap.set('#hero-media', { clipPath: `inset(${wt}% ${wr}% ${wb}% ${wl}%)` });
   gsap.set(heroChars, { yPercent: 115, rotate: 6 });
-  gsap.set(['.hero-kicker', '.hero-foot', '.scroll-cue', '#bar'], { autoAlpha: 0 });
+  gsap.set(['.hero-kicker', '.hero-foot', '.scroll-cue', '#bar', '.hero-shade'], { autoAlpha: 0 });
   (async () => {
     const num = $('#ld-num'), chap = $('#ld-chapter'), barI = $('#ld-bar');
     const names = ['Prologue', 'The Actress', 'The Activist', 'The Reader', 'The Style', 'The Voice'];
@@ -1115,6 +1159,7 @@ window.CONFIG = {
       .to(['#ld-num', '#ld-chapter', '.ld-top', '.ld-bar'], { yPercent: -80, autoAlpha: 0, duration: .7, ease: 'expo.in', stagger: .05 })
       .to('#hero-media', { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut' }, '-=.35')
       .to(heroChars, { yPercent: 0, rotate: 0, duration: 1.5, stagger: .05, ease: 'expo.out' }, '-=.75')
+      .to('.hero-shade', { autoAlpha: 1, duration: 1 }, '-=1.4')
       .to(['.hero-kicker', '.hero-foot', '.scroll-cue', '#bar'], { autoAlpha: 1, duration: .9, stagger: .08 }, '-=1.1');
   })();
 
@@ -1182,7 +1227,7 @@ window.CONFIG = {
     split($('.f-title', row), 'words');
     gsap.fromTo($('.f-year', row), { opacity: 0, x: -40 }, { opacity: 1, x: 0, ease: 'none', scrollTrigger: st });
     gsap.fromTo($$('.f-title .wi', row), { opacity: 0, filter: 'blur(10px)', y: 14 }, { opacity: 1, filter: 'blur(0px)', y: 0, stagger: .08, ease: 'none', scrollTrigger: st });
-    gsap.fromTo([$('.f-role', row), $('.f-thumb', row)], { opacity: 0 }, { opacity: 1, ease: 'none', scrollTrigger: st });
+    gsap.fromTo([$('.f-role', row), $('.f-thumb', row)].filter(Boolean), { opacity: 0 }, { opacity: 1, ease: 'none', scrollTrigger: st });
     gsap.fromTo($('.f-line', row), { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: st });
   });
   if (FINE) {
@@ -1190,7 +1235,7 @@ window.CONFIG = {
     gsap.set(prev, { xPercent: -50, yPercent: -50 });
     const px = gsap.quickTo(prev, 'x', { duration: .7, ease: 'power3' }), py = gsap.quickTo(prev, 'y', { duration: .7, ease: 'power3' });
     addEventListener('pointermove', e => { px(e.clientX); py(e.clientY); });
-    $$('.film').forEach(row => {
+    $$('.film:not(.no-img)').forEach(row => {
       row.addEventListener('pointerenter', () => { pImg.src = srcFor(row.dataset.slot, 600); gsap.to(prev, { autoAlpha: 1, scale: 1, rotate: gsap.utils.random(-5, 5), duration: .55, ease: 'expo.out' }); });
       row.addEventListener('pointerleave', () => gsap.to(prev, { autoAlpha: 0, scale: .85, duration: .35, ease: 'power2.in' }));
     });
@@ -1285,6 +1330,12 @@ window.CONFIG = {
       scrollTrigger: { containerAnimation: hTween, trigger: card, start: 'right 40%', end: 'right 0%', scrub: true } });
     gsap.fromTo(img, { xPercent: -9, scale: 1.25 }, { xPercent: 9, scale: 1.05, ease: 'none', scrollTrigger: { containerAnimation: hTween, trigger: card, start: 'left right', end: 'right left', scrub: true } });
     gsap.fromTo($('.hs-cap', card), { y: 50, opacity: 0 }, { y: 0, opacity: 1, ease: 'none', scrollTrigger: { containerAnimation: hTween, trigger: card, start: 'left 85%', end: 'left 45%', scrub: true } });
+  });
+
+  $$('.hs-fact').forEach(f => {
+    const st = (start, end) => ({ containerAnimation: hTween, trigger: f, start, end, scrub: true });
+    gsap.fromTo($('.hf-yr', f), { yPercent: 70, opacity: 0, letterSpacing: '.2em' }, { yPercent: 0, opacity: 1, letterSpacing: '-.04em', ease: 'none', scrollTrigger: st('left 98%', 'left 60%') });
+    gsap.fromTo([$('h4', f), $('p', f)], { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: .15, ease: 'none', scrollTrigger: st('left 92%', 'left 50%') });
   });
 
   /* ---------- V · Voice: pinned scenes that change colour, image and quote ---------- */
