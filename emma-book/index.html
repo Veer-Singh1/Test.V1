@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>A Life in Chapters</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="An unofficial fan tribute to Emma Watson: a picture book in ink and candlelight that you read by scrolling.">
+<meta name="description" content="An unofficial fan tribute to Emma Watson: a candlelit picture book whose pages you turn by scrolling.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
@@ -13,12 +13,12 @@
 <script>
 /* =========================================================================
    CONFIG: everything you are likely to change lives here.
-   • colours / fonts  – the whole palette is ink, paper and one flame.
+   • colours / fonts  – ink, paper and one flame.
    • images           – leave src empty to show a labelled placeholder plate.
                         Use only photos you own or have a licence for.
    • audio            – leave a URL empty and that sound is synthesised live.
    • chapters         – the text of each chapter, card by card.
-   Facts and quotes here are verifiable; quotes come from Emma Watson's
+   Every fact here can be checked. Quotes come only from Emma Watson's
    HeForShe speech at the United Nations, 20 September 2014.
    ========================================================================= */
 window.CONFIG = {
@@ -28,11 +28,12 @@ window.CONFIG = {
   audio: { music: '', crackle: '', pageTurn: '' },
 
   // focus = [x, y] from 0 to 1: the part of the photo to keep when it is cropped into a plate.
-  frontispiece: { src: 'images/portrait-blazer.jpg', alt: 'Engraved portrait of Emma Watson in a black blazer and a silver choker', focus: [0.5, 0.42], caption: 'Frontispiece' },
+  frontispiece: { src: 'images/portrait-blazer.jpg', alt: 'Engraved portrait of Emma Watson in a black blazer and a silver choker', focus: [0.5, 0.42], caption: 'Emma Watson' },
 
   chapters: [
     {
-      num: 'I', title: 'The Girl Who Read', place: 'Paris · 1990',
+      num: 'I', title: 'The Girl Who Read', place: 'Paris · 1990', vignette: 'book',
+      argument: 'In which a girl born in Paris grows up in Oxfordshire, and is cast as Hermione.',
       plate: { src: 'images/hero.jpg', alt: 'Engraved portrait of Emma Watson looking back over her shoulder in a knitted cardigan', focus: [0.56, 0.3], caption: '“Born in Paris, 1990.”' },
       effect: 'pages', tint: 'paper',
       cards: [
@@ -42,7 +43,8 @@ window.CONFIG = {
       ]
     },
     {
-      num: 'II', title: 'The Spell', place: '2001 – 2019',
+      num: 'II', title: 'The Spell', place: '2001 – 2019', vignette: 'wand',
+      argument: 'In which eight films are made, and then many more.',
       plate: { src: 'images/talk-show.jpg', alt: 'Engraved portrait of Emma Watson smiling, seated in a talk-show guest chair', focus: [0.5, 0.32], caption: '“Eight films, then many more.”' },
       effect: 'sparks', tint: 'warm', flash: true,
       cards: [
@@ -52,7 +54,8 @@ window.CONFIG = {
       ]
     },
     {
-      num: 'III', title: 'The Speech', place: 'New York · 2014',
+      num: 'III', title: 'The Speech', place: 'New York · 2014', vignette: 'speech',
+      argument: 'In which a speech is given at the United Nations.',
       plate: { src: 'images/wonderland-profile.jpg', alt: 'Engraved profile of Emma Watson with her eyes closed, hands folded against her chest', focus: [0.5, 0.3], caption: '“Gender equality is your issue too.”' },
       effect: 'dust', tint: 'spot',
       cards: [
@@ -63,7 +66,8 @@ window.CONFIG = {
       ]
     },
     {
-      num: 'IV', title: 'The Bookshelf', place: '2014 – 2016',
+      num: 'IV', title: 'The Bookshelf', place: '2014 – 2016', vignette: 'books',
+      argument: 'In which a degree is earned and a book club is begun.',
       plate: { src: 'images/wonderland-laugh.jpg', alt: 'Engraved portrait of Emma Watson laughing with her eyes shut', focus: [0.5, 0.26], caption: '“A shelf shared with strangers.”' },
       effect: 'letters', tint: 'paper', shelf: true,
       cards: [
@@ -73,7 +77,8 @@ window.CONFIG = {
       ]
     },
     {
-      num: 'V', title: 'The Last Page', place: 'Today',
+      num: 'V', title: 'The Last Page', place: 'Today', vignette: 'candle',
+      argument: 'In which a question is asked of everyone who is reading.',
       plate: { src: 'images/portrait-bob.jpg', alt: 'Engraved close-up portrait of Emma Watson with a short bob', focus: [0.5, 0.4], caption: '“If not now, when?”' },
       effect: 'snow', tint: 'night',
       cards: [
@@ -101,164 +106,102 @@ window.CONFIG = {
 </script>
 
 <style>
-  /* Layout: one fixed 3D stage (a book on a pool of light) driven by a tall invisible scroller; the story text
-     lives in a semantic <article> that doubles as the "read as text" version. Ink, paper and one flame. */
+  /* Layout: one fixed WebGL stage (a real 3D book on a pool of light) with a few DOM layers on top:
+     the narration card, the match, the HUD. Nothing scrolls; a custom engine turns wheel, swipe, tap and keys
+     into page turns that settle on resting points. Ink, paper and one flame. */
   :root {
     --ink: #0d0c0b; --paper: #efe9dc; --flame: #f29a3a; --gold: #c9a45c;
     --mist: rgba(239, 233, 220, .72);
     --serif: 'Cormorant Garamond', 'Iowan Old Style', Garamond, Georgia, serif;
-    --W: 300px; --t: 2px; --P: 1000px;
-    --heat: .5; --fk: 1; --out: 0; --len: 1;
+    --heat: .5; --fk: 1; --out: 0; --len: 1; --flare: 0;
     --gl: max(16px, env(safe-area-inset-left, 0px));
     --gr: max(16px, env(safe-area-inset-right, 0px));
     color-scheme: dark;
   }
   *, *::before, *::after { box-sizing: border-box; }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis.lenis-smooth { scroll-behavior: auto !important; }
-  html.is-intro, html.is-intro body { overflow: hidden; }
-  body { margin: 0; background: var(--ink); color: var(--paper); font-family: var(--serif); font-size: 1.2rem; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  html, body { height: 100%; }
+  body { margin: 0; background: #050505; color: var(--paper); font-family: var(--serif); font-size: 1.2rem; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow: hidden; overscroll-behavior: none; }
+  html.text-mode, html.text-mode body { height: auto; }
+  html.text-mode body { overflow: auto; }
   button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-  a { color: inherit; }
   :focus-visible { outline: 2px solid var(--flame); outline-offset: 3px; }
-  .sr-only, .book-mode #story { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+  .sr-only { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
   .skip { position: fixed; z-index: 120; left: 16px; top: -80px; padding: .6rem 1rem; background: var(--paper); color: var(--ink); text-decoration: none; font-style: italic; }
   .skip:focus { top: calc(12px + env(safe-area-inset-top, 0px)); }
   .caps { font-weight: 600; letter-spacing: .32em; text-transform: uppercase; font-size: .78em; }
 
+  /* ---------- Stage ---------- */
+  #gl { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 1; touch-action: none; cursor: grab; outline: none; }
+  #gl.dragging { cursor: grabbing; }
+  #fx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+  #vig { position: fixed; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(125% 100% at 50% 46%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .55) 100%); }
+  #warm { position: fixed; inset: 0; z-index: 3; pointer-events: none; mix-blend-mode: screen; opacity: 0;
+    background: radial-gradient(52% 48% at 100% 38%, rgba(242, 154, 58, .3), rgba(242, 154, 58, 0) 70%); }
+  #veil { position: fixed; inset: 0; z-index: 70; background: #000; opacity: 0; pointer-events: none; }
+  .text-mode #gl, .text-mode #vig, .text-mode #fx, .text-mode #warm, .text-mode #card, .text-mode #shelf-wrap, .text-mode #flame, .text-mode #prompt,
+  .text-mode #progress, .text-mode .corner, .text-mode #endcard, .text-mode #veil { display: none !important; }
+  .book-mode #story { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); }
+
   /* ---------- Intro ---------- */
-  #intro { position: fixed; inset: 0; z-index: 90; background: var(--ink); display: grid; place-items: center; text-align: center;
-    padding: calc(70px + env(safe-area-inset-top, 0px)) var(--gr) calc(90px + env(safe-area-inset-bottom, 0px)) var(--gl); transition: opacity 1.2s ease, visibility 1.2s; }
-  #intro::before { content: ''; position: absolute; left: 50%; top: 58%; width: 520px; height: 220px; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
-    background: radial-gradient(closest-side, rgba(242, 154, 58, .14), transparent); }
+  #intro { position: fixed; inset: 0; z-index: 90; background: #050505; display: grid; place-items: center; text-align: center; overflow: hidden;
+    padding: calc(64px + env(safe-area-inset-top, 0px)) var(--gr) calc(92px + env(safe-area-inset-bottom, 0px)) var(--gl); transition: opacity 1.4s ease, visibility 1.4s; }
   #intro.gone { opacity: 0; visibility: hidden; }
+  .intro-glow { position: absolute; left: 50%; top: 60%; width: 640px; height: 300px; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(242, 154, 58, .16), transparent); animation: breathe 5s ease-in-out infinite; }
+  @keyframes breathe { 50% { transform: translate(-50%, -50%) scale(1.08); opacity: .75; } }
+  .embers { position: absolute; inset: 0; pointer-events: none; }
+  .embers i { position: absolute; bottom: -10px; width: 3px; height: 3px; border-radius: 50%; background: #ffcf86; box-shadow: 0 0 6px #ff9a2c; opacity: 0; animation: ember linear infinite; }
+  @keyframes ember { 0% { transform: translate(0, 0); opacity: 0; } 12% { opacity: .9; } 100% { transform: translate(var(--dx, 20px), -70vh); opacity: 0; } }
   .intro-in { position: relative; max-width: 34rem; display: grid; justify-items: center; }
+  .intro-in > * { opacity: 0; transform: translateY(14px); filter: blur(6px); animation: rise 1.5s cubic-bezier(.2, .8, .2, 1) forwards; }
+  .intro-in > :nth-child(1) { animation-delay: .25s; } .intro-in > :nth-child(2) { animation-delay: .5s; } .intro-in > :nth-child(3) { animation-delay: .9s; }
+  .intro-in > :nth-child(4) { animation-delay: 1.15s; } .intro-in > :nth-child(5) { animation-delay: 1.45s; } .intro-in > :nth-child(6) { animation-delay: 1.6s; } .intro-in > :nth-child(7) { animation-delay: 1.7s; }
+  @keyframes rise { to { opacity: 1; transform: none; filter: blur(0); } }
   .kicker { margin: 0; font-style: italic; letter-spacing: .06em; color: var(--mist); font-size: 1.15rem; }
   .intro-in h1 { margin: .5rem 0 1.4rem; font-style: italic; font-weight: 500; font-size: clamp(3.1rem, 13vw, 6rem); line-height: .98; text-wrap: balance; }
   .intro-in .lede { margin: 0; font-size: clamp(1.3rem, 4.6vw, 1.6rem); line-height: 1.35; max-width: 26ch; text-wrap: balance; }
   .intro-in .hint { margin: 1.3rem 0 0; font-style: italic; color: var(--mist); max-width: 30ch; text-wrap: balance; }
-  .open-btn { margin-top: 2.2rem; width: min(100%, 22rem); min-height: 64px; padding: 1rem 1.6rem; background: #a29d93; color: var(--ink); font-size: 1.3rem; box-shadow: 0 0 60px rgba(242, 154, 58, .12); transition: background-color .3s; }
-  .open-btn:hover { background: var(--paper); }
-  .quiet-link { margin-top: 1.2rem; font-style: italic; font-size: 1.25rem; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; color: var(--mist); min-height: 44px; }
+  .open-btn { margin-top: 2.2rem; width: min(100%, 22rem); min-height: 64px; padding: 1rem 1.6rem; background: #a29d93; color: var(--ink); font-size: 1.3rem;
+    box-shadow: 0 0 60px rgba(242, 154, 58, .14); transition: background-color .3s, box-shadow .3s; }
+  .open-btn:hover { background: var(--paper); box-shadow: 0 0 80px rgba(242, 154, 58, .3); }
+  .quiet-link { margin-top: 1.1rem; font-style: italic; font-size: 1.25rem; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; color: var(--mist); min-height: 44px; }
   .quiet-link:hover { color: var(--paper); }
-  .small-link { margin-top: .3rem; font-size: 1rem; }
+  .small-link { margin-top: .2rem; font-size: 1rem; }
   .intro-foot { position: absolute; left: var(--gl); right: var(--gr); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 1rem;
     font-style: italic; color: var(--mist); font-size: 1rem; }
 
   /* ---------- HUD ---------- */
   .hud { position: fixed; z-index: 50; inset: 0 0 auto; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none;
-    padding: calc(14px + env(safe-area-inset-top, 0px)) var(--gr) 0 var(--gl); }
+    padding: calc(14px + env(safe-area-inset-top, 0px)) var(--gr) 0 var(--gl); transition: opacity 1s; }
   .hud > * { pointer-events: auto; }
-  .box-btn { min-height: 46px; padding: .35rem 1.05rem; border: 1px solid rgba(239, 233, 220, .38); background: rgba(13, 12, 11, .72); color: var(--paper); font-style: italic; font-weight: 500; font-size: 1.25rem; transition: background-color .3s, color .3s; }
+  .box-btn { min-height: 46px; padding: .35rem 1.05rem; border: 1px solid rgba(239, 233, 220, .38); background: rgba(13, 12, 11, .72); color: var(--paper);
+    font-style: italic; font-weight: 500; font-size: 1.25rem; transition: background-color .3s, color .3s; }
   .box-btn:hover { background: var(--paper); color: var(--ink); }
-  .is-intro .hud { opacity: 0; pointer-events: none; }
-  .is-intro .hud > * { pointer-events: none; }
+  .is-intro .hud, .is-intro #flame, .is-intro #prompt, .is-intro #progress, .is-intro .corner { opacity: 0 !important; pointer-events: none !important; }
+  #prompt { position: fixed; z-index: 45; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); min-height: 50px; padding: .45rem 1.5rem;
+    border: 1px solid rgba(239, 233, 220, .4); background: rgba(13, 12, 11, .84); font-style: italic; font-size: 1.4rem; white-space: nowrap;
+    transition: opacity .7s, transform .7s cubic-bezier(.2, .8, .2, 1); }
+  #prompt.hide { opacity: 0; transform: translate(-50%, 10px); pointer-events: none; }
+  #prompt::after { content: ''; display: inline-block; width: .42em; height: .42em; margin-left: .7em; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+    transform: translateY(-.18em) rotate(45deg); animation: nudge 1.8s ease-in-out infinite; }
+  @keyframes nudge { 50% { transform: translateY(.05em) rotate(45deg); } }
+  #progress { position: fixed; z-index: 44; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(239, 233, 220, .08); pointer-events: none; transition: opacity 1s; }
+  #progress i { display: block; height: 100%; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, rgba(201, 164, 92, .6), var(--flame)); }
+  .corner { position: fixed; z-index: 44; right: var(--gr); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); margin: 0; font-style: italic; color: var(--mist); font-size: 1.05rem;
+    pointer-events: none; transition: opacity .6s; text-shadow: 0 1px 6px rgba(0, 0, 0, .6); }
+  .corner.hide { opacity: 0; }
 
-  /* ---------- The stage ---------- */
-  #stage { position: fixed; inset: 0; z-index: 1; overflow: hidden; background: var(--ink); perspective: var(--P); perspective-origin: 50% 50%; }
-  #stage::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 90% at 50% 52%, transparent 45%, rgba(0, 0, 0, .55)); }
-  #world { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; will-change: transform; }
-  #pool { position: absolute; width: calc(var(--W) * 3.8); height: calc(var(--W) * 3.8); left: calc(var(--W) * -1.9); top: calc(var(--W) * -1.9); border-radius: 50%;
-    background: radial-gradient(circle, var(--paper) 0 64%, rgba(239, 233, 220, .55) 68.5%, rgba(239, 233, 220, 0) 70.5%); transform: translateZ(calc(var(--t) * -1.5)); }
-  .shadow { position: absolute; top: calc(var(--W) * -2 / 3); height: calc(var(--W) * 4 / 3); width: var(--W); background: rgba(0, 0, 0, .3);
-    box-shadow: calc(var(--W) * .03) calc(var(--W) * .05) calc(var(--W) * .09) calc(var(--W) * .02) rgba(0, 0, 0, .45); transform: translateZ(calc(var(--t) * -1)); }
-  .shadow.r { left: 0; } .shadow.l { left: calc(var(--W) * -1); }
-  #book { position: absolute; left: 0; top: 0; transform-style: preserve-3d; }
-  .leaf { position: absolute; left: 0; top: calc(var(--W) * -2 / 3); width: var(--W); height: calc(var(--W) * 4 / 3); transform-origin: 0 50%; transform-style: preserve-3d; }
-  .face { position: absolute; inset: 0; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; background: var(--paper); color: var(--ink); opacity: var(--op, 1); }
-  .face.front { transform: translateZ(calc(var(--t) / 2)); background: linear-gradient(90deg, rgba(40, 30, 15, .2), rgba(40, 30, 15, 0) 9%), var(--paper); }
-  .face.back { transform: rotateY(180deg) translateZ(calc(var(--t) / 2)); background: linear-gradient(270deg, rgba(40, 30, 15, .2), rgba(40, 30, 15, 0) 9%), var(--paper); }
-  .face::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: var(--sh, 0); }
-  .face.front::after { background: linear-gradient(90deg, rgba(0, 0, 0, .55), rgba(0, 0, 0, .05)); }
-  .face.back::after { background: linear-gradient(270deg, rgba(0, 0, 0, .45), rgba(255, 245, 225, .1)); }
-  .edge { position: absolute; background: repeating-linear-gradient(0deg, #d9d0bd 0 1px, #efe8d8 1px 2px); opacity: var(--op, 1); }
-  .edge.b { left: 0; width: 100%; height: var(--t); top: calc(100% - var(--t) / 2); transform: rotateX(90deg); }
-  .edge.r { top: 0; height: 100%; width: var(--t); left: calc(100% - var(--t) / 2); transform: rotateY(90deg); background: repeating-linear-gradient(90deg, #d9d0bd 0 1px, #efe8d8 1px 2px); }
-  .leaf.board .face, .leaf.board .edge { background: #121110; color: var(--gold); }
-  .leaf.board .face.back.inside, .leaf.board .face.front.inside { background: var(--paper); color: var(--ink); }
-
-  /* page content, sized from the book's width */
-  .pg { position: absolute; inset: 0; display: grid; align-content: center; justify-items: center; text-align: center; padding: calc(var(--W) * .1); }
-  .pg .folio { position: absolute; left: 0; right: 0; bottom: calc(var(--W) * .055); font-style: italic; font-size: calc(var(--W) * .042); color: #4a4438; }
-  .cover-pg { border: calc(var(--W) * .006) solid var(--gold); outline: calc(var(--W) * .003) solid var(--gold); outline-offset: calc(var(--W) * -.03); margin: calc(var(--W) * .055); padding: calc(var(--W) * .08); align-content: space-between; }
-  .cover-pg .ct { font-weight: 600; text-transform: uppercase; letter-spacing: .18em; font-size: calc(var(--W) * .068); line-height: 1.25; }
-  .cover-pg .cs { font-style: italic; font-size: calc(var(--W) * .045); letter-spacing: .04em; }
-  .cover-pg svg { width: calc(var(--W) * .18); height: calc(var(--W) * .28); }
-  .title-pg .orn, .open-pg .orn { font-size: calc(var(--W) * .06); color: #6a5a3a; letter-spacing: .4em; }
-  .title-pg .tt { margin: calc(var(--W) * .05) 0; font-style: italic; font-weight: 500; font-size: calc(var(--W) * .13); line-height: 1; }
-  .title-pg .ts { font-size: calc(var(--W) * .048); max-width: 16ch; line-height: 1.3; }
-  .title-pg .tb { margin-top: calc(var(--W) * .14); font-style: italic; font-size: calc(var(--W) * .04); color: #4a4438; }
-  .open-pg .on { font-weight: 500; font-size: calc(var(--W) * .3); line-height: 1; }
-  .open-pg .ol { margin-top: calc(var(--W) * .02); letter-spacing: .3em; text-transform: uppercase; font-weight: 600; font-size: calc(var(--W) * .034); color: #4a4438; }
-  .open-pg .ot { margin: calc(var(--W) * .05) 0 calc(var(--W) * .04); font-style: italic; font-weight: 500; font-size: calc(var(--W) * .108); line-height: 1.02; max-width: 9ch; }
-  .open-pg .op { font-style: italic; font-size: calc(var(--W) * .045); color: #4a4438; }
-  .plate { position: absolute; left: calc(var(--W) * .17); top: calc(var(--W) * .12); width: calc(var(--W) * .66); height: calc(var(--W) * .88); padding: calc(var(--W) * .016);
-    border: calc(var(--W) * .004) solid var(--ink); box-shadow: 0 0 0 calc(var(--W) * .008) var(--paper), 0 0 0 calc(var(--W) * .011) var(--ink); background: var(--paper); }
-  .plate canvas { display: block; width: 100%; height: 100%; }
-  .plate-cap { position: absolute; left: 0; right: 0; top: calc(var(--W) * 1.05); text-align: center; }
-  .plate-cap .pc { font-style: italic; font-size: calc(var(--W) * .048); }
-  .plate-cap .pl { margin-top: calc(var(--W) * .015); letter-spacing: .32em; text-transform: uppercase; font-weight: 600; font-size: calc(var(--W) * .03); color: #4a4438; }
-  .end-pg .ef { font-style: italic; font-weight: 500; font-size: calc(var(--W) * .16); }
-  .end-pg .es { margin-top: calc(var(--W) * .04); font-style: italic; font-size: calc(var(--W) * .048); max-width: 15ch; }
-  .paper-pg { background-image: radial-gradient(circle at 50% 50%, transparent 0 2px, transparent 2px), repeating-linear-gradient(45deg, rgba(13, 12, 11, .08) 0 1px, transparent 1px calc(var(--W) * .045)), repeating-linear-gradient(-45deg, rgba(13, 12, 11, .08) 0 1px, transparent 1px calc(var(--W) * .045)); }
-  .back-pg { align-content: end; padding-bottom: calc(var(--W) * .14); }
-  .back-pg p { margin: 0; font-style: italic; font-size: calc(var(--W) * .04); max-width: 22ch; color: var(--gold); }
-
-  /* ---------- Light ---------- */
-  #dim { position: fixed; inset: 0; z-index: 10; pointer-events: none; background: #000; opacity: .5; }
-  #warm { position: fixed; inset: 0; z-index: 11; pointer-events: none; mix-blend-mode: screen;
-    background: radial-gradient(60% 55% at 100% 42%, rgba(242, 154, 58, .34), rgba(242, 154, 58, 0) 70%); opacity: .6; }
-
-  /* ---------- Scene (inside a plate) ---------- */
-  #scene { position: fixed; inset: 0; z-index: 30; overflow: hidden; background: var(--paper); opacity: 0; visibility: hidden; }
-  #scene .art { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(var(--kb, 1)); }
-  #scene .art canvas { display: block; width: 100%; height: 100%; }
-  .tint { position: absolute; inset: 0; pointer-events: none; }
-  .tint.warm { background: radial-gradient(50% 40% at 50% 42%, rgba(255, 196, 110, .32), rgba(255, 196, 110, 0) 70%), radial-gradient(90% 80% at 50% 45%, rgba(13, 12, 11, 0) 35%, rgba(13, 12, 11, .82)); }
-  .tint.spot { background: radial-gradient(34% 62% at 50% 28%, rgba(13, 12, 11, 0) 0 30%, rgba(13, 12, 11, .9) 78%); }
-  .tint.night { background: linear-gradient(rgba(8, 10, 16, .84), rgba(8, 10, 16, .62) 60%, rgba(8, 10, 16, .8)); }
-  .tint.paper { background: radial-gradient(90% 80% at 50% 45%, rgba(13, 12, 11, 0) 50%, rgba(13, 12, 11, .38)); }
-  #flash { position: absolute; inset: 0; background: #fffaf0; opacity: 0; pointer-events: none; mix-blend-mode: screen; }
-  #fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-  .card { position: absolute; left: 50%; bottom: calc(26px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); width: min(600px, calc(100% - 52px));
-    min-height: 9.5rem; padding: 1.1rem 1.4rem 1.3rem; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 9px 9px 0 var(--ink); }
-  .card .ck { margin: 0 0 .35rem; letter-spacing: .26em; text-transform: uppercase; font-weight: 600; font-size: .78rem; color: #5a5040; }
-  .card .ct { margin: 0; font-weight: 500; font-size: clamp(1.45rem, 5.2vw, 1.85rem); line-height: 1.25; text-wrap: pretty; }
-  .card.quote .ct { font-style: italic; }
-  .card .ln { display: block; }
-  .card .cc { margin: .6rem 0 0; font-style: italic; font-size: 1rem; color: #5a5040; }
-  .card .w { transition: opacity .25s; }
-  .shelf-wrap { position: absolute; left: 50%; top: calc(80px + env(safe-area-inset-top, 0px)); transform: translateX(-50%); width: min(560px, calc(100% - 48px)); text-align: center; }
-  .shelf { display: flex; justify-content: center; align-items: flex-end; gap: 10px; height: 11.5rem; padding: 0 8px; border-bottom: 10px solid var(--ink); }
-  .spine { position: relative; width: 3.4rem; border: 2px solid var(--ink); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: .55rem 0;
-    transform-origin: 50% 100%; transition: transform .5s cubic-bezier(.2, .9, .3, 1.2), box-shadow .3s; box-shadow: 4px 4px 0 var(--ink); }
-  .spine:hover, .spine:focus-visible, .spine[aria-expanded="true"] { transform: translateY(-10px) rotate(-3deg); }
-  .spine .st { writing-mode: vertical-rl; transform: rotate(180deg); font-style: italic; font-weight: 600; font-size: 1.05rem; line-height: 1.1; white-space: nowrap; }
-  .spine .sa { font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
-  .spine.ink { background: var(--ink); color: var(--paper); height: 100%; }
-  .spine.paper { background: var(--paper); color: var(--ink); height: 86%; }
-  .spine.gold { background: var(--gold); color: var(--ink); height: 94%; }
-  .spine.ink:nth-child(4) { height: 80%; }
-  .shelf-hint { margin: .6rem 0 0; font-style: italic; font-size: 1.05rem; color: var(--ink); background: rgba(239, 233, 220, .85); display: inline-block; padding: 0 .5rem; }
-  .spine-page { position: absolute; left: 50%; top: calc(100% + 14px); transform: translateX(-50%) perspective(700px) rotateX(0); transform-origin: 50% 0; width: min(360px, 100%);
-    padding: 1rem 1.2rem 1.1rem; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 7px 7px 0 var(--ink); text-align: left; z-index: 2; animation: unfold .5s cubic-bezier(.2, .9, .3, 1); }
-  @keyframes unfold { from { opacity: 0; transform: translateX(-50%) perspective(700px) rotateX(-70deg); } }
-  .spine-page h3 { margin: 0; font-style: italic; font-weight: 600; font-size: 1.5rem; line-height: 1.1; }
-  .spine-page .by { margin: .2rem 0 .5rem; letter-spacing: .14em; text-transform: uppercase; font-size: .76rem; font-weight: 600; color: #5a5040; }
-  .spine-page p { margin: 0; font-size: 1.15rem; line-height: 1.35; }
-  .spine-page .x { position: absolute; top: .3rem; right: .4rem; width: 40px; height: 40px; font-size: 1.4rem; }
-
-  /* ---------- The flame ---------- */
-  #flame { position: fixed; z-index: 46; right: max(6px, env(safe-area-inset-right, 0px)); top: 26vh; width: 46px; height: 46vh; }
+  /* ---------- The match ---------- */
+  #flame { position: fixed; z-index: 46; right: max(6px, env(safe-area-inset-right, 0px)); top: 26vh; width: 46px; height: 46vh; transition: opacity 1s; }
   #flame .stick { position: absolute; left: 50%; bottom: 0; width: 8px; margin-left: -4px; height: calc(var(--len) * 100%); border-radius: 2px 2px 1px 1px;
     background: linear-gradient(90deg, #8f6c3c, #ecd29a 42%, #b8925a); box-shadow: 0 0 calc(var(--heat) * 18px) rgba(242, 154, 58, calc(var(--heat) * .5)); }
   #flame .stick::before { content: ''; position: absolute; left: -1px; right: -1px; top: 0; height: 14px; border-radius: 3px 3px 0 0; background: linear-gradient(#120d08, #3a2410 60%, rgba(58, 36, 16, 0)); }
-  #flame .glow { position: absolute; left: 50%; bottom: calc(var(--len) * 100%); width: 200px; height: 200px; transform: translate(-50%, 40%); border-radius: 50%; pointer-events: none; mix-blend-mode: screen;
-    background: radial-gradient(circle, rgba(255, 170, 70, .6), rgba(255, 120, 40, 0) 62%); opacity: calc(var(--heat) * var(--fk) * (1 - var(--out))); }
+  #flame .glow { position: absolute; left: 50%; bottom: calc(var(--len) * 100%); width: 220px; height: 220px; transform: translate(-50%, 40%); border-radius: 50%; pointer-events: none; mix-blend-mode: screen;
+    background: radial-gradient(circle, rgba(255, 170, 70, .6), rgba(255, 120, 40, 0) 62%); opacity: calc((var(--heat) * var(--fk) + var(--flare)) * (1 - var(--out))); }
   #flame .fl { position: absolute; left: 50%; bottom: calc(var(--len) * 100% - 4px); width: 20px; height: 38px; margin-left: -10px; transform-origin: 50% 92%;
-    transform: scale(calc((.42 + var(--heat) * .7) * var(--fk))); opacity: calc(1 - var(--out)); transition: opacity .6s; }
+    transform: scale(calc((.42 + var(--heat) * .7) * var(--fk) + var(--flare) * 1.3)); opacity: calc(1 - var(--out)); }
   #flame .fl i { position: absolute; border-radius: 50% 50% 45% 45% / 64% 64% 36% 36%; }
-  #flame .fl .o { inset: 0; background: radial-gradient(58% 70% at 50% 74%, #fffbea 0 16%, #ffd479 30%, #ff9a2c 56%, rgba(255, 90, 20, .0) 74%); animation: flick 1.7s ease-in-out infinite alternate; transform-origin: 50% 90%; }
+  #flame .fl .o { inset: 0; background: radial-gradient(58% 70% at 50% 74%, #fffbea 0 16%, #ffd479 30%, #ff9a2c 56%, rgba(255, 90, 20, 0) 74%); animation: flick 1.7s ease-in-out infinite alternate; transform-origin: 50% 90%; }
   #flame .fl .c { left: 35%; right: 35%; top: 52%; bottom: 8%; background: radial-gradient(circle at 50% 70%, rgba(120, 170, 255, .85), rgba(120, 170, 255, 0) 70%); }
   @keyframes flick { 0% { transform: scale(1, 1) skewX(0); } 25% { transform: scale(.94, 1.06) skewX(2deg); } 55% { transform: scale(1.04, .95) skewX(-3deg); } 80% { transform: scale(.97, 1.04) skewX(1deg); } 100% { transform: scale(1.02, .98) skewX(-1deg); } }
   #flame .sp { position: absolute; left: 50%; bottom: calc(var(--len) * 100% + 22px); width: 0; height: 0; opacity: calc(var(--heat) * (1 - var(--out))); }
@@ -268,19 +211,63 @@ window.CONFIG = {
   #flame .smoke { position: absolute; left: 50%; bottom: calc(var(--len) * 100% + 4px); width: 40px; height: 120px; margin-left: -20px; opacity: var(--out); overflow: visible; pointer-events: none; }
   #flame .smoke path { fill: none; stroke: rgba(239, 233, 220, .45); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 30 180; animation: smoke 3.2s linear infinite; }
   @keyframes smoke { from { stroke-dashoffset: 210; } to { stroke-dashoffset: 0; } }
-  .is-intro #flame { opacity: 0; pointer-events: none; }
 
-  /* ---------- Prompt, end card, contents ---------- */
-  #prompt { position: fixed; z-index: 45; left: 50%; bottom: calc(30px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); margin: 0; padding: .55rem 1.6rem; white-space: nowrap;
-    border: 1px solid rgba(239, 233, 220, .4); background: rgba(13, 12, 11, .85); font-style: italic; font-size: 1.45rem; pointer-events: none; }
-  #endcard { position: fixed; z-index: 44; inset: 0; display: grid; place-items: center; text-align: center; padding: 90px var(--gr) 60px var(--gl); opacity: 0; visibility: hidden; }
-  #endcard .fin { margin: 0; font-style: italic; font-weight: 500; font-size: clamp(4rem, 16vw, 7rem); line-height: 1; }
+  /* ---------- Narration card + bookshelf ---------- */
+  #card { --tx: -50%; --ty: 0px; position: fixed; z-index: 30; left: 50%; bottom: calc(26px + env(safe-area-inset-bottom, 0px)); width: min(600px, calc(100% - 52px)); min-height: 9.5rem;
+    padding: 1.1rem 1.4rem 1.5rem; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 9px 9px 0 var(--ink);
+    opacity: 0; transform: translate(var(--tx), calc(var(--ty) + 28px)) rotate(.6deg); pointer-events: none; transition: opacity .6s ease, transform .9s cubic-bezier(.2, .8, .2, 1); }
+  #card.show { opacity: 1; transform: translate(var(--tx), var(--ty)); }
+  .land #card { left: auto; right: max(5vw, calc(var(--gr) + 48px)); bottom: auto; top: 50%; --tx: 0px; --ty: -50%; width: min(520px, 37vw); }
+  .land #card.low { top: auto; bottom: 9vh; --ty: 0px; }
+  #card .more { position: absolute; right: .9rem; bottom: .55rem; width: .62rem; height: .62rem; border-right: 2px solid #9a5a1c; border-bottom: 2px solid #9a5a1c;
+    transform: rotate(45deg); opacity: 0; transition: opacity .5s ease; }
+  #card.typed .more { opacity: 1; transition-delay: var(--done, 1.6s); animation: more 1.6s ease-in-out infinite; animation-delay: var(--done, 1.6s); }
+  @keyframes more { 50% { transform: translate(0, 4px) rotate(45deg); } }
+  #card .ck { margin: 0 0 .35rem; letter-spacing: .26em; text-transform: uppercase; font-weight: 600; font-size: .78rem; color: #5a5040; }
+  #card .ct { margin: 0; font-weight: 500; font-size: clamp(1.45rem, 5.2vw, 1.85rem); line-height: 1.25; text-wrap: pretty; transition: opacity .14s; }
+  #card.quote .ct { font-style: italic; }
+  #card .ln { display: block; }
+  #card .w { display: inline-block; opacity: 0; filter: blur(6px); transform: translateY(.28em);
+    transition: opacity .55s ease var(--d, 0ms), filter .75s ease var(--d, 0ms), transform .8s cubic-bezier(.2, .8, .2, 1) var(--d, 0ms); }
+  #card.typed .w { opacity: 1; filter: blur(0); transform: none; }
+  #card .cc { margin: .6rem 0 0; font-style: italic; font-size: 1rem; color: #5a5040; opacity: 0; transition: opacity .8s ease 1s; }
+  #card.typed .cc { opacity: 1; }
+  #card.swap .ct, #card.swap .cc { opacity: 0; transition: opacity .14s; }
+  #shelf-wrap { --sx: -50%; --sy: 30px; position: fixed; z-index: 31; left: 50%; top: calc(80px + env(safe-area-inset-top, 0px)); transform: translate(var(--sx), var(--sy)); width: min(560px, calc(100% - 48px)); text-align: center; opacity: 0; }
+  .land #shelf-wrap { left: auto; right: max(5vw, calc(var(--gr) + 48px)); --sx: 0px; width: min(520px, 37vw); top: 9vh; }
+  .shelf { display: flex; justify-content: center; align-items: flex-end; gap: 10px; height: 11.5rem; padding: 0 8px; border-bottom: 10px solid var(--ink); }
+  .spine { position: relative; width: 3.4rem; border: 2px solid var(--ink); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: .55rem 0;
+    transform-origin: 50% 100%; transition: transform .5s cubic-bezier(.2, .9, .3, 1.2); box-shadow: 4px 4px 0 var(--ink); }
+  .spine:hover, .spine:focus-visible, .spine[aria-expanded="true"] { transform: translateY(-10px) rotate(-3deg); }
+  .spine .st { writing-mode: vertical-rl; transform: rotate(180deg); font-style: italic; font-weight: 600; font-size: 1.05rem; line-height: 1.1; white-space: nowrap; }
+  .spine .sa { font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+  .spine.ink { background: var(--ink); color: var(--paper); height: 100%; }
+  .spine.paper { background: var(--paper); color: var(--ink); height: 86%; }
+  .spine.gold { background: var(--gold); color: var(--ink); height: 94%; }
+  .spine.ink:nth-child(4) { height: 80%; }
+  @media (max-width: 600px) { .shelf { height: 8.6rem; gap: 8px; } .spine { width: 3rem; } .spine .st { font-size: .92rem; } }
+  .shelf-hint { margin: .6rem 0 0; font-style: italic; font-size: 1.05rem; color: var(--ink); background: rgba(239, 233, 220, .88); display: inline-block; padding: 0 .5rem; }
+  .spine-page { position: absolute; left: 50%; top: calc(100% + 14px); transform: translateX(-50%); width: min(360px, 100%); padding: 1rem 1.2rem 1.1rem;
+    background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 7px 7px 0 var(--ink); text-align: left; z-index: 2; transform-origin: 50% 0;
+    animation: unfold .55s cubic-bezier(.2, .9, .3, 1); }
+  @keyframes unfold { from { opacity: 0; transform: translateX(-50%) perspective(700px) rotateX(-70deg); } }
+  .spine-page h3 { margin: 0; font-style: italic; font-weight: 600; font-size: 1.5rem; line-height: 1.1; }
+  .spine-page .by { margin: .2rem 0 .5rem; letter-spacing: .14em; text-transform: uppercase; font-size: .76rem; font-weight: 600; color: #5a5040; }
+  .spine-page p { margin: 0; font-size: 1.15rem; line-height: 1.35; }
+  .spine-page .x { position: absolute; top: .3rem; right: .4rem; width: 40px; height: 40px; font-size: 1.4rem; }
+
+  /* ---------- End card, contents ---------- */
+  #endcard { position: fixed; z-index: 60; inset: 0; display: grid; place-items: center; text-align: center; padding: 90px var(--gr) 60px var(--gl); opacity: 0; visibility: hidden;
+    background: radial-gradient(60% 55% at 50% 50%, rgba(5, 5, 5, .82), rgba(5, 5, 5, .5) 70%, rgba(5, 5, 5, .2)); }
+  #endcard .fin { margin: 0; font-style: italic; font-weight: 500; font-size: clamp(4rem, 16vw, 7rem); line-height: 1; text-shadow: 0 0 40px rgba(0, 0, 0, .8); }
   #endcard .fl2 { margin: .8rem 0 1.6rem; font-style: italic; font-size: 1.4rem; color: var(--mist); max-width: 28ch; text-wrap: balance; }
   #endcard .btns { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; }
   #endcard .legal { margin: 2rem 0 0; font-size: 1rem; color: var(--mist); max-width: 40ch; }
   #contents { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 80px var(--gr) 40px var(--gl); background: rgba(8, 7, 6, .9); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
   #contents[hidden] { display: none; }
-  .toc { width: min(100%, 30rem); background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 10px 10px 0 #000; padding: 1.4rem 1.6rem 1.6rem; position: relative; }
+  .toc { width: min(100%, 30rem); background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 10px 10px 0 #000; padding: 1.4rem 1.6rem 1.6rem; position: relative;
+    animation: unfold2 .5s cubic-bezier(.2, .9, .3, 1); }
+  @keyframes unfold2 { from { opacity: 0; transform: translateY(16px) perspective(800px) rotateX(12deg); } }
   .toc h2 { margin: 0 0 .8rem; font-style: italic; font-weight: 500; font-size: 2.2rem; }
   .toc ol { list-style: none; margin: 0; padding: 0; }
   .toc li + li { border-top: 1px solid rgba(13, 12, 11, .18); }
@@ -291,7 +278,6 @@ window.CONFIG = {
   .toc .text-btn { margin-top: 1rem; text-decoration: underline; text-underline-offset: 4px; font-style: italic; font-size: 1.15rem; min-height: 44px; }
 
   /* ---------- The story as text ---------- */
-  .text-mode #stage, .text-mode #dim, .text-mode #warm, .text-mode #scene, .text-mode #prompt, .text-mode #endcard, .text-mode #flame, .text-mode #scroller { display: none !important; }
   #story { max-width: 46rem; margin: 0 auto; padding: calc(96px + env(safe-area-inset-top, 0px)) var(--gr) 6rem var(--gl); }
   #story .page { background: var(--paper); color: var(--ink); padding: clamp(1.6rem, 6vw, 3.4rem); box-shadow: 10px 10px 0 #000; }
   #story header { text-align: center; padding-bottom: 1.4rem; border-bottom: 1px solid rgba(13, 12, 11, .25); }
@@ -299,6 +285,7 @@ window.CONFIG = {
   #story h2 { margin: 2.6rem 0 1rem; font-style: italic; font-weight: 500; font-size: clamp(2rem, 6vw, 2.8rem); line-height: 1.05; }
   #story h2 small { display: block; font-style: normal; letter-spacing: .28em; text-transform: uppercase; font-weight: 600; font-size: .9rem; color: #5a5040; margin-bottom: .3rem; }
   #story p { margin: 0 0 1rem; font-size: 1.32rem; line-height: 1.5; font-weight: 500; }
+  #story .arg { font-style: italic; color: #5a5040; }
   #story blockquote { margin: 1.4rem 0; padding-left: 1.2rem; border-left: 3px solid var(--ink); }
   #story blockquote p { font-style: italic; font-size: 1.6rem; line-height: 1.25; }
   #story blockquote footer { font-style: italic; color: #5a5040; }
@@ -308,32 +295,40 @@ window.CONFIG = {
   #story ul.books { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: .8rem; }
   #story ul.books li { padding: .8rem 1rem; border: 1px solid rgba(13, 12, 11, .3); }
   #story ul.books b { font-style: italic; font-size: 1.3rem; }
-  #story footer.legal { margin-top: 2.6rem; padding-top: 1.2rem; border-top: 1px solid rgba(13, 12, 11, .25); font-size: 1.05rem; }
+  #story footer.legal { margin-top: 2.6rem; padding-top: 1.2rem; border-top: 1px solid rgba(13, 12, 11, .25); }
   #story footer.legal p { font-size: 1.1rem; }
   .back-to-book { margin: 2rem auto 0; display: block; }
+  .notice { margin: 0 0 1.4rem; padding: .8rem 1rem; border: 1px solid rgba(239, 233, 220, .3); font-style: italic; color: var(--mist); }
 
   /* ---------- Texture + cursor ---------- */
-  .grain { position: fixed; inset: -20%; z-index: 95; pointer-events: none; opacity: .13; mix-blend-mode: overlay;
+  .grain { position: fixed; inset: -20%; z-index: 95; pointer-events: none; opacity: .12; mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
   .cursor { position: fixed; z-index: 110; left: 0; top: 0; width: 30px; height: 30px; margin: -15px 0 0 -15px; border: 1px solid #fff; border-radius: 50%; pointer-events: none; mix-blend-mode: difference;
     transition: width .3s, height .3s, margin .3s, background-color .3s; display: none; }
   .cursor.big { width: 56px; height: 56px; margin: -28px 0 0 -28px; background: rgba(255, 255, 255, .15); }
+  .cursor::after { content: ''; position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; border-top: 1px solid #fff; border-right: 1px solid #fff;
+    transform: translate(-70%, -50%) rotate(45deg); opacity: 0; transition: opacity .3s, transform .3s; }
+  .cursor.fwd::after { opacity: 1; }
+  .cursor.back::after { opacity: 1; transform: translate(-30%, -50%) rotate(-135deg); }
   @media (hover: hover) and (pointer: fine) { .has-cursor .cursor { display: block; } }
 
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+    *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; transition-delay: 0ms !important; }
+    .intro-in > * { opacity: 1; transform: none; filter: none; }
+    #card .w { filter: none; transform: none; }
   }
 </style>
 </head>
 <body>
 <a class="skip" href="#story" id="skip">Read the story as text</a>
 
-<!-- Intro -->
 <section id="intro" aria-labelledby="intro-title">
+  <div class="intro-glow" aria-hidden="true"></div>
+  <div class="embers" aria-hidden="true"></div>
   <div class="intro-in">
     <p class="kicker">Emma Watson · An unofficial fan tribute</p>
     <h1 id="intro-title">A Life in Chapters</h1>
-    <p class="lede">A picture book in ink and candlelight. Scroll to turn the pages of an actor, an activist and a reader.</p>
+    <p class="lede">A picture book in ink and candlelight. Turn the pages of an actor, an activist and a reader.</p>
     <p class="hint">There is quiet music, a crackling flame and the sound of pages turning, so headphones are best.</p>
     <button class="open-btn caps" id="open-sound" type="button">Open the book</button>
     <button class="quiet-link" id="open-silent" type="button">Continue without sound</button>
@@ -346,42 +341,33 @@ window.CONFIG = {
 </section>
 
 <header class="hud">
-  <button class="box-btn" id="contents-btn" type="button" aria-haspopup="dialog" aria-controls="contents">Contents</button>
+  <button class="box-btn" id="contents-btn" type="button" aria-haspopup="dialog" aria-controls="contents" aria-expanded="false">Contents</button>
   <button class="box-btn" id="sound-btn" type="button" aria-pressed="false">Sound off</button>
 </header>
 
-<!-- The book on the desk -->
-<div id="stage" aria-hidden="true">
-  <div id="world">
-    <div id="pool"></div>
-    <div class="shadow r"></div><div class="shadow l"></div>
-    <div id="book"></div>
-  </div>
-</div>
-<div id="dim" aria-hidden="true"></div>
+<canvas id="gl" tabindex="0" role="img" aria-label="The picture book. Scroll, swipe, tap or use the arrow keys to turn the pages."></canvas>
+<div id="vig" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
 <div id="warm" aria-hidden="true"></div>
 
-<!-- Inside a plate -->
-<div id="scene">
-  <div class="art" aria-hidden="true"></div>
-  <div class="tint" aria-hidden="true"></div>
-  <div id="flash" aria-hidden="true"></div>
-  <canvas id="fx" aria-hidden="true"></canvas>
-  <div class="shelf-wrap" id="shelf-wrap" hidden>
-    <div class="shelf" id="shelf" role="group" aria-label="Books from her story. Each spine opens a small page."></div>
-    <p class="shelf-hint">Tap or click a spine to open its page</p>
-  </div>
-  <div class="card" aria-hidden="true"><p class="ck"></p><p class="ct"></p><p class="cc"></p></div>
+<div id="shelf-wrap" hidden>
+  <div class="shelf" id="shelf" role="group" aria-label="Books from her story. Each spine opens a small page."></div>
+  <p class="shelf-hint">Tap or click a spine to open its page</p>
 </div>
+<div id="card" aria-hidden="true"><p class="ck"></p><p class="ct"></p><p class="cc"></p><span class="more"></span></div>
 
-<button id="flame" type="button" aria-pressed="false" aria-label="Flame. Turns the sound on.">
+<button id="flame" type="button" aria-pressed="false" aria-label="The match. Turns the sound on.">
   <span class="glow"></span><span class="stick"></span>
   <span class="sp"><i></i><i></i><i></i><i></i></span>
   <span class="fl"><i class="o"></i><i class="c"></i></span>
   <svg class="smoke" viewBox="0 0 40 120" aria-hidden="true"><path d="M20 118 C 8 96, 32 84, 18 62 S 30 30, 16 4"/></svg>
 </button>
 
-<p id="prompt" aria-hidden="true">Scroll to continue</p>
+<button id="prompt" type="button" class="hide">Scroll to continue</button>
+<div id="progress" aria-hidden="true"><i></i></div>
+<p class="corner">Created by <span class="credit"></span></p>
+<div id="veil" aria-hidden="true"></div>
+<p id="live" class="sr-only" aria-live="polite"></p>
 
 <div id="endcard">
   <div>
@@ -405,7 +391,6 @@ window.CONFIG = {
 </div>
 
 <main>
-  <div id="scroller" aria-hidden="true"></div>
   <article id="story" aria-labelledby="story-title" tabindex="-1"></article>
 </main>
 
@@ -414,8 +399,7 @@ window.CONFIG = {
 <noscript><p style="position:fixed;inset:auto 0 0;z-index:200;margin:0;padding:1rem;background:#efe9dc;color:#0d0c0b;text-align:center">This picture book needs JavaScript to turn its pages.</p></noscript>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (() => {
   'use strict';
@@ -425,20 +409,31 @@ window.CONFIG = {
   const root = document.documentElement;
   const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
-  const HAS_GSAP = !!(window.gsap && window.ScrollTrigger);
+  const COARSE = matchMedia('(pointer: coarse)').matches;
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const mix = (a, b, t) => a + (b - a) * t;
-  const ease = t => t * t * (3 - 2 * t);
-  const fontsReady = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise(r => setTimeout(r, 2500))]);
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const INK = C.colors.ink, PAPER = C.colors.paper;
   $$('.credit').forEach(el => { el.textContent = C.credit; });
   root.classList.add('book-mode');
+  let VW = innerWidth, VH = innerHeight;
+
+  const fontsReady = (async () => {
+    if (!document.fonts || !document.fonts.load) return;
+    const fam = '"Cormorant Garamond"';
+    try { await Promise.race([Promise.all(['500', 'italic 500', '600', 'italic 600', '700'].map(s => document.fonts.load(`${s} 40px ${fam}`))), sleep(3500)]); } catch (e) {}
+  })();
+
+  // a few embers rising behind the intro
+  $$('.embers').forEach(box => { for (let i = 0; i < 14; i++) { const e = document.createElement('i'); e.style.left = (30 + Math.random() * 40) + '%'; e.style.setProperty('--dx', ((Math.random() - .5) * 120) + 'px');
+    e.style.animationDuration = (5 + Math.random() * 6) + 's'; e.style.animationDelay = (-Math.random() * 10) + 's'; box.append(e); } });
 
   /* =====================================================================
-     ENGRAVING: turns a photo into a black-and-white line-screen plate
+     ENGRAVING: photos become black-and-white line-screen plates
+     (on the CPU for the book's pages, on the GPU for full-screen scenes)
      ===================================================================== */
-  const PLATE_ASPECT = 0.62 / 0.84;           // inner plate width / height
-  const PAPER = C.colors.paper, INK = C.colors.ink;
+  const PLATE_ASPECT = 0.62 / 0.84, LINES = 112, ANGLE = 0.42;
   const rgb = h => h.replace('#', '').match(/../g).map(x => parseInt(x, 16));
   const PAP = rgb(PAPER), INKC = rgb(INK);
   const images = new Map();
@@ -447,18 +442,32 @@ window.CONFIG = {
     if (!images.has(src)) images.set(src, new Promise(res => { const im = new Image(); im.onload = () => res(im); im.onerror = () => res(null); im.src = src; }));
     return images.get(src);
   }
-  function engrave(img, w, h, focus, lines) {
-    const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
-    const g = cv.getContext('2d', { willReadFrequently: true });
-    const iw = img.naturalWidth, ih = img.naturalHeight, r = w / h;
+  const plateInfo = k => (k === 'front' ? C.frontispiece : CH[k].plate);
+  const plateLabel = k => (k === 'front' ? 'Frontispiece' : `Plate ${CH[k].num}`);
+  function cropOf(img, focus) {
+    const iw = img.naturalWidth, ih = img.naturalHeight, r = PLATE_ASPECT;
     let sw = iw, sh = ih; if (iw / ih > r) sw = ih * r; else sh = iw / r;
     const sx = clamp(focus[0] * iw - sw / 2, 0, iw - sw), sy = clamp(focus[1] * ih - sh / 2, 0, ih - sh);
+    return { sx, sy, sw, sh };
+  }
+  function lumOf(g, w, h) {
+    const d = g.getImageData(0, 0, w, h).data, n = w * h, L = new Float32Array(n);
+    for (let i = 0, j = 0; i < n; i++, j += 4) L[i] = (d[j] * .299 + d[j + 1] * .587 + d[j + 2] * .114) / 255;
+    return L;
+  }
+  function levelsOf(L) {
+    const n = L.length, hist = new Uint32Array(256); for (let i = 0; i < n; i++) hist[Math.min(255, (L[i] * 255) | 0)]++;
+    const pct = q => { let s = 0; for (let k = 0; k < 256; k++) { s += hist[k]; if (s >= q * n) return k / 255; } return 1; };
+    const lo = pct(.02); return [lo, Math.max(lo + .1, pct(.985))];
+  }
+  function engrave(img, w, h, focus) {
+    const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+    const g = cv.getContext('2d', { willReadFrequently: true });
+    const { sx, sy, sw, sh } = cropOf(img, focus);
     g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
     g.drawImage(img, sx, sy, sw, sh, 0, 0, w, h);
     const id = g.getImageData(0, 0, w, h), d = id.data, n = w * h;
-    let L = new Float32Array(n);
-    for (let i = 0, j = 0; i < n; i++, j += 4) L[i] = (d[j] * .299 + d[j + 1] * .587 + d[j + 2] * .114) / 255;
-    // soften (two box passes) so the line screen reads tone, not noise
+    const L = lumOf(g, w, h);
     const rad = Math.max(1, Math.round(h / 420)), tmp = new Float32Array(n);
     for (let pass = 0; pass < 2; pass++) {
       for (let y = 0; y < h; y++) { let acc = 0, row = y * w; for (let x = -rad; x <= rad; x++) acc += L[row + clamp(x, 0, w - 1)];
@@ -466,16 +475,14 @@ window.CONFIG = {
       for (let x = 0; x < w; x++) { let acc = 0; for (let y = -rad; y <= rad; y++) acc += tmp[clamp(y, 0, h - 1) * w + x];
         for (let y = 0; y < h; y++) { L[y * w + x] = acc / (2 * rad + 1); acc += tmp[Math.min(h - 1, y + rad + 1) * w + x] - tmp[Math.max(0, y - rad) * w + x]; } }
     }
-    const hist = new Uint32Array(256); for (let i = 0; i < n; i++) hist[(L[i] * 255) | 0]++;
-    const pct = q => { let s = 0; for (let k = 0; k < 256; k++) { s += hist[k]; if (s >= q * n) return k / 255; } return 1; };
-    const lo = pct(.02), hi = Math.max(lo + .1, pct(.985));
-    const period = h / lines, ang = .42, ca = Math.cos(ang), sa = Math.sin(ang), aa = 1.15 / period, es = h / 520;
+    const [lo, hi] = levelsOf(L);
+    const period = h / LINES, ca = Math.cos(ANGLE), sa = Math.sin(ANGLE), aa = 1.15 / period, es = h / 520;
     for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
       const i = y * w + x;
       const v = Math.pow(clamp((L[i] - lo) / (hi - lo), 0, 1), 1.12), dark = 1 - v;
       const u = (x * sa + y * ca) / period + .2 * Math.sin(x / (period * 5.5) + y / (period * 9));
       const f = Math.abs(u - Math.floor(u) - .5) * 2;
-      let a = clamp((dark * 1.05 - f) / aa + .5, 0, 1);
+      let a = clamp((dark * 1.05 - f) / aa + .5, 0, 1) * clamp((dark - .02) / .1, 0, 1);
       const gx = L[i + (x < w - 1 ? 1 : 0)] - L[i - (x > 0 ? 1 : 0)], gy = L[i + (y < h - 1 ? w : 0)] - L[i - (y > 0 ? w : 0)];
       a = Math.max(a, clamp((Math.sqrt(gx * gx + gy * gy) * es - .05) * 7, 0, 1) * .85);
       const j = i * 4; d[j] = PAP[0] + (INKC[0] - PAP[0]) * a; d[j + 1] = PAP[1] + (INKC[1] - PAP[1]) * a; d[j + 2] = PAP[2] + (INKC[2] - PAP[2]) * a; d[j + 3] = 255;
@@ -483,82 +490,775 @@ window.CONFIG = {
     g.putImageData(id, 0, 0);
     return cv;
   }
-  function placeholder(w, h, label) {
+  function placeholderPlate(w, h, label) {
     const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
     const g = cv.getContext('2d');
     g.fillStyle = PAPER; g.fillRect(0, 0, w, h);
     g.strokeStyle = INK; g.globalAlpha = .18; g.lineWidth = Math.max(1, w / 400);
     for (let k = -h; k < w; k += w / 22) { g.beginPath(); g.moveTo(k, 0); g.lineTo(k + h, h); g.stroke(); }
-    g.globalAlpha = 1; g.lineWidth = Math.max(1, w / 260); g.strokeRect(w * .06, h * .06, w * .88, h * .88);
-    g.fillStyle = INK; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.globalAlpha = 1; g.fillStyle = PAPER; g.fillRect(w * .1, h * .4, w * .8, h * .2); g.fillStyle = INK; g.textAlign = 'center'; g.textBaseline = 'middle';
     const fs = Math.round(w * .062);
-    g.fillStyle = PAPER; g.fillRect(w * .1, h * .4, w * .8, h * .2); g.fillStyle = INK;
     g.font = `italic 600 ${fs}px ${C.fonts.serif}`; g.fillText('Replace with licensed', w / 2, h * .46); g.fillText('or owned photo', w / 2, h * .46 + fs * 1.15);
     g.font = `600 ${Math.round(fs * .55)}px ${C.fonts.serif}`; g.fillText(label.toUpperCase(), w / 2, h * .57);
     return cv;
   }
-  // plate keys: 'front' or chapter index. Each is made at two sizes: for the book page and for the full-screen scene.
-  const plateInfo = k => (k === 'front' ? C.frontispiece : CH[k].plate);
-  const plateLabel = k => (k === 'front' ? 'Frontispiece' : `Plate ${CH[k].num}`);
-  const made = { small: new Map(), big: new Map(), text: new Map() };
-  async function makePlate(k, size, w, h) {
-    const cache = made[size];
-    if (cache.has(k)) return cache.get(k);
-    const job = (async () => {
+  const plateCache = new Map();
+  function plateCanvas(k, w, h) {
+    const key = k + ':' + w;
+    if (!plateCache.has(key)) plateCache.set(key, (async () => {
       await fontsReady;
       const info = plateInfo(k), img = await loadImage(info.src);
-      await new Promise(r => setTimeout(r, 0));
-      return img ? engrave(img, w, h, info.focus || [.5, .4], 112) : placeholder(w, h, plateLabel(k));
-    })();
-    cache.set(k, job);
-    return job;
+      await sleep(0);
+      return img ? engrave(img, w, h, info.focus || [.5, .4]) : placeholderPlate(w, h, plateLabel(k));
+    })());
+    return plateCache.get(key);
   }
 
   /* =====================================================================
-     BOOK: eight leaves (cover, six pages, back cover), built from CONFIG
+     THE BOOK IN NUMBERS (world units: one page is 1 wide and 4/3 tall)
      ===================================================================== */
-  const N = 8, T = 0.0075;                     // leaves; thickness of one leaf (in book widths)
-  const emblem = `<svg viewBox="0 0 36 56" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M18 4c4 7 9 10 9 18a9 9 0 0 1-18 0c0-5 3-8 5-11 1 4 3 5 4 5-1-5 0-9 0-12z" fill="currentColor" fill-opacity=".18"/><path d="M6 44c4-2 8-2 12 1 4-3 8-3 12-1v8c-4-2-8-2-12 1-4-3-8-3-12-1z"/><path d="M18 45v8"/></svg>`;
-  const plateHTML = (k, folio) => {
-    const info = plateInfo(k);
-    return `<div class="pg"><div class="plate"><canvas data-plate="${k}"></canvas></div>
-      <div class="plate-cap"><div class="pc">${esc(info.caption || '')}</div><div class="pl">${esc(plateLabel(k))}</div></div>${folio ? `<div class="folio">${folio}</div>` : ''}</div>`;
-  };
-  const openerHTML = (c, folio) => `<div class="pg open-pg"><div class="orn">✦ ✦ ✦</div><div class="on">${esc(CH[c].num)}</div><div class="ol">Chapter</div>
-      <div class="ot">${esc(CH[c].title)}</div><div class="op">${esc(CH[c].place)}</div><div class="folio">${folio}</div></div>`;
-  const FACES = [
-    [`<div class="pg cover-pg"><div class="ct">A Life<br>in Chapters</div>${emblem}<div class="cs">Emma Watson<br>an unofficial tribute</div></div>`, plateHTML('front')],
-    [`<div class="pg title-pg"><div class="orn">✦</div><div class="tt">A Life in Chapters</div><div class="ts">An unofficial fan tribute to Emma Watson, in five chapters</div><div class="tb">Created by ${esc(C.credit)}</div></div>`, openerHTML(0, 2)],
-    [plateHTML(0, 3), openerHTML(1, 4)],
-    [plateHTML(1, 5), openerHTML(2, 6)],
-    [plateHTML(2, 7), openerHTML(3, 8)],
-    [plateHTML(3, 9), openerHTML(4, 10)],
-    [plateHTML(4, 11), `<div class="pg end-pg"><div class="ef">Fin.</div><div class="es">Here the story pauses, for now.</div><div class="folio">12</div></div>`],
-    [`<div class="pg paper-pg"></div>`, `<div class="pg cover-pg back-pg"><p>An unofficial fan tribute, not affiliated with Emma Watson or her representatives.</p></div>`]
-  ];
-  const book = $('#book');
-  const leaves = FACES.map(([front, back], i) => {
-    const leaf = document.createElement('div');
-    const board = i === 0 || i === N - 1;
-    leaf.className = 'leaf' + (board ? ' board' : '');
-    leaf.innerHTML = `<div class="face front${i === N - 1 ? ' inside' : ''}">${front}</div><div class="face back${i === 0 ? ' inside' : ''}">${back}</div><div class="edge b"></div><div class="edge r"></div>`;
-    book.append(leaf);
-    return leaf;
-  });
-  let W = 300, VW = innerWidth, VH = innerHeight;
-  function sizeBook() {
-    VW = innerWidth; VH = innerHeight;
-    const portrait = VW < VH * .9;
-    W = Math.round(portrait ? Math.min(VW * .66, VH * .42) : Math.min(VW * .33, VH * .58));
-    root.style.setProperty('--W', W + 'px'); root.style.setProperty('--t', (T * W).toFixed(2) + 'px'); root.style.setProperty('--P', Math.round(W * 3.4) + 'px');
-    // paint the small plates at the book's resolution
-    const dpr = Math.min(window.devicePixelRatio || 1, 2), pw = Math.round(.62 * W * dpr), ph = Math.round(pw / PLATE_ASPECT);
-    $$('canvas[data-plate]', book).forEach(cv => {
-      const k = cv.dataset.plate === 'front' ? 'front' : +cv.dataset.plate;
-      made.small.delete(k);
-      makePlate(k, 'small', pw, ph).then(src => { cv.width = src.width; cv.height = src.height; cv.getContext('2d').drawImage(src, 0, 0); });
+  const PAGE_W = 1, PAGE_H = 4 / 3, NL = 9, LT = 0.0118, BT = 0.026, BW = 1.045, BH = PAGE_H + 0.055;
+  const GUT = 0.44, GUT_D = 0.055, BEND_A = 0.62, BEND_C = 0.5;
+  const yR = i => BT + (NL - 1 - i + .5) * LT, yL = i => BT + (i + .5) * LT;
+  const PIVOT = BT + NL * LT / 2;
+  const PLATE = { u0: .19, u1: .81, v0: .085, v1: .715 };
+  // faces of each paper leaf, in reading order: [front (right-hand page), back (left-hand page)]
+  const LEAVES = [['half', 'frontis'], ['title', 'contents'], ['note', 'open0'], ['plate0', 'open1'], ['plate1', 'open2'], ['plate2', 'open3'], ['plate3', 'open4'], ['plate4', 'fin'], ['colophon', 'blank']];
+  const FOLIO = { half: 1, frontis: 2, title: 3, contents: 4, note: 5, open0: 6, plate0: 7, open1: 8, plate1: 9, open2: 10, plate2: 11, open3: 12, plate3: 13, open4: 14, plate4: 15, fin: 16, colophon: 17 };
+
+  /* =====================================================================
+     PAGE ART: every page is drawn on a canvas and becomes a texture
+     ===================================================================== */
+  const PW = COARSE ? 640 : 768, PH = Math.round(PW * PAGE_H), K = PW / 768;
+  const CVW = PW, CVH = Math.round(PW * BH / BW);
+  const mk = (w = PW, h = PH) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
+  let NOISE = null;
+  function noiseTile() {
+    if (NOISE) return NOISE;
+    NOISE = mk(256, 256); const g = NOISE.getContext('2d'), im = g.createImageData(256, 256);
+    for (let i = 0; i < im.data.length; i += 4) { const v = 128 + (Math.random() - .5) * 200; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
+    g.putImageData(im, 0, 0); return NOISE;
+  }
+  const setFont = (g, size, weight = 500, italic = false) => { g.font = `${italic ? 'italic ' : ''}${weight} ${Math.round(size * K)}px ${C.fonts.serif}`; };
+  function spaced(g, str, x, y, track) {
+    const t = track * K, chars = [...str], ws = chars.map(ch => g.measureText(ch).width);
+    const w = ws.reduce((a, b) => a + b, 0) + t * (chars.length - 1); let cx = x - w / 2;
+    g.textAlign = 'left'; chars.forEach((ch, i) => { g.fillText(ch, cx, y); cx += ws[i] + t; }); g.textAlign = 'center';
+  }
+  function wrap(g, str, maxW) { const out = []; let line = ''; str.split(' ').forEach(w => { const test = line ? line + ' ' + w : w; if (g.measureText(test).width > maxW && line) { out.push(line); line = w; } else line = test; }); if (line) out.push(line); return out; }
+  function star(g, x, y, r) { g.beginPath(); for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4 - Math.PI / 2, rr = i % 2 ? r * .3 : r; g.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); } g.closePath(); g.fill(); }
+  function stars3(g, x, y, r) { star(g, x - r * 3.4, y, r * .65); star(g, x, y, r); star(g, x + r * 3.4, y, r * .65); }
+  function paper(g, gutter) {
+    g.fillStyle = PAPER; g.fillRect(0, 0, PW, PH);
+    g.save(); g.globalAlpha = .07; g.globalCompositeOperation = 'multiply'; g.fillStyle = g.createPattern(noiseTile(), 'repeat'); g.fillRect(0, 0, PW, PH); g.restore();
+    const vg = g.createRadialGradient(PW / 2, PH / 2, PW * .35, PW / 2, PH / 2, PW * 1.05); vg.addColorStop(0, 'rgba(90,64,30,0)'); vg.addColorStop(1, 'rgba(90,64,30,.16)');
+    g.fillStyle = vg; g.fillRect(0, 0, PW, PH);
+    if (gutter) {
+      const x0 = gutter === 'left' ? 0 : PW, gr = g.createLinearGradient(x0, 0, gutter === 'left' ? PW * .18 : PW * .82, 0);
+      gr.addColorStop(0, 'rgba(50,36,18,.3)'); gr.addColorStop(.35, 'rgba(50,36,18,.08)'); gr.addColorStop(1, 'rgba(50,36,18,0)'); g.fillStyle = gr; g.fillRect(0, 0, PW, PH);
+    }
+    g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = INK;
+  }
+  function folio(g, key) { const n = FOLIO[key]; if (!n) return; setFont(g, 26, 500, true); g.fillStyle = '#5b5141'; g.fillText(String(n), PW / 2, PH * .945); g.fillStyle = INK; }
+  function plateFrame(g, cv) {
+    const x0 = PLATE.u0 * PW, y0 = PLATE.v0 * PH, w = (PLATE.u1 - PLATE.u0) * PW, h = (PLATE.v1 - PLATE.v0) * PH;
+    g.fillStyle = PAPER; g.fillRect(x0 - 14 * K, y0 - 14 * K, w + 28 * K, h + 28 * K);
+    g.strokeStyle = INK; g.lineWidth = 3 * K; g.strokeRect(x0 - 13 * K, y0 - 13 * K, w + 26 * K, h + 26 * K);
+    g.lineWidth = 1.4 * K; g.strokeRect(x0 - 6 * K, y0 - 6 * K, w + 12 * K, h + 12 * K);
+    if (cv) g.drawImage(cv, x0, y0, w, h);
+    g.fillStyle = INK;
+  }
+  function vignette(g, kind, x, y, s) {
+    g.save(); g.translate(x, y); g.scale(s, s); g.strokeStyle = INK; g.fillStyle = INK; g.lineWidth = 2.6; g.lineCap = 'round'; g.lineJoin = 'round';
+    const L = (...pts) => { g.beginPath(); g.moveTo(pts[0], pts[1]); for (let i = 2; i < pts.length; i += 2) g.lineTo(pts[i], pts[i + 1]); g.stroke(); };
+    if (kind === 'book') {
+      g.beginPath(); g.moveTo(0, -16); g.quadraticCurveTo(-22, -28, -48, -22); g.lineTo(-48, 24); g.quadraticCurveTo(-22, 18, 0, 28); g.quadraticCurveTo(22, 18, 48, 24); g.lineTo(48, -22); g.quadraticCurveTo(22, -28, 0, -16); g.closePath(); g.stroke();
+      L(0, -16, 0, 28);
+      g.lineWidth = 1.5; for (let k = 0; k < 6; k++) { const yy = -10 + k * 6.5; g.beginPath(); g.moveTo(-40, yy - 3); g.quadraticCurveTo(-20, yy - 7, -6, yy); g.moveTo(6, yy); g.quadraticCurveTo(20, yy - 7, 40, yy - 3); g.stroke(); }
+    } else if (kind === 'wand') {
+      g.lineWidth = 5; L(-40, 38, 22, -24); g.lineWidth = 2.4; L(-40, 38, -30, 28);
+      star(g, 28, -30, 16); star(g, 44, -6, 6); star(g, 6, -42, 6); star(g, 48, -40, 4);
+      g.lineWidth = 1.4; for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; L(28 + Math.cos(a) * 20, -30 + Math.sin(a) * 20, 28 + Math.cos(a) * 28, -30 + Math.sin(a) * 28); }
+    } else if (kind === 'speech') {
+      g.beginPath(); g.ellipse(0, -18, 13, 18, 0, 0, Math.PI * 2); g.stroke();
+      g.lineWidth = 1.3; for (let k = -2; k <= 2; k++) L(-9, -18 + k * 5, 9, -18 + k * 5);
+      g.lineWidth = 2.6; g.beginPath(); g.arc(0, -10, 22, .1 * Math.PI, .9 * Math.PI); g.stroke(); L(0, 12, 0, 34); L(-16, 36, 16, 36);
+      g.lineWidth = 2; [[30, .7], [40, .9]].forEach(([r, a]) => { g.beginPath(); g.arc(0, -18, r, -a / 2, a / 2); g.stroke(); g.beginPath(); g.arc(0, -18, r, Math.PI - a / 2, Math.PI + a / 2); g.stroke(); });
+    } else if (kind === 'books') {
+      const book = (bx, by, w, h, r) => { g.save(); g.translate(bx, by); g.rotate(r); g.strokeRect(-w / 2, -h / 2, w, h); g.lineWidth = 1.2; L(-w / 2 + 5, -h / 2 + 3, -w / 2 + 5, h / 2 - 3); L(w / 2 - 5, -h / 2 + 3, w / 2 - 5, h / 2 - 3); g.restore(); };
+      book(0, 26, 88, 14, 0); book(-4, 11, 76, 14, .03); book(4, -4, 66, 14, -.04);
+      g.save(); g.translate(18, -28); g.rotate(-.5); g.strokeRect(-6, -22, 12, 44); g.restore();
+    } else if (kind === 'candle') {
+      g.strokeRect(-11, -4, 22, 40); g.beginPath(); g.moveTo(-11, 2); g.quadraticCurveTo(-6, 8, -4, 2); g.stroke();
+      L(0, -4, 0, -12);
+      g.beginPath(); g.moveTo(0, -40); g.bezierCurveTo(9, -28, 9, -18, 0, -12); g.bezierCurveTo(-9, -18, -9, -28, 0, -40); g.fill();
+      g.lineWidth = 1.3; for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + (k - 4.5) * .3; L(Math.cos(a) * 18, -24 + Math.sin(a) * 18, Math.cos(a) * 30, -24 + Math.sin(a) * 30); }
+      L(-26, 38, 26, 38);
+    }
+    g.restore();
+  }
+  function emblem(g, x, y, s, style) {
+    g.save(); g.translate(x, y); g.scale(s, s); g.lineWidth = 3.2; g.strokeStyle = style; g.fillStyle = style; g.lineJoin = 'round';
+    g.beginPath(); g.moveTo(0, -62); g.bezierCurveTo(16, -44, 26, -30, 26, -12); g.bezierCurveTo(26, 6, 14, 16, 0, 16); g.bezierCurveTo(-14, 16, -26, 6, -26, -12);
+    g.bezierCurveTo(-26, -24, -18, -32, -12, -40); g.bezierCurveTo(-10, -30, -6, -26, -2, -24); g.bezierCurveTo(-6, -36, -4, -50, 0, -62); g.closePath(); g.stroke();
+    g.beginPath(); g.moveTo(0, -20); g.bezierCurveTo(8, -10, 10, -2, 8, 4); g.bezierCurveTo(6, 10, -6, 10, -8, 4); g.bezierCurveTo(-10, -2, -6, -12, 0, -20); g.fill();
+    g.beginPath(); g.moveTo(0, 34); g.quadraticCurveTo(-24, 24, -50, 30); g.lineTo(-50, 62); g.quadraticCurveTo(-24, 56, 0, 66); g.quadraticCurveTo(24, 56, 50, 62); g.lineTo(50, 30); g.quadraticCurveTo(24, 24, 0, 34); g.closePath(); g.stroke();
+    g.beginPath(); g.moveTo(0, 34); g.lineTo(0, 66); g.stroke();
+    g.restore();
+  }
+  function cloth(g, w, h) {
+    g.fillStyle = '#161311'; g.fillRect(0, 0, w, h);
+    g.save(); g.globalAlpha = .05; g.fillStyle = '#fff'; for (let y = 0; y < h; y += 4 * K) g.fillRect(0, y, w, 1); for (let x = 0; x < w; x += 4 * K) g.fillRect(x, 0, 1, h); g.restore();
+    g.save(); g.globalAlpha = .12; g.globalCompositeOperation = 'overlay'; g.fillStyle = g.createPattern(noiseTile(), 'repeat'); g.fillRect(0, 0, w, h); g.restore();
+    const e = g.createLinearGradient(0, 0, w, 0); e.addColorStop(0, 'rgba(0,0,0,.35)'); e.addColorStop(.04, 'rgba(0,0,0,0)'); e.addColorStop(.97, 'rgba(0,0,0,0)'); e.addColorStop(1, 'rgba(0,0,0,.3)');
+    g.fillStyle = e; g.fillRect(0, 0, w, h);
+  }
+  function coverArt(g, w, h, gold, back) {
+    g.save(); g.strokeStyle = gold; g.fillStyle = gold; g.textAlign = 'center'; g.textBaseline = 'middle';
+    const m1 = 36 * K, m2 = 48 * K;
+    g.lineWidth = 3.4 * K; g.strokeRect(m1, m1, w - 2 * m1, h - 2 * m1);
+    g.lineWidth = 1.4 * K; g.strokeRect(m2, m2, w - 2 * m2, h - 2 * m2);
+    [[m2, m2], [w - m2, m2], [m2, h - m2], [w - m2, h - m2]].forEach(([x, y]) => star(g, x, y, 11 * K));
+    if (!back) {
+      setFont(g, 56, 600); spaced(g, 'A LIFE', w / 2, h * .19, 16); spaced(g, 'IN CHAPTERS', w / 2, h * .26, 16);
+      emblem(g, w / 2, h * .51, 1.55 * K, gold);
+      setFont(g, 40, 500, true); g.fillText('Emma Watson', w / 2, h * .78);
+      setFont(g, 30, 500, true); g.fillText('an unofficial tribute', w / 2, h * .83);
+    } else {
+      emblem(g, w / 2, h * .44, 1.05 * K, gold);
+      setFont(g, 21, 600); spaced(g, 'AN UNOFFICIAL FAN TRIBUTE', w / 2, h * .78, 6);
+      setFont(g, 26, 500, true); g.fillText('Created by ' + C.credit, w / 2, h * .83);
+    }
+    g.restore();
+  }
+  function goldFill(g, w, h) { const gr = g.createLinearGradient(0, 0, w, h); gr.addColorStop(0, '#e6c681'); gr.addColorStop(.45, '#b08a45'); gr.addColorStop(.7, '#dcb975'); gr.addColorStop(1, '#a07b3a'); return gr; }
+  function endpaper(g, w, h) {
+    g.fillStyle = '#1c1714'; g.fillRect(0, 0, w, h);
+    const s = 52 * K; g.strokeStyle = 'rgba(201,164,92,.42)'; g.lineWidth = 1.1 * K;
+    for (let x = -h; x < w + h; x += s) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x + h, h); g.moveTo(x, h); g.lineTo(x + h, 0); g.stroke(); }
+    g.fillStyle = 'rgba(214,180,110,.75)';
+    for (let a = -60; a < 60; a++) for (let b = -60; b < 60; b++) { const x = (a + b) * s / 2, y = (b - a) * s / 2; if (x > -10 && x < w + 10 && y > -10 && y < h + 10) star(g, x, y, (Math.abs(a + b) % 2 ? 3 : 5) * K); }
+    g.save(); g.globalAlpha = .1; g.globalCompositeOperation = 'overlay'; g.fillStyle = g.createPattern(noiseTile(), 'repeat'); g.fillRect(0, 0, w, h); g.restore();
+  }
+  // the pages, drawn by key
+  async function drawFace(key) {
+    const cv = mk(), g = cv.getContext('2d');
+    const right = !['frontis', 'contents', 'fin', 'blank'].includes(key) && !key.startsWith('open');
+    paper(g, right ? 'left' : 'right');
+    const cx = PW / 2;
+    if (key === 'half') {
+      stars3(g, cx, PH * .34, 8 * K); setFont(g, 30, 600); spaced(g, 'A LIFE IN CHAPTERS', cx, PH * .42, 8); stars3(g, cx, PH * .5, 8 * K);
+    } else if (key === 'frontis' || key.startsWith('plate')) {
+      const k = key === 'frontis' ? 'front' : +key.slice(5), info = plateInfo(k);
+      const pw = Math.round((PLATE.u1 - PLATE.u0) * PW), ph = Math.round(pw / PLATE_ASPECT);
+      plateFrame(g, await plateCanvas(k, pw, ph));
+      setFont(g, 33, 500, true); g.fillText(info.caption || '', cx, PH * .785);
+      setFont(g, 17, 600); g.fillStyle = '#4a4438'; spaced(g, plateLabel(k).toUpperCase(), cx, PH * .828, 7); g.fillStyle = INK;
+    } else if (key === 'title') {
+      stars3(g, cx, PH * .15, 9 * K);
+      setFont(g, 124, 500, true); g.fillText('A Life', cx, PH * .3); g.fillText('in Chapters', cx, PH * .42);
+      g.fillRect(cx - 50 * K, PH * .5, 100 * K, 1.6 * K);
+      setFont(g, 34, 500); g.fillText('An unofficial fan tribute', cx, PH * .56); g.fillText('to Emma Watson', cx, PH * .6);
+      setFont(g, 30, 500, true); g.fillStyle = '#4a4438'; g.fillText('in five chapters', cx, PH * .65); g.fillStyle = INK;
+      emblem(g, cx, PH * .735, .55 * K, INK);
+      setFont(g, 30, 500, true); g.fillText('Created by ' + C.credit, cx, PH * .84);
+      setFont(g, 15, 600); g.fillStyle = '#4a4438'; spaced(g, 'PRINTED BY CANDLELIGHT · MMXXVI', cx, PH * .885, 5); g.fillStyle = INK;
+    } else if (key === 'contents') {
+      setFont(g, 74, 500, true); g.fillText('Contents', cx, PH * .14); stars3(g, cx, PH * .2, 7 * K);
+      const rows = CH.map((ch, i) => [ch.num, ch.title, FOLIO['open' + i]]).concat([['', 'Fin.', 16], ['', 'Colophon', 17]]);
+      const x0 = PW * .16, x1 = PW * .84;
+      rows.forEach(([num, t, pg], r) => {
+        const y = PH * (.31 + r * .085);
+        g.textAlign = 'left'; setFont(g, 20, 600); g.fillStyle = '#4a4438'; g.fillText(num, x0, y); g.fillStyle = INK;
+        setFont(g, 33, 500, true); g.fillText(t, x0 + 62 * K, y); const tw = g.measureText(t).width;
+        g.textAlign = 'right'; setFont(g, 28, 500); g.fillText(String(pg), x1, y);
+        g.fillStyle = 'rgba(13,12,11,.45)'; for (let x = x0 + 62 * K + tw + 14 * K; x < x1 - 34 * K; x += 11 * K) g.fillRect(x, y + 6 * K, 2.2 * K, 2.2 * K);
+        g.fillStyle = INK; g.textAlign = 'center';
+      });
+    } else if (key === 'note') {
+      setFont(g, 66, 500, true); g.fillText('A note', cx, PH * .15); setFont(g, 38, 500, true); g.fillStyle = '#4a4438'; g.fillText('before you begin', cx, PH * .205); g.fillStyle = INK;
+      const paras = ['This is a fan’s picture book. It is not affiliated with Emma Watson or her representatives.',
+        'Every fact in it can be checked, and every quote is her own, from her HeForShe speech at the United Nations on 20 September 2014.',
+        'Read it slowly. Scroll, swipe or tap, and the pages will turn.'];
+      let y = PH * .3; const mw = PW * .64, lh = 46 * K, xl = (PW - mw) / 2; g.textAlign = 'left';
+      paras.forEach((p, pi) => {
+        setFont(g, 33, 500, pi === 2);
+        let lines = wrap(g, p, mw);
+        if (pi === 0) {
+          setFont(g, 118, 600); g.textBaseline = 'alphabetic'; g.fillText(p[0], xl - 4 * K, y + 74 * K); const dw = g.measureText(p[0]).width + 10 * K; g.textBaseline = 'middle';
+          setFont(g, 33, 500); const first = wrap(g, p.slice(1), mw - dw), l1 = first.slice(0, 2);
+          l1.forEach((ln, i) => g.fillText(ln, xl + dw, y + i * lh + 6 * K)); y += l1.length * lh; lines = first.length > 2 ? wrap(g, first.slice(2).join(' '), mw) : [];
+        }
+        lines.forEach(ln => { g.fillText(ln, xl, y + 6 * K); y += lh; }); y += lh * .55;
+      });
+      g.textAlign = 'center'; stars3(g, cx, Math.min(PH * .86, y + 20 * K), 6 * K);
+    } else if (key.startsWith('open')) {
+      const c = +key.slice(4), ch = CH[c];
+      vignette(g, ch.vignette, cx, PH * .17, 1.25 * K);
+      setFont(g, 190, 600); g.fillText(ch.num, cx, PH * .37);
+      setFont(g, 20, 600); g.fillStyle = '#4a4438'; spaced(g, 'CHAPTER', cx, PH * .45, 10); g.fillStyle = INK;
+      setFont(g, 76, 500, true); const tl = wrap(g, ch.title, PW * .74); tl.forEach((ln, i) => g.fillText(ln, cx, PH * (.53 + i * .068) - (tl.length - 1) * PH * .034));
+      setFont(g, 30, 500, true); g.fillStyle = '#4a4438'; g.fillText(ch.place, cx, PH * .64); g.fillStyle = INK;
+      g.fillRect(cx - 34 * K, PH * .695, 68 * K, 1.4 * K);
+      setFont(g, 29, 500, true); wrap(g, ch.argument, PW * .62).forEach((ln, i) => g.fillText(ln, cx, PH * .75 + i * 38 * K));
+    } else if (key === 'fin') {
+      stars3(g, cx, PH * .3, 8 * K); setFont(g, 164, 500, true); g.fillText('Fin.', cx, PH * .43);
+      setFont(g, 36, 500, true); g.fillStyle = '#4a4438'; g.fillText('Here the story pauses,', cx, PH * .53); g.fillText('for now.', cx, PH * .575); g.fillStyle = INK;
+      vignette(g, 'candle', cx, PH * .7, .9 * K);
+    } else if (key === 'colophon') {
+      setFont(g, 22, 600); spaced(g, 'COLOPHON', cx, PH * .17, 9); stars3(g, cx, PH * .22, 6 * K);
+      const ls = ['Set in Cormorant Garamond.', 'The plates were engraved by your browser from photographs, which belong to their photographers and publishers.',
+        'The quotes are from Emma Watson’s HeForShe speech at the United Nations, 20 September 2014.', 'An unofficial fan tribute, not affiliated with Emma Watson or her representatives.'];
+      let y = PH * .3; setFont(g, 29, 500, true);
+      ls.forEach(p => { wrap(g, p, PW * .66).forEach(ln => { g.fillText(ln, cx, y); y += 39 * K; }); y += 22 * K; });
+      setFont(g, 34, 500); g.fillText('Created by ' + C.credit, cx, y + 30 * K);
+    }
+    folio(g, key);
+    return cv;
+  }
+
+  /* =====================================================================
+     THREE.JS: the room, the light, the book
+     ===================================================================== */
+  const glCanvas = $('#gl');
+  let renderer = null;
+  try {
+    if (window.THREE) {
+      renderer = new THREE.WebGLRenderer({ canvas: glCanvas, antialias: true, powerPreference: 'high-performance' });
+      if (!renderer.getContext()) renderer = null;
+    }
+  } catch (e) { renderer = null; }
+  const GL = !!renderer && !!window.gsap;
+  const DPR = Math.min(window.devicePixelRatio || 1, COARSE ? 1.6 : 2);
+  const D2R = Math.PI / 180, FOV = 30;
+
+  let ribbon = null, ribbonKey = '';
+  let world, camera, pool, candle, hemi, table, frontHinge, backBoard, spine, rightBlock, leftBlock, closeGroup, dust, orthoCam, sceneQuad, sceneMat, sceneWorld, PLACE, covers;
+  const leaves = [], REV = [];   // REV: plates that ink themselves in the first time they come into view
+  const SU = 36, SV = 12;
+  const tex = (canvas, linear) => { const t = new THREE.CanvasTexture(canvas); t.encoding = linear ? THREE.LinearEncoding : THREE.sRGBEncoding; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); return t; };
+
+  function leafGeometry() {
+    const g = new THREE.BufferGeometry(), nv = (SU + 1) * (SV + 1);
+    const pos = new Float32Array(nv * 3), uv = new Float32Array(nv * 2), idx = [];
+    for (let j = 0; j <= SV; j++) for (let i = 0; i <= SU; i++) { const k = j * (SU + 1) + i; uv[k * 2] = i / SU; uv[k * 2 + 1] = 1 - j / SV; }
+    for (let j = 0; j < SV; j++) for (let i = 0; i < SU; i++) { const a = j * (SU + 1) + i, b = a + 1, c = a + SU + 1, d = c + 1; idx.push(a, c, b, b, c, d); }
+    const pa = new THREE.BufferAttribute(pos, 3); pa.setUsage(THREE.DynamicDrawUsage);
+    g.setAttribute('position', pa); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2)); g.setIndex(idx);
+    return g;
+  }
+  // A leaf shows one texture on each side. A plate on either side can be "un-inked" (rev < 1): the engraving
+  // then appears stroke by stroke, sweeping across the plate with a ragged, wet edge, as if being printed.
+  function leafMaterial() {
+    const back = { value: PLACE }, revF = { value: 1 }, revB = { value: 1 };
+    const m = new THREE.MeshStandardMaterial({ map: PLACE, side: THREE.DoubleSide, roughness: .9, metalness: 0, envMapIntensity: .3 });
+    m.shadowSide = THREE.DoubleSide; Object.assign(m.userData, { back, revF, revB });
+    m.onBeforeCompile = s => {
+      Object.assign(s.uniforms, { backMap: back, uRevF: revF, uRevB: revB });
+      s.fragmentShader = s.fragmentShader.replace('#include <map_pars_fragment>', '#include <map_pars_fragment>\nuniform sampler2D backMap;\nuniform float uRevF, uRevB;')
+        .replace('#include <map_fragment>', `#ifdef USE_MAP
+          vec2 fuv = gl_FrontFacing ? vUv : vec2(1.0 - vUv.x, vUv.y);
+          vec4 texelColor = gl_FrontFacing ? texture2D(map, fuv) : texture2D(backMap, fuv);
+          float rv = gl_FrontFacing ? uRevF : uRevB;
+          if (rv < .999) {
+            float inP = step(.165, fuv.x) * step(fuv.x, .835) * step(.265, fuv.y) * step(fuv.y, .935);
+            float nz = fract(sin(dot(floor(fuv * vec2(90.0, 120.0)), vec2(12.9898, 78.233))) * 43758.5453);
+            float sweep = (fuv.x - .165) / .67 * .55 + (.935 - fuv.y) / .67 * .45;
+            float inkAmt = 1.0 - dot(texelColor.rgb, vec3(.3333));
+            float front = rv * 1.32 - sweep - nz * .14;
+            float m = smoothstep(0.0, .07, front + inkAmt * .12);
+            float wet = smoothstep(.0, .05, front) * (1.0 - smoothstep(.06, .22, front));
+            vec3 inked = texelColor.rgb * mix(1.0, .86, wet);
+            texelColor.rgb = mix(texelColor.rgb, mix(vec3(.937, .914, .863), inked, m), inP);
+          }
+          texelColor = mapTexelToLinear(texelColor);
+          diffuseColor *= texelColor;
+          #endif`);
+    };
+    return m;
+  }
+  // bend a leaf: p = 0 lying right, 1 lying left; gm = how open the book is (gutter); peel lifts the near corner
+  function updateLeaf(L, p, gm, hy, peel) {
+    const pos = L.geo.attributes.position.array, ds = PAGE_W / SU, sp = Math.sin(Math.PI * p);
+    const bend = sp * BEND_A, corner = sp * BEND_C + peel, g0 = (1 - 2 * p) * GUT * gm;
+    for (let j = 0; j <= SV; j++) {
+      const zn = j / SV, z = -PAGE_H / 2 + zn * PAGE_H;
+      let x = 0, y = hy;
+      for (let i = 0; i <= SU; i++) {
+        const k = (j * (SU + 1) + i) * 3; pos[k] = x; pos[k + 1] = y; pos[k + 2] = z;
+        const s = (i + .5) * ds, sn = s / PAGE_W;
+        const th = Math.PI * p + g0 * Math.exp(-s / GUT_D) + bend * Math.pow(sn, 1.5) + corner * sn * sn * zn;
+        x += ds * Math.cos(th); y += ds * Math.sin(th);
+      }
+    }
+    L.geo.attributes.position.needsUpdate = true; L.geo.computeVertexNormals();
+  }
+  // the ribbon's path: out of the page block at the foot of the spine, over the edge, down onto the desk, then a lazy S
+  function ribbonUpdate(open, sway) {
+    const key = open.toFixed(3) + '|' + sway.toFixed(3); if (key === ribbonKey) return; ribbonKey = key;
+    const n = ribbon.userData.n, pos = ribbon.geometry.attributes.position.array, W2 = .016;
+    const x0 = mix(.12, .006, open), y0 = BT + NL * LT * .5 + .004 * open, zE = BH / 2 - .02, drop = .07, LEN = .5;
+    const at = s => {
+      if (s < .02) return [x0, y0, zE - .02 + s];
+      if (s < .02 + drop) { const t = (s - .02) / drop, e = t * t * (3 - 2 * t); return [x0 + .004 * t, mix(y0, .0025, e), zE + (s - .02) * .62]; }
+      const u = s - .02 - drop, g = Math.min(1, u * 5);
+      return [x0 + .004 + (Math.sin(u * 9 + .4) * .045 + u * .1) * g + sway * u * u, .0025, zE + drop * .62 + u * .97];
+    };
+    for (let i = 0; i <= n; i++) {
+      const s = i / n * LEN, a = at(s), b = at(Math.min(LEN, s + .004)), c = at(Math.max(0, s - .004));
+      let tx = b[0] - c[0], tz = b[2] - c[2]; const tl = Math.hypot(tx, tz) || 1; tx /= tl; tz /= tl;
+      const sx = -tz * W2, sz = tx * W2, cut = i === n ? .018 : 0;   // the end is cut on the slant
+      pos.set([a[0] + sx + tx * cut, a[1], a[2] + sz + tz * cut, a[0] - sx, a[1], a[2] - sz], i * 6);
+    }
+    ribbon.geometry.attributes.position.needsUpdate = true; ribbon.geometry.computeVertexNormals();
+  }
+  function riseOf(gm) { let y = 0; const ds = PAGE_W / SU; for (let i = 0; i < SU; i++) y += ds * Math.sin(GUT * gm * Math.exp(-(i + .5) * ds / GUT_D)); return y; }
+  function shortOf() { let x = 0; const ds = PAGE_W / 200; for (let i = 0; i < 100; i++) x += ds * Math.cos(GUT * Math.exp(-(i + .5) * ds / GUT_D)); return .5 - x; }
+  const SHORT = shortOf();
+  const plateCenter = c => ({ x: .5 - SHORT, y: yR(c + 3) + .002, z: -PAGE_H / 2 + (PLATE.v0 + PLATE.v1) / 2 * PAGE_H });
+
+  function initGL() {
+    renderer.setPixelRatio(DPR);
+    renderer.setSize(VW, VH, false);
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.06;
+    renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.autoClear = false; renderer.setClearColor(0x050505, 1);
+    PLACE = new THREE.DataTexture(new Uint8Array([239, 233, 220, 255]), 1, 1, THREE.RGBAFormat); PLACE.encoding = THREE.sRGBEncoding; PLACE.needsUpdate = true;
+
+    world = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(FOV, VW / VH, .03, 60); camera.rotation.order = 'YXZ'; world.add(camera);
+
+    // a soft, warm environment so the gold has something to reflect
+    const pm = new THREE.PMREMGenerator(renderer), envScene = new THREE.Scene();
+    const sg = new THREE.SphereGeometry(5, 48, 24), col = [], p = sg.attributes.position, v = new THREE.Vector3(), cd = new THREE.Vector3(.75, .45, .3).normalize();
+    for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i).normalize(); const c1 = Math.pow(Math.max(0, v.dot(cd)), 10) * 3.2, top = Math.pow(Math.max(0, v.y), 4) * .5;
+      col.push(.02 + c1 * 1.0 + top * .9, .016 + c1 * .62 + top * .85, .012 + c1 * .3 + top * .78); }
+    sg.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+    envScene.add(new THREE.Mesh(sg, new THREE.MeshBasicMaterial({ side: THREE.BackSide, vertexColors: true })));
+    world.environment = pm.fromScene(envScene, .04).texture;
+
+    hemi = new THREE.HemisphereLight(0xfff1dd, 0x0b0a09, .1); world.add(hemi);
+    pool = new THREE.SpotLight(0xfff1de, 1.3, 0, .42, .5, 1); pool.position.set(.15, 5.6, .9); pool.target.position.set(.1, 0, .12);
+    pool.castShadow = true; pool.shadow.mapSize.set(COARSE ? 1024 : 2048, COARSE ? 1024 : 2048); pool.shadow.bias = -.0004; pool.shadow.normalBias = .01;
+    pool.shadow.camera.near = 3.5; pool.shadow.camera.far = 7; world.add(pool, pool.target);
+    candle = new THREE.SpotLight(0xffa04a, 1.1, 0, .95, .85, 1.4);
+    if (!COARSE) { candle.castShadow = true; candle.shadow.mapSize.set(1024, 1024); candle.shadow.bias = -.0006; candle.shadow.normalBias = .012; candle.shadow.camera.near = .2; candle.shadow.camera.far = 12; }
+    camera.add(candle); world.add(candle.target);
+
+    // the desk
+    const tcv = mk(512, 512), tg = tcv.getContext('2d'); tg.fillStyle = '#d9d0bf'; tg.fillRect(0, 0, 512, 512);
+    tg.globalAlpha = .12; tg.globalCompositeOperation = 'multiply'; tg.fillStyle = tg.createPattern(noiseTile(), 'repeat'); tg.fillRect(0, 0, 512, 512);
+    const ttex = tex(tcv); ttex.wrapS = ttex.wrapT = THREE.RepeatWrapping; ttex.repeat.set(14, 14);
+    // the desk is only lit inside the lamp's pool; beyond it the room falls away to black
+    const tableMat = new THREE.MeshStandardMaterial({ color: 0xffffff, map: ttex, roughness: .96, envMapIntensity: .2 });
+    tableMat.userData.pool = { value: new THREE.Vector4(.5, .05, .3, .3) };
+    tableMat.onBeforeCompile = s => {
+      s.uniforms.uPool = tableMat.userData.pool;
+      s.vertexShader = 'varying vec3 vPoolW;\n' + s.vertexShader.replace('#include <project_vertex>', '#include <project_vertex>\n vPoolW = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+      s.fragmentShader = 'varying vec3 vPoolW;\nuniform vec4 uPool;\n' + s.fragmentShader.replace('#include <tonemapping_fragment>',
+        ' float poolR = length((vPoolW.xz - uPool.xy) / uPool.zw);\n gl_FragColor.rgb *= mix(.018, 1.0, pow(1.0 - smoothstep(.28, 1.0, poolR), 1.8));\n#include <tonemapping_fragment>');
+    };
+    table = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), tableMat);
+    table.rotation.x = -Math.PI / 2; table.receiveShadow = true; world.add(table);
+
+    // boards, spine, page blocks
+    const clothMat = new THREE.MeshStandardMaterial({ color: 0x171412, roughness: .85, envMapIntensity: .4 });
+    const boardGeo = new THREE.BoxGeometry(BW, BT, BH); boardGeo.translate(BW / 2, BT / 2, 0);
+    const cvMat = () => new THREE.MeshStandardMaterial({ color: 0x222222, roughness: .85, metalness: 0, envMapIntensity: 1 });
+    const outFront = cvMat(), inFront = new THREE.MeshStandardMaterial({ map: PLACE, color: 0x2a2420, roughness: .8, envMapIntensity: .3 });
+    const inBack = new THREE.MeshStandardMaterial({ map: PLACE, color: 0x2a2420, roughness: .8, envMapIntensity: .3 }), outBack = cvMat();
+    frontHinge = new THREE.Group();
+    const front = new THREE.Mesh(boardGeo, [clothMat, clothMat, outFront, inFront, clothMat, clothMat]); front.castShadow = front.receiveShadow = true; frontHinge.add(front);
+    backBoard = new THREE.Mesh(boardGeo, [clothMat, clothMat, inBack, outBack, clothMat, clothMat]); backBoard.castShadow = backBoard.receiveShadow = true; world.add(backBoard);
+    const sgeo = new THREE.BoxGeometry(.032, 1, BH); sgeo.translate(-.016, .5, 0);
+    spine = new THREE.Mesh(sgeo, clothMat); spine.castShadow = spine.receiveShadow = true; world.add(spine);
+    const ecv = mk(8, 64), eg = ecv.getContext('2d');
+    for (let y = 0; y < 64; y++) { const tt = (y % 4) / 3; eg.fillStyle = `rgb(${Math.round(212 - 40 * tt)},${Math.round(176 - 34 * tt)},${Math.round(104 - 24 * tt)})`; eg.fillRect(0, y, 8, 1); }
+    const etex = tex(ecv); etex.wrapS = etex.wrapT = THREE.RepeatWrapping; etex.repeat.set(1, 3);
+    const gilt = new THREE.MeshStandardMaterial({ map: etex, metalness: .85, roughness: .38, envMapIntensity: 1.2 });
+    const pageTop = new THREE.MeshStandardMaterial({ color: 0xefe9dc, roughness: .9 });
+    const blockGeo = new THREE.BoxGeometry(1, 1, 1); blockGeo.translate(.5, .5, 0);
+    rightBlock = new THREE.Mesh(blockGeo, [gilt, pageTop, pageTop, pageTop, gilt, gilt]); rightBlock.position.set(.07, BT, 0); rightBlock.castShadow = rightBlock.receiveShadow = true;
+    leftBlock = new THREE.Mesh(blockGeo, [pageTop, gilt, pageTop, pageTop, gilt, gilt]); leftBlock.position.set(-1, BT, 0); leftBlock.castShadow = leftBlock.receiveShadow = true;
+    world.add(rightBlock);
+    closeGroup = new THREE.Group(); world.add(closeGroup); closeGroup.add(frontHinge, leftBlock);
+    LEAVES.forEach(faces => {
+      const geo = leafGeometry(), mat = leafMaterial(), mesh = new THREE.Mesh(geo, mat);
+      mesh.castShadow = mesh.receiveShadow = true; mesh.frustumCulled = false; closeGroup.add(mesh);
+      leaves.push({ geo, mat, mesh, key: '', faces, prevP: 0, peel: 0 });
     });
-    made.big.clear(); bigShown = -1;
+    leaves.forEach((L, i) => {
+      if (L.faces[0].startsWith('plate')) REV.push({ u: L.mat.userData.revF, seen: () => S['l' + (i - 1)] > .04, t0: -1 });
+      if (L.faces[1] === 'frontis') REV.push({ u: L.mat.userData.revB, seen: () => S['l' + i] > .3, t0: -1 });
+    });
+    if (!REDUCE) REV.forEach(r => { r.u.value = 0; });
+    covers = { outFront, inFront, inBack, outBack };
+
+    // a silk ribbon marker, slipping out of the foot of the book and lying across the desk
+    const RN = 30, rg = new THREE.BufferGeometry(), ridx = [];
+    for (let i = 0; i < RN; i++) { const a = i * 2; ridx.push(a, a + 2, a + 1, a + 1, a + 2, a + 3); }
+    const rpa = new THREE.BufferAttribute(new Float32Array((RN + 1) * 6), 3); rpa.setUsage(THREE.DynamicDrawUsage);
+    rg.setAttribute('position', rpa); rg.setIndex(ridx);
+    ribbon = new THREE.Mesh(rg, new THREE.MeshStandardMaterial({ color: 0x4c0a10, roughness: .46, metalness: .05, side: THREE.DoubleSide, envMapIntensity: .8 }));
+    ribbon.castShadow = true; ribbon.receiveShadow = true; ribbon.frustumCulled = false; ribbon.userData.n = RN; world.add(ribbon);
+
+    // dust drifting through the light
+    const N = COARSE ? 140 : 260, dp = new Float32Array(N * 3), dseed = new Float32Array(N);
+    for (let i = 0; i < N; i++) { dp[i * 3] = (Math.random() - .5) * 3.4; dp[i * 3 + 1] = .1 + Math.random() * 1.6; dp[i * 3 + 2] = (Math.random() - .5) * 2.6; dseed[i] = Math.random(); }
+    const dg = new THREE.BufferGeometry(); dg.setAttribute('position', new THREE.BufferAttribute(dp, 3)); dg.setAttribute('aSeed', new THREE.BufferAttribute(dseed, 1));
+    dust = new THREE.Points(dg, new THREE.ShaderMaterial({
+      uniforms: { uTime: { value: 0 }, uHeat: { value: .5 }, uSize: { value: 22 * DPR } }, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+      vertexShader: `attribute float aSeed; uniform float uTime, uHeat, uSize; varying float vA;
+        void main() { vec3 p = position; float t = uTime * (.05 + aSeed * .05);
+          p.x += sin(t * 2.0 + aSeed * 40.0) * .25; p.z += cos(t * 1.7 + aSeed * 23.0) * .2; p.y = .08 + mod(p.y + t * .35, 1.7);
+          vec4 mv = modelViewMatrix * vec4(p, 1.0); gl_Position = projectionMatrix * mv;
+          gl_PointSize = uSize * (.35 + aSeed * .9) / -mv.z;
+          float r = length(p.xz - vec2(.1, .15)); vA = smoothstep(2.4, 1.0, r) * smoothstep(0.08, .3, p.y) * (.15 + .85 * uHeat) * (.45 + .55 * sin(uTime * (1.0 + aSeed) + aSeed * 30.0)); }`,
+      fragmentShader: `varying float vA; void main() { float d = length(gl_PointCoord - .5); gl_FragColor = vec4(1.0, .9, .74, smoothstep(.5, .0, d) * vA * .55); }`
+    }));
+    dust.frustumCulled = false; if (!REDUCE) world.add(dust);
+
+    // the full-screen engraving for scenes inside a plate
+    orthoCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    sceneMat = new THREE.ShaderMaterial({
+      transparent: true, depthTest: false, depthWrite: false, extensions: { derivatives: true },
+      uniforms: { uImg: { value: PLACE }, uRes: { value: new THREE.Vector2(1, 1) }, uRect: { value: new THREE.Vector4(0, 0, 1, 1) }, uCrop: { value: new THREE.Vector4(0, 0, 1, 1) },
+        uLev: { value: new THREE.Vector2(0, 1) }, uTexel: { value: new THREE.Vector2(.002, .002) }, uPhase: { value: 0 }, uOpacity: { value: 0 }, uMode: { value: 0 }, uHeat: { value: .5 },
+        uFlash: { value: 0 }, uFlame: { value: new THREE.Vector2(0, 0) }, uHas: { value: 0 }, uSpill: { value: 0 }, uPaper: { value: new THREE.Color(PAPER) }, uInk: { value: new THREE.Color(INK) } },
+      vertexShader: 'void main(){ gl_Position = vec4(position.xy, 0.0, 1.0); }',
+      // The plate, engraved live: the same line screen as the printed page, so the hand-off is seamless.
+      // Then the ruled frame melts away and the picture spreads past it, thinning out like an old vignette engraving.
+      fragmentShader: `
+        precision highp float;
+        uniform sampler2D uImg; uniform vec2 uRes, uTexel, uLev, uFlame; uniform vec4 uRect, uCrop;
+        uniform float uPhase, uOpacity, uMode, uHeat, uFlash, uHas, uSpill; uniform vec3 uPaper, uInk;
+        float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+        float vnoise(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+          return mix(mix(hash(i), hash(i + vec2(1., 0.)), f.x), mix(hash(i + vec2(0., 1.)), hash(i + vec2(1., 1.)), f.x), f.y); }
+        float lum(vec2 uv) { return dot(texture2D(uImg, uv).rgb, vec3(.299, .587, .114)); }
+        float blurLum(vec2 uv) { vec2 r = uTexel * 1.5;
+          float s = lum(uv) * 4.0 + 2.0 * (lum(uv + vec2(r.x, 0.)) + lum(uv - vec2(r.x, 0.)) + lum(uv + vec2(0., r.y)) + lum(uv - vec2(0., r.y)));
+          s += lum(uv + r) + lum(uv - r) + lum(uv + vec2(r.x, -r.y)) + lum(uv + vec2(-r.x, r.y)); return s / 16.0; }
+        void main() {
+          vec2 sp = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);
+          vec2 rs = uRect.zw - uRect.xy; float ph = rs.y;
+          vec2 q = (sp - uRect.xy) / rs;
+          vec2 iuv = uCrop.xy + q * (uCrop.zw - uCrop.xy);
+          // how far outside the frame this pixel is, in plate heights, and how far the picture has spread
+          vec2 o = max(vec2(0.), max(-q, q - 1.)) * rs / ph;
+          float away = length(o);
+          vec2 np = sp / ph;
+          float reach = uSpill * (.05 + .2 * vnoise(np * 2.6 + 4.0));
+          float keep = 1.0 - smoothstep(reach * .3, reach + .002 + .02 * uSpill, away + (vnoise(np * 11.0) - .5) * .05 * uSpill);
+          vec2 ib = smoothstep(vec2(0.), uTexel * 10., iuv) * smoothstep(vec2(0.), uTexel * 10., 1. - iuv);
+          float have = ib.x * ib.y * uHas;
+          // where the photograph itself runs out, the engraving frays out raggedly instead of stopping on a straight edge
+          vec2 toEdge = min(iuv, 1. - iuv) * vec2((rs.x / ph) / (uCrop.z - uCrop.x), 1.0 / (uCrop.w - uCrop.y));
+          float fray = smoothstep(0.0, .03 + .08 * vnoise(np * 4.0 + 9.0), min(toEdge.x, toEdge.y) + (vnoise(np * 13.0) - .5) * .03);
+          keep *= mix(1.0, fray, uSpill);
+          float L = mix(1.0, blurLum(vec2(iuv.x, 1.0 - iuv.y)), have);
+          float dark = (1.0 - pow(clamp((L - uLev.x) / (uLev.y - uLev.x), 0.0, 1.0), 1.12)) * keep * have;
+          if (uHas < .5) dark = .1 * keep;
+          vec2 pp = vec2(q.x * rs.x / ph, q.y);
+          float sa = sin(.42), ca = cos(.42), n = 112.0;
+          float u = (pp.x * sa + pp.y * ca) * n + .2 * sin(pp.x * n / 5.5 + pp.y * n / 9.0 + uPhase * .6) + uPhase * .08;
+          float f = abs(fract(u) - .5) * 2.0;
+          float aa = max(fwidth(u) * 1.4, 1e-4);
+          float ink = clamp((dark * 1.05 - f) / aa + .5, 0.0, 1.0) * smoothstep(.02, .12, dark) * smoothstep(0.0, .35, keep * (uHas > .5 ? have : 1.0));
+          float g = length(vec2(dFdx(L), dFdy(L))) * 2.0 * ph / 520.0;
+          ink = max(ink, clamp((g - .05) * 7.0, 0.0, 1.0) * .85 * keep * have);
+          // the printed frame: two ruled lines, as on the page, fading as the picture spreads
+          vec2 fo = max(-q, q - 1.) * rs; float dOut = max(fo.x, fo.y), k = ph / 645.0;
+          float fr = max(1.0 - smoothstep(1.5 * k - .5, 1.5 * k + .5, abs(dOut - 13.0 * k)), 1.0 - smoothstep(.7 * k - .5, .7 * k + .5, abs(dOut - 6.0 * k)));
+          ink = max(ink, fr * (1.0 - smoothstep(0.0, .45, uSpill)));
+          vec3 paper = uPaper * (.975 + .04 * vnoise(sp * .45) + .035 * (vnoise(np * 3.0) - .5));
+          vec3 col = mix(paper, uInk, ink) * .94;
+          vec2 sq = sp / uRes;
+          float vig = smoothstep(1.2, .3, length((sq - vec2(.5, .46)) * vec2(1.1, .95)));
+          if (uMode < .5) col *= mix(.6, 1.0, vig);
+          else if (uMode < 1.5) { vec2 d = (sq - vec2(.5, .4)) * vec2(1.6, 1.2); col = col * mix(.24, 1.0, vig) + vec3(1.0, .74, .4) * exp(-dot(d, d) * 3.0) * .2; }
+          else if (uMode < 2.5) { vec2 c = (uRect.xy + rs * vec2(.5, .3)) / uRes; float s2 = smoothstep(.75, .12, length((sq - c) * vec2(uRes.x / uRes.y * .8, .75))); col *= mix(.12, 1.04, s2); }
+          else { col = col * vec3(.19, .2, .27) + vec3(.012, .014, .024); }
+          vec2 fd = (sp - uFlame) / uRes.y; col += vec3(1.0, .6, .24) * exp(-dot(fd, fd) * 10.0) * .32 * uHeat;
+          col = mix(col, vec3(1.0, .97, .9), uFlash);
+          gl_FragColor = vec4(col, uOpacity);
+        }`
+    });
+    sceneQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), sceneMat); sceneQuad.frustumCulled = false;
+    sceneWorld = new THREE.Scene(); sceneWorld.add(sceneQuad);
+  }
+
+  // textures for every page, built a few at a time so the first spreads are ready first
+  let texturesReady = false;
+  async function buildTextures() {
+    await fontsReady;
+    const cw = mk(CVW, CVH), cg = cw.getContext('2d'); cloth(cg, CVW, CVH); coverArt(cg, CVW, CVH, goldFill(cg, CVW, CVH), false);
+    const cp = mk(CVW, CVH), pg = cp.getContext('2d'); pg.fillStyle = 'rgb(0,226,0)'; pg.fillRect(0, 0, CVW, CVH); coverArt(pg, CVW, CVH, 'rgb(0,92,255)', false);
+    const bw = mk(CVW, CVH), bg = bw.getContext('2d'); cloth(bg, CVW, CVH); coverArt(bg, CVW, CVH, goldFill(bg, CVW, CVH), true);
+    const bp = mk(CVW, CVH), bpg = bp.getContext('2d'); bpg.fillStyle = 'rgb(0,226,0)'; bpg.fillRect(0, 0, CVW, CVH); coverArt(bpg, CVW, CVH, 'rgb(0,92,255)', true);
+    const ep = mk(CVW, CVH); endpaper(ep.getContext('2d'), CVW, CVH);
+    const setCover = (m, map, pbr) => { m.map = tex(map); m.roughnessMap = m.metalnessMap = tex(pbr, true); m.roughness = 1; m.metalness = 1; m.color.set(0xffffff); m.needsUpdate = true; };
+    setCover(covers.outFront, cw, cp); setCover(covers.outBack, bw, bp);
+    const ept = tex(ep); [covers.inFront, covers.inBack].forEach(m => { m.map = ept; m.color.set(0xffffff); m.needsUpdate = true; });
+    const spcv = mk(64, CVH), spg = spcv.getContext('2d'); cloth(spg, 64, CVH); spg.fillStyle = goldFill(spg, 64, CVH); [.07, .085, .915, .93].forEach(f => spg.fillRect(6, CVH * f, 52, 3 * K));
+    spine.material = new THREE.MeshStandardMaterial({ map: tex(spcv), roughness: .8, envMapIntensity: .5 });
+    for (const L of leaves) {
+      const [fk, bk] = L.faces;
+      const [fc, bc] = await Promise.all([drawFace(fk), drawFace(bk)]);
+      L.mat.map = tex(fc); L.mat.userData.back.value = tex(bc); L.mat.needsUpdate = true;
+      await sleep(0);
+    }
+    texturesReady = true;
+  }
+
+  /* =====================================================================
+     CAMERA POSES (recomputed every frame, so they follow the window size)
+     ===================================================================== */
+  const portrait = () => VW < VH * .95;
+  function fit(wd, hd, e, fw, fh) { const t = Math.tan(FOV * D2R / 2), a = VW / VH; return Math.max(wd / (2 * t * a * fw), (hd * Math.sin(e * D2R) + .1) / (2 * t * fh)); }
+  const P = {
+    closed: () => ({ x: .52, y: .06, z: .04, e: 52, yaw: -14, roll: -1.5, d: fit(1.45, 1.7, 52, portrait() ? .9 : .62, .62) }),
+    intro: () => { const b = P.closed(); return { ...b, d: b.d * 1.8, e: 76, yaw: -34, roll: 3 }; },
+    closedEnd: () => ({ x: .52, y: .06, z: .02, e: 60, yaw: 12, roll: 1.2, d: fit(1.45, 1.7, 60, portrait() ? .9 : .6, .6) }),
+    closedEnd2: () => { const b = P.closedEnd(); return { ...b, e: 68, yaw: 20, d: b.d * 1.14 }; },
+    spreadL: () => portrait() ? { x: -.5, y: .06, z: .03, e: 62, yaw: 5, roll: .5, d: fit(1.12, 1.42, 62, .95, .78) } : { x: -.06, y: .06, z: .03, e: 58, yaw: -1.5, roll: -.3, d: fit(2.3, 1.5, 58, .9, .8) },
+    spreadR: () => portrait() ? { x: .5, y: .06, z: .03, e: 62, yaw: -5, roll: -.5, d: fit(1.12, 1.42, 62, .95, .78) } : { x: .06, y: .06, z: .03, e: 58, yaw: -3.5, roll: -.5, d: fit(2.3, 1.5, 58, .9, .8) },
+    plateFocus: c => { const pc = plateCenter(c); return portrait() ? { x: pc.x, y: pc.y, z: pc.z + .04, e: 70, yaw: -3, roll: 0, d: fit(.95, 1.04, 70, .97, .84) } : { x: pc.x - .05, y: pc.y, z: pc.z + .06, e: 68, yaw: -6, roll: -.4, d: fit(1.5, 1.2, 68, .95, .9) }; },
+    // inside a plate: looking straight down at it. Wide screens keep it on the left with the words on the right;
+    // tall screens keep it at the top with the words below.
+    scene: (c, kb, sk = 0) => {
+      const pc = plateCenter(c), t = Math.tan(FOV * D2R / 2), a = VW / VH;
+      let H, ox = 0, oz = 0;
+      if (landScene()) { H = .84 / .76 / kb; ox = .21 * H * a; }
+      else { H = Math.max(.62 / (.86 * a), .84 / .58) / kb * (1 + .45 * sk); oz = (.13 - .09 * sk) * H; }   // sk: make room for the shelf
+      return { x: pc.x + ox, y: pc.y, z: pc.z + oz, e: 90, yaw: 0, roll: 0, d: H / (2 * t) };
+    }
+  };
+  const landScene = () => VW >= VH * 1.2;
+  function lerpPose(a, b, t) { return { x: mix(a.x, b.x, t), y: mix(a.y, b.y, t), z: mix(a.z, b.z, t), e: mix(a.e, b.e, t), yaw: mix(a.yaw, b.yaw, t), roll: mix(a.roll, b.roll, t), d: Math.exp(mix(Math.log(a.d), Math.log(b.d), t)) }; }
+  function placeCamera(Q) {
+    const e = Q.e * D2R, yaw = Q.yaw * D2R;
+    camera.position.set(Q.x + Q.d * Math.sin(yaw) * Math.cos(e), Q.y + Q.d * Math.sin(e), Q.z + Q.d * Math.cos(yaw) * Math.cos(e));
+    camera.rotation.set(-e, yaw, Q.roll * D2R);
+    camera.updateMatrixWorld();
+  }
+
+  /* =====================================================================
+     THE STORY TIMELINE: every resting point is a "beat"; GSAP tweens the
+     book between them. The scroll engine only ever moves between beats.
+     ===================================================================== */
+  const S = { board: 0, close: 0, cam: 0, dive: 0, scene: 0, ch: -1, card: 0, heat: .5, out: 0, end: 0 };
+  for (let i = 0; i < NL; i++) S['l' + i] = 0;
+  const BEATS = [];
+  let TL = null, tAt = 0;
+  function buildTimeline() {
+    TL = gsap.timeline({ paused: true, defaults: { ease: 'none' } });
+    const beat = (pose, info) => BEATS.push({ t: tAt, pose, ...info });
+    const camTo = (at, dur, ease = 'sine.inOut') => TL.to(S, { cam: BEATS.length, duration: dur, ease }, at);
+    const turnTo = (leaf, pose, info, fromScene) => {
+      let s = tAt;
+      if (fromScene) {
+        TL.to(S, { scene: 0, duration: .4 }, s);
+        TL.to(S, { dive: 0, duration: 1.05, ease: 'power1.inOut' }, s);
+        TL.to(S, { heat: .66, duration: .7 }, s + .2);
+        s += .5;
+      }
+      camTo(s, 1.5);
+      TL.to(S, { ['l' + leaf]: 1, duration: 1.4, ease: 'sine.inOut' }, s + (fromScene ? .12 : .04));
+      tAt = s + 1.55; beat(pose, info);
+    };
+    const panTo = (pose, info, dur = 1.0) => { camTo(tAt, dur); tAt += dur; beat(pose, info); };
+
+    beat(P.closed, { say: 'A closed black book on a pool of light: A Life in Chapters, an unofficial tribute to Emma Watson.' });
+    camTo(tAt, 1.8); TL.to(S, { board: 1, duration: 1.65, ease: 'sine.inOut' }, tAt + .08); TL.to(S, { heat: .62, duration: 1.4 }, tAt);
+    tAt += 1.85; beat(P.spreadR, { say: 'The cover opens. Half-title: A Life in Chapters.' });
+    turnTo(0, P.spreadL, { say: `Frontispiece: ${C.frontispiece.alt}.` });
+    panTo(P.spreadR, { say: `Title page: A Life in Chapters. An unofficial fan tribute to Emma Watson, in five chapters. Created by ${C.credit}.`, mark: 'title' });
+    turnTo(1, P.spreadL, { say: 'Contents: ' + CH.map(c => `Chapter ${c.num}, ${c.title}`).join('; ') + '.' });
+    panTo(P.spreadR, { say: 'A note before you begin: this is a fan’s picture book, not affiliated with Emma Watson. Every quote is her own, from her HeForShe speech on 20 September 2014.' });
+    CH.forEach((ch, c) => {
+      turnTo(c + 2, P.spreadL, { say: `Chapter ${ch.num}: ${ch.title}. ${ch.place}. ${ch.argument}`, mark: 'ch' + c }, c > 0);
+      panTo(() => P.plateFocus(c), { say: `Plate ${ch.num}: ${ch.plate.caption} ${ch.plate.alt}.` });
+      TL.set(S, { ch: c, card: 0 }, tAt);
+      camTo(tAt, 1.35);
+      TL.to(S, { dive: 1, duration: 1.4, ease: 'power1.inOut' }, tAt);
+      TL.to(S, { scene: 1, duration: .4 }, tAt + 1.02);
+      TL.to(S, { heat: 1, duration: .7 }, tAt + .6);
+      tAt += 1.45; beat(() => P.plateFocus(c), { ch: c, card: 0, say: ch.cards[0].text.replace(/\n/g, ' ') });
+      for (let k = 1; k < ch.cards.length; k++) {
+        camTo(tAt, .9); TL.to(S, { card: k, duration: .9, ease: 'sine.inOut' }, tAt);
+        tAt += .9; beat(() => P.plateFocus(c), { ch: c, card: k, say: ch.cards[k].text.replace(/\n/g, ' ') + (ch.cards[k].cite ? ' ' + ch.cards[k].cite : '') });
+      }
+    });
+    turnTo(7, P.spreadL, { say: 'Fin. Here the story pauses, for now.', mark: 'end' }, true);
+    panTo(P.spreadR, { say: `Colophon. An unofficial fan tribute. Created by ${C.credit}.` });
+    camTo(tAt, 2.1); TL.to(S, { close: 1, duration: 2.0, ease: 'sine.inOut' }, tAt); TL.to(S, { heat: .5, duration: 1.6 }, tAt);
+    tAt += 2.15; beat(P.closedEnd, { say: 'The book closes.' });
+    camTo(tAt, 2.4, 'sine.inOut'); TL.to(S, { heat: 0, out: 1, duration: 1.5, ease: 'power1.in' }, tAt); TL.to(S, { end: 1, duration: .9 }, tAt + 1.3);
+    tAt += 2.4; beat(P.closedEnd2, { say: 'The match goes out. Fin.', end: true });
+  }
+  if (window.gsap) buildTimeline();
+  const NB = () => BEATS.length;
+  const markBeat = name => Math.max(0, BEATS.findIndex(b => b.mark === name));
+  function beatTime(b) { const n = NB() - 1; b = clamp(b, 0, n); const i = Math.min(n - 1, Math.floor(b)); return mix(BEATS[i].t, BEATS[i + 1].t, b - i); }
+
+  /* =====================================================================
+     SCROLL ENGINE: wheel, trackpad, touch, mouse drag, tap and keys all
+     move one value, b (the beat). Letting go always settles on a beat.
+     ===================================================================== */
+  // The engine works in timeline time (T). A step glides there like a hand turning a page: it eases in,
+  // cruises at the story's own pace and eases out, and a second step during a glide just moves the goal,
+  // so the motion never stops and restarts. A drag (finger, mouse, trackpad) holds the page where the
+  // input is, at most one beat either way, and letting go finishes the turn at the speed it was moving.
+  const E = { T: 0, V: 0, b: 0, goal: 0, goalB: 0, vmax: 1, mode: 'rest', on: false, pointer: null, from: 0, dragB: 0, dir: 0, samples: [], restAt: performance.now() };
+  const CRUISE = 1.5, ACCEL = 4.4, BRAKE = 2.7, TAIL = 5.2, IDLE = 140, WHEEL_PX = 300;
+  const contents = $('#contents'), tocList = $('#toc-list'), contentsBtn = $('#contents-btn');
+  let textMode = false;
+  function beatOf(t) {
+    const n = NB() - 1; if (t <= BEATS[0].t) return 0; if (t >= BEATS[n].t) return n;
+    let lo = 0, hi = n; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (BEATS[m].t <= t) lo = m; else hi = m; }
+    return lo + (t - BEATS[lo].t) / (BEATS[lo + 1].t - BEATS[lo].t);
+  }
+  function noteInput() { E.restAt = performance.now(); hidePrompt(); }
+  function glideTo(i) {
+    i = clamp(Math.round(i), 0, NB() - 1);
+    E.goalB = i; E.goal = BEATS[i].t; E.mode = 'auto';
+    E.vmax = Math.max(CRUISE * (1 + .6 * Math.max(0, Math.abs(i - E.b) - 1)), Math.abs(E.V));   // further away, a little faster
+  }
+  function arrive() { E.T = E.goal; E.V = 0; E.mode = 'rest'; onRest(E.goalB); }
+  function glide(dt) {
+    const d = E.goal - E.T, ad = Math.abs(d), dir = Math.sign(d);
+    if (ad < 2e-4 && Math.abs(E.V) < .05) { arrive(); return; }
+    // the fastest speed that can still stop softly at the goal: braking curve, then an exponential tail
+    const want = dir * Math.min(E.vmax, Math.sqrt(2 * BRAKE * ad), TAIL * ad + .025);
+    const speedUp = Math.abs(want) > Math.abs(E.V) && Math.sign(want) === Math.sign(E.V || want);
+    // slowing down: never less than the braking needed to stop exactly on the beat, so a thrown page never slams
+    const need = Math.sign(E.V) === dir ? E.V * E.V / (2 * Math.max(ad, 1e-4)) * 1.15 : 0;
+    const dv = want - E.V, lim = (speedUp ? ACCEL : Math.max(BRAKE * 2.4, need)) * dt;
+    E.V += clamp(dv, -lim, lim);
+    const nT = E.T + E.V * dt;
+    if (dir && Math.sign(E.goal - nT) !== dir) { arrive(); return; }
+    E.T = nT;
+    E.vmax = Math.max(CRUISE, E.vmax - dt * .5);
+  }
+  function step(dir) {
+    if (!E.on) return; noteInput();
+    if (REDUCE) { veilTo(clamp(Math.round(E.b) + dir, 0, NB() - 1), .14); return; }
+    const from = E.mode === 'auto' && Math.sign(E.goalB - E.b) === dir ? E.goalB : (dir > 0 ? Math.floor(E.b + 1e-3) : Math.ceil(E.b - 1e-3));
+    glideTo(clamp(from + dir, Math.round(E.b) - 2, Math.round(E.b) + 2));
+  }
+  // drags: the page follows the input, up to one beat away, with a rubber band beyond that
+  function grab() {
+    if (E.mode !== 'drag') { E.mode = 'drag'; E.from = Math.round(E.b); E.dragB = E.b; E.samples = []; }
+  }
+  function nudge(db) {
+    E.dragB += db; if (db) E.dir = Math.sign(db);
+    const now = performance.now(); E.samples.push([now, E.dragB]); while (E.samples.length > 2 && now - E.samples[0][0] > 120) E.samples.shift();
+  }
+  function dragVel() { const s = E.samples; if (s.length < 2) return 0; const a = s[0], z = s[s.length - 1]; return (z[1] - a[1]) / Math.max(.016, (z[0] - a[0]) / 1000); }
+  const band = (x, a, z) => x > z ? z + .16 * (1 - Math.exp(-(x - z) / .16)) : x < a ? a - .16 * (1 - Math.exp(-(a - x) / .16)) : x;
+  // the page is tied to the input by a stiff, critically damped spring: it follows closely, carries the speed it
+  // already had, and never jumps. A trackpad can't throw it faster than a hand would turn it.
+  function drag(dt) {
+    const n = NB() - 1, target = beatTime(clamp(band(E.dragB, E.from - 1, E.from + 1), 0, n)), w = 17, vm = E.pointer ? 6 : 3.2;
+    for (let k = Math.ceil(dt * 240), h = dt / k; k > 0; k--) {
+      E.V = clamp(E.V + (w * w * (target - E.T) - 2 * w * E.V) * h, -vm, vm);
+      E.T += E.V * h;
+    }
+  }
+  function release(vb = dragVel()) {
+    const n = NB() - 1, b = clamp(E.b, 0, n), moved = E.dragB - E.from;
+    let to;
+    if (Math.abs(vb) > .7) to = vb > 0 ? Math.floor(b + 1e-3) + 1 : Math.ceil(b - 1e-3) - 1;      // a flick goes where it was thrown
+    else if (Math.abs(moved) > .1 && Math.sign(moved) === E.dir) to = E.from + E.dir;          // a deliberate drag finishes its turn
+    else to = Math.round(b);                                                                   // a nudge settles back
+    glideTo(clamp(to, Math.max(0, E.from - 1), Math.min(n, E.from + 1)));
+  }
+  function engineUpdate(dt, now) {
+    if (E.mode === 'drag') { drag(dt); if (!E.pointer && now - W.last > IDLE) { W.g = null; release(); } }
+    else if (E.mode === 'auto') glide(dt);
+    E.b = beatOf(E.T);
+  }
+  function onRest(i) {
+    E.restAt = performance.now();
+    const B = BEATS[i]; if (B && B.say) { const live = $('#live'); live.textContent = ''; setTimeout(() => { live.textContent = B.say; }, 60); }
+  }
+  // Wheel and trackpad. A mouse wheel arrives as separate notches: each one turns one beat.
+  // A trackpad arrives as a stream of small deltas: the page follows it, and when the stream starts
+  // to decay (the finger has lifted and the rest is momentum) the turn is released and the tail ignored.
+  const W = { last: 0, g: null, cool: 0 };
+  addEventListener('wheel', e => {
+    if (!E.on || !contents.hidden || textMode) return;
+    e.preventDefault();
+    let dy = e.deltaY, dx = e.deltaX;
+    if (e.deltaMode === 1) { dy *= 32; dx *= 32; } else if (e.deltaMode === 2) { dy *= VH; dx *= VW; }
+    const d = Math.abs(dx) > Math.abs(dy) ? dx : dy; if (!d) return;
+    const now = performance.now(), gap = now - W.last, ad = Math.abs(d), sg = Math.sign(d); W.last = now;
+    let G = W.g;
+    if (G && gap < 240) {
+      if (G.done) {                                               // momentum after a release
+        if (!G.armed) { if (ad < G.lastAd) G.armed = true; G.lastAd = ad; return; }   // still this swipe's own rise
+        G.rise = ad > G.lastAd + .5 ? G.rise + 1 : 0;           // momentum only ever decays; rising deltas are a new swipe
+        const push = (sg !== G.sign && ad > 6) || ad > G.lastAd * 1.4 + 4 || G.rise >= 2;
+        G.lastAd = ad; if (!push) return;
+        G = null;
+      }
+    } else G = null;
+    if (!G) {
+      G = W.g = { sign: sg, notch: ad >= 40 && gap > 160, lastAd: 0, peak: 0, fall: 0, rise: 0, done: false, armed: true, stepAt: 0 };
+      // a fresh swipe the same way as a glide already under way just carries it on to the next beat
+      if (!G.notch && !REDUCE && E.mode === 'auto' && Math.sign(E.goalB - E.b) === sg) { G.done = true; G.armed = false; G.lastAd = ad; step(sg); return; }
+    }
+    noteInput();
+    if (REDUCE) { if (now > W.cool && (G.notch || ad > 12)) { step(sg); W.cool = now + 600; } G.done = true; G.lastAd = ad; return; }
+    if (G.notch) {
+      if (ad >= 30 && now - G.stepAt > 140) { G.stepAt = now; step(sg); }
+      G.lastAd = ad; return;
+    }
+    grab(); nudge(d / WHEEL_PX);
+    G.fall = ad < G.lastAd ? G.fall + 1 : 0; G.peak = Math.max(G.peak, ad); G.lastAd = ad;
+    if (G.peak > 8 && G.fall >= 3 && ad < G.peak * .88) { G.done = true; release(); }
+  }, { passive: false });
+  glCanvas.addEventListener('pointerdown', e => {
+    if (!E.on || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    glCanvas.setPointerCapture(e.pointerId); glCanvas.classList.add('dragging');
+    E.pointer = { id: e.pointerId, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, t0: e.timeStamp, moved: 0, axis: null };
+    if (!REDUCE) grab();
+    noteInput();
+  });
+  glCanvas.addEventListener('pointermove', e => {
+    const Pt = E.pointer; if (!Pt || e.pointerId !== Pt.id) return;
+    const dx = e.clientX - Pt.x, dy = e.clientY - Pt.y; Pt.x = e.clientX; Pt.y = e.clientY; Pt.moved += Math.abs(dx) + Math.abs(dy);
+    if (!Pt.axis && Math.hypot(Pt.x - Pt.x0, Pt.y - Pt.y0) > 10) Pt.axis = Math.abs(Pt.x - Pt.x0) > Math.abs(Pt.y - Pt.y0) ? 'x' : 'y';
+    if (REDUCE || !Pt.axis) return;
+    nudge(Pt.axis === 'x' ? -dx / (VW * .42) : -dy / (VH * .42));
+  });
+  const endPointer = e => {
+    const Pt = E.pointer; if (!Pt || e.pointerId !== Pt.id) return;
+    E.pointer = null; glCanvas.classList.remove('dragging');
+    const dur = e.timeStamp - Pt.t0;   // the events' own clock, so a busy frame can't turn a tap into a press
+    if (Pt.moved < 10 && dur < 400) { if (E.mode === 'drag') { E.mode = 'rest'; E.V = 0; } step(Pt.x < VW * .3 ? -1 : 1); return; }
+    if (REDUCE) { const dd = Pt.axis === 'x' ? Pt.x0 - Pt.x : Pt.y0 - Pt.y; if (Math.abs(dd) > 30) step(Math.sign(dd)); return; }
+    if (E.mode === 'drag') release();
+  };
+  glCanvas.addEventListener('pointerup', endPointer); glCanvas.addEventListener('pointercancel', endPointer);
+  addEventListener('keydown', e => {
+    if (!E.on || textMode || !contents.hidden) return;
+    const onBtn = e.target.closest && e.target.closest('button, a, input');
+    const fwd = ['ArrowDown', 'ArrowRight', 'PageDown'].includes(e.key) || (e.key === ' ' && !e.shiftKey && !onBtn);
+    const bwd = ['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key) || (e.key === ' ' && e.shiftKey && !onBtn);
+    if (fwd || bwd) { e.preventDefault(); step(fwd ? 1 : -1); }
+    else if (e.key === 'Home') { e.preventDefault(); veilTo(0); }
+    else if (e.key === 'End') { e.preventDefault(); veilTo(NB() - 1); }
+  });
+  const VEIL = { v: 0 };
+  function setBeat(i) { E.T = beatTime(i); E.b = i; E.goalB = Math.round(i); E.goal = BEATS[E.goalB].t; E.V = 0; E.mode = 'rest'; }
+  function veilTo(i, half = .32) {
+    if (!E.on) return;
+    gsap.timeline().to(VEIL, { v: 1, duration: half, ease: 'power1.in', overwrite: true })
+      .add(() => { setBeat(i); onRest(i); })
+      .to(VEIL, { v: 0, duration: half * 1.9, ease: 'power1.out' }, '+=.08');
   }
 
   /* =====================================================================
@@ -567,11 +1267,11 @@ window.CONFIG = {
   const Sound = (() => {
     const AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) return null;
-    let ctx, master, music, fx, verb, noise, rum, padVoices = [], on = false, timer = null, heat = .5, quietUntil = 0;
+    let ctx, master, music, fx, verb, noise, rum, padVoices = [], on = false, timer = null, heat = .5;
     let nextChord = 0, chordIx = 0, nextNote = 0, nextPop = 0;
     const files = {};
     const hz = m => 440 * Math.pow(2, (m - 69) / 12);
-    const CHORDS = [[45, 57, 60, 64, 67], [41, 53, 57, 60, 65], [48, 55, 60, 64, 67], [43, 55, 59, 62, 67]];   // Am – F – C – G, softly
+    const CHORDS = [[45, 57, 60, 64, 67], [41, 53, 57, 60, 65], [48, 55, 60, 64, 67], [43, 55, 59, 62, 67]];
     const PENTA = [69, 72, 74, 76, 79, 81, 84];
     const env = (p, t, peak, a, r) => { p.setValueAtTime(.0001, t); p.exponentialRampToValueAtTime(peak, t + a); p.exponentialRampToValueAtTime(.0001, t + a + r); };
     async function load(url) { try { const r = await fetch(url); return await ctx.decodeAudioData(await r.arrayBuffer()); } catch (e) { return null; } }
@@ -587,11 +1287,9 @@ window.CONFIG = {
       fx = ctx.createGain(); fx.gain.value = .9; fx.connect(master);
       noise = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
       const nd = noise.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
-      // the hearth: a low rumble whose level follows the flame
       const rs = ctx.createBufferSource(); rs.buffer = noise; rs.loop = true;
       const rf = ctx.createBiquadFilter(); rf.type = 'lowpass'; rf.frequency.value = 340;
       rum = ctx.createGain(); rum.gain.value = 0; rs.connect(rf).connect(rum).connect(fx); rs.start();
-      // optional files
       const A = C.audio || {};
       if (A.music) load(A.music).then(b => { if (!b) return startPad(); files.music = b; const s = ctx.createBufferSource(); s.buffer = b; s.loop = true; const g = ctx.createGain(); g.gain.value = .6; s.connect(g).connect(music); s.start(); });
       else startPad();
@@ -609,8 +1307,7 @@ window.CONFIG = {
     }
     function bell(m, t, amt) {
       const out = ctx.createGain(); out.gain.value = amt; out.connect(music); out.connect(verb);
-      [[1, .1, 2.4], [2.01, .035, 1.2], [3.98, .015, .5]].forEach(([r, peak, dec]) => {
-        const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = hz(m) * r; env(g.gain, t, peak, .005, dec); o.connect(g).connect(out); o.start(t); o.stop(t + dec + .1); });
+      [[1, .1, 2.4], [2.01, .035, 1.2], [3.98, .015, .5]].forEach(([r, peak, dec]) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = hz(m) * r; env(g.gain, t, peak, .005, dec); o.connect(g).connect(out); o.start(t); o.stop(t + dec + .1); });
     }
     function pop(t, amt) {
       const s = ctx.createBufferSource(); s.buffer = noise;
@@ -618,13 +1315,14 @@ window.CONFIG = {
       const g = ctx.createGain(); env(g.gain, t, .14 * amt, .001, .012 + Math.random() * .03);
       s.connect(f).connect(g).connect(fx); s.start(t, Math.random() * 1.5, .06);
     }
-    function sweep(t, from, to, dur, peak) {
+    function sweep(t, from, to, dur, peak, q = 1.1) {
       const s = ctx.createBufferSource(); s.buffer = noise;
-      const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.1;
+      const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = q;
       f.frequency.setValueAtTime(from, t); f.frequency.exponentialRampToValueAtTime(to, t + dur);
       const g = ctx.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + dur * .35); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
       s.connect(f).connect(g).connect(fx); s.start(t, Math.random(), dur + .05);
     }
+    function thud(t, f0, peak) { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f0 * .45, t + .2); env(g.gain, t, peak, .006, .26); o.connect(g).connect(fx); o.start(t); o.stop(t + .4); }
     function schedule() {
       const now = ctx.currentTime, ahead = now + .25;
       if (padVoices.length && nextChord < ahead) {
@@ -632,10 +1330,11 @@ window.CONFIG = {
         padVoices.forEach((oscs, i) => oscs.forEach(o => o.frequency.setTargetAtTime(hz(CHORDS[chordIx][i]), Math.max(now, nextChord), 1.6)));
         nextChord = Math.max(nextChord, now) + 8;
       }
-      if (!files.music && nextNote < ahead) { if (nextNote > now) bell(PENTA[(Math.random() * PENTA.length) | 0], nextNote, .28); nextNote = Math.max(nextNote, now) + 1.6 + Math.random() * 2.8; }
+      if (!files.music && nextNote < ahead) { if (nextNote > now) bell(PENTA[(Math.random() * PENTA.length) | 0], nextNote, .26); nextNote = Math.max(nextNote, now) + 1.6 + Math.random() * 2.8; }
       if (!files.crackle) while (nextPop < ahead) { if (nextPop > now && heat > .04) pop(nextPop, (.35 + Math.random() * .65) * heat); nextPop = Math.max(nextPop, now) + (.04 + Math.random() * .45) / Math.max(.25, heat * 1.8); }
     }
     document.addEventListener('visibilitychange', () => { if (!ctx || !on) return; if (document.hidden) { clearInterval(timer); ctx.suspend(); } else { ctx.resume(); timer = setInterval(schedule, 60); } });
+    const ok = () => on && ctx;
     return {
       get on() { return on; },
       async enable() {
@@ -646,163 +1345,166 @@ window.CONFIG = {
         return ctx.state === 'running';
       },
       disable() { on = false; clearInterval(timer); if (!ctx) return; master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setTargetAtTime(0, ctx.currentTime, .15); setTimeout(() => { if (!on) ctx.suspend(); }, 700); },
-      heat(h) { heat = h; if (ctx && on) { rum.gain.setTargetAtTime(h * .045, ctx.currentTime, .3); if (files.crackleGain) files.crackleGain.gain.setTargetAtTime(h * .5, ctx.currentTime, .3); } },
-      hush(ms) { quietUntil = performance.now() + ms; },
-      page(fwd) {
-        if (!on || performance.now() < quietUntil) return; const t = ctx.currentTime + .01;
-        if (files.page) { const s = ctx.createBufferSource(); s.buffer = files.page; s.connect(fx); s.start(t); return; }
-        sweep(t, fwd ? 700 : 3200, fwd ? 3400 : 650, .34, .5);
-        const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.setValueAtTime(110, t + .22); o.frequency.exponentialRampToValueAtTime(55, t + .4); env(g.gain, t + .22, .12, .01, .2); o.connect(g).connect(fx); o.start(t + .2); o.stop(t + .5);
-      },
-      swell() { if (!on || performance.now() < quietUntil) return; sweep(ctx.currentTime + .01, 300, 2200, 1.3, .18); },
-      spell() { if (!on || performance.now() < quietUntil) return; const t = ctx.currentTime + .02; [81, 84, 88, 93].forEach((m, i) => bell(m, t + i * .09, .45)); },
-      puff() { if (!on || performance.now() < quietUntil) return; sweep(ctx.currentTime + .01, 900, 180, .9, .5); }
+      heat(h) { heat = h; if (ok()) { rum.gain.setTargetAtTime(h * .045, ctx.currentTime, .3); if (files.crackleGain) files.crackleGain.gain.setTargetAtTime(h * .5, ctx.currentTime, .3); } },
+      lift() { if (!ok()) return; const t = ctx.currentTime + .01; if (files.page) { const s = ctx.createBufferSource(); s.buffer = files.page; s.connect(fx); s.start(t); return; } sweep(t, 700, 3000, .42, .42); },
+      land() { if (!ok() || files.page) return; const t = ctx.currentTime + .01; sweep(t, 2600, 900, .2, .22, 2); thud(t + .04, 120, .1); },
+      board() { if (!ok()) return; const t = ctx.currentTime + .01; thud(t, 95, .3); sweep(t, 1200, 300, .3, .12, 1.4); },
+      strike() { if (!ok()) return; const t = ctx.currentTime + .02; sweep(t, 2400, 5200, .16, .5, 2.5); for (let i = 0; i < 9; i++) pop(t + .03 + i * .018, 1.4); sweep(t + .12, 300, 1600, .9, .32, .8); thud(t + .14, 70, .18); },
+      swell() { if (!ok()) return; sweep(ctx.currentTime + .01, 300, 2200, 1.3, .16); },
+      spell() { if (!ok()) return; const t = ctx.currentTime + .02; [81, 84, 88, 93].forEach((m, i) => bell(m, t + i * .09, .45)); },
+      puff() { if (!ok()) return; sweep(ctx.currentTime + .01, 900, 180, .9, .5); }
     };
   })();
   const soundBtn = $('#sound-btn'), flameBtn = $('#flame');
   async function setSound(want) {
-    if (!Sound) { soundBtn.hidden = true; return; }
+    if (!Sound) { soundBtn.hidden = true; return false; }
     if (want) want = await Sound.enable(); else Sound.disable();
     soundBtn.textContent = want ? 'Sound on' : 'Sound off';
-    soundBtn.setAttribute('aria-pressed', String(want));
-    flameBtn.setAttribute('aria-pressed', String(want));
-    flameBtn.setAttribute('aria-label', want ? 'Flame. Turns the sound off.' : 'Flame. Turns the sound on.');
+    soundBtn.setAttribute('aria-pressed', String(want)); flameBtn.setAttribute('aria-pressed', String(want));
+    flameBtn.setAttribute('aria-label', want ? 'The match. Turns the sound off.' : 'The match. Turns the sound on.');
+    return want;
   }
   soundBtn.addEventListener('click', () => setSound(!(Sound && Sound.on)));
   flameBtn.addEventListener('click', () => setSound(!(Sound && Sound.on)));
-  if (!Sound) { soundBtn.hidden = true; }
+  if (!Sound) soundBtn.hidden = true;
 
   /* =====================================================================
-     THE SCENE inside each plate: the engraving, a tint, particles and the text box
+     INSIDE A PLATE: the engraving, particles, narration and the shelf
      ===================================================================== */
-  const scene = $('#scene'), art = $('.art', scene), tint = $('.tint', scene), flash = $('#flash'), fxCanvas = $('#fx');
-  const card = $('.card', scene), cardK = $('.ck', card), cardT = $('.ct', card), cardC = $('.cc', card);
-  const shelfWrap = $('#shelf-wrap'), shelfEl = $('#shelf');
-  let bigShown = -1, sceneCh = -2, cardShown = '', wordEls = [], lineEls = [];
-  function coverScale() { return Math.max(VW / (.62 * W), VH / (.84 * W)) * 1.02; }
-  function sizeArt() { const s = coverScale(); art.style.width = (.62 * W * s) + 'px'; art.style.height = (.84 * W * s) + 'px'; }
-  function showBig(c) {
-    if (bigShown === c) return;
-    bigShown = c; art.textContent = '';
-    const s = coverScale(), dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const h = Math.min(1700, Math.round(.84 * W * s * dpr)), w = Math.round(h * PLATE_ASPECT);
-    makePlate(c, 'big', w, h).then(cv => { if (bigShown === c) { art.textContent = ''; art.append(cv); } });
+  const sceneTex = new Map();
+  function sceneImage(c) {
+    if (sceneTex.has(c)) return sceneTex.get(c);
+    const job = (async () => {
+      const info = CH[c].plate, img = await loadImage(info.src);
+      if (!img) return null;
+      const { sx, sy, sw, sh } = cropOf(img, info.focus || [.5, .4]);
+      const cv = mk(160, Math.round(160 / PLATE_ASPECT)), g = cv.getContext('2d', { willReadFrequently: true }); g.drawImage(img, sx, sy, sw, sh, 0, 0, cv.width, cv.height);
+      const t = new THREE.Texture(img); t.needsUpdate = true; t.minFilter = THREE.LinearFilter; t.generateMipmaps = false;
+      return { tex: t, crop: [sx / img.naturalWidth, sy / img.naturalHeight, (sx + sw) / img.naturalWidth, (sy + sh) / img.naturalHeight], lev: levelsOf(lumOf(g, cv.width, cv.height)), texel: [1 / img.naturalWidth, 1 / img.naturalHeight] };
+    })();
+    sceneTex.set(c, job); return job;
   }
-  function setSceneChapter(c) {
-    sceneCh = c; cardShown = '';
+  let sceneShown = -2, sceneStart = 0;
+  function useScene(c) {
+    if (c === sceneShown) return; sceneShown = c;
     if (c < 0) return;
-    const ch = CH[c];
-    tint.className = 'tint ' + (ch.tint || 'paper');
-    showBig(c);
-    shelfWrap.hidden = !ch.shelf;
-    fxInit(ch.effect);
+    const U = sceneMat.uniforms;
+    U.uMode.value = { paper: 0, warm: 1, spot: 2, night: 3 }[CH[c].tint] || 0;
+    U.uHas.value = 0;
+    sceneImage(c).then(s => { if (sceneShown !== c || !s) return; U.uImg.value = s.tex; U.uCrop.value.set(...s.crop); U.uLev.value.set(...s.lev); U.uTexel.value.set(...s.texel); U.uHas.value = 1; });
+    fxInit(CH[c].effect);
+    shelfWrap.hidden = !CH[c].shelf;
   }
-  function setCard(c, i) {
-    const key = c + ':' + i; if (key === cardShown) return; cardShown = key;
-    const cd = CH[c].cards[i];
-    card.classList.toggle('quote', !!cd.quote);
-    cardK.textContent = `Chapter ${CH[c].num} · ${CH[c].title}`;
-    cardC.textContent = cd.cite || '';
-    cardT.textContent = '';
-    wordEls = []; lineEls = [];
-    cd.text.split('\n').forEach(line => {
-      const ln = document.createElement('span'); ln.className = 'ln';
-      line.split(' ').forEach((w, k) => { const s = document.createElement('span'); s.className = 'w'; s.textContent = w; if (k) ln.append(' '); ln.append(s); wordEls.push(s); });
-      cardT.append(ln); lineEls.push(ln);
-    });
+  function plateRect(c) {
+    const pc = plateCenter(c), pts = [[-.31, -.42], [.31, -.42], [-.31, .42], [.31, .42]];
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; const v = new THREE.Vector3(), W = VW * DPR, H = VH * DPR;
+    pts.forEach(([dx, dz]) => { v.set(pc.x + dx, pc.y, pc.z + dz).project(camera); const sx = (v.x * .5 + .5) * W, sy = (1 - (v.y * .5 + .5)) * H; x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy); });
+    return [x0, y0, x1, y1];
   }
-  function revealCard(c, read) {
-    const cards = CH[c].cards, i = clamp(Math.floor(read), 0, cards.length - 1);
-    setCard(c, i);
-    const q = clamp((read - i) / .72, 0, 1);
-    if (cards[i].quote) {                      // speeches arrive line by line
-      lineEls.forEach((ln, k) => { const o = REDUCE ? (q > k / lineEls.length ? 1 : 0) : clamp(q * lineEls.length * 1.2 - k, 0, 1); ln.style.opacity = o; ln.style.transform = `translateY(${(1 - o) * 8}px)`; });
-      wordEls.forEach(w => { w.style.opacity = 1; });
-    } else {                                   // narration arrives word by word
-      lineEls.forEach(ln => { ln.style.opacity = 1; ln.style.transform = ''; });
-      const shown = q * wordEls.length;
-      wordEls.forEach((w, k) => { w.style.opacity = clamp(shown - k, 0, 1).toFixed(2); });
-    }
+
+  // narration card: words ink in, one after another
+  const cardEl = $('#card'), cK = $('.ck', cardEl), cT = $('.ct', cardEl), cC = $('.cc', cardEl);
+  let cardKey = '', cardTok = 0;
+  function setCard(c, k) {
+    const key = c + ':' + k; if (key === cardKey) return;
+    const prev = cardKey.split(':'), back = prev[0] === String(c) && +prev[1] > k;
+    cardKey = key; const tok = ++cardTok, cd = CH[c].cards[k];
+    const build = () => {
+      if (tok !== cardTok) return;
+      cardEl.classList.remove('typed', 'swap'); cardEl.classList.toggle('quote', !!cd.quote);
+      cK.textContent = `Chapter ${CH[c].num} · ${CH[c].title}`; cC.textContent = cd.cite || ''; cT.textContent = '';
+      let n = 0;
+      cd.text.split('\n').forEach((line, li) => {
+        const ln = document.createElement('span'); ln.className = 'ln';
+        line.split(' ').forEach((w, wi) => {
+          const s = document.createElement('span'); s.className = 'w'; s.textContent = w;
+          s.style.setProperty('--d', (back ? n * 8 : cd.quote ? 120 + li * 560 + wi * 45 : 80 + n * 36) + 'ms');
+          if (wi) ln.append(' '); ln.append(s); n++;
+        });
+        cT.append(ln);
+      });
+      cardEl.style.setProperty('--done', ((back ? n * 8 : cd.quote ? 120 + (cd.text.split('\n').length - 1) * 560 + 400 : 80 + n * 36) + 700) + 'ms');
+      void cardEl.offsetWidth; cardEl.classList.add('typed');
+    };
+    if (cardEl.classList.contains('show') && cT.textContent) { cardEl.classList.add('swap'); setTimeout(build, 150); } else build();
   }
-  // the bookshelf (Chapter IV)
+
+  // bookshelf (Chapter IV)
+  const shelfWrap = $('#shelf-wrap'), shelfEl = $('#shelf');
   let openSpine = null;
   C.shelf.forEach((b, i) => {
     const sp = document.createElement('button');
-    sp.type = 'button'; sp.className = 'spine ' + (b.tone || 'ink'); sp.setAttribute('aria-expanded', 'false');
-    sp.setAttribute('aria-label', `${b.title} by ${b.author}`);
+    sp.type = 'button'; sp.className = 'spine ' + (b.tone || 'ink'); sp.setAttribute('aria-expanded', 'false'); sp.setAttribute('aria-label', `${b.title} by ${b.author}`);
     sp.innerHTML = `<span class="st">${esc(b.title)}</span><span class="sa">${esc(b.author.split(' ').pop().slice(0, 9))}</span>`;
     sp.addEventListener('click', () => toggleSpine(i, sp));
     shelfEl.append(sp);
   });
   function toggleSpine(i, sp) {
-    const was = openSpine && openSpine.i === i;
-    closeSpine();
-    if (was) return;
+    const was = openSpine && openSpine.i === i; closeSpine(); if (was) return;
     const b = C.shelf[i], pg = document.createElement('div');
     pg.className = 'spine-page'; pg.setAttribute('role', 'region'); pg.setAttribute('aria-label', b.title);
     pg.innerHTML = `<button class="x" type="button" aria-label="Close this page">×</button><h3>${esc(b.title)}</h3><p class="by">${esc(b.author)}</p><p>${esc(b.note)}</p>`;
     $('.x', pg).addEventListener('click', () => { closeSpine(); sp.focus(); });
     shelfWrap.append(pg); sp.setAttribute('aria-expanded', 'true'); openSpine = { i, pg, sp };
-    if (Sound) Sound.page(true);
+    if (Sound) Sound.lift();
   }
   function closeSpine() { if (!openSpine) return; openSpine.pg.remove(); openSpine.sp.setAttribute('aria-expanded', 'false'); openSpine = null; }
 
   // particles: each chapter has its own weather
-  const fx = fxCanvas.getContext('2d');
-  let parts = [], fxType = '', FXDPR = 1;
+  const fxCanvas = $('#fx'), fx = fxCanvas.getContext('2d');
+  let parts = [], fxType = '', FXDPR = 1, fxClear = true;
   const LETTERS = 'abcdefghijklmnopqrstuvwxyzAEW&';
   function sizeFx() { FXDPR = Math.min(window.devicePixelRatio || 1, 2); fxCanvas.width = VW * FXDPR; fxCanvas.height = VH * FXDPR; }
-  function fxInit(type) {
-    fxType = type; parts = [];
-    const n = { pages: 22, sparks: 70, dust: 70, letters: 26, snow: 150 }[type] || 0;
-    for (let i = 0; i < n; i++) parts.push(spawn(type, true));
-  }
+  function fxInit(type) { fxType = type; parts = []; const n = { pages: COARSE ? 12 : 18, sparks: 70, dust: 70, letters: 26, snow: 150 }[type] || 0; for (let i = 0; i < n; i++) parts.push(spawn(type, true)); }
   function spawn(type, anywhere) {
-    const r = Math.random;
-    const p = { x: r() * VW, y: anywhere ? r() * VH : (type === 'sparks' || type === 'letters' ? VH + 20 : -20), s: r(), ph: r() * 6.28, rot: r() * 6.28 };
-    if (type === 'pages') { p.vx = (r() - .5) * 14; p.vy = 16 + r() * 22; p.w = 10 + p.s * 18; }
+    const r = Math.random, p = { x: r() * VW, y: anywhere ? r() * VH : (type === 'sparks' || type === 'letters' ? VH + 20 : -20), s: r(), ph: r() * 6.28, rot: r() * 6.28 };
+    if (type === 'pages') { p.vx = (r() - .5) * 18; p.vy = 14 + p.s * 26; p.w = 9 + p.s * 22; }
     if (type === 'sparks') { p.vx = (r() - .5) * 20; p.vy = -(30 + r() * 70); p.life = r(); }
     if (type === 'dust') { p.vx = (r() - .5) * 6; p.vy = (r() - .5) * 6; }
     if (type === 'letters') { p.vx = (r() - .5) * 10; p.vy = -(10 + r() * 18); p.ch = LETTERS[(r() * LETTERS.length) | 0]; }
     if (type === 'snow') { p.vx = (r() - .5) * 12; p.vy = 30 + p.s * 70; }
     return p;
   }
-  function fxDraw(dt, t, alpha) {
-    fx.setTransform(FXDPR, 0, 0, FXDPR, 0, 0); fx.clearRect(0, 0, VW, VH);
-    if (REDUCE || alpha < .01) return;
+  function fxDraw(dt, tm, alpha) {
+    if (REDUCE || alpha < .01) { if (!fxClear) { fx.setTransform(1, 0, 0, 1, 0, 0); fx.clearRect(0, 0, fxCanvas.width, fxCanvas.height); fxClear = true; } return; }
+    fxClear = false;
+    fx.setTransform(FXDPR, 0, 0, FXDPR, 0, 0); fx.clearRect(0, 0, VW, VH); fx.globalAlpha = alpha;
     parts.forEach((p, i) => {
-      p.x += (p.vx + Math.sin(t * .6 + p.ph) * 8) * dt; p.y += p.vy * dt; p.rot += dt * (p.s - .5) * 2;
+      p.x += (p.vx + Math.sin(tm * .6 + p.ph) * 8) * dt; p.y += p.vy * dt; p.rot += dt * (p.s - .5) * 2;
       const off = p.y > VH + 30 || p.y < -40 || p.x < -40 || p.x > VW + 40;
-      if (fxType === 'sparks') { p.life += dt * .35; if (p.life > 1 || off) parts[i] = spawn('sparks', false); }
-      else if (off) parts[i] = spawn(fxType, false);
-      fx.save(); fx.translate(p.x, p.y);
+      if (fxType === 'sparks') { p.life += dt * .35; if (p.life > 1 || off) parts[i] = spawn('sparks', false); } else if (off) parts[i] = spawn(fxType, false);
+      fx.save(); fx.translate(p.x - MP.sx * 18 * p.s, p.y - MP.sy * 12 * p.s);   // nearer things drift further with the mouse
       if (fxType === 'pages') {
-        fx.rotate(p.rot); fx.scale(Math.cos(t * 1.4 + p.ph), 1);
-        fx.fillStyle = PAPER; fx.strokeStyle = INK; fx.lineWidth = 1; fx.fillRect(-p.w / 2, -p.w * .65, p.w, p.w * 1.3); fx.strokeRect(-p.w / 2, -p.w * .65, p.w, p.w * 1.3);
-        fx.globalAlpha = .5; for (let k = 0; k < 4; k++) fx.fillRect(-p.w * .35, -p.w * .4 + k * p.w * .22, p.w * .7, 1);
+        // a loose leaf, tumbling: its width flips as it turns, and its far side is the darker back of the paper
+        const flip = Math.cos(tm * (1 + p.s * .8) + p.ph), w = p.w, h = p.w * 1.32, bow = w * .16 * Math.sin(tm * 1.7 + p.ph);
+        fx.rotate(p.rot + Math.sin(tm * .9 + p.ph) * .5); fx.scale(Math.max(.08, Math.abs(flip)), 1);
+        fx.globalAlpha = alpha * (.55 + p.s * .45);
+        fx.fillStyle = flip > 0 ? '#f3eee3' : '#cfc6b3'; fx.strokeStyle = 'rgba(13, 12, 11, .5)'; fx.lineWidth = .9;
+        fx.beginPath(); fx.moveTo(-w / 2, -h / 2); fx.quadraticCurveTo(0, -h / 2 + bow, w / 2, -h / 2); fx.lineTo(w / 2, h / 2); fx.quadraticCurveTo(0, h / 2 + bow, -w / 2, h / 2); fx.closePath(); fx.fill(); fx.stroke();
+        if (flip > 0) { fx.fillStyle = 'rgba(13, 12, 11, .32)'; for (let k = 0; k < 5; k++) fx.fillRect(-w * .32, -h * .3 + k * h * .14 + bow * .3, w * (k === 4 ? .38 : .64), Math.max(.7, w * .03)); }
       } else if (fxType === 'sparks') {
-        const a = Math.sin(p.life * Math.PI); fx.fillStyle = `rgba(255, 205, 120, ${a})`; fx.shadowColor = '#ff9a2c'; fx.shadowBlur = 8;
-        fx.beginPath(); fx.arc(0, 0, 1 + p.s * 2, 0, 6.28); fx.fill();
+        const a = Math.sin(p.life * Math.PI); fx.fillStyle = `rgba(255, 205, 120, ${a})`; fx.shadowColor = '#ff9a2c'; fx.shadowBlur = 8; fx.beginPath(); fx.arc(0, 0, 1 + p.s * 2, 0, 6.28); fx.fill();
       } else if (fxType === 'dust') {
-        const inBeam = Math.max(0, 1 - Math.abs(p.x - VW / 2) / (VW * .32)); fx.fillStyle = `rgba(255, 246, 225, ${.15 + inBeam * .55 * (.6 + .4 * Math.sin(t * 2 + p.ph))})`;
-        fx.beginPath(); fx.arc(0, 0, .6 + p.s * 1.8, 0, 6.28); fx.fill();
+        const inBeam = Math.max(0, 1 - Math.abs(p.x - VW / 2) / (VW * .32)); fx.fillStyle = `rgba(255, 246, 225, ${.15 + inBeam * .55 * (.6 + .4 * Math.sin(tm * 2 + p.ph))})`; fx.beginPath(); fx.arc(0, 0, .6 + p.s * 1.8, 0, 6.28); fx.fill();
       } else if (fxType === 'letters') {
-        fx.rotate(Math.sin(t + p.ph) * .3); fx.fillStyle = `rgba(13, 12, 11, ${.35 + p.s * .4})`; fx.font = `italic 600 ${14 + p.s * 18}px ${C.fonts.serif}`; fx.fillText(p.ch, 0, 0);
+        fx.rotate(Math.sin(tm + p.ph) * .3); fx.fillStyle = `rgba(13, 12, 11, ${.35 + p.s * .4})`; fx.font = `italic 600 ${14 + p.s * 18}px ${C.fonts.serif}`; fx.fillText(p.ch, 0, 0);
       } else if (fxType === 'snow') {
         const rr = 1 + p.s * 3.4; fx.fillStyle = `rgba(250, 248, 242, ${.55 + p.s * .45})`; fx.beginPath(); fx.arc(0, 0, rr, 0, 6.28); fx.fill();
       }
       fx.restore();
     });
+    fx.globalAlpha = 1;
   }
 
   /* =====================================================================
-     THE STORY AS TEXT (also what screen readers read during the animation)
+     THE STORY AS TEXT (also what screen readers can read in full)
      ===================================================================== */
   const story = $('#story');
   story.innerHTML = `<div class="page">
     <header><p class="kicker" style="color:#5a5040">Emma Watson · An unofficial fan tribute</p><h1 id="story-title">A Life in Chapters</h1>
-      <figure><canvas data-tplate="front" role="img" aria-label="${esc(C.frontispiece.alt)}"></canvas><figcaption>${esc(C.frontispiece.caption)}</figcaption></figure></header>
+      <figure><canvas data-tplate="front" role="img" aria-label="${esc(C.frontispiece.alt)}"></canvas><figcaption>Frontispiece · ${esc(C.frontispiece.caption)}</figcaption></figure></header>
     ${CH.map((ch, c) => `<section id="ch-${c}" aria-labelledby="ch-${c}-h"><h2 id="ch-${c}-h"><small>Chapter ${esc(ch.num)} · ${esc(ch.place)}</small>${esc(ch.title)}</h2>
+      <p class="arg">${esc(ch.argument)}</p>
       <figure><canvas data-tplate="${c}" role="img" aria-label="${esc(ch.plate.alt)}"></canvas><figcaption>Plate ${esc(ch.num)} · ${esc(ch.plate.caption)}</figcaption></figure>
       ${ch.cards.map(cd => cd.quote ? `<blockquote><p>${esc(cd.text).replace(/\n/g, ' ')}</p><footer>${esc(cd.cite || '')}</footer></blockquote>` : `<p>${esc(cd.text)}</p>`).join('')}
       ${ch.shelf ? `<h3 class="sr-only">Books from her story</h3><ul class="books">${C.shelf.map(b => `<li><b>${esc(b.title)}</b>, ${esc(b.author)}. ${esc(b.note)}</li>`).join('')}</ul>` : ''}
@@ -815,204 +1517,193 @@ window.CONFIG = {
   function paintTextPlates() {
     $$('canvas[data-tplate]', story).forEach(cv => {
       const k = cv.dataset.tplate === 'front' ? 'front' : +cv.dataset.tplate;
-      makePlate(k, 'text', 520, Math.round(520 / PLATE_ASPECT)).then(src => { cv.width = src.width; cv.height = src.height; cv.getContext('2d').drawImage(src, 0, 0); });
+      plateCanvas(k, 520, Math.round(520 / PLATE_ASPECT)).then(src => { cv.width = src.width; cv.height = src.height; cv.getContext('2d').drawImage(src, 0, 0); });
     });
   }
 
   /* =====================================================================
-     THE TIMELINE: one scroll-scrubbed GSAP timeline drives the whole book
+     EVERY FRAME: state → book, camera, light, scene, card
      ===================================================================== */
-  const S = { phase: 0, near: 0, pan: 1, dive: 0, scene: 0, ch: -1, read: 0, heat: .45, out: 0, end: 0, prompt: 1 };
-  for (let i = 0; i < N; i++) S['l' + i] = 0;
-  const MARK = {};
-  let TL = null, ST = null, lenis = null;
-  if (HAS_GSAP) {
-    gsap.registerPlugin(ScrollTrigger);
-    TL = gsap.timeline({ paused: true, defaults: { ease: 'none' } });
-    let t = 0;
-    TL.to(S, { near: 1, duration: 1, ease: 'sine.inOut' }, 0).to(S, { prompt: 0, duration: .45 }, .1);
-    t = 1;
-    TL.to(S, { l0: 1, duration: 1.3, ease: 'power2.inOut' }, t).to(S, { phase: 1, duration: 1.3, ease: 'power2.inOut' }, t).to(S, { heat: .6, duration: 1 }, t);
-    t += 1.3; MARK.title = t; t += .7;
-    CH.forEach((ch, c) => {
-      const k = c + 1;
-      MARK['turn' + c] = t;
-      TL.to(S, { ['l' + k]: 1, duration: 1.1, ease: 'power2.inOut' }, t).to(S, { pan: 0, duration: 1.1, ease: 'power2.inOut' }, t);
-      t += 1.1; MARK['ch' + c] = t;
-      TL.to(S, { heat: .8, duration: .4 }, t - .3);
-      TL.to(S, { pan: 1, duration: .7, ease: 'power2.inOut' }, t + .45);   // on phones: read the title, then look across at the plate
-      t += 1.1;
-      TL.set(S, { ch: c, read: 0 }, t);
-      TL.to(S, { dive: 1, duration: 1.15, ease: 'power2.inOut' }, t);
-      TL.to(S, { scene: 1, duration: .32 }, t + .85);
-      TL.to(S, { heat: 1, duration: .5 }, t + .6);
-      t += 1.2;
-      const n = ch.cards.length;
-      TL.fromTo(S, { read: 0 }, { read: n, duration: n * 1.05, immediateRender: false }, t);
-      t += n * 1.05 + .2;
-      TL.to(S, { scene: 0, duration: .32 }, t);
-      TL.to(S, { dive: 0, duration: 1.05, ease: 'power2.inOut' }, t);
-      TL.to(S, { heat: .6, duration: .6 }, t + .2);
-      t += 1.1;
-    });
-    TL.to(S, { l6: 1, duration: 1.1, ease: 'power2.inOut' }, t).to(S, { pan: 0, duration: 1.1, ease: 'power2.inOut' }, t); t += 1.1; MARK.end = t; t += .9;
-    TL.to(S, { l7: 1, duration: 1.5, ease: 'power2.inOut' }, t).to(S, { phase: 2, duration: 1.5, ease: 'power2.inOut' }, t); t += 1.6;
-    TL.to(S, { heat: 0, out: 1, duration: 1.1, ease: 'power1.in' }, t); t += 1.3;
-    TL.to(S, { end: 1, duration: .7 }, t); t += .9;
-    TL.to({}, { duration: .3 }, t);
+  const promptEl = $('#prompt'), progressEl = $('#progress i'), cornerEl = $('.corner'), warmEl = $('#warm'), veilEl = $('#veil'), vigEl = $('#vig'), endcard = $('#endcard');
+  const INTRO = { light: 0, cam: 0 }, FLARE = { v: 0 };
+  const MP = { x: 0, y: 0, sx: 0, sy: 0, on: false };   // the mouse, -1 to 1 across the window
+  if (FINE) {
+    addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; MP.x = e.clientX / VW * 2 - 1; MP.y = e.clientY / VH * 2 - 1; MP.on = !E.pointer; }, { passive: true });
+    document.documentElement.addEventListener('mouseleave', () => { MP.on = false; });
   }
-  const scroller = $('#scroller');
-  function sizeScroller() { if (TL) scroller.style.height = Math.round(TL.duration() * Math.max(300, VH * .62) + VH) + 'px'; }
-  function timeToY(time) { return ST ? ST.start + (time / TL.duration()) * (ST.end - ST.start) : 0; }
-  window.__book = { marks: MARK, y: t => timeToY(t), duration: () => (TL ? TL.duration() : 0) };   // handy for testing jumps
+  let lastTime = 0, lastTL = -1, spillV = 0, prevScene = 0, prevOut = 0, prevBoard = 0, prevClose = 0, flashAt = -9, flashKey = '', started = false;
+  function hidePrompt() { promptEl.classList.add('hide'); }
+  promptEl.textContent = COARSE ? 'Swipe or tap to continue' : 'Scroll to continue';
+  promptEl.addEventListener('click', () => step(1));
 
-  /* =====================================================================
-     RENDER: every frame, turn the state into the book, the camera and the light
-     ===================================================================== */
-  const world = $('#world'), shadowR = $('.shadow.r'), shadowL = $('.shadow.l'), dim = $('#dim'), warm = $('#warm'), prompt = $('#prompt'), endcard = $('#endcard');
-  const presets = () => {
-    const p = VW < VH * .9;
-    return {
-      closed: { cx: .5, cy: .05, s: p ? 1.28 : 1.22, tilt: 50, rz: -15, oy: VH * .03 },
-      open: { cx: p ? mix(-.47, .47, ease(S.pan)) : 0, cy: .03, s: p ? 1.06 : 1, tilt: 38, rz: p ? mix(4, -4, S.pan) : -4, oy: VH * .03 },
-      end: { cx: -.5, cy: .05, s: p ? 1.24 : 1.2, tilt: 52, rz: 12, oy: VH * .03 }
-    };
-  };
-  const lerpView = (a, b, t) => ({ cx: mix(a.cx, b.cx, t), cy: mix(a.cy, b.cy, t), s: Math.exp(mix(Math.log(a.s), Math.log(b.s), t)), tilt: mix(a.tilt, b.tilt, t), rz: mix(a.rz, b.rz, t), oy: mix(a.oy, b.oy, t) });
-  const prevLeaf = new Array(N).fill(0), VEIL = { v: 0 };
-  let prevScene = 0, prevOut = 0, prevRead = 0, lastT = 0, textMode = false;
-  function render(time) {
-    const dt = Math.min(.05, time - lastT); lastT = time;
-    if (textMode) return;
+  function frame(nowMs) {
+    requestAnimationFrame(frame);
+    const now = nowMs, time = now / 1000, dt = Math.min(.05, Math.max(0, time - lastTime)); lastTime = time;
+    if (textMode || document.hidden) return;
+    engineUpdate(dt, now);
+    const bt = E.T;
+    if (bt !== lastTL) { TL.time(bt); lastTL = bt; }
+
     const fk = REDUCE ? 0 : Math.sin(time * 13.1) * .5 + Math.sin(time * 7.3 + 1) * .3 + Math.sin(time * 23.7) * .2;
-    const heat = S.heat * (1 - S.out);
-    const fs = flameBtn.style;                                // the flame burns down as you read
-    fs.setProperty('--heat', heat.toFixed(3)); fs.setProperty('--fk', (1 + fk * .07).toFixed(3));
-    fs.setProperty('--out', S.out.toFixed(3)); fs.setProperty('--len', (1 - (TL ? TL.progress() : 0) * .55).toFixed(3));
-    if (Sound) Sound.heat(heat);
+    const heat = S.heat * (1 - S.out) * INTRO.light;
+    const idle = now - E.restAt, atEnd = E.b > NB() - 1.5;
 
-    // camera
-    const P = presets();
-    let v = S.phase <= 1 ? lerpView(P.closed, P.open, ease(S.phase)) : lerpView(P.open, P.end, ease(S.phase - 1));
-    v.s *= 1 + .07 * S.near * (1 - Math.min(1, S.phase));
-    if (!REDUCE) { v.rz += Math.sin(time * .21) * .7; v.tilt += Math.sin(time * .17) * .9; v.oy += Math.sin(time * .13) * 4; }
-    const d = REDUCE ? 0 : S.dive;
-    if (d > 0) {
-      const leafZ = ((N - 1 - (S.ch + 1)) * T + T / 2) * W, want = coverScale(), Pp = W * 3.4;
-      const dv = { cx: .5, cy: -2 / 3 + .12 + .44, s: want * Pp / (Pp + leafZ * want), tilt: 0, rz: 0, oy: 0 };
-      v = lerpView(v, dv, d);
+    /* ---- book ---- */
+    const open = S.board * (1 - S.close), rise = riseOf(open);
+    // a page corner lifts toward a cursor near the edge of the book, and now and then by itself, as a hint
+    let nLeft = 0, nRight = 0, peelLeaf = -1, peelAmt = 0;   // only leaves lying flat count toward the page blocks
+    if (E.mode === 'rest' && S.dive < .01 && S.board > .99 && S.close < .01 && !REDUCE) {
+      const nextLeaf = leaves.findIndex((L, i) => S['l' + i] < .5), prevLeaf = nextLeaf < 0 ? NL - 1 : nextLeaf - 1;
+      const ease = v => { v = clamp(v, 0, 1); return v * v * (3 - 2 * v); };
+      if (MP.on && MP.sx > .4 && nextLeaf >= 0) { peelLeaf = nextLeaf; peelAmt = ease((MP.sx - .4) / .5) * .5; }
+      else if (MP.on && MP.sx < -.4 && prevLeaf >= 0) { peelLeaf = prevLeaf; peelAmt = -ease((-MP.sx - .4) / .5) * .5; }
+      else if (idle > 3200 && nextLeaf >= 0) { peelLeaf = nextLeaf; const ph = ((idle - 3200) / 3600) % 1; peelAmt = ph < .5 ? Math.pow(Math.sin(Math.PI * ph / .5), 2) * .45 : 0; }
     }
-    world.style.transform = `translate3d(0, ${v.oy.toFixed(1)}px, 0) scale3d(${v.s.toFixed(4)}, ${v.s.toFixed(4)}, ${v.s.toFixed(4)}) rotateX(${v.tilt.toFixed(2)}deg) rotateZ(${v.rz.toFixed(2)}deg) translate3d(${(-v.cx * W).toFixed(1)}px, ${(-v.cy * W).toFixed(1)}px, 0)`;
+    REV.forEach(r => {
+      if (r.t0 < 0) { if (texturesReady && r.seen()) r.t0 = time; }
+      else if (r.u.value < 1) { const k = Math.min(1, (time - r.t0) / 2.2); r.u.value = k < 1 ? .5 - .5 * Math.cos(Math.PI * k) : 1; }
+    });
+    leaves.forEach((L, i) => {
+      const p = S['l' + i]; nLeft += clamp((p - .9) / .1, 0, 1); nRight += clamp((.1 - p) / .1, 0, 1);
+      L.peel += ((i === peelLeaf ? peelAmt : 0) - L.peel) * (1 - Math.exp(-dt * 7)); if (Math.abs(L.peel) < 2e-4) L.peel = 0;
+      const hy = mix(yR(i), yL(i), p) - rise, peel = L.peel;
+      const key = `${p.toFixed(5)}|${open.toFixed(4)}|${peel.toFixed(4)}`;
+      if (key !== L.key) { updateLeaf(L, p, open, hy, peel); L.key = key; }
+      const home = p > .5 ? closeGroup : world; if (L.mesh.parent !== home) home.add(L.mesh);   // turned leaves close with the cover
+      if (Sound && Sound.on) { if ((L.prevP < .06 && p >= .06) || (L.prevP > .94 && p <= .94)) Sound.lift(); if ((L.prevP < .97 && p >= .97) || (L.prevP > .03 && p <= .03)) Sound.land(); }
+      L.prevP = p;
+    });
+    frontHinge.position.y = mix(BT + NL * LT, BT, S.board); frontHinge.rotation.z = Math.PI * S.board;
+    if (Sound && Sound.on && ((prevBoard < .97 && S.board >= .97) || (prevClose < .97 && S.close >= .97))) Sound.board();
+    prevBoard = S.board; prevClose = S.close;
+    const hRt = LT * (nRight - .75), hLt = LT * (nLeft - .75);
+    rightBlock.visible = hRt > 1e-4; rightBlock.scale.set(.93, Math.max(hRt, 1e-4), PAGE_H);
+    leftBlock.visible = hLt > 1e-4; leftBlock.scale.set(.93, Math.max(hLt, 1e-4), PAGE_H);
+    spine.scale.y = mix(2 * BT + NL * LT, BT * 1.2, open);
+    ribbonUpdate(open, REDUCE ? 0 : Math.sin(time * .5) * .012 * (1 - S.dive));
+    const cc = Math.PI * S.close; closeGroup.rotation.z = -cc; closeGroup.position.set(-PIVOT * Math.sin(cc), PIVOT - PIVOT * Math.cos(cc), 0);
 
-    // leaves
-    for (let i = 0; i < N; i++) {
-      const p = S['l' + i], zr = (N - 1 - i) * T, zl = i * T;
-      let ang, z;
-      if (REDUCE) {                                            // fade, don't fly
-        ang = p < .5 ? 0 : -180; z = p < .5 ? zr : zl;
-        leaves[i].style.setProperty('--op', p <= 0 || p >= 1 ? 1 : Math.abs(1 - 2 * p).toFixed(3));
-      } else { ang = -180 * p; z = mix(zr, zl, p) + Math.sin(p * Math.PI) * .015; }
-      leaves[i].style.transform = `translateZ(${(z * W).toFixed(2)}px) rotateY(${ang.toFixed(2)}deg)`;
-      leaves[i].style.setProperty('--sh', (Math.sin(p * Math.PI) * .6).toFixed(3));
-      if ((prevLeaf[i] < .5) !== (p < .5) && Sound) Sound.page(p > prevLeaf[i]);
-      prevLeaf[i] = p;
+    /* ---- camera ---- */
+    const ci = clamp(S.cam, 0, NB() - 1), c0 = Math.floor(ci), c1 = Math.min(NB() - 1, c0 + 1);
+    let Q = lerpPose(BEATS[c0].pose(), BEATS[c1].pose(), ci - c0);
+    if (S.dive > 0 && S.ch >= 0) { const n = CH[S.ch].cards.length; Q = lerpPose(Q, P.scene(S.ch, 1 + .07 * clamp(S.card / Math.max(1, n - 1), 0, 1), CH[S.ch].shelf ? clamp((S.card - .6) / .4, 0, 1) : 0), S.dive); }
+    if (INTRO.cam < 1) Q = lerpPose(P.intro(), Q, INTRO.cam);
+    MP.sx += ((MP.on ? MP.x : 0) - MP.sx) * (1 - Math.exp(-dt * 3.5)); MP.sy += ((MP.on ? MP.y : 0) - MP.sy) * (1 - Math.exp(-dt * 3.5));
+    if (!REDUCE) {
+      const k = 1 - S.dive;   // a hand-held drift, and a little parallax toward the mouse; inside a plate only a slow float
+      Q.e += Math.sin(time * .21) * .55 * k - MP.sy * 1.1 * k; Q.yaw += Math.sin(time * .17 + 1) * .65 * k + MP.sx * 1.5 * k; Q.roll += Math.sin(time * .13) * .25 * k; Q.d *= 1 + Math.sin(time * .11) * .006;
+      Q.x += (Math.sin(time * .23) * .006 + MP.sx * .008) * S.dive; Q.z += (Math.cos(time * .19) * .005 + MP.sy * .006) * S.dive;
     }
-    shadowR.style.opacity = (1 - S.l7).toFixed(3); shadowL.style.opacity = Math.min(S.l0, 1).toFixed(3);
+    placeCamera(Q);
 
-    // light: the flame is the only light in the room
-    dim.style.opacity = Math.max(VEIL.v, clamp(.8 - heat * .72 + S.out * .14 + (REDUCE ? 0 : fk * .03 * heat), 0, .96)).toFixed(3);
-    warm.style.opacity = (heat * (.7 + fk * .1)).toFixed(3);
-    prompt.style.opacity = S.prompt.toFixed(3);
-    endcard.style.opacity = S.end.toFixed(3); endcard.style.visibility = S.end > .01 ? 'visible' : 'hidden'; endcard.inert = S.end < .5;
+    /* ---- light ---- */
+    pool.intensity = (.18 + 1.05 * clamp(heat / .62, 0, 1.1)) * INTRO.light * (1 - .82 * S.out) * (1 + fk * .015);
+    candle.intensity = (.15 + 1.0 * heat) * (1 + fk * .06);
+    const pr = (.3 + .7 * INTRO.light) * (1 - .45 * S.out) * (1 + fk * .012 + .05 * (heat - .5));
+    table.material.userData.pool.value.set(mix(.5, 0, open), .06, mix(1.3, 1.85, open) * pr, mix(1.12, 1.3, open) * pr);
+    candle.position.set(Q.d * .55, Q.d * .24, -Q.d * .2); candle.target.position.set(Q.x, Q.y, Q.z);
+    hemi.intensity = .06 + .06 * INTRO.light;
+    dust.material.uniforms.uTime.value = time; dust.material.uniforms.uHeat.value = heat;
 
-    // scene
+    /* ---- draw ---- */
+    renderer.clear();
     const sc = S.scene;
-    scene.style.opacity = sc.toFixed(3); scene.style.visibility = sc > .002 ? 'visible' : 'hidden'; scene.inert = sc < .5;
-    if (sc < .5 && openSpine) closeSpine();
-    if (S.ch !== sceneCh) setSceneChapter(S.ch);
-    if (S.ch >= 0) {
-      const n = CH[S.ch].cards.length;
-      revealCard(S.ch, S.read);
-      art.style.setProperty('--kb', REDUCE ? 1 : (1 + .07 * clamp(S.read / n, 0, 1)).toFixed(4));
-      flash.style.opacity = CH[S.ch].flash && !REDUCE ? (Math.exp(-Math.pow((S.read - .12) / .07, 2)) * .85).toFixed(3) : 0;
-      if (CH[S.ch].flash && prevRead < .12 && S.read >= .12 && Sound) Sound.spell();
-      if (CH[S.ch].shelf) {                                     // the shelf rises once the photo has been seen
-        const so = REDUCE ? (S.read > 1 ? 1 : 0) : clamp((S.read - .9) / .4, 0, 1);
-        shelfWrap.style.opacity = so; shelfWrap.style.transform = `translate(-50%, ${((1 - so) * 30).toFixed(1)}px)`; shelfWrap.inert = so < .5;
-        if (so < .5 && openSpine) closeSpine();
-      }
-      if (sc > .01) fxDraw(dt, time, sc); else if (prevScene > .01) fx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+    if (!(sc > .999)) renderer.render(world, camera);
+    if (sc > .001 && S.ch >= 0) {
+      useScene(S.ch);
+      const U = sceneMat.uniforms;
+      if (prevScene < .98 && sc >= .98) sceneStart = time;
+      if (sc >= .98) spillV = REDUCE ? 1 : 1 - Math.pow(1 - clamp((time - sceneStart - .3) / 2.6, 0, 1), 3);
+      else if (sc > prevScene) spillV = 0;
+      U.uSpill.value = spillV;
+      U.uRes.value.set(VW * DPR, VH * DPR); U.uRect.value.set(...plateRect(S.ch)); U.uOpacity.value = sc; U.uHeat.value = heat;
+      U.uPhase.value = sc >= .98 && !REDUCE ? time - sceneStart : 0;
+      const lenFrac = 1 - (E.b / Math.max(1, NB() - 1)) * .55;
+      U.uFlame.value.set((VW - 29) * DPR, (VH * .72 - VH * .46 * lenFrac) * DPR);
+      const fkey = S.ch + ':' + Math.round(E.b);
+      if (CH[S.ch].flash && prevScene < .9 && sc >= .9 && E.V >= 0 && flashKey !== fkey) { flashAt = time; flashKey = fkey; if (Sound) Sound.spell(); }
+      U.uFlash.value = REDUCE ? 0 : Math.exp(-Math.pow((time - flashAt - .12) / .14, 2)) * .9;
+      renderer.render(sceneWorld, orthoCam);
     }
-    if (prevScene < .5 && sc >= .5 && Sound) Sound.swell();
+    if (prevScene < .9 && sc >= .9 && Sound) Sound.swell();
     if (prevOut < .5 && S.out >= .5 && Sound) Sound.puff();
-    // warm the next big plate in advance
-    const upcoming = S.phase > 0 ? CH.findIndex((_, c) => S['l' + (c + 2)] < .5) : 0;
-    if (S.scene < .01 && upcoming >= 0 && upcoming !== bigShown && S.ch !== upcoming) showBig(upcoming);
-    prevScene = sc; prevOut = S.out; prevRead = S.read;
+
+    /* ---- scene overlays ---- */
+    if (S.ch >= 0 && sc > .001) {
+      fxDraw(dt, time, sc);
+      setCard(S.ch, clamp(Math.round(S.card), 0, CH[S.ch].cards.length - 1));
+      if (CH[S.ch].shelf) { const so = clamp((S.card - .6) / .4, 0, 1) * sc; shelfWrap.style.opacity = so; shelfWrap.style.setProperty('--sy', ((1 - so) * 30).toFixed(1) + 'px'); shelfWrap.inert = so < .5; if (so < .5) closeSpine(); }
+      cardEl.classList.toggle('low', !!CH[S.ch].shelf && S.card > .5);
+    } else { fxDraw(dt, time, 0); if (openSpine) closeSpine(); }
+    cardEl.classList.toggle('show', sc > .55 && S.ch >= 0);
+    if (sc < .05) cardKey = '';
+    if (sc < .01) { shelfWrap.style.opacity = 0; shelfWrap.inert = true; }
+
+    /* ---- the match, HUD ---- */
+    const fs = flameBtn.style;
+    fs.setProperty('--heat', heat.toFixed(3)); fs.setProperty('--fk', (1 + fk * .07).toFixed(3)); fs.setProperty('--out', S.out.toFixed(3));
+    fs.setProperty('--len', (1 - (E.b / Math.max(1, NB() - 1)) * .55).toFixed(3)); fs.setProperty('--flare', FLARE.v.toFixed(3));
+    if (Sound) Sound.heat(heat);
+    warmEl.style.opacity = (heat * (.7 + fk * .1) * (1 - sc * .6)).toFixed(3);
+    veilEl.style.opacity = VEIL.v.toFixed(3);
+    vigEl.style.opacity = (1 - .85 * sc).toFixed(3);
+    progressEl.style.transform = `scaleX(${(E.b / Math.max(1, NB() - 1)).toFixed(4)})`;
+    endcard.style.opacity = S.end.toFixed(3); endcard.style.visibility = S.end > .01 ? 'visible' : 'hidden'; endcard.inert = S.end < .5;
+    cornerEl.classList.toggle('hide', sc > .3 || S.end > .1);
+    if (started && E.on && E.mode === 'rest' && !atEnd && sc < .3 && idle > (E.b < .5 ? 400 : 7000)) promptEl.classList.remove('hide');
+    else if (sc >= .3 && !promptEl.classList.contains('hide')) hidePrompt();
+    prevScene = sc; prevOut = S.out;
   }
 
   /* =====================================================================
-     START-UP, SCROLL, INTRO, CONTENTS, TEXT MODE
+     START-UP, INTRO, CONTENTS, TEXT MODE
      ===================================================================== */
-  function resize() { sizeBook(); sizeArt(); sizeFx(); sizeScroller(); if (HAS_GSAP) ScrollTrigger.refresh(); }
-  sizeBook(); sizeArt(); sizeFx(); sizeScroller();
-  addEventListener('resize', () => { clearTimeout(resize.t); resize.t = setTimeout(resize, 150); });
-  fontsReady.then(() => { if (HAS_GSAP) ScrollTrigger.refresh(); });
+  function resize() {
+    VW = innerWidth; VH = innerHeight; root.classList.toggle('land', landScene());
+    if (GL) { renderer.setSize(VW, VH, false); camera.aspect = VW / VH; camera.updateProjectionMatrix(); }
+    sizeFx();
+  }
+  addEventListener('resize', resize);
+  root.classList.toggle('land', landScene()); sizeFx();
 
-  if (HAS_GSAP) {
-    if (!REDUCE && window.Lenis) {
-      lenis = new Lenis({ duration: 1.25, smoothWheel: true });
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add(t => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0);
-      lenis.stop();
-    }
-    ST = ScrollTrigger.create({ trigger: scroller, start: 'top top', end: 'bottom bottom', animation: TL, scrub: REDUCE ? true : .6 });
-    gsap.ticker.add(t => render(t));
-  } else {
-    setTextMode(true);
+  if (GL) {
+    initGL(); camera.aspect = VW / VH; camera.updateProjectionMatrix();
+    buildTextures();
+    requestAnimationFrame(frame);
   }
 
   const intro = $('#intro');
-  function begin(withSound) {
-    if (withSound) setSound(true);
+  async function begin(withSound) {
+    if (started) return; started = true;
     intro.classList.add('gone'); intro.inert = true;
     root.classList.remove('is-intro');
-    if (lenis) lenis.start();
-    if (HAS_GSAP) ScrollTrigger.refresh();
-    $('#contents-btn').focus({ preventScroll: true });
+    if (!GL) { setTextMode(true); return; }
+    let snd = false; if (withSound) snd = await setSound(true);
+    if (snd) Sound.strike();
+    if (REDUCE) { INTRO.light = 1; INTRO.cam = 1; E.on = true; onRest(0); glCanvas.focus({ preventScroll: true }); return; }
+    gsap.timeline()
+      .to(FLARE, { v: 1, duration: .12, ease: 'power2.out' }, .05).to(FLARE, { v: 0, duration: 1.1, ease: 'power2.inOut' }, .2)
+      .to(INTRO, { light: 1, duration: 2.6, ease: 'power2.out' }, .1)
+      .to(INTRO, { cam: 1, duration: 3.2, ease: 'power3.inOut' }, 0)
+      .add(() => { E.on = true; onRest(0); }, 1.4);
+    glCanvas.focus({ preventScroll: true });
   }
   $('#open-sound').addEventListener('click', () => begin(true));
   $('#open-silent').addEventListener('click', () => begin(false));
   $('#open-text').addEventListener('click', () => { begin(false); setTextMode(true); });
   $('#skip').addEventListener('click', e => { e.preventDefault(); begin(false); setTextMode(true); });
 
-  // jump: a breath of darkness, then the page
-  function jumpTo(time) {
-    if (!ST) return;
-    if (Sound) Sound.hush(900);
-    const go = () => { const y = timeToY(time); if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo(0, y); };
-    if (REDUCE) { go(); return; }
-    gsap.timeline().to(VEIL, { v: 1, duration: .3, overwrite: true }).add(go).to(VEIL, { v: 0, duration: .6 }, '+=.2');
-  }
   function setTextMode(on) {
     textMode = on;
     root.classList.toggle('text-mode', on); root.classList.toggle('book-mode', !on);
-    if (on) {
-      paintTextPlates(); if (ST) ST.disable(false);
-      if (lenis) lenis.scrollTo(0, { immediate: true, force: true }); else window.scrollTo(0, 0);
-      story.focus({ preventScroll: true });
-    } else {
-      if (ST) { ST.enable(); ScrollTrigger.refresh(); }
-      jumpTo(MARK.title || 0);
-    }
+    if (on) { paintTextPlates(); window.scrollTo(0, 0); story.focus({ preventScroll: true }); }
+    else { window.scrollTo(0, 0); glCanvas.focus({ preventScroll: true }); }
   }
   $('#back-book').addEventListener('click', () => setTextMode(false));
   $('#text-btn').addEventListener('click', () => setTextMode(true));
-  $('#again-btn').addEventListener('click', () => jumpTo(0));
-  if (!HAS_GSAP) $('#back-book').hidden = true;
+  $('#again-btn').addEventListener('click', () => veilTo(0, .5));
+  if (!GL) { $('#back-book').hidden = true; story.insertAdjacentHTML('afterbegin', '<p class="notice">Your browser could not draw the 3D book, so here is the story as text.</p>'); }
 
-  // contents
-  const contents = $('#contents'), tocList = $('#toc-list'), contentsBtn = $('#contents-btn');
   const tocItems = [['', 'Title page', 'title'], ...CH.map((ch, c) => [ch.num, ch.title, 'ch' + c]), ['', 'The end', 'end']];
   tocItems.forEach(([num, label, mark], i) => {
     const li = document.createElement('li'), b = document.createElement('button');
@@ -1020,12 +1711,12 @@ window.CONFIG = {
     b.addEventListener('click', () => {
       closeContents(false);
       if (textMode) { const el = i === 0 ? story : (mark === 'end' ? $('.legal', story) : $('#ch-' + (i - 1))); el.scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth' }); return; }
-      jumpTo(MARK[mark]);
+      veilTo(markBeat(mark)); glCanvas.focus({ preventScroll: true });
     });
     li.append(b); tocList.append(li);
   });
-  function openContents() { contents.hidden = false; contentsBtn.setAttribute('aria-expanded', 'true'); if (lenis) lenis.stop(); $('button', tocList).focus(); }
-  function closeContents(focus = true) { if (contents.hidden) return; contents.hidden = true; contentsBtn.setAttribute('aria-expanded', 'false'); if (lenis) lenis.start(); if (focus) contentsBtn.focus({ preventScroll: true }); }
+  function openContents() { contents.hidden = false; contentsBtn.setAttribute('aria-expanded', 'true'); $('button', tocList).focus(); }
+  function closeContents(focus = true) { if (contents.hidden) return; contents.hidden = true; contentsBtn.setAttribute('aria-expanded', 'false'); if (focus) contentsBtn.focus({ preventScroll: true }); }
   contentsBtn.addEventListener('click', openContents);
   $('#toc-close').addEventListener('click', () => closeContents());
   $('#toc-text').addEventListener('click', () => { closeContents(false); setTextMode(true); });
@@ -1040,14 +1731,21 @@ window.CONFIG = {
     if (e.key === 'Escape' && openSpine) { const sp = openSpine.sp; closeSpine(); sp.focus(); }
   });
 
-  // cursor (desktop only)
   if (FINE && !REDUCE) {
     root.classList.add('has-cursor');
-    const cur = $('.cursor'); let cx = -100, cy = -100, x = -100, y = -100;
+    const cur = $('.cursor'); let cx = -100, cy = -100, x = -100, y = -100, over = null, zone = '';
     addEventListener('pointermove', e => { x = e.clientX; y = e.clientY; }, { passive: true });
-    document.addEventListener('pointerover', e => cur.classList.toggle('big', !!e.target.closest('button, a')));
-    (function loop() { cx += (x - cx) * .25; cy += (y - cy) * .25; cur.style.transform = `translate(${cx}px, ${cy}px)`; requestAnimationFrame(loop); })();
+    document.addEventListener('pointerover', e => { over = e.target; cur.classList.toggle('big', !!e.target.closest('button, a')); });
+    (function loop() {
+      cx += (x - cx) * .25; cy += (y - cy) * .25; cur.style.transform = `translate(${cx}px, ${cy}px)`;
+      const z = over === glCanvas && E.on && !E.pointer && contents.hidden ? (x < VW * .3 ? 'back' : 'fwd') : '';
+      if (z !== zone) { zone = z; cur.classList.toggle('fwd', z === 'fwd'); cur.classList.toggle('back', z === 'back'); }
+      requestAnimationFrame(loop);
+    })();
   }
+
+  // for automated checks
+  window.__book = { E, S, BEATS, ready: () => texturesReady, jump(i) { setBeat(i); }, mark: markBeat };
 })();
 </script>
 </body>
