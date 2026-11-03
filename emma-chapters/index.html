@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Emma Watson in Chapters</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="An unofficial fan tribute to Emma Watson, told as a film in five chapters.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<script>
+/* =========================================================================
+   CONFIG: everything you are likely to change lives here.
+   -------------------------------------------------------------------------
+   • colours  → CONFIG.chapters (one palette per chapter) and CONFIG.voiceScenes
+   • fonts    → CONFIG.fonts (keep the Google Fonts URL in step with the names)
+   • images   → CONFIG.images. Leave `src` empty to show a labelled placeholder.
+                Use only photos you own or have a licence for.
+                Inside a claude.ai artifact, remote image URLs are blocked: publish
+                the files next to this page and use relative paths ('images/hero.jpg').
+   ========================================================================= */
+window.CONFIG = {
+  credit: 'Veer Singh',                       // shown in the closing credits
+
+  // Font pairings: display face for headlines, body face for text. Pick one with fontSet.
+  fontSets: {
+    literary: { label: 'Literary', pair: 'Fraunces & Hanken Grotesk',
+      display: '"Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif', body: '"Hanken Grotesk", "Helvetica Neue", Arial, sans-serif',
+      url: 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Hanken+Grotesk:wght@300..700&display=swap' },
+    classic:  { label: 'Classic', pair: 'Playfair Display & DM Sans',
+      display: '"Playfair Display", Georgia, serif', body: '"DM Sans", "Helvetica Neue", Arial, sans-serif',
+      url: 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap' },
+    couture:  { label: 'Couture', pair: 'Bodoni Moda & Manrope',
+      display: '"Bodoni Moda", Didot, Georgia, serif', body: '"Manrope", "Helvetica Neue", Arial, sans-serif',
+      url: 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Manrope:wght@300..700&display=swap' },
+    playful:  { label: 'Playful', pair: 'Bricolage Grotesque & Figtree',
+      display: '"Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif', body: '"Figtree", "Helvetica Neue", Arial, sans-serif',
+      url: 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Figtree:ital,wght@0,300..700;1,300..700&display=swap' }
+  },
+  fontSet: 'couture',          // official: Bodoni Moda & Manrope
+
+  // Colour schemes. Each chapter repaints the whole page as you scroll into it, and the pinned
+  // quote scene moves through voiceScenes (night, dusk, dawn). Pick one with palette.
+  // Every pair here passes contrast checks: text at least 7:1, small accent text at least 4.5:1.
+  palettes: {
+    original: {
+      label: 'Original', note: 'Candlelit and literary: the first design',
+      chapters: {
+        prologue: { bg: '#0e0c0a', fg: '#f2ebe1', muted: '#aaa195', accent: '#e0b56a', line: 'rgba(242,235,225,0.14)' }, // candlelit ink
+        actress:  { bg: '#1c0b10', fg: '#f4e7d7', muted: '#bba696', accent: '#e6b873', line: 'rgba(244,231,215,0.14)' }, // velvet curtain + marquee gold
+        activist: { bg: '#f1eee8', fg: '#16131c', muted: '#585266', accent: '#5b2a86', line: 'rgba(22,19,28,0.16)', second: '#2f6b47' }, // suffragette purple, white, green
+        reader:   { bg: '#efe5d2', fg: '#2a2016', muted: '#655441', accent: '#2f5442', line: 'rgba(42,32,22,0.18)' },  // library paper + green baize
+        style:    { bg: '#0f0f0f', fg: '#ebe6de', muted: '#9c978f', accent: '#a9b8a2', line: 'rgba(235,230,222,0.14)' }, // monochrome editorial + sage
+        voice:    { bg: '#101a2c', fg: '#f3eee6', muted: '#aab1bf', accent: '#f0c27b', line: 'rgba(243,238,230,0.16)' }  // night before the speech
+      },
+      voiceScenes: [{ bg: '#101a2c', fg: '#f3eee6', accent: '#f0c27b' }, { bg: '#3a1c2c', fg: '#f7ece6', accent: '#f2a98a' }, { bg: '#ecd9b4', fg: '#1e1a14', accent: '#7a3b1d' }]
+    },
+    technicolor: {
+      label: 'Technicolor', note: 'Saturated cinema colour, chapter by chapter',
+      chapters: {
+        prologue: { bg: '#170a2e', fg: '#fff4e8', muted: '#c9bce0', accent: '#ff7a7a' },
+        actress:  { bg: '#93102a', fg: '#fff1e6', muted: '#f6cfcf', accent: '#ffd447' },
+        activist: { bg: '#f3eaff', fg: '#22094d', muted: '#574776', accent: '#6a1fd1', second: '#1f9d55' },
+        reader:   { bg: '#0c5446', fg: '#fdf3d8', muted: '#c3e3d3', accent: '#ffbf5e' },
+        style:    { bg: '#ff7fb2', fg: '#1c0412', muted: '#3e0a25', accent: '#2b0a6b' },
+        voice:    { bg: '#1b1464', fg: '#fff4e8', muted: '#c3bfea', accent: '#ffd447' }
+      },
+      voiceScenes: [{ bg: '#1b1464', fg: '#fff4e8', accent: '#ffd447' }, { bg: '#9e1430', fg: '#fff7ef', accent: '#ffe08a' }, { bg: '#ffd166', fg: '#2a1500', accent: '#8a0f26' }]
+    },
+    riviera: {
+      label: 'Riviera', note: 'Sunlit cobalt, lemon and tomato',
+      chapters: {
+        prologue: { bg: '#0b1e5b', fg: '#fff8ec', muted: '#bcc6ea', accent: '#ffe14d' },
+        actress:  { bg: '#9e2410', fg: '#fff8ec', muted: '#ffd9cc', accent: '#ffe14d' },
+        activist: { bg: '#ffe14d', fg: '#1a1442', muted: '#4a4325', accent: '#5b21b6', second: '#15803d' },
+        reader:   { bg: '#a8ebe1', fg: '#0a2e3a', muted: '#1f5560', accent: '#1d3fd6' },
+        style:    { bg: '#1d3fd6', fg: '#fff8ec', muted: '#d3dbff', accent: '#ffb3d9' },
+        voice:    { bg: '#0b1e5b', fg: '#fff8ec', muted: '#bcc6ea', accent: '#ffe14d' }
+      },
+      voiceScenes: [{ bg: '#0b1e5b', fg: '#fff8ec', accent: '#ffe14d' }, { bg: '#9e2410', fg: '#fff8ec', accent: '#ffe14d' }, { bg: '#ffe14d', fg: '#1a1442', accent: '#9a2a12' }]
+    },
+    neon: {
+      label: 'Neon Noir', note: 'Night-time darks lit by electric colour',
+      chapters: {
+        prologue: { bg: '#07070f', fg: '#f4f4ff', muted: '#a7a7c6', accent: '#22e4ff' },
+        actress:  { bg: '#14001f', fg: '#fdf0ff', muted: '#c9acd8', accent: '#ff4fe0' },
+        activist: { bg: '#120427', fg: '#f6efff', muted: '#bba8db', accent: '#c99bff', second: '#3dff8b' },
+        reader:   { bg: '#001a24', fg: '#e9fbff', muted: '#9fc7d2', accent: '#ffd60a' },
+        style:    { bg: '#0b0b0b', fg: '#f5f5f5', muted: '#a8a8a8', accent: '#b6ff3b' },
+        voice:    { bg: '#0a0a2e', fg: '#f4f4ff', muted: '#a9a9d6', accent: '#22e4ff' }
+      },
+      voiceScenes: [{ bg: '#0a0a2e', fg: '#f4f4ff', accent: '#22e4ff' }, { bg: '#2a0a3d', fg: '#fdf0ff', accent: '#ff4fe0' }, { bg: '#2a1206', fg: '#fff3e6', accent: '#ffb547' }]
+    },
+    pastel: {
+      label: 'Pastel Pop', note: 'Bright sorbet colours with punchy ink',
+      chapters: {
+        prologue: { bg: '#fff1e6', fg: '#1c1530', muted: '#584d6c', accent: '#d01c55' },
+        actress:  { bg: '#ffd3dd', fg: '#2b0f1e', muted: '#653548', accent: '#a8102f' },
+        activist: { bg: '#e6dbff', fg: '#1f1147', muted: '#4b3d78', accent: '#5b21b6', second: '#15803d' },
+        reader:   { bg: '#d4f3e2', fg: '#0f3320', muted: '#365f4a', accent: '#b23a08' },
+        style:    { bg: '#fff0a0', fg: '#1a1a1a', muted: '#4d4a30', accent: '#1d4ed8' },
+        voice:    { bg: '#cfdcff', fg: '#14163b', muted: '#3f4270', accent: '#3730a3' }
+      },
+      voiceScenes: [{ bg: '#cfdcff', fg: '#14163b', accent: '#3730a3' }, { bg: '#ffd0e0', fg: '#3a0a1f', accent: '#9d174d' }, { bg: '#fff0a0', fg: '#2a2000', accent: '#9a4a06' }]
+    }
+  },
+  palette: 'neon',             // official: Neon Noir
+
+  // src     = path to the photo (relative to this page). Empty = labelled placeholder.
+  // ratio   = width/height the placeholder is drawn at. label = what the placeholder says.
+  // focus   = [x, y] from 0 to 1: the point of the photo to keep in frame when it is cropped.
+  // These photos belong to their photographers and publishers. They are fine on a private page;
+  // get permission or licensed copies before sharing the site publicly.
+  images: {
+    hero:  { src: 'images/hero.jpg', alt: 'Black-and-white portrait of Emma Watson looking back over her shoulder, a knitted cardigan slipping off one shoulder',
+             label: 'Hero portrait', ratio: '1/1', focus: [0.56, 0.2], tone: 'light' },   // tone 'light' = dark type over a light photo
+    intro: { src: 'images/portrait-blazer.jpg', alt: 'Black-and-white portrait of Emma Watson in a black blazer and a silver choker, looking straight at the camera',
+             label: 'Intro portrait · 4:5', ratio: '4/5', caption: 'Portrait', focus: [0.5, 0.35] },
+    // Film stills: leave src empty and that film shows no hover preview or thumbnail.
+    films: {
+      hp:          { src: '', alt: 'Emma Watson as Hermione Granger', label: 'Harry Potter series', ratio: '4/5' },
+      balletshoes: { src: '', alt: 'Still from Ballet Shoes', label: 'Ballet Shoes, 2007', ratio: '4/5' },
+      despereaux:  { src: '', alt: 'Still from The Tale of Despereaux', label: 'The Tale of Despereaux, 2008', ratio: '4/5' },
+      marilyn:     { src: '', alt: 'Still from My Week with Marilyn', label: 'My Week with Marilyn, 2011', ratio: '4/5' },
+      perks:       { src: '', alt: 'Emma Watson as Sam', label: 'The Perks of Being a Wallflower, 2012', ratio: '4/5' },
+      blingring:   { src: '', alt: 'Emma Watson as Nicki', label: 'The Bling Ring, 2013', ratio: '4/5' },
+      thisistheend:{ src: '', alt: 'Still from This Is the End', label: 'This Is the End, 2013', ratio: '4/5' },
+      noah:        { src: '', alt: 'Emma Watson as Ila', label: 'Noah, 2014', ratio: '4/5' },
+      colonia:     { src: '', alt: 'Emma Watson as Lena', label: 'Colonia, 2015', ratio: '4/5' },
+      regression:  { src: '', alt: 'Emma Watson as Angela Gray', label: 'Regression, 2015', ratio: '4/5' },
+      beauty:      { src: '', alt: 'Emma Watson as Belle', label: 'Beauty and the Beast, 2017', ratio: '4/5' },
+      circle:      { src: '', alt: 'Emma Watson as Mae Holland', label: 'The Circle, 2017', ratio: '4/5' },
+      littlewomen: { src: '', alt: 'Emma Watson as Meg March', label: 'Little Women, 2019', ratio: '4/5' }
+    },
+    // The image trail in "Moments" cycles through these.
+    moments: ['wonderland-laugh', 'portrait-blazer', 'talk-show', 'wonderland-profile', 'interview', 'hollywood-authentic', 'portrait-bob', 'profile-wet']
+      .map(name => ({ src: `images/${name}.jpg`, alt: '', label: name, ratio: '4/5' })),
+    activism: { src: 'images/wonderland-profile.jpg', alt: 'Black-and-white profile of Emma Watson with her eyes closed and her hands folded against her chest',
+                label: 'Activism portrait · 4:5', ratio: '4/5', caption: 'Photographed for Wonderland', focus: [0.5, 0.3] },
+    // Photo cards in the style gallery. kicker / title / caption describe the photo itself.
+    style: [
+      { src: 'images/wonderland-laugh.jpg', alt: 'Emma Watson laughing with her eyes shut, in a pleated bandeau top and a dark skirt',
+        ratio: '3/4', focus: [0.5, 0.25], kicker: 'Editorial', title: 'Wonderland', caption: 'Photographed for Wonderland magazine.' },
+      { src: 'images/talk-show.jpg', alt: 'Emma Watson smiling in a cream dress with black piping, seated in a talk-show guest chair',
+        ratio: '3/4', focus: [0.5, 0.3], kicker: 'On air', title: 'Talk show', caption: 'A guest appearance on a television talk show.' },
+      { src: 'images/hollywood-authentic.jpg', alt: 'Emma Watson shouting with joy on a pickleball court, on the cover of Hollywood Authentic',
+        ratio: '3/4', focus: [0.5, 0.45], kicker: '2025', title: 'Hollywood Authentic', caption: 'Cover of Digital Dispatch 8, "The Graduate".' },
+      { src: 'images/interview.jpg', alt: 'Emma Watson smiling, with shoulder-length wavy hair, in front of a pink patterned backdrop',
+        ratio: '3/4', focus: [0.5, 0.3], kicker: 'Candid', title: 'On camera', caption: 'Smiling to camera.' }
+    ],
+    // One image per quote scene (night, dusk, dawn).
+    voice: [
+      { src: 'images/profile-wet.jpg', alt: '', label: 'Voice scene 1 · night', ratio: '3/4' },
+      { src: 'images/portrait-bob.jpg', alt: '', label: 'Voice scene 2 · dusk', ratio: '3/4' },
+      { src: 'images/hero.jpg', alt: '', label: 'Voice scene 3 · dawn', ratio: '3/4', focus: [0.57, 0.22] }
+    ]
+  }
+};
+
+/* Apply the config before first paint: the chosen palette and fonts become CSS variables. */
+(function applyConfig() {
+  const C = window.CONFIG, root = document.documentElement, s = root.style;
+  try { localStorage.removeItem('ew-design'); } catch (e) {}   // clear picks saved by the old preview switcher
+  const rgba = (h, a) => `rgba(${h.replace('#', '').match(/../g).map(x => parseInt(x, 16)).join(',')},${a})`;
+
+  window.loadFontCss = url => {                       // add a Google Fonts stylesheet once
+    if (document.querySelector(`link[data-font="${url}"]`)) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet'; link.href = url; link.dataset.font = url;
+    document.head.appendChild(link);
+  };
+  window.applyPaletteVars = () => {                   // C.chapters / C.voiceScenes follow the palette
+    const P = C.palettes[C.palette];
+    C.chapters = P.chapters; C.voiceScenes = P.voiceScenes;
+    Object.entries(C.chapters).forEach(([name, c]) => {
+      if (!c.line) c.line = rgba(c.fg, .16);
+      s.setProperty(`--c-${name}`, c.bg); s.setProperty(`--c-${name}-fg`, c.fg); s.setProperty(`--c-${name}-ac`, c.accent);
+    });
+    s.setProperty('--c-activist-2', C.chapters.activist.second || C.chapters.activist.accent);
+    s.setProperty('--ink', C.chapters.prologue.bg); s.setProperty('--paper', C.chapters.prologue.fg);   // menu, curtain, preloader
+    const v = C.voiceScenes[0];
+    s.setProperty('--vbg', v.bg); s.setProperty('--vfg', v.fg); s.setProperty('--vac', v.accent);
+  };
+  window.applyFontVars = () => {
+    C.fonts = C.fontSets[C.fontSet];
+    s.setProperty('--font-display', C.fonts.display); s.setProperty('--font-body', C.fonts.body);
+    window.loadFontCss(C.fonts.url);
+  };
+  window.applyPaletteVars(); window.applyFontVars();
+  const p = C.chapters.prologue;
+  ['bg', 'fg', 'muted', 'accent', 'line'].forEach(k => s.setProperty(`--${k}`, p[k]));
+  root.classList.add('js', 'is-loading');
+})();
+</script>
+
+<style>
+  /* Layout: full-bleed chapters on one 1320px editorial column; each chapter repaints the page from CONFIG.chapters.
+     Type scale: 0.72 / 1 / 1.25 / 2 / 3.6 / 6 / 13rem. Display = Fraunces (variable), body = Hanken Grotesk. */
+  :root {
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --gutter-l: max(20px, env(safe-area-inset-left, 0px));
+    --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+    --ink: #0e0c0a;            /* overlays: menu, wipe */
+    --paper: #f3ece2;          /* text on overlays */
+    color-scheme: dark;
+  }
+
+  /* ---------- Base ---------- */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-stopped { overflow: hidden; }
+  html.is-loading:not(.rm) { overflow: hidden; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: var(--font-body); font-size: clamp(1rem, .95rem + .2vw, 1.125rem); line-height: 1.6;
+    overflow-x: hidden; -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .sr-only { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .skip { position: fixed; left: 16px; top: -80px; z-index: 300; background: var(--paper); color: var(--ink); padding: .7rem 1.1rem; border-radius: 999px; font-weight: 600; text-decoration: none; }
+  .skip:focus { top: calc(16px + env(safe-area-inset-top, 0px)); }
+  .wrap { max-width: 1320px; margin: 0 auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+  .eyebrow { font: 600 .72rem/1.3 var(--font-body); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin: 0 0 1.4rem; }
+  .display { font-family: var(--font-display); }
+  h1, h2, h3, h4 { margin: 0; font-weight: inherit; }
+  .sec-title { font-family: var(--font-display); font-size: clamp(2.6rem, 7.4vw, 6.4rem); line-height: .95; letter-spacing: -.03em; text-wrap: balance; }
+  .sec-title em { color: var(--accent); }
+  section { position: relative; }
+
+  /* Split text */
+  .split .w { display: inline-block; white-space: nowrap; }
+  .split .wi, .split .c { display: inline-block; }
+  .is-mask .w { overflow: hidden; vertical-align: top; padding: 0 .06em .14em 0; margin: 0 -.06em -.14em 0; }
+
+  /* Soft glow that follows the chapter accent */
+  .glow { overflow: hidden; }
+  .glow::before { content: ''; position: absolute; width: 70vmax; aspect-ratio: 1; right: -25vmax; top: -10vmax; pointer-events: none;
+    background: radial-gradient(closest-side, var(--accent), transparent); opacity: .1; filter: blur(30px); }
+
+  /* ---------- Grain ---------- */
+  .grain { position: fixed; inset: -50%; z-index: 95; pointer-events: none; opacity: .075;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain .9s steps(6) infinite; }
+  @keyframes grain { 0%{transform:translate(0,0)} 20%{transform:translate(-6%,3%)} 40%{transform:translate(4%,-5%)} 60%{transform:translate(-2%,7%)} 80%{transform:translate(6%,1%)} 100%{transform:translate(0,0)} }
+
+  /* ---------- Header ---------- */
+  .bar { position: fixed; inset: 0 0 auto; z-index: 80; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+    padding: calc(16px + env(safe-area-inset-top, 0px)) var(--gutter-r) 16px var(--gutter-l); color: #fff; mix-blend-mode: difference; }
+  .brand { font-family: var(--font-display); font-style: italic; font-size: 1.45rem; text-decoration: none; justify-self: start; letter-spacing: -.02em; }
+  .bar-chapter { margin: 0; font: 600 .68rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
+  .bar-actions { justify-self: end; display: flex; align-items: center; gap: 1.4rem; }
+  .menu-btn { font: 600 .72rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; padding: .7rem 0; }
+  .sound-btn { display: inline-flex; align-items: center; gap: .6rem; min-width: 32px; padding: .7rem 0; font: 600 .72rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; }
+  .eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
+  .eq i { width: 2px; height: 5px; background: currentColor; opacity: .55; }
+  .eq i:nth-child(2) { height: 9px; } .eq i:nth-child(3) { height: 4px; } .eq i:nth-child(4) { height: 7px; }
+  .sound-btn.is-on .eq i { opacity: 1; height: 9px; animation: eq .9s ease-in-out infinite alternate; }
+  .sound-btn.is-on .eq i:nth-child(2) { height: 12px; animation-delay: -.35s; }
+  .sound-btn.is-on .eq i:nth-child(3) { height: 6px; animation-delay: -.6s; }
+  .sound-btn.is-on .eq i:nth-child(4) { height: 10px; animation-delay: -.15s; }
+  @keyframes eq { from { height: 3px; } to { height: 12px; } }
+  @media (max-width: 560px) { .sb-label { display: none; } }
+
+  /* ---------- Cursor (fine pointers only) ---------- */
+  #cursor { display: none; }
+  .has-cursor #cursor { display: block; }
+  .has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
+  .c-dot, .c-ring { position: fixed; left: 0; top: 0; z-index: 160; pointer-events: none; border-radius: 50%; }
+  .c-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: #fff; mix-blend-mode: difference; transition: opacity .3s; }
+  .c-ring { width: 42px; height: 42px; margin: -21px 0 0 -21px; border: 1px solid rgba(255,255,255,.85); mix-blend-mode: difference; display: grid; place-items: center;
+    transition: width .5s var(--ease), height .5s var(--ease), margin .5s var(--ease), background-color .4s, border-color .4s; }
+  .c-label { font: 600 .64rem var(--font-body); letter-spacing: .16em; text-transform: uppercase; color: var(--ink); opacity: 0; transition: opacity .3s; }
+  #cursor.is-view .c-ring { width: 104px; height: 104px; margin: -52px 0 0 -52px; background: var(--paper); border-color: var(--paper); mix-blend-mode: normal; }
+  #cursor.is-view .c-label { opacity: 1; }
+  #cursor.is-view .c-dot, #cursor.is-magnet .c-dot { opacity: 0; }
+  #cursor.is-magnet .c-ring { width: 12px; height: 12px; margin: -6px 0 0 -6px; background: #fff; }
+
+  /* ---------- Preloader ---------- */
+  #loader { position: fixed; inset: 0; z-index: 130; pointer-events: none; color: var(--paper); }
+  .ld-top { position: absolute; left: var(--gutter-l); right: var(--gutter-r); top: calc(20px + env(safe-area-inset-top, 0px)); display: flex; justify-content: space-between; gap: 1rem;
+    font: 600 .68rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; color: color-mix(in srgb, var(--paper) 72%, transparent); }
+  .ld-chapter { position: absolute; left: var(--wl, 38%); right: var(--wr, 38%); top: calc(var(--wt, 34%) - 2.4rem); margin: 0; text-align: center; white-space: nowrap; font-family: var(--font-display); font-style: italic; font-size: 1.15rem; }
+  .ld-count { position: absolute; left: var(--gutter-l); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); font-family: var(--font-display); font-weight: 200;
+    font-size: clamp(5rem, 24vw, 17rem); line-height: .8; letter-spacing: -.05em; font-variant-numeric: tabular-nums; font-variation-settings: "opsz" 144; }
+  .ld-bar { position: absolute; left: var(--wl, 38%); right: var(--wr, 38%); top: calc(100% - var(--wb, 34%) + 6px); height: 1px; background: color-mix(in srgb, var(--paper) 20%, transparent); }
+  .ld-bar i { position: absolute; inset: 0; background: var(--paper); transform-origin: left; transform: scaleX(0); }
+  .rm #loader { display: none; }
+  .ld-gate { position: absolute; right: var(--gutter-r); bottom: calc(40px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 1rem; justify-items: end; pointer-events: auto; }
+  .ld-gate[hidden] { display: none; }
+  .ld-gate-note { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 1.2rem; color: color-mix(in srgb, var(--paper) 82%, transparent); }
+  .ld-gate-btns { display: flex; flex-wrap: wrap; gap: .7rem; justify-content: flex-end; }
+  .ld-btn { position: relative; overflow: hidden; padding: 1rem 1.5rem; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--paper) 40%, transparent);
+    color: var(--paper); font: 600 .7rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; transition: background-color .3s, color .3s; }
+  .ld-btn:hover { background: color-mix(in srgb, var(--paper) 12%, transparent); }
+  .ld-btn.main { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  .ld-btn i { position: absolute; left: 0; bottom: 0; width: 100%; height: 2px; background: var(--paper); transform: scaleX(0); transform-origin: left; }
+  .ld-gate.counting .ld-btn i { transform: scaleX(1); transition: transform 8s linear; }
+  @media (max-width: 700px) { .ld-gate { left: var(--gutter-l); top: calc(100% - var(--wb, 34%) + 34px); bottom: auto; justify-items: start; } .ld-gate-btns { justify-content: flex-start; } }
+
+  /* ---------- Fullscreen menu ---------- */
+  #menu { position: fixed; inset: 0; z-index: 120; color: var(--paper); }
+  .m-panels { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .m-panels i { display: block; background: var(--ink); transform-origin: top; }
+  .m-inner { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 5rem var(--gutter-r) 3rem var(--gutter-l); max-width: 1320px; margin: 0 auto; }
+  .m-close { position: absolute; top: calc(16px + env(safe-area-inset-top, 0px)); right: var(--gutter-r); font: 600 .72rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; padding: .7rem 0 .7rem 1rem; }
+  .m-list { list-style: none; margin: 0; padding: 0; }
+  .m-list li { overflow: hidden; border-top: 1px solid color-mix(in srgb, var(--paper) 15%, transparent); }
+  .m-list li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--paper) 15%, transparent); }
+  .m-list a { display: flex; align-items: baseline; gap: 1.2rem; padding: .28em 0; text-decoration: none; font-family: var(--font-display); font-style: italic; font-weight: 200;
+    font-size: clamp(2rem, min(7.6vw, 8.2svh), 6rem); line-height: 1.05; letter-spacing: -.02em; transition: color .4s, padding-left .7s var(--ease); }
+  .m-list a:hover, .m-list a:focus-visible { color: var(--m-accent, #e0b56a); padding-left: 1rem; }
+  .m-num { font: 600 .7rem var(--font-body); letter-spacing: .16em; color: color-mix(in srgb, var(--paper) 62%, transparent); min-width: 2.6rem; font-style: normal; }
+  .m-note { margin: 2rem 0 0; color: color-mix(in srgb, var(--paper) 68%, transparent); font-size: .85rem; max-width: 46ch; }
+
+  /* ---------- SVG page wipe ---------- */
+  #wipe { position: fixed; inset: 0; z-index: 140; pointer-events: none; visibility: hidden; }
+  #wipe svg { width: 100%; height: 100%; display: block; }
+  #wipe path { fill: var(--ink); }
+  .wipe-title { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; padding: 0 var(--gutter-r) 0 var(--gutter-l); text-align: center; color: var(--paper);
+    font-family: var(--font-display); font-style: italic; font-weight: 200; font-size: clamp(2.2rem, 8vw, 6rem); line-height: 1; }
+
+  /* ---------- 1. Hero ---------- */
+  .hero { height: 100svh; min-height: 560px; overflow: hidden; color: #f6efe6; }
+  .hero-media { position: absolute; inset: 0; background: #1a1410; }
+  .hero-media canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .hero-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero.gl-on .hero-fallback { visibility: hidden; }
+  /* Light photo: dark type, pale shading */
+  .hero.is-light { color: #17130f; }
+  .hero.is-light .hero-media { background: #ece8e2; }
+  .hero.is-light .hero-shade { background: linear-gradient(180deg, rgba(240,236,229,.5) 0%, rgba(240,236,229,0) 25%, rgba(240,236,229,0) 50%, rgba(240,236,229,.78) 100%); }
+  .hero.is-light .hero-kicker { color: rgba(23,19,15,.72); }
+  .hero.is-light .hero-lede { color: rgba(23,19,15,.85); }
+  .hero.is-light .hero-foot { border-top-color: rgba(23,19,15,.25); }
+  .hero.is-light .badge { border-color: rgba(23,19,15,.45); }
+  .hero.is-light .scroll-cue { color: rgba(23,19,15,.7); }
+  .hero.is-light .scroll-cue i { background: rgba(23,19,15,.5); }
+  .hero-shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(14,12,10,.55) 0%, rgba(14,12,10,0) 30%, rgba(14,12,10,0) 45%, rgba(14,12,10,.82) 100%); }
+  .hero-kicker { position: absolute; left: var(--gutter-l); right: var(--gutter-r); top: calc(78px + env(safe-area-inset-top, 0px)); margin: 0; display: flex; justify-content: space-between; gap: 1rem;
+    font: 600 .68rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; color: rgba(246,239,230,.82); }
+  .hero-copy { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 var(--gutter-r) calc(28px + env(safe-area-inset-bottom, 0px)) var(--gutter-l); }
+  .hero-title { font-family: var(--font-display); font-weight: 300; font-size: clamp(4.4rem, 21vw, 17rem); line-height: .82; letter-spacing: -.045em;
+    font-variation-settings: "opsz" 144; margin: 0; }
+  .hero-title .ht-line { display: block; }
+  .hero-title .ht-it { font-style: italic; padding-left: 11vw; }
+  .hero-title .c { transition: font-variation-settings .35s ease-out; }
+  .hero-foot { display: flex; justify-content: space-between; align-items: end; gap: 1.2rem; flex-wrap: wrap; margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid rgba(246,239,230,.25); }
+  .hero-lede { margin: 0; max-width: 34ch; font-size: clamp(1rem, 1.6vw, 1.2rem); color: rgba(246,239,230,.86); }
+  .badge { margin: 0; border: 1px solid rgba(246,239,230,.5); border-radius: 999px; padding: .45rem .9rem; font: 600 .66rem var(--font-body); letter-spacing: .18em; text-transform: uppercase; }
+  .scroll-cue { position: absolute; right: var(--gutter-r); top: 50%; display: grid; justify-items: center; gap: .6rem; text-decoration: none;
+    font: 600 .64rem var(--font-body); letter-spacing: .22em; text-transform: uppercase; writing-mode: vertical-rl; color: rgba(246,239,230,.8); }
+  .scroll-cue i { width: 1px; height: 54px; background: rgba(246,239,230,.6); transform-origin: top; animation: cue 2.2s var(--ease) infinite; }
+  @keyframes cue { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+  /* ---------- 2. Intro ---------- */
+  .intro { padding-block: clamp(7rem, 16vw, 13rem); }
+  .intro-grid { display: grid; gap: clamp(2.5rem, 6vw, 5rem); }
+  .intro-text { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.75rem, 4.1vw, 3.5rem); line-height: 1.12; letter-spacing: -.02em; margin: 0; max-width: 24ch; text-wrap: pretty; font-variation-settings: "opsz" 96; }
+  .intro-text em { color: var(--accent); }
+  .mask-fig { margin: 0; }
+  .mask-fig .mask { overflow: hidden; background: color-mix(in srgb, var(--fg) 8%, transparent); }
+  .mask-fig img { width: 100%; height: 100%; object-fit: cover; }
+  .mask-fig figcaption { margin-top: .8rem; font-size: .82rem; color: var(--muted); }
+  .intro-fig .mask { aspect-ratio: 4 / 5; max-width: 100%; }
+  .facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin: 0; border-top: 1px solid var(--line); }
+  .facts div { padding: 1.1rem 1rem 1.1rem 0; border-bottom: 1px solid var(--line); min-width: 0; }
+  .facts dt { font: 600 .66rem var(--font-body); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: .35rem; }
+  .facts dd { margin: 0; font-family: var(--font-display); font-size: 1.15rem; line-height: 1.25; }
+
+  /* ---------- Marquee ---------- */
+  .marquee { overflow: hidden; border-block: 1px solid var(--line); padding-block: clamp(1rem, 2.4vw, 1.8rem); white-space: nowrap; user-select: none; }
+  .mq-track { display: inline-flex; will-change: transform; }
+  .mq-track span { font-family: var(--font-display); font-style: italic; font-weight: 300; font-size: clamp(2.6rem, 9vw, 7.4rem); line-height: 1; letter-spacing: -.03em; padding-right: .4em; }
+  .mq-track b { font-style: normal; font-weight: 400; color: var(--accent); font-size: .45em; vertical-align: middle; padding: 0 .5em; }
+
+  /* ---------- Chapter cards (clip-path wipes) ---------- */
+  .cc { height: 100svh; min-height: 520px; overflow: hidden; }
+  .cc-fill { position: absolute; inset: 0; background: var(--cc); }
+  .cc-fill.parts { background: none; }
+  .cc-fill.parts i { position: absolute; top: 0; bottom: 0; background: var(--cc); }
+  .cc-blinds .cc-fill i { width: calc(100% / 6 + 1px); left: calc(var(--i) * 100% / 6); }
+  .cc-doors .cc-fill i { width: 50.5%; }
+  .cc-doors .cc-fill i:last-child { right: 0; }
+  .cc-copy { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; color: var(--cc-fg); padding: 0 var(--gutter-r) 0 var(--gutter-l); }
+  .cc-num { font: 600 .74rem var(--font-body); letter-spacing: .3em; text-transform: uppercase; color: var(--cc-ac); margin: 0 0 1.4rem; }
+  .cc-title { font-family: var(--font-display); font-size: clamp(3.6rem, 15vw, 13rem); line-height: .86; letter-spacing: -.04em; }
+  .cc-sub { margin: 1.6rem 0 0; font-size: .95rem; opacity: .75; }
+  .rm .cc-fill { clip-path: none !important; }
+
+  /* Chapter type personalities */
+  [data-chapter="actress"] .cc-title, [data-chapter="actress"] .sec-title { font-style: italic; font-weight: 200; font-variation-settings: "opsz" 144, "SOFT" 0; }
+  [data-chapter="activist"] .cc-title, [data-chapter="activist"] .sec-title { font-weight: 800; text-transform: uppercase; letter-spacing: -.055em; font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; }
+  [data-chapter="activist"] .sec-title em { font-style: normal; }
+  [data-chapter="reader"] .cc-title, [data-chapter="reader"] .sec-title { font-weight: 420; font-variation-settings: "opsz" 72, "SOFT" 100, "WONK" 1; }
+  [data-chapter="style"] .cc-title, [data-chapter="style"] .sec-title { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: -.06em; }
+  [data-chapter="style"] .sec-title em { font-family: var(--font-display); font-style: italic; font-weight: 200; text-transform: none; letter-spacing: -.02em; }
+  [data-chapter="voice"] .cc-title { font-style: italic; font-weight: 300; font-variation-settings: "opsz" 144, "SOFT" 50; }
+
+  /* ---------- 3. Filmography ---------- */
+  .films { padding-block: clamp(6rem, 12vw, 10rem); }
+  .films::after { content: ''; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen; opacity: .35;
+    background: radial-gradient(40% 30% at 10% 20%, rgba(230,140,80,.25), transparent 70%); animation: leak 18s ease-in-out infinite alternate; }
+  @keyframes leak { to { transform: translate(55%, 60%) scale(1.4); } }
+  .sec-head { margin-bottom: clamp(2.5rem, 6vw, 4.5rem); }
+  .film-list { list-style: none; margin: 0; padding: 0; position: relative; z-index: 1; }
+  .film { position: relative; display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); grid-template-areas: "y t" "y r"; column-gap: 1rem; padding: 1.15rem 0; transition: opacity .4s; }
+  .f-line { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--line); transform-origin: left; }
+  .f-year { grid-area: y; padding-top: .55em; font: 600 .78rem var(--font-body); letter-spacing: .12em; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .f-title { grid-area: t; font-family: var(--font-display); font-style: italic; font-weight: 300; font-size: clamp(1.6rem, 4.6vw, 3.6rem); line-height: 1.02; letter-spacing: -.02em;
+    transition: transform .6s var(--ease), color .4s; font-variation-settings: "opsz" 144; }
+  .f-title small { font: 600 .66rem var(--font-body); letter-spacing: .16em; text-transform: uppercase; color: var(--accent); font-style: normal; vertical-align: middle; margin-left: .6rem; }
+  .f-role { grid-area: r; color: var(--muted); font-size: .95rem; margin-top: .3rem; }
+  .f-thumb { display: none; }
+  @media (hover: hover) and (pointer: fine) {
+    .film-list:hover .film { opacity: .35; }
+    .film-list .film:hover { opacity: 1; }
+    .film:hover .f-title { transform: translateX(1rem); color: var(--accent); }
+  }
+  @media (hover: none), (pointer: coarse) {
+    .film { grid-template-columns: 4.4rem minmax(0, 1fr) 56px; grid-template-areas: "y t p" "y r p"; }
+    .f-thumb { display: block; grid-area: p; width: 56px; height: 70px; object-fit: cover; align-self: center; }
+    .film.no-img { grid-template-columns: 4.4rem minmax(0, 1fr); grid-template-areas: "y t" "y r"; }
+  }
+  @media (min-width: 900px) {
+    .film { grid-template-columns: 8rem minmax(0, 1fr) 16rem; grid-template-areas: "y t r"; align-items: baseline; }
+    .f-role { text-align: right; margin: 0; }
+  }
+  .film-preview { position: fixed; left: 0; top: 0; z-index: 70; width: clamp(200px, 18vw, 280px); aspect-ratio: 4 / 5; pointer-events: none; overflow: hidden;
+    opacity: 0; visibility: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.45); }
+  .film-preview img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---------- Moments (image trail) ---------- */
+  .moments { height: 100svh; min-height: 560px; overflow: hidden; touch-action: pan-y; }
+  .mo-trail { position: absolute; inset: 0; }
+  .trail-img { position: absolute; left: 0; top: 0; width: clamp(130px, 17vw, 250px); aspect-ratio: 4 / 5; object-fit: cover; opacity: 0; pointer-events: none; will-change: transform, opacity; box-shadow: 0 20px 50px rgba(0,0,0,.4); }
+  .mo-copy { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; pointer-events: none; z-index: 2; mix-blend-mode: difference; color: #fff; }
+  .mo-copy .eyebrow { color: rgba(255,255,255,.75); }
+  .mo-title { font-family: var(--font-display); font-style: italic; font-weight: 200; font-size: clamp(4.6rem, 23vw, 21rem); line-height: .85; letter-spacing: -.05em; font-variation-settings: "opsz" 144; }
+  .mo-hint { margin: 1.4rem 0 0; font: 600 .68rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; }
+  .mo-static { display: none; }
+  .rm .mo-trail, .rm .mo-hint { display: none; }
+  .rm .moments { height: auto; padding-block: 6rem; }
+  .rm .mo-copy { position: relative; mix-blend-mode: normal; color: var(--fg); }
+  .rm .mo-static { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; list-style: none; margin: 3rem auto 0; padding: 0 var(--gutter-r) 0 var(--gutter-l); max-width: 1320px; }
+  .rm .mo-static img { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; }
+
+  /* ---------- 4. Activism ---------- */
+  .activism { padding-block: clamp(6rem, 12vw, 10rem); }
+  .tricolor { display: flex; gap: 6px; margin: 1.6rem 0 0; }
+  .tricolor i { display: block; width: 3.2rem; height: 6px; transform-origin: left; }
+  .tricolor i:nth-child(1) { background: var(--c-activist-ac); }
+  .tricolor i:nth-child(2) { background: color-mix(in srgb, var(--fg) 12%, transparent); }
+  .tricolor i:nth-child(3) { background: var(--c-activist-2); }
+  .act-grid { display: grid; gap: clamp(2.5rem, 6vw, 5rem); }
+  .act-fig .mask { aspect-ratio: 4 / 5; max-width: 100%; }
+  .act-rows { list-style: none; margin: 0; padding: 0; }
+  .act-row { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: .6rem; padding: 1.8rem 0; }
+  .act-line { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--fg); transform-origin: left; }
+  .act-date { font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1; letter-spacing: -.04em; color: var(--accent); font-variant-numeric: tabular-nums; font-variation-settings: "opsz" 144, "SOFT" 0; }
+  .act-row h4 { font: 700 1.05rem var(--font-body); letter-spacing: .04em; text-transform: uppercase; }
+  .act-row p { margin: 0; color: var(--muted); max-width: 46ch; }
+  @media (min-width: 900px) {
+    .act-grid { grid-template-columns: 5fr 7fr; align-items: start; }
+    .act-row { grid-template-columns: 15rem minmax(0, 1fr); column-gap: 2rem; }
+    .act-row > div { padding-top: .4rem; }
+  }
+
+  /* ---------- 5. Reading ---------- */
+  .reading { padding-block: clamp(6rem, 12vw, 10rem); }
+  .read-grid { display: grid; gap: clamp(3rem, 7vw, 6rem); }
+  .read-copy p { max-width: 54ch; margin: 0 0 1.2rem; }
+  .read-copy .dropcap::first-letter { float: left; font-family: var(--font-display); font-weight: 600; font-size: 4.4em; line-height: .78; padding: .06em .1em 0 0; color: var(--accent); font-variation-settings: "SOFT" 100, "WONK" 1; }
+  .read-copy cite { font-style: italic; font-family: var(--font-display); }
+  .pen { position: relative; background: none; color: inherit; white-space: nowrap; font-weight: 600; }
+  .pen svg { position: absolute; left: -3%; bottom: -.38em; width: 106%; height: .7em; overflow: visible; pointer-events: none; }
+  .pen path { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+  .shelf-wrap { display: grid; gap: 1.6rem; align-content: start; }
+  .shelf { display: flex; align-items: flex-end; gap: clamp(8px, 1.4vw, 14px); height: clamp(300px, 40vw, 430px); padding: 0 1rem; border-bottom: 12px solid color-mix(in srgb, var(--fg) 75%, var(--bg)); perspective: 900px; }
+  .book { position: relative; width: clamp(54px, 7.5vw, 82px); height: var(--h); background: var(--c); color: var(--bc, #f3ead8); border-radius: 3px 3px 1px 1px; transform-origin: 50% 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: .9rem 0; box-shadow: inset -6px 0 10px rgba(0,0,0,.18), inset 3px 0 0 rgba(255,255,255,.12); }
+  .book .t { writing-mode: vertical-rl; transform: rotate(180deg); font-family: var(--font-display); font-size: clamp(.82rem, 1.3vw, 1.05rem); line-height: 1.1; white-space: nowrap; }
+  .book .a { font: 700 .58rem var(--font-body); letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+  .book-notes { list-style: none; margin: 0; padding: 0; display: grid; gap: .9rem; }
+  .book-notes li { display: grid; grid-template-columns: 1.4rem minmax(0, 1fr); gap: .6rem; font-size: .95rem; }
+  .book-notes b { font: 700 .7rem var(--font-body); color: var(--accent); padding-top: .25rem; }
+  .book-notes cite { font-family: var(--font-display); font-style: italic; }
+  .book-notes span { color: var(--muted); }
+  @media (min-width: 900px) { .read-grid { grid-template-columns: 1fr 1fr; align-items: center; } }
+
+  /* ---------- 6. Style (horizontal gallery) ---------- */
+  .hs-pin { position: relative; height: 100svh; min-height: 560px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: calc(5vh + env(safe-area-inset-bottom, 0px)); }
+  .hs-bgword { position: absolute; left: 0; bottom: -.12em; margin: 0; font: 800 38vw/1 var(--font-body); text-transform: uppercase; letter-spacing: -.06em; color: transparent;
+    -webkit-text-stroke: 1px var(--line); white-space: nowrap; pointer-events: none; }
+  .hs-head { position: absolute; top: calc(80px + env(safe-area-inset-top, 0px)); left: var(--gutter-l); right: var(--gutter-r); }
+  .hs-head .sec-title { font-size: clamp(2.2rem, 6vw, 5rem); }
+  .hs-track { display: flex; gap: clamp(16px, 3vw, 48px); padding-left: var(--gutter-l); padding-right: 20vw; width: max-content; will-change: transform; }
+  .hs-card { flex: 0 0 auto; width: min(calc(52svh * .75), 74vw); perspective: 1100px; }
+  .hs-card:nth-child(even) { margin-top: 6svh; }
+  .hs-media { overflow: hidden; aspect-ratio: 3 / 4; max-width: 100%; background: color-mix(in srgb, var(--fg) 8%, transparent); transform-origin: 0 50%; }
+  .hs-media img { width: 124%; max-width: none; height: 100%; margin-left: -12%; object-fit: cover; }
+  .hs-cap { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: .9rem; margin-top: .9rem; }
+  .hs-yr { font: 600 .74rem var(--font-body); letter-spacing: .14em; color: var(--accent); padding-top: .2rem; font-variant-numeric: tabular-nums; }
+  .hs-cap h4 { font: 700 1rem var(--font-body); text-transform: uppercase; letter-spacing: .02em; }
+  .hs-cap p { grid-column: 2; margin: .2rem 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45; }
+  .hs-fact { flex: 0 0 auto; align-self: center; width: min(300px, 64vw); border-top: 1px solid var(--line); padding-top: 1.2rem; }
+  .hf-yr { display: block; font-family: var(--font-display); font-style: italic; font-weight: 200; font-size: clamp(3.4rem, 7vw, 5.6rem); line-height: .9; letter-spacing: -.04em; color: var(--accent); }
+  .hs-fact h4 { font: 700 1rem var(--font-body); text-transform: uppercase; letter-spacing: .02em; margin-top: .8rem; }
+  .hs-fact p { margin: .4rem 0 0; color: var(--muted); font-size: .9rem; line-height: 1.5; }
+  .hs-end { flex: 0 0 auto; align-self: center; width: min(70vw, 360px); font-family: var(--font-display); font-style: italic; font-weight: 200; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.05; }
+  .hs-end small { display: block; font: 600 .68rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-style: normal; margin-bottom: .8rem; }
+  .hs-progress { position: absolute; left: var(--gutter-l); right: var(--gutter-r); bottom: calc(2vh + env(safe-area-inset-bottom, 0px)); height: 1px; background: var(--line); }
+  .hs-progress i { position: absolute; inset: 0; background: var(--fg); transform-origin: left; transform: scaleX(0); }
+  .rm .hs-pin { height: auto; padding-block: 7rem 4rem; }
+  .rm .hs-head { position: relative; top: 0; left: 0; right: 0; padding: 0 var(--gutter-r) 2.5rem var(--gutter-l); }
+  .rm .hs-track { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1.4rem; }
+  .rm .hs-card, .rm .hs-fact { scroll-snap-align: start; }
+  .rm .hs-progress, .rm .hs-bgword { display: none; }
+
+  /* ---------- 7. Voice (pinned quotes) ---------- */
+  .vs-stage { position: relative; height: 100svh; min-height: 560px; overflow: hidden; background: var(--vbg); color: var(--vfg); }
+  .vs-media { position: absolute; overflow: hidden; right: var(--gutter-r); top: calc(84px + env(safe-area-inset-top, 0px)); width: clamp(140px, 30vw, 420px); aspect-ratio: 3 / 4; max-width: 100%; }
+  .vs-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .vs-copy { position: absolute; left: var(--gutter-l); right: var(--gutter-r); bottom: calc(6vh + env(safe-area-inset-bottom, 0px)); }
+  .vs-eyebrow { color: color-mix(in srgb, var(--vfg) 70%, transparent); }
+  .vs-quotes { display: grid; }
+  .vs-q { grid-area: 1 / 1; margin: 0; align-self: end; }
+  .vs-q p { margin: 0; font-family: var(--font-display); font-style: italic; font-weight: 300; font-size: clamp(2.1rem, 6.6vw, 5.8rem); line-height: 1.02; letter-spacing: -.025em; max-width: 17ch; text-wrap: balance; font-variation-settings: "opsz" 144, "SOFT" 50; }
+  .vs-foot { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid color-mix(in srgb, var(--vfg) 25%, transparent); }
+  .vs-cite { margin: 0; font-size: .9rem; color: color-mix(in srgb, var(--vfg) 78%, transparent); }
+  .vs-count { font: 600 .74rem var(--font-body); letter-spacing: .16em; color: var(--vac); font-variant-numeric: tabular-nums; }
+  @media (min-width: 900px) { .vs-media { top: 50%; transform: translateY(-50%); } .vs-copy { right: calc(var(--gutter-r) + clamp(140px, 30vw, 420px) + 4vw); } }
+  .rm .vs-stage { height: auto; padding: 7rem 0 5rem; }
+  .rm .vs-media { display: none; }
+  .rm .vs-copy { position: relative; left: auto; right: auto; bottom: auto; padding: 0 var(--gutter-r) 0 var(--gutter-l); }
+  .rm .vs-quotes { gap: 2.4rem; }
+  .rm .vs-q { grid-area: auto; }
+  .rm .vs-count { display: none; }
+
+  /* ---------- Credits ---------- */
+  .credits { padding-block: clamp(8rem, 16vw, 12rem) calc(6rem + env(safe-area-inset-bottom, 0px)); text-align: center; overflow: hidden; }
+  .cr-fin { margin: 0; font-family: var(--font-display); font-style: italic; font-weight: 200; font-size: clamp(5rem, 22vw, 17rem); line-height: .85; letter-spacing: -.04em; font-variation-settings: "opsz" 144; }
+  .cr-list { margin: 4rem auto 0; max-width: 560px; display: grid; gap: 1.4rem; }
+  .cr-list dt { font: 600 .66rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+  .cr-list dd { margin: .3rem 0 0; font-family: var(--font-display); font-size: clamp(1.3rem, 2.6vw, 1.8rem); line-height: 1.2; }
+  .cr-note { margin: 4rem auto 0; max-width: 52ch; color: var(--muted); font-size: .92rem; }
+  .cr-note strong { color: var(--fg); font-weight: 600; }
+  .cr-top { display: inline-flex; align-items: center; gap: .6rem; margin-top: 3rem; padding: 1rem 1.6rem; border: 1px solid var(--line); border-radius: 999px; text-decoration: none;
+    font: 600 .72rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; transition: background-color .4s, color .4s; }
+  .cr-top:hover { background: var(--fg); color: var(--bg); }
+
+  @media (min-width: 900px) {
+    .intro-grid { grid-template-columns: 7fr 4fr; align-items: end; }
+    .intro-grid .facts { grid-column: 1 / -1; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) { .bar-chapter { font-size: .58rem; letter-spacing: .14em; } .hero-kicker span:last-child { display: none; } .scroll-cue { display: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Preloader: counts up, then its window grows into the hero -->
+<div id="loader" aria-hidden="true">
+  <div class="ld-top"><span>Emma Watson · A life in chapters</span><span>Unofficial fan tribute</span></div>
+  <p class="ld-chapter" id="ld-chapter">Prologue</p>
+  <div class="ld-bar"><i id="ld-bar"></i></div>
+  <p class="ld-count" id="ld-num">000</p>
+  <div class="ld-gate" id="ld-gate" hidden>
+    <p class="ld-gate-note">This film has sound.</p>
+    <div class="ld-gate-btns">
+      <button class="ld-btn main" id="enter-sound" data-magnetic>Enter with sound</button>
+      <button class="ld-btn" id="enter-silent" data-magnetic>Enter in silence<i aria-hidden="true"></i></button>
+    </div>
+  </div>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+<div id="cursor" aria-hidden="true"><div class="c-ring"><span class="c-label">View</span></div><div class="c-dot"></div></div>
+
+<div id="wipe" aria-hidden="true">
+  <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path id="wipe-path" d="M0 100 V100 Q50 100 100 100 V100 z"/></svg>
+  <p class="wipe-title" id="wipe-title"></p>
+</div>
+<div class="film-preview" aria-hidden="true"><img alt=""></div>
+
+<header class="bar" id="bar">
+  <a href="#hero" class="brand" data-magnetic data-nav="Prologue" aria-label="Back to the beginning">E.W.</a>
+  <p class="bar-chapter"><span class="sr-only">Current chapter: </span><span id="chapter-now">Prologue</span></p>
+  <div class="bar-actions">
+    <button class="sound-btn" id="sound-btn" data-magnetic aria-pressed="false" aria-label="Sound"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="sb-label">Sound off</span></button>
+    <button class="menu-btn" id="menu-btn" data-magnetic aria-expanded="false" aria-controls="menu"><span data-scramble>Menu</span></button>
+  </div>
+</header>
+
+<div id="menu" role="dialog" aria-modal="true" aria-label="Chapters" hidden>
+  <div class="m-panels" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="m-inner">
+    <button class="m-close" id="menu-close" data-magnetic><span data-scramble>Close</span></button>
+    <nav aria-label="Chapters">
+      <ol class="m-list">
+        <li><a href="#hero" data-nav="Prologue" data-accent="prologue"><span class="m-num">00</span><span data-scramble>Prologue</span></a></li>
+        <li><a href="#ch-actress" data-nav="Chapter I · The Actress" data-accent="actress"><span class="m-num">I</span><span data-scramble>The Actress</span></a></li>
+        <li><a href="#ch-activist" data-nav="Chapter II · The Activist" data-accent="activist"><span class="m-num">II</span><span data-scramble>The Activist</span></a></li>
+        <li><a href="#ch-reader" data-nav="Chapter III · The Reader" data-accent="reader"><span class="m-num">III</span><span data-scramble>The Reader</span></a></li>
+        <li><a href="#ch-style" data-nav="Chapter IV · The Style" data-accent="style"><span class="m-num">IV</span><span data-scramble>The Style</span></a></li>
+        <li><a href="#ch-voice" data-nav="Chapter V · The Voice" data-accent="voice"><span class="m-num">V</span><span data-scramble>The Voice</span></a></li>
+      </ol>
+    </nav>
+    <p class="m-note">Unofficial fan site. Not affiliated with Emma Watson, her representatives, UN Women or HeForShe.</p>
+  </div>
+</div>
+
+<main id="main" tabindex="-1">
+
+  <!-- ================= PROLOGUE ================= -->
+  <section id="hero" class="hero" data-theme="prologue" data-label="Prologue" aria-labelledby="hero-title">
+    <div class="hero-media" id="hero-media" role="img" aria-label="Portrait of Emma Watson (image slot)">
+      <canvas id="gl" aria-hidden="true"></canvas>
+      <img class="hero-fallback" data-slot="hero" alt="" fetchpriority="high">
+    </div>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <p class="hero-kicker"><span>A life in chapters</span><span>Paris · 15 April 1990</span></p>
+    <div class="hero-copy">
+      <h1 class="hero-title" id="hero-title"><span class="ht-line">Emma</span> <span class="ht-line ht-it">Watson</span></h1>
+      <div class="hero-foot">
+        <p class="hero-lede">Actress, activist, reader. A fan's tribute told as a film in five chapters.</p>
+        <p class="badge">Unofficial fan site</p>
+      </div>
+    </div>
+    <a class="scroll-cue" href="#intro" data-magnetic data-smooth><span>Scroll</span><i></i></a>
+  </section>
+
+  <section id="intro" class="intro glow" data-theme="prologue" data-label="Prologue" aria-labelledby="intro-label">
+    <div class="wrap intro-grid">
+      <div>
+        <p class="eyebrow" id="intro-label">Prologue</p>
+        <p class="intro-text" id="intro-text">Born in Paris on 15 April 1990 and raised in Oxfordshire, Emma Watson was nine when she was cast as <em>Hermione Granger</em>. She grew up on screen, studied English literature at Brown University and became a UN Women Goodwill Ambassador.</p>
+      </div>
+      <figure class="mask-fig intro-fig" data-cursor="view">
+        <div class="mask"><img data-slot="intro" alt="" loading="lazy"></div>
+        <figcaption data-caption="intro"></figcaption>
+      </figure>
+      <dl class="facts" id="facts">
+        <div><dt>Born</dt><dd>Paris, 15 April 1990</dd></div>
+        <div><dt>First film</dt><dd>Philosopher's Stone, 2001</dd></div>
+        <div><dt>Degree</dt><dd>BA English literature, Brown, 2014</dd></div>
+        <div><dt>Appointed 2014</dt><dd>UN Women Goodwill Ambassador</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="marquee" data-dir="1" aria-hidden="true">
+    <div class="mq-track"><span>Actress<b>✦</b>Activist<b>✦</b>Reader<b>✦</b>Style<b>✦</b>Voice<b>✦</b></span><span>Actress<b>✦</b>Activist<b>✦</b>Reader<b>✦</b>Style<b>✦</b>Voice<b>✦</b></span></div>
+  </div>
+
+  <!-- ================= CHAPTER I · THE ACTRESS ================= -->
+  <section id="ch-actress" class="cc" data-wipe="circle" data-chapter="actress" data-theme="actress" data-label="I · The Actress" style="--cc: var(--c-actress); --cc-fg: var(--c-actress-fg); --cc-ac: var(--c-actress-ac)" aria-labelledby="cc1">
+    <div class="cc-fill" aria-hidden="true"></div>
+    <div class="cc-copy"><p class="cc-num">Chapter I</p><h2 class="cc-title" id="cc1">The Actress</h2><p class="cc-sub">From Hogwarts to Little Women · 2001–2019</p></div>
+  </section>
+
+  <section id="films" class="films glow" data-chapter="actress" data-theme="actress" data-label="I · The Actress" aria-labelledby="films-title">
+    <div class="wrap">
+      <header class="sec-head"><p class="eyebrow">Filmography</p><h3 class="sec-title" id="films-title">Roles, in order of <em>appearance</em></h3></header>
+      <ol class="film-list">
+        <li class="film" data-cursor="view" data-slot="films.hp"><span class="f-year">2001–11</span><span class="f-title">Harry Potter<small>8 films</small></span><span class="f-role">Hermione Granger</span><img class="f-thumb" data-slot="films.hp" alt="" loading="lazy"><i class="f-line"></i></li>
+        <li class="film" data-cursor="view" data-slot="films.balletshoes"><span class="f-year">2007</span><span class="f-title">Ballet Shoes</span><span class="f-role">Pauline Fossil · TV film</span><img class="f-thumb" data-slot="films.balletshoes" alt="" loading="lazy"><i class="f-line"></i></li>
+        <li class="film" data-cursor="view" data-slot="films.despereaux"><span class="f-year">2008</span><span class="f-title">The Tale of Despereaux</span><span class="f-role">Princess Pea · voice</span><img class="f-thumb" data-slot="films.despereaux" alt="" loading="lazy"><i class="f-line"></i></li>
+        <li class="film" data-cursor="view" data-slot="films.marilyn"><span class="f-year">2011</span><span class="f-title">My Week with Marilyn</span><span class="f-role">Lucy</span><img class="f-thumb" data-slot="films.marilyn" alt="" loading="lazy"><i class="f-line"></i></li>
+        <li class="film" data-cursor="view" data-slot="films.perks"><span class="f-year">2012</span><span class="f-title">The Perks of Being a Wallflower</span><span class="f-role">Sam</span><img class="f-thumb" data-slot="films.perks" alt="" loading="lazy"><i class="f-line"></i></li>
+        <li class="film" data-cursor="view" data-slot="films.blingring"><span class="f-year">2013</span><span class="f-title">The Bling Ring</span><span class="f-role">Nicki</span><img class="f-thumb" data-slot="films.blingring" alt="" loading="lazy"><i class="f-line"></i></li>
+        <li class="film" data-cursor="view" data-slot="films.thisistheend"><span class="f-year">2013</span><span class="f-title">This Is the End</span><span class="f-role">Herself</span><img class="f-thumb" data-slot="films.thisistheend" alt="" loading="lazy"><i class="f-line"></i></li>
+        <li class="film" data-cursor="view" data-slot="films.noah"><span class="f-year">2014</span><span class="f-title">Noah</span><span class="f-role">Ila</span><img class="f-thumb" data-slot="films.noah" alt="" loading="lazy"><i class="f-line"></i></li>
+        <li class="film" data-cursor="view" data-slot="films.colonia"><span class="f-year">2015</span><span class="f-title">Colonia</span><span class="f-role">Lena</span><img class="f-thumb" data-slot="films.colonia" alt="" loading="lazy"><i class="f-line"></i></li>
+        <li class="film" data-cursor="view" data-slot="films.regression"><span class="f-year">2015</span><span class="f-title">Regression</span><span class="f-role">Angela Gray</span><img class="f-thumb" data-slot="films.regression" alt="" loading="lazy"><i class="f-line"></i></li>
+        <li class="film" data-cursor="view" data-slot="films.beauty"><span class="f-year">2017</span><span class="f-title">Beauty and the Beast</span><span class="f-role">Belle</span><img class="f-thumb" data-slot="films.beauty" alt="" loading="lazy"><i class="f-line"></i></li>
+        <li class="film" data-cursor="view" data-slot="films.circle"><span class="f-year">2017</span><span class="f-title">The Circle</span><span class="f-role">Mae Holland</span><img class="f-thumb" data-slot="films.circle" alt="" loading="lazy"><i class="f-line"></i></li>
+        <li class="film" data-cursor="view" data-slot="films.littlewomen"><span class="f-year">2019</span><span class="f-title">Little Women</span><span class="f-role">Meg March</span><img class="f-thumb" data-slot="films.littlewomen" alt="" loading="lazy"><i class="f-line"></i></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="moments" class="moments" data-chapter="actress" data-theme="actress" data-label="Interlude · Moments" aria-labelledby="mo-title">
+    <div class="mo-trail" id="trail" aria-hidden="true"></div>
+    <div class="mo-copy"><p class="eyebrow">Interlude</p><h3 class="mo-title" id="mo-title">Moments</h3><p class="mo-hint" id="mo-hint">Move across the frame</p></div>
+    <ul class="mo-static" id="mo-static"></ul>
+  </section>
+
+  <div class="marquee" data-dir="-1" aria-hidden="true">
+    <div class="mq-track"><span>UN Women<b>✦</b>HeForShe<b>✦</b>New York<b>✦</b>20 September 2014<b>✦</b></span><span>UN Women<b>✦</b>HeForShe<b>✦</b>New York<b>✦</b>20 September 2014<b>✦</b></span></div>
+  </div>
+
+  <!-- ================= CHAPTER II · THE ACTIVIST ================= -->
+  <section id="ch-activist" class="cc cc-blinds" data-wipe="blinds" data-chapter="activist" data-theme="activist" data-label="II · The Activist" style="--cc: var(--c-activist); --cc-fg: var(--c-activist-fg); --cc-ac: var(--c-activist-ac)" aria-labelledby="cc2">
+    <div class="cc-fill parts" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i></div>
+    <div class="cc-copy"><p class="cc-num">Chapter II</p><h2 class="cc-title" id="cc2">The Activist</h2><p class="cc-sub">UN Women · HeForShe · from 2014</p></div>
+  </section>
+
+  <section id="activism" class="activism glow" data-chapter="activist" data-theme="activist" data-label="II · The Activist" aria-labelledby="act-title">
+    <div class="wrap">
+      <header class="sec-head"><p class="eyebrow">Activism &amp; UN Women</p><h3 class="sec-title" id="act-title">The work behind <em>the words</em></h3><div class="tricolor" aria-hidden="true"><i></i><i></i><i></i></div></header>
+      <div class="act-grid">
+        <figure class="mask-fig act-fig" data-cursor="view">
+          <div class="mask"><img data-slot="activism" alt="" loading="lazy"></div>
+          <figcaption data-caption="activism"></figcaption>
+        </figure>
+        <ol class="act-rows">
+          <li class="act-row"><i class="act-line" aria-hidden="true"></i><span class="act-date" data-final="07.2014">07.2014</span><div><h4>Goodwill Ambassador</h4><p>Appointed a UN Women Goodwill Ambassador.</p></div></li>
+          <li class="act-row"><i class="act-line" aria-hidden="true"></i><span class="act-date" data-final="20.09.2014">20.09.2014</span><div><h4>HeForShe</h4><p>Launches the HeForShe campaign with a speech at UN headquarters in New York, inviting men and boys to stand up for gender equality.</p></div></li>
+          <li class="act-row"><i class="act-line" aria-hidden="true"></i><span class="act-date" data-final="01.2015">01.2015</span><div><h4>Davos</h4><p>Speaks at the World Economic Forum in Davos to launch the HeForShe IMPACT 10x10x10 initiative.</p></div></li>
+          <li class="act-row"><i class="act-line" aria-hidden="true"></i><span class="act-date" data-final="2018">2018</span><div><h4>Justice and Equality Fund</h4><p>Donates £1 million to the UK Justice and Equality Fund, set up in support of the Time's Up movement.</p></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CHAPTER III · THE READER ================= -->
+  <section id="ch-reader" class="cc" data-wipe="page" data-chapter="reader" data-theme="reader" data-label="III · The Reader" style="--cc: var(--c-reader); --cc-fg: var(--c-reader-fg); --cc-ac: var(--c-reader-ac)" aria-labelledby="cc3">
+    <div class="cc-fill" aria-hidden="true"></div>
+    <div class="cc-copy"><p class="cc-num">Chapter III</p><h2 class="cc-title" id="cc3">The Reader</h2><p class="cc-sub">Book clubs, notes and the London Underground</p></div>
+  </section>
+
+  <section id="reading" class="reading glow" data-chapter="reader" data-theme="reader" data-label="III · The Reader" aria-labelledby="read-title">
+    <div class="wrap read-grid">
+      <div class="read-copy">
+        <header class="sec-head"><p class="eyebrow">Books &amp; reading</p><h3 class="sec-title" id="read-title">A shelf shared with <em>strangers</em></h3></header>
+        <p class="dropcap rd">In January 2016 Emma Watson started <mark class="pen">Our Shared Shelf</mark>, a feminist book club that met online. Its first pick was Gloria Steinem's <cite>My Life on the Road</cite>.</p>
+        <p class="rd">That November she hid copies of Maya Angelou's <cite>Mom &amp; Me &amp; Mom</cite> around the London Underground for commuters to find, each with a handwritten note, working with <mark class="pen">Books on the Underground</mark>.</p>
+        <p class="rd">Her own degree, from Brown University in 2014, is in English literature.</p>
+      </div>
+      <div class="shelf-wrap">
+        <div class="shelf" id="shelf" aria-hidden="true">
+          <div class="book" style="--h:86%; --c:#2f5442"><span class="t">My Life on the Road</span><span class="a">Steinem</span></div>
+          <div class="book" style="--h:72%; --c:#6e2a2a"><span class="t">Mom &amp; Me &amp; Mom</span><span class="a">Angelou</span></div>
+          <div class="book" style="--h:94%; --c:#283a5b"><span class="t">Little Women</span><span class="a">Alcott</span></div>
+          <div class="book" style="--h:80%; --c:#c39a4c; --bc:#23190f"><span class="t">Hogwarts: A History</span><span class="a">Fictional</span></div>
+        </div>
+        <ol class="book-notes" id="book-notes">
+          <li><b>01</b><div><cite>My Life on the Road</cite> <span>· Gloria Steinem. The first Our Shared Shelf pick, January 2016.</span></div></li>
+          <li><b>02</b><div><cite>Mom &amp; Me &amp; Mom</cite> <span>· Maya Angelou. Hidden on the London Underground, November 2016.</span></div></li>
+          <li><b>03</b><div><cite>Little Women</cite> <span>· Louisa May Alcott. She played Meg March in the 2019 film.</span></div></li>
+          <li><b>04</b><div><cite>Hogwarts: A History</cite> <span>· Hermione Granger's favourite reference, invented for the Harry Potter books.</span></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CHAPTER IV · THE STYLE ================= -->
+  <section id="ch-style" class="cc cc-doors" data-wipe="doors" data-chapter="style" data-theme="style" data-label="IV · The Style" style="--cc: var(--c-style); --cc-fg: var(--c-style-fg); --cc-ac: var(--c-style-ac)" aria-labelledby="cc4">
+    <div class="cc-fill parts" aria-hidden="true"><i></i><i></i></div>
+    <div class="cc-copy"><p class="cc-num">Chapter IV</p><h2 class="cc-title" id="cc4">The Style</h2><p class="cc-sub">Sustainability on the red carpet</p></div>
+  </section>
+
+  <section id="style" class="style" data-chapter="style" data-theme="style" data-label="IV · The Style" aria-labelledby="style-title">
+    <div class="hs-pin" id="hs-pin">
+      <p class="hs-bgword" id="hs-bgword" aria-hidden="true">Style</p>
+      <header class="hs-head"><p class="eyebrow">Style gallery</p><h3 class="sec-title" id="style-title">Fashion with a <em>conscience</em></h3></header>
+      <div class="hs-track" id="hs-track">
+        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.0" alt="" loading="lazy"></div><div class="hs-cap" data-cap="style.0"><span class="hs-yr"></span><h4></h4><p></p></div></article>
+        <article class="hs-fact"><span class="hf-yr">2009</span><h4>Burberry</h4><p>Fronts Burberry's autumn/winter 2009 campaign.</p></article>
+        <article class="hs-fact"><span class="hf-yr">2010</span><h4>People Tree</h4><p>Designs a collection with the fair-trade label People Tree.</p></article>
+        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.1" alt="" loading="lazy"></div><div class="hs-cap" data-cap="style.1"><span class="hs-yr"></span><h4></h4><p></p></div></article>
+        <article class="hs-fact"><span class="hf-yr">2011</span><h4>Lancôme</h4><p>Becomes a face of Lancôme.</p></article>
+        <article class="hs-fact"><span class="hf-yr">2016</span><h4>Met Gala</h4><p>Wears a Calvin Klein gown made partly from recycled plastic bottles, created with Eco-Age for the Green Carpet Challenge.</p></article>
+        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.2" alt="" loading="lazy"></div><div class="hs-cap" data-cap="style.2"><span class="hs-yr"></span><h4></h4><p></p></div></article>
+        <article class="hs-fact"><span class="hf-yr">2017</span><h4>The press tour</h4><p>Shares where her <em>Beauty and the Beast</em> press-tour outfits came from on the Instagram account @the_press_tour.</p></article>
+        <article class="hs-fact"><span class="hf-yr">2020</span><h4>Kering</h4><p>Joins the board of the luxury group Kering and chairs its sustainability committee.</p></article>
+        <article class="hs-card" data-cursor="view"><div class="hs-media"><img data-slot="style.3" alt="" loading="lazy"></div><div class="hs-cap" data-cap="style.3"><span class="hs-yr"></span><h4></h4><p></p></div></article>
+        <article class="hs-fact"><span class="hf-yr">2022</span><h4>Prada Paradoxe</h4><p>Becomes the face of the Prada Paradoxe fragrance.</p></article>
+        <p class="hs-end"><small>Next</small>Chapter V, the voice.</p>
+      </div>
+      <div class="hs-progress" aria-hidden="true"><i id="hs-bar"></i></div>
+    </div>
+  </section>
+
+  <div class="marquee" data-dir="1" aria-hidden="true">
+    <div class="mq-track"><span>If not me, who?<b>✦</b>If not now, when?<b>✦</b>If not me, who?<b>✦</b>If not now, when?<b>✦</b></span><span>If not me, who?<b>✦</b>If not now, when?<b>✦</b>If not me, who?<b>✦</b>If not now, when?<b>✦</b></span></div>
+  </div>
+
+  <!-- ================= CHAPTER V · THE VOICE ================= -->
+  <section id="ch-voice" class="cc" data-wipe="iris" data-chapter="voice" data-theme="voice" data-label="V · The Voice" style="--cc: var(--c-voice); --cc-fg: var(--c-voice-fg); --cc-ac: var(--c-voice-ac)" aria-labelledby="cc5">
+    <div class="cc-fill" aria-hidden="true"></div>
+    <div class="cc-copy"><p class="cc-num">Chapter V</p><h2 class="cc-title" id="cc5">The Voice</h2><p class="cc-sub">HeForShe · United Nations · 2014</p></div>
+  </section>
+
+  <section id="voice" class="voice" data-chapter="voice" data-theme="voice" data-label="V · The Voice" aria-labelledby="voice-title">
+    <div class="vs-stage" id="vs-stage">
+      <div class="vs-media" aria-hidden="true">
+        <img data-slot="voice.0" alt="" loading="lazy"><img data-slot="voice.1" alt="" loading="lazy"><img data-slot="voice.2" alt="" loading="lazy">
+      </div>
+      <div class="vs-copy">
+        <h3 class="sr-only" id="voice-title">Quotes from the HeForShe speech</h3>
+        <p class="eyebrow vs-eyebrow">From her HeForShe speech · United Nations, New York · 20 September 2014</p>
+        <div class="vs-quotes">
+          <blockquote class="vs-q"><p>Both men and women should feel free to be sensitive. Both men and women should feel free to be strong.</p></blockquote>
+          <blockquote class="vs-q"><p>Gender equality is your issue too.</p></blockquote>
+          <blockquote class="vs-q"><p>If not me, who? If not now, when?</p></blockquote>
+        </div>
+        <div class="vs-foot"><p class="vs-cite">Emma Watson</p><p class="vs-count" aria-hidden="true"><span id="vs-n">01</span> / 03</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CREDITS ================= -->
+  <footer id="credits" class="credits" data-theme="prologue" data-label="Credits">
+    <div class="wrap cr-roll">
+      <p class="cr-fin" id="cr-fin">Fin.</p>
+      <dl class="cr-list">
+        <div><dt>A fan tribute by</dt><dd id="credit-name"></dd></div>
+        <div><dt>In honour of</dt><dd>Emma Watson</dd></div>
+        <div><dt>Typography</dt><dd id="credit-type"></dd></div>
+        <div><dt>Motion</dt><dd>GSAP, ScrollTrigger, Lenis &amp; Three.js</dd></div>
+        <div><dt>Sound</dt><dd>An original score, synthesised live in your browser</dd></div>
+        <div><dt>Photography</dt><dd>© the original photographers and publishers</dd></div>
+      </dl>
+      <p class="cr-note"><strong>Unofficial fan site.</strong> Not affiliated with, endorsed by or connected to Emma Watson, her representatives, UN Women or HeForShe. The quotes on this page come from her public HeForShe speech at the United Nations on 20 September 2014.</p>
+      <a href="#hero" class="cr-top" data-magnetic data-nav="Prologue"><span data-scramble>Back to the beginning</span> <span aria-hidden="true">↑</span></a>
+    </div>
+  </footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+  'use strict';
+  const C = window.CONFIG;
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const HAS_GSAP = !!(window.gsap && window.ScrollTrigger);
+  const MOTION = HAS_GSAP && !REDUCE;
+  const root = document.documentElement;
+  if (!MOTION) root.classList.add('rm');
+  if (HAS_GSAP) { gsap.registerPlugin(ScrollTrigger); ScrollTrigger.config({ ignoreMobileResize: true }); }
+
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const fontsReady = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), wait(2500)]);
+
+  $('#credit-name').textContent = C.credit;
+
+  /* =====================================================================
+     IMAGE SLOTS: real image if CONFIG gives a src, otherwise a labelled
+     placeholder painted on a canvas. Both load lazily near the viewport.
+     ===================================================================== */
+  const slotOf = key => key.split('.').reduce((o, k) => (o ? o[k] : undefined), C.images);
+  const chapterOf = key => ({ hero: 'prologue', intro: 'prologue', films: 'actress', moments: 'actress', activism: 'activist', style: 'style', voice: 'voice' })[key.split('.')[0]] || 'prologue';
+  const hex = h => { h = h.replace('#', ''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); };
+  const rgba = (h, a) => `rgba(${hex(h).join(',')},${a})`;
+  const mix = (a, b, t) => { const A = hex(a), B = hex(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',')})`; };
+
+  function paintPlaceholder(key, w, h, centered = false) {
+    const slot = slotOf(key) || { label: key }, pal = C.chapters[chapterOf(key)];
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const x = c.getContext('2d');
+    const g = x.createLinearGradient(0, 0, w, h);
+    g.addColorStop(0, mix(pal.bg, pal.accent, .32)); g.addColorStop(1, mix(pal.bg, '#000000', .2));
+    x.fillStyle = g; x.fillRect(0, 0, w, h);
+    const cx = w * .7, cy = h * .3, R = Math.max(w, h) * .8;
+    const r = x.createRadialGradient(cx, cy, 0, cx, cy, R);
+    r.addColorStop(0, rgba(pal.accent, .55)); r.addColorStop(1, rgba(pal.accent, 0));
+    x.fillStyle = r; x.fillRect(0, 0, w, h);
+    x.strokeStyle = rgba(pal.fg, .07); x.lineWidth = Math.max(1, w / 700);
+    for (let i = 1; i < 16; i++) { x.beginPath(); x.arc(cx, cy, i * R / 16, 0, Math.PI * 2); x.stroke(); }
+    const m = Math.round(Math.min(w, h) * .06), t = m * .6;
+    x.strokeStyle = rgba(pal.fg, .5); x.lineWidth = Math.max(1, w / 500);
+    [[m, m, 1, 1], [w - m, m, -1, 1], [m, h - m, 1, -1], [w - m, h - m, -1, -1]].forEach(([px, py, sx, sy]) => {
+      x.beginPath(); x.moveTo(px, py + t * sy); x.lineTo(px, py); x.lineTo(px + t * sx, py); x.stroke();
+    });
+    const fs = Math.max(11, Math.round(Math.min(w, h) * (centered ? .032 : .042)));
+    const tx = centered ? w / 2 : Math.max(m * 1.5, w * .14);
+    x.fillStyle = pal.fg; x.textBaseline = 'top'; x.textAlign = centered ? 'center' : 'left';
+    x.font = `600 ${Math.round(fs * .78)}px ${C.fonts.body}`;
+    x.fillText('IMAGE SLOT', tx, centered ? h * .2 : m * 1.5);
+    x.font = `italic 300 ${Math.round(fs * 1.5)}px ${C.fonts.display}`;
+    const words = (slot.label || key).split(' '), lines = [], maxW = centered ? w * .28 : w - tx * 2;
+    let line = '';
+    words.forEach(wd => { const test = line ? line + ' ' + wd : wd; if (x.measureText(test).width > maxW && line) { lines.push(line); line = wd; } else line = test; });
+    lines.push(line);
+    const lh = fs * 1.6, top = centered ? h * .2 + fs * 1.8 : h - m * 1.5 - fs * 1.4 - lines.length * lh;
+    lines.forEach((l, i) => x.fillText(l, tx, top + i * lh));
+    x.globalAlpha = .7; x.font = `500 ${Math.round(fs * .7)}px ui-monospace, Menlo, monospace`;
+    x.fillText(`CONFIG.images.${key}`, tx, centered ? top + lines.length * lh + fs * .4 : h - m * 1.5 - fs * .8);
+    x.globalAlpha = 1;
+    return c;
+  }
+  const phCache = new Map();
+  function srcFor(key, long = 900) {
+    const slot = slotOf(key);
+    if (slot && slot.src) return slot.src;
+    if (phCache.has(key)) return phCache.get(key);
+    const [rw, rh] = String((slot && slot.ratio) || '4/5').split('/').map(Number);
+    const w = rw >= rh ? long : Math.round(long * rw / rh), h = rw >= rh ? Math.round(long * rh / rw) : long;
+    const url = paintPlaceholder(key, w, h).toDataURL('image/jpeg', .84);
+    phCache.set(key, url);
+    return url;
+  }
+  function fillImg(img) {
+    const key = img.dataset.slot, slot = slotOf(key) || {};
+    img.src = srcFor(key);
+    if (slot.src && slot.focus) img.style.objectPosition = `${slot.focus[0] * 100}% ${slot.focus[1] * 100}%`;
+    if (!img.alt && slot.alt !== undefined && !img.closest('[aria-hidden="true"]')) img.alt = slot.src ? slot.alt : `Image placeholder: ${slot.label}`;
+  }
+  $$('[data-cap]').forEach(cap => { const s = slotOf(cap.dataset.cap) || {}; $('.hs-yr', cap).textContent = s.kicker || ''; $('h4', cap).textContent = s.title || ''; $('p', cap).textContent = s.caption || ''; });
+  // films with no still get no preview, no thumbnail and no "View" cursor
+  $$('.film').forEach(row => { const s = slotOf(row.dataset.slot); if (!s || !s.src) { row.classList.add('no-img'); row.removeAttribute('data-cursor'); const t = $('.f-thumb', row); if (t) t.remove(); } });
+  $$('[data-caption]').forEach(f => { const s = slotOf(f.dataset.caption); f.textContent = s && s.caption ? s.caption : ''; });
+  const imgIO = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    imgIO.unobserve(e.target);
+    fontsReady.then(() => fillImg(e.target));
+  }), { rootMargin: '900px 0px' });
+  $$('img[data-slot]').forEach(img => imgIO.observe(img));
+  // the horizontal gallery sits off to the side, so load it once its section is near
+  const hsIO = new IntersectionObserver(es => { if (es[0].isIntersecting) { hsIO.disconnect(); fontsReady.then(() => $$('#hs-track img').forEach(fillImg)); } }, { rootMargin: '1200px 0px' });
+  hsIO.observe($('#style'));
+
+  /* =====================================================================
+     SPLIT TEXT into words (and optionally chars), keeping <em>/<cite> etc.
+     Screen readers get the original sentence; the pieces are aria-hidden.
+     ===================================================================== */
+  function split(el, mode = 'words', mask = false) {
+    if (!el || el.dataset.split) return el;
+    const text = el.textContent.replace(/\s+/g, ' ').trim();
+    const sr = document.createElement('span'); sr.className = 'sr-only'; sr.textContent = text;
+    const vis = document.createElement('span'); vis.className = 'split' + (mask ? ' is-mask' : ''); vis.setAttribute('aria-hidden', 'true');
+    const walk = (node, parent) => node.childNodes.forEach(n => {
+      if (n.nodeType === 3) {
+        n.textContent.split(/(\s+)/).forEach(part => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { parent.append(' '); return; }
+          const w = document.createElement('span'); w.className = 'w';
+          const wi = document.createElement('span'); wi.className = 'wi';
+          if (mode === 'chars') [...part].forEach(ch => { const s = document.createElement('span'); s.className = 'c'; s.textContent = ch; wi.append(s); });
+          else wi.textContent = part;
+          w.append(wi); parent.append(w);
+        });
+      } else if (n.nodeType === 1) { const clone = n.cloneNode(false); parent.append(clone); walk(n, clone); }
+    });
+    walk(el, vis);
+    el.textContent = ''; el.append(sr, vis); el.dataset.split = mode;
+    return el;
+  }
+
+  /* =====================================================================
+     TEXT SCRAMBLE (hover, focus, chapter label)
+     ===================================================================== */
+  const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&*/+=';
+  function scramble(el, to) {
+    const final = to !== undefined ? to : (el.dataset.text || (el.dataset.text = el.textContent));
+    if (to !== undefined) el.dataset.text = to;
+    if (REDUCE) { el.textContent = final; return; }
+    cancelAnimationFrame(el._scr);
+    let f = 0; const total = 16;
+    const step = () => {
+      f++;
+      el.textContent = [...final].map((ch, i) => (ch === ' ' || i < (f / total) * final.length) ? ch : GLYPHS[(Math.random() * GLYPHS.length) | 0]).join('');
+      if (f < total) el._scr = requestAnimationFrame(step); else el.textContent = final;
+    };
+    step();
+  }
+  $$('[data-scramble]').forEach(el => {
+    const host = el.closest('a, button') || el;
+    host.addEventListener('pointerenter', () => scramble(el));
+    host.addEventListener('focus', () => scramble(el));
+  });
+
+  /* =====================================================================
+     SMOOTH SCROLL (Lenis) driving ScrollTrigger
+     ===================================================================== */
+  let lenis = null;
+  if (MOTION && window.Lenis) {
+    lenis = new Lenis({ duration: 1.15, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(time => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+    lenis.stop();
+  }
+  const scrollToEl = (el, immediate) => {
+    if (lenis) lenis.scrollTo(el, { immediate, force: true, offset: 1 });
+    else el.scrollIntoView({ behavior: immediate || REDUCE ? 'auto' : 'smooth' });
+  };
+
+  /* =====================================================================
+     SOUND DESIGN: an original score and effects, synthesised live with the
+     Web Audio API (no audio files, no recordings). Silent until the visitor
+     chooses sound. Each chapter has its own chord, texture and rhythm.
+     ===================================================================== */
+  const Sound = (() => {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    const hz = m => 440 * Math.pow(2, (m - 69) / 12);            // MIDI note → frequency
+    // chord = MIDI notes (bass first) · bright = pad filter in Hz · texture = the chapter's extra layer
+    const SCORE = {
+      prologue: { chord: [38, 50, 57, 60, 65, 69], bright: 900,  texture: 'shimmer' },             // D minor 7: anticipation
+      actress:  { chord: [41, 53, 57, 60, 64, 67], bright: 1300, texture: 'projector' },           // F major 9: warm, filmic
+      activist: { chord: [36, 48, 55, 58, 63, 67], bright: 1600, texture: 'heartbeat', bpm: 96 }, // C minor 7: resolve
+      reader:   { chord: [43, 55, 59, 62, 66, 71], bright: 1100, texture: 'bells' },               // G major 7: gentle
+      style:    { chord: [33, 45, 52, 57, 60, 71], bright: 2100, texture: 'runway', bpm: 116 },    // A minor add 9: night drive
+      voice:    { chord: [38, 50, 57, 60, 65, 69], bright: 700,  texture: 'none' },                // moves with VOICE below
+      fin:      { chord: [38, 50, 57, 61, 64, 69], bright: 1200, texture: 'shimmer' }              // D major 9: resolution
+    };
+    const VOICE = [[38, 50, 57, 60, 65, 69], [34, 46, 53, 57, 62, 65], [41, 53, 57, 60, 65, 67]];  // night Dm7 → dusk B♭maj7 → dawn F add 9
+    const PATTERNS = {                                               // one step = a 16th note; numbers are hit strength
+      heartbeat: { steps: 8,  kick: [1, 0, .6, 0, 0, 0, 0, 0], hat: [] },
+      runway:    { steps: 16, kick: [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0], hat: [0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, .5] }
+    };
+    let ctx, master, music, fx, verb, noise, padFilter, proj, air, airFilter, shimmerGain, timer = null;
+    const voices = [];
+    let on = false, current = 'prologue', voiceIdx = 0, nextStep = 0, step = 0, nextBell = 0, lastBlip = 0, lastPling = 0, quietUntil = 0;
+    const quiet = () => performance.now() < quietUntil;
+    const chordNow = () => (current === 'voice' ? VOICE[voiceIdx] : SCORE[current].chord);
+    const env = (param, t, peak, attack, release) => {
+      param.setValueAtTime(.0001, t); param.exponentialRampToValueAtTime(peak, t + attack); param.exponentialRampToValueAtTime(.0001, t + attack + release);
+    };
+    const loopNoise = () => { const n = ctx.createBufferSource(); n.buffer = noise; n.loop = true; n.start(0, Math.random() * 2); return n; };
+    const noiseHit = (t, dur) => { const n = ctx.createBufferSource(); n.buffer = noise; n.start(t, Math.random()); n.stop(t + dur); return n; };
+
+    function build() {
+      ctx = new AC();
+      const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 4;
+      master = ctx.createGain(); master.gain.value = 0;
+      master.connect(comp).connect(ctx.destination);
+      // reverb: a convolver fed with three seconds of decaying noise
+      verb = ctx.createConvolver();
+      const len = ctx.sampleRate * 3, ir = ctx.createBuffer(2, len, ctx.sampleRate);
+      for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3.2); }
+      verb.buffer = ir;
+      const wet = ctx.createGain(); wet.gain.value = .45; verb.connect(wet).connect(master);
+      music = ctx.createGain(); music.gain.value = .55; music.connect(master);
+      fx = ctx.createGain(); fx.gain.value = .8; fx.connect(master);
+      noise = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+      const nd = noise.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+
+      // PAD: six voices that glide between chords through one slowly breathing filter
+      padFilter = ctx.createBiquadFilter(); padFilter.type = 'lowpass'; padFilter.Q.value = .8; padFilter.frequency.value = SCORE.prologue.bright;
+      const lfo = ctx.createOscillator(), lfoAmt = ctx.createGain();
+      lfo.frequency.value = .06; lfoAmt.gain.value = 260; lfo.connect(lfoAmt).connect(padFilter.frequency); lfo.start();
+      const pad = ctx.createGain(), send = ctx.createGain(); send.gain.value = .6;
+      padFilter.connect(pad); pad.connect(music); pad.connect(send).connect(verb);
+      SCORE.prologue.chord.forEach((m, i) => {
+        const g = ctx.createGain(); g.gain.value = i === 0 ? .16 : .045; g.connect(padFilter);
+        voices.push((i === 0 ? ['sine', 'triangle'] : ['sawtooth', 'triangle']).map((type, k) => {
+          const o = ctx.createOscillator(); o.type = type; o.frequency.value = hz(m); o.detune.value = k ? 7 : -7;
+          o.connect(g); o.start(); return o;
+        }));
+      });
+      // PROJECTOR (Chapter I): filtered noise flickering at 24 frames a second
+      const band = ctx.createBiquadFilter(), flick = ctx.createGain(), rate = ctx.createOscillator(), depth = ctx.createGain();
+      band.type = 'bandpass'; band.frequency.value = 2400; band.Q.value = 2.5;
+      rate.type = 'square'; rate.frequency.value = 24; depth.gain.value = .5; flick.gain.value = .5;
+      rate.connect(depth).connect(flick.gain); rate.start();
+      proj = ctx.createGain(); proj.gain.value = 0;
+      loopNoise().connect(band).connect(flick).connect(proj).connect(music);
+      // AIR: wind that rises with scroll speed
+      airFilter = ctx.createBiquadFilter(); airFilter.type = 'bandpass'; airFilter.frequency.value = 700; airFilter.Q.value = .7;
+      air = ctx.createGain(); air.gain.value = 0;
+      loopNoise().connect(airFilter).connect(air).connect(fx);
+      // SHIMMER: bright air that follows the cursor ripple in the hero
+      const high = ctx.createBiquadFilter(); high.type = 'highpass'; high.frequency.value = 6500;
+      shimmerGain = ctx.createGain(); shimmerGain.gain.value = 0;
+      loopNoise().connect(high).connect(shimmerGain); shimmerGain.connect(fx); shimmerGain.connect(verb);
+    }
+
+    function kick(t, amt) {                                          // a soft, deep thump
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(42, t + .18);
+      env(g.gain, t, .5 * amt, .005, .38); o.connect(g).connect(music); o.start(t); o.stop(t + .5);
+    }
+    function hat(t, amt) {
+      const f = ctx.createBiquadFilter(), g = ctx.createGain(); f.type = 'highpass'; f.frequency.value = 8000;
+      env(g.gain, t, .06 * amt, .002, .05); noiseHit(t, .1).connect(f).connect(g).connect(music);
+    }
+    function bell(m, t, amt = 1) {                                   // glassy bell: three inharmonic partials
+      const out = ctx.createGain(); out.gain.value = amt; out.connect(fx); out.connect(verb);
+      [[1, .11, 2.2], [2.76, .04, 1.2], [5.4, .02, .6]].forEach(([ratio, peak, decay]) => {
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.frequency.value = hz(m) * ratio; env(g.gain, t, peak, .004, decay);
+        o.connect(g).connect(out); o.start(t); o.stop(t + decay + .1);
+      });
+    }
+    function whooshAt(t, up, dur) {                                  // filtered rush, rising or falling
+      const f = ctx.createBiquadFilter(), g = ctx.createGain(); f.type = 'bandpass'; f.Q.value = 1.4;
+      f.frequency.setValueAtTime(up ? 280 : 3200, t); f.frequency.exponentialRampToValueAtTime(up ? 3200 : 280, t + dur);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.22, t + dur * .6); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      noiseHit(t, dur + .05).connect(f).connect(g); g.connect(fx); g.connect(verb);
+    }
+    function clickAt(t) {                                            // projector shutter: two dry ticks and a low knock
+      [0, .045].forEach((d, i) => {
+        const f = ctx.createBiquadFilter(), g = ctx.createGain(); f.type = 'highpass'; f.frequency.value = 2500;
+        env(g.gain, t + d, i ? .12 : .2, .001, .03); noiseHit(t + d, .06).connect(f).connect(g).connect(fx);
+      });
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.frequency.setValueAtTime(180, t); o.frequency.exponentialRampToValueAtTime(70, t + .08);
+      env(g.gain, t, .12, .002, .12); o.connect(g).connect(fx); o.start(t); o.stop(t + .2);
+    }
+
+    function schedule() {                                            // look-ahead sequencer for rhythm and bells
+      const sc = SCORE[current], pat = PATTERNS[sc.texture], now = ctx.currentTime, ahead = now + .2;
+      if (pat) {
+        if (nextStep < now) nextStep = now + .05;
+        while (nextStep < ahead) {
+          const i = step % pat.steps;
+          if (pat.kick[i]) kick(nextStep, pat.kick[i]);
+          if (pat.hat[i]) hat(nextStep, pat.hat[i]);
+          nextStep += 60 / sc.bpm / 4; step++;
+        }
+      }
+      if (sc.texture === 'bells' || sc.texture === 'shimmer') {
+        const soft = sc.texture === 'shimmer';
+        if (nextBell < now) nextBell = now + .3 + Math.random();
+        if (nextBell < ahead) {
+          const top = chordNow().slice(2);
+          bell(top[(Math.random() * top.length) | 0] + (soft ? 24 : 12), nextBell, soft ? .3 : .7);
+          nextBell += soft ? 2.2 + Math.random() * 2.5 : .7 + Math.random() * 1.4;
+        }
+      }
+    }
+    function applyScore(secs) {
+      const t = ctx.currentTime, chord = chordNow();
+      voices.forEach((oscs, i) => oscs.forEach(o => o.frequency.setTargetAtTime(hz(chord[i]), t, secs / 3)));
+      padFilter.frequency.setTargetAtTime(current === 'voice' ? 700 + voiceIdx * 750 : SCORE[current].bright, t, secs / 2);
+      proj.gain.setTargetAtTime(SCORE[current].texture === 'projector' ? .05 : 0, t, .6);
+      step = 0;
+    }
+    const startClock = () => { clearInterval(timer); timer = setInterval(schedule, 50); };
+
+    async function enable() {
+      if (!ctx) build();
+      try { await ctx.resume(); } catch (e) { return false; }
+      on = true; applyScore(.03);
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setTargetAtTime(.9, ctx.currentTime, .8);
+      startClock();
+      return ctx.state === 'running';
+    }
+    function disable() {
+      on = false; clearInterval(timer);
+      if (!ctx) return;
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setTargetAtTime(0, ctx.currentTime, .12);
+      setTimeout(() => { if (!on) ctx.suspend(); }, 600);
+    }
+    document.addEventListener('visibilitychange', () => {           // stay silent in a background tab
+      if (!ctx || !on) return;
+      if (document.hidden) { clearInterval(timer); ctx.suspend(); } else { ctx.resume(); startClock(); }
+    });
+
+    return {
+      get on() { return on; },
+      enable, disable,
+      hush(ms) { quietUntil = performance.now() + ms; },              // mute effects during jumps between chapters
+      chapter(name, label) {
+        const key = label === 'Credits' ? 'fin' : (SCORE[name] ? name : 'prologue');
+        if (key === current) return;
+        current = key;
+        if (!on) return;
+        applyScore(2.4);
+        if (!quiet()) clickAt(ctx.currentTime + .02);
+      },
+      voice(p) {                                                     // the quote scene: night → dusk → dawn
+        const i = Math.min(VOICE.length - 1, Math.round(p * (VOICE.length - 1)));
+        if (i === voiceIdx) return;
+        voiceIdx = i;
+        if (!on || current !== 'voice') return;
+        applyScore(1.6); bell(VOICE[i][5] + 12, ctx.currentTime + .05, .8);
+      },
+      whoosh(up = true, dur = .9) { if (on && !quiet()) whooshAt(ctx.currentTime + .01, up, dur); },
+      click() { if (on) clickAt(ctx.currentTime + .01); },
+      blip(i) {                                                      // soft hover note from the current chord
+        if (!on || quiet()) return;
+        const now = performance.now(); if (now - lastBlip < 70) return; lastBlip = now;
+        const top = chordNow().slice(2);
+        bell(top[(i === undefined ? (Math.random() * top.length) | 0 : i) % top.length] + 24, ctx.currentTime + .005, .22);
+      },
+      pling(x, amt = 1) {                                            // trail photos: higher notes to the right
+        if (!on || quiet()) return;
+        const now = performance.now(); if (now - lastPling < 110) return; lastPling = now;
+        const top = chordNow().slice(1);
+        bell(top[Math.max(0, Math.min(top.length - 1, Math.floor(x * top.length)))] + 24, ctx.currentTime + .005, .5 * amt);
+      },
+      air(v) {
+        if (!on) return; const a = Math.abs(v), t = ctx.currentTime;
+        air.gain.setTargetAtTime(Math.min(.09, a / 30000), t, .15);
+        airFilter.frequency.setTargetAtTime(500 + Math.min(2500, a / 4), t, .2);
+      },
+      shimmer(s) { if (on) shimmerGain.gain.setTargetAtTime(Math.min(.05, s * .05), ctx.currentTime, .1); },
+      swell() {                                                      // the entrance: a rising rush into a deep boom
+        if (!on) return; const t = ctx.currentTime;
+        whooshAt(t, true, 1.6);
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.frequency.setValueAtTime(70, t + 1.45); o.frequency.exponentialRampToValueAtTime(32, t + 3.2);
+        env(g.gain, t + 1.45, .55, .02, 2.2); o.connect(g); g.connect(music); g.connect(verb); o.start(t + 1.4); o.stop(t + 4);
+        bell(81, t + 1.5, .8); bell(88, t + 1.78, .5);
+      }
+    };
+  })();
+
+  const soundBtn = $('#sound-btn');
+  async function setSound(want) {
+    if (!Sound) return;
+    if (want) want = await Sound.enable(); else Sound.disable();
+    soundBtn.classList.toggle('is-on', want);
+    soundBtn.setAttribute('aria-pressed', String(want));
+    scramble($('.sb-label', soundBtn), want ? 'Sound on' : 'Sound off');
+  }
+  if (Sound) soundBtn.addEventListener('click', () => setSound(!Sound.on));
+  else soundBtn.hidden = true;
+
+  /* =====================================================================
+     CHAPTER THEMES: each section repaints the page as it takes the screen
+     ===================================================================== */
+  const chapterNow = $('#chapter-now');
+  let theme = 'prologue';
+  const isLightBg = hex => { const [r, g, b] = hex.replace('#', '').match(/../g).map(x => parseInt(x, 16) / 255); return .2126 * r + .7152 * g + .0722 * b > .5; };
+  function applyTheme(name, label, instant) {
+    if (Sound) Sound.chapter(name, label);
+    if (label && chapterNow.dataset.text !== label) scramble(chapterNow, label);
+    if (name === theme) return;
+    theme = name;
+    const p = C.chapters[name];
+    const vars = { '--bg': p.bg, '--fg': p.fg, '--muted': p.muted, '--accent': p.accent, '--line': p.line };
+    root.style.setProperty('color-scheme', isLightBg(p.bg) ? 'light' : 'dark');
+    if (MOTION && !instant) gsap.to(root, { ...vars, duration: .9, ease: 'power2.out', overwrite: 'auto' });
+    else { if (HAS_GSAP) gsap.killTweensOf(root); Object.entries(vars).forEach(([k, v]) => root.style.setProperty(k, v)); }
+  }
+
+  /* =====================================================================
+     WEBGL HERO: ripple + RGB split that follows the cursor (Three.js)
+     ===================================================================== */
+  const hero = $('#hero');
+  if (C.images.hero.tone === 'light') hero.classList.add('is-light');
+  $('#hero-media').setAttribute('aria-label', C.images.hero.src ? C.images.hero.alt : `Image placeholder: ${C.images.hero.label}`);
+  const GL = (() => {
+    const canvas = $('#gl');
+    if (!window.THREE) return null;
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' }); }
+    catch (e) { return null; }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, FINE ? 1.75 : 1.5));
+    const scene = new THREE.Scene(), camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const tex = new THREE.Texture();
+    tex.minFilter = THREE.LinearFilter; tex.magFilter = THREE.LinearFilter; tex.generateMipmaps = false;
+    const uniforms = {
+      uTex: { value: tex }, uRes: { value: new THREE.Vector2(1, 1) }, uImg: { value: new THREE.Vector2(16, 10) },
+      uMouse: { value: new THREE.Vector2(.5, .5) }, uStrength: { value: 0 }, uTime: { value: 0 }, uScroll: { value: 0 },
+      uFocus: { value: new THREE.Vector2((C.images.hero.focus || [.5, .5])[0], 1 - (C.images.hero.focus || [.5, .5])[1]) },
+      uLight: { value: C.images.hero.tone === 'light' ? 1 : 0 }
+    };
+    const material = new THREE.ShaderMaterial({
+      uniforms,
+      vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position, 1.0); }',
+      fragmentShader: `
+        precision highp float;
+        uniform sampler2D uTex; uniform vec2 uRes, uImg, uMouse, uFocus; uniform float uStrength, uTime, uScroll, uLight;
+        varying vec2 vUv;
+        vec2 cover(vec2 uv){
+          float rs = uRes.x / uRes.y, ri = uImg.x / uImg.y;
+          vec2 s = rs < ri ? vec2(rs / ri, 1.0) : vec2(1.0, ri / rs);
+          return uv * s + (1.0 - s) * uFocus;                                // crop around the focus point
+        }
+        void main(){
+          vec2 uv = (vUv - 0.5) * (1.0 - uScroll * 0.14) + 0.5;               // scroll pushes the image in
+          vec2 p = vUv - uMouse; p.x *= uRes.x / uRes.y;
+          float d = length(p);
+          float wave = sin(d * 42.0 - uTime * 5.5) * exp(-d * 5.0);            // rings spreading from the cursor
+          vec2 off = (p / max(d, 1e-4)) * wave * 0.022 * uStrength;
+          off += vec2(sin(uv.y * 7.0 + uTime * 0.5), cos(uv.x * 6.0 + uTime * 0.4)) * 0.0022; // ambient breathing
+          float r = texture2D(uTex, cover(uv + off * 1.4)).r;
+          float g = texture2D(uTex, cover(uv + off)).g;
+          float b = texture2D(uTex, cover(uv + off * 0.65)).b;
+          vec3 col = vec3(r, g, b);
+          col += vec3(1.0, 0.82, 0.56) * exp(-d * 8.0) * 0.14 * uStrength * (1.0 - uLight * 0.6); // soft glow at the cursor
+          float vig = smoothstep(1.25, 0.25, length(vUv - 0.5) * 1.45);
+          col *= mix(mix(0.5, 0.86, uLight), 1.0, vig) * (1.0 - uScroll * mix(0.6, 0.88, uLight)); // light photos fade to ink on scroll
+          gl_FragColor = vec4(col, 1.0);
+        }`
+    });
+    scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
+
+    const setImage = src => { tex.image = src; tex.needsUpdate = true; uniforms.uImg.value.set(src.naturalWidth || src.width, src.naturalHeight || src.height); renderOnce(); };
+    const slot = C.images.hero;
+    const usePlaceholder = () => setImage(paintPlaceholder('hero', 1600, 1000, true));
+    if (slot.src) { const im = new Image(); im.onload = () => setImage(im); im.onerror = usePlaceholder; im.src = slot.src; }
+    else { usePlaceholder(); fontsReady.then(usePlaceholder); }
+
+    const resize = () => {
+      const w = canvas.clientWidth || innerWidth, h = canvas.clientHeight || innerHeight;
+      renderer.setSize(w, h, false); uniforms.uRes.value.set(w, h); renderOnce();
+    };
+    function renderOnce() { if (tex.image) renderer.render(scene, camera); }
+
+    // pointer → ripple strength from speed; touch/idle → slow autopilot
+    const target = new THREE.Vector2(.5, .5); let push = 0, lastMove = 0, last = null;
+    hero.addEventListener('pointermove', e => {
+      const r = canvas.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width, ny = 1 - (e.clientY - r.top) / r.height;
+      if (last) push = Math.min(1, push + Math.hypot(nx - last.x, ny - last.y) * 6);
+      last = { x: nx, y: ny }; target.set(nx, ny); lastMove = performance.now();
+    });
+    hero.addEventListener('pointerdown', e => { push = 1; });
+
+    let running = false;
+    const tick = (time) => {
+      uniforms.uTime.value = time;
+      if (performance.now() - lastMove > 1800) {             // autopilot drift
+        target.set(.5 + Math.sin(time * .35) * .28, .5 + Math.sin(time * .53) * .22);
+        push = Math.max(push, .35);
+      }
+      uniforms.uMouse.value.lerp(target, .08);
+      uniforms.uStrength.value += (push - uniforms.uStrength.value) * .08;
+      push *= .95;
+      if (Sound) Sound.shimmer(Math.max(0, uniforms.uStrength.value - .35) / .65 * (1 - uniforms.uScroll.value)); // only when the visitor stirs it
+      renderer.render(scene, camera);
+    };
+    const setActive = on => {
+      if (REDUCE || !HAS_GSAP) return;
+      if (on && !running) { running = true; gsap.ticker.add(tick); }
+      else if (!on && running) { running = false; gsap.ticker.remove(tick); }
+    };
+    addEventListener('resize', resize);
+    document.addEventListener('visibilitychange', () => setActive(!document.hidden && heroVisible));
+    let heroVisible = true;
+    resize();
+    hero.classList.add('gl-on');
+    return { uniforms, setActive: on => { heroVisible = on; setActive(on); if (!on && Sound) Sound.shimmer(0); } };
+  })();
+  if (!GL) fillImg($('.hero-fallback'));
+  else GL.setActive(true);
+
+  /* =====================================================================
+     CURSOR: morphs to "View" over images, to a magnetic dot over buttons
+     ===================================================================== */
+  const cursor = $('#cursor');
+  if (FINE && MOTION) {
+    document.body.classList.add('has-cursor');
+    const ring = $('.c-ring'), dot = $('.c-dot');
+    const rx = gsap.quickTo(ring, 'x', { duration: .5, ease: 'power3' }), ry = gsap.quickTo(ring, 'y', { duration: .5, ease: 'power3' });
+    const dx = gsap.quickTo(dot, 'x', { duration: .12 }), dy = gsap.quickTo(dot, 'y', { duration: .12 });
+    let magnet = null;
+    addEventListener('pointermove', e => {
+      dx(e.clientX); dy(e.clientY);
+      if (magnet) {
+        const r = magnet.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        rx(cx + (e.clientX - cx) * .35); ry(cy + (e.clientY - cy) * .35);
+      } else { rx(e.clientX); ry(e.clientY); }
+    });
+    document.addEventListener('pointerover', e => {
+      magnet = e.target.closest('[data-magnetic]');
+      cursor.classList.toggle('is-magnet', !!magnet);
+      cursor.classList.toggle('is-view', !magnet && !!e.target.closest('[data-cursor="view"]'));
+    });
+    document.addEventListener('mouseout', e => { if (!e.relatedTarget) cursor.style.visibility = 'hidden'; });
+    document.addEventListener('mouseover', () => { cursor.style.visibility = ''; });
+
+    // hover sounds: a soft note on links and buttons, rising notes down the chapter menu
+    $$('a, button, .film').filter(el => !el.closest('.m-list')).forEach(el => el.addEventListener('pointerenter', () => Sound && Sound.blip()));
+    $$('.m-list a').forEach((a, i) => a.addEventListener('pointerenter', () => Sound && Sound.blip(i)));
+
+    // magnetic pull on the element itself
+    $$('[data-magnetic]').forEach(el => {
+      const mx = gsap.quickTo(el, 'x', { duration: .6, ease: 'power3' }), my = gsap.quickTo(el, 'y', { duration: .6, ease: 'power3' });
+      el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); mx((e.clientX - r.left - r.width / 2) * .4); my((e.clientY - r.top - r.height / 2) * .4); });
+      el.addEventListener('pointerleave', () => { gsap.to(el, { x: 0, y: 0, duration: .9, ease: 'elastic.out(1, .4)' }); });
+    });
+
+    // hero letters thicken as the cursor comes near (Fraunces variable weight)
+    const heroChars = () => $$('#hero-title .c');
+    let hx = -1e4, hy = -1e4, hraf = 0;
+    const weigh = () => { hraf = 0; heroChars().forEach(c => { const r = c.getBoundingClientRect(); const d = Math.hypot(hx - (r.left + r.width / 2), hy - (r.top + r.height / 2)); c.style.fontVariationSettings = `"wght" ${Math.round(280 + 560 * Math.exp(-d / 170))}, "opsz" 144`; }); };
+    hero.addEventListener('pointermove', e => { hx = e.clientX; hy = e.clientY; if (!hraf) hraf = requestAnimationFrame(weigh); });
+    hero.addEventListener('pointerleave', () => { hx = hy = -1e4; requestAnimationFrame(weigh); });
+  }
+
+  /* =====================================================================
+     MENU: panels stagger down, links rise; keyboard friendly with a focus trap
+     ===================================================================== */
+  const menu = $('#menu'), menuBtn = $('#menu-btn'), main = $('#main'), bar = $('#bar');
+  $$('.m-list a').forEach(a => a.style.setProperty('--m-accent', C.chapters[a.dataset.accent].accent));
+  let menuOpen = false;
+  function openMenu() {
+    if (menuOpen) return; menuOpen = true;
+    menu.hidden = false; menuBtn.setAttribute('aria-expanded', 'true');
+    main.inert = true; bar.inert = true; lenis && lenis.stop();
+    if (Sound) Sound.whoosh(true, .8);
+    if (MOTION) {
+      gsap.timeline()
+        .fromTo('.m-panels i', { scaleY: 0 }, { scaleY: 1, duration: .7, stagger: .08, ease: 'expo.inOut' })
+        .fromTo('.m-list a', { yPercent: 120 }, { yPercent: 0, duration: .9, stagger: .06, ease: 'expo.out' }, '-=.3')
+        .fromTo(['.m-close', '.m-note', '.m-list li'], { opacity: 0 }, { opacity: 1, duration: .5 }, '<');
+    }
+    requestAnimationFrame(() => $('.m-list a').focus({ preventScroll: true }));
+  }
+  function closeMenu(instant) {
+    if (!menuOpen) return; menuOpen = false;
+    menuBtn.setAttribute('aria-expanded', 'false');
+    const done = () => { menu.hidden = true; main.inert = false; bar.inert = false; lenis && lenis.start(); };
+    if (MOTION && !instant) {
+      if (Sound) Sound.whoosh(false, .7);
+      gsap.timeline({ onComplete: () => { done(); menuBtn.focus({ preventScroll: true }); } })
+        .to('.m-list a', { yPercent: -120, duration: .45, stagger: .03, ease: 'power3.in' })
+        .to(['.m-close', '.m-note'], { opacity: 0, duration: .25 }, '<')
+        .to('.m-panels i', { scaleY: 0, transformOrigin: 'bottom', duration: .6, stagger: .06, ease: 'expo.inOut' }, '-=.15')
+        .set('.m-panels i', { transformOrigin: 'top' });
+    } else done();
+  }
+  menuBtn.addEventListener('click', openMenu);
+  $('#menu-close').addEventListener('click', () => closeMenu());
+  document.addEventListener('keydown', e => {
+    if (!menuOpen) return;
+    if (e.key === 'Escape') { closeMenu(); return; }
+    if (e.key !== 'Tab') return;
+    const f = $$('a, button', menu), first = f[0], last = f[f.length - 1];
+    if (!menu.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+    else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  let paintVoice = null;                                  // set by the voice scene when motion is on
+  $('#credit-type').textContent = C.fonts.pair;
+
+  /* =====================================================================
+     SVG CURTAIN between chapters (menu links, logo, back to top)
+     ===================================================================== */
+  const wipe = $('#wipe'), wipePath = $('#wipe-path'), wipeTitle = $('#wipe-title');
+  let wiping = false;
+  function goTo(target, label) {
+    if (!MOTION) { closeMenu(true); scrollToEl(target, true); target.focus && target.setAttribute('tabindex', '-1'); target.focus({ preventScroll: true }); return; }
+    if (wiping) return; wiping = true;
+    wipeTitle.textContent = label || '';
+    if (Sound) Sound.whoosh(true, .8);
+    gsap.timeline({ onComplete: () => { wiping = false; } })
+      .set(wipe, { autoAlpha: 1 })
+      .fromTo(wipePath, { attr: { d: 'M0 100 V100 Q50 100 100 100 V100 z' } }, { attr: { d: 'M0 100 V50 Q50 0 100 50 V100 z' }, duration: .45, ease: 'power2.in' })
+      .to(wipePath, { attr: { d: 'M0 100 V0 Q50 0 100 0 V100 z' }, duration: .35, ease: 'power2.out' })
+      .fromTo(wipeTitle, { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: .6, ease: 'expo.out' }, '-=.25')
+      .add(() => { if (Sound) Sound.hush(700); closeMenu(true); scrollToEl(target, true); ScrollTrigger.update(); })
+      .to(wipeTitle, { yPercent: -60, autoAlpha: 0, duration: .45, ease: 'power2.in' }, '+=.35')
+      .set(wipePath, { attr: { d: 'M0 0 V100 Q50 100 100 100 V0 z' } })
+      .add(() => { if (Sound) { Sound.click(); Sound.whoosh(false, .8); } })
+      .to(wipePath, { attr: { d: 'M0 0 V50 Q50 100 100 50 V0 z' }, duration: .35, ease: 'power2.in' })
+      .to(wipePath, { attr: { d: 'M0 0 V0 Q50 0 100 0 V0 z' }, duration: .45, ease: 'power2.out' })
+      .set(wipe, { autoAlpha: 0 })
+      .add(() => { target.setAttribute('tabindex', '-1'); target.focus({ preventScroll: true }); });
+  }
+  $$('[data-nav]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); goTo($(a.getAttribute('href')), a.dataset.nav); }));
+  $$('[data-smooth]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); scrollToEl($(a.getAttribute('href')), false); }));
+
+  /* =====================================================================
+     STATIC SETUP when motion is off (reduced motion, or the CDN failed)
+     ===================================================================== */
+  const momentsStatic = () => {
+    const ul = $('#mo-static');
+    C.images.moments.forEach((m, i) => { const li = document.createElement('li'); const img = document.createElement('img'); img.dataset.slot = `moments.${i}`; img.alt = ''; img.loading = 'lazy'; li.append(img); ul.append(li); imgIO.observe(img); });
+  };
+  if (!MOTION) {
+    momentsStatic();
+    $('#loader').remove(); root.classList.remove('is-loading');
+    if (HAS_GSAP) {
+      $$('[data-theme]').forEach((sec, i, all) => ScrollTrigger.create({ trigger: sec, start: sec.classList.contains('cc') ? 'top top' : 'top 50%', end: 'bottom 50%',
+        onEnter: () => applyTheme(sec.dataset.theme, sec.dataset.label), onEnterBack: () => applyTheme(sec.dataset.theme, sec.dataset.label),
+        onLeaveBack: () => i && applyTheme(all[i - 1].dataset.theme, all[i - 1].dataset.label) }));
+    }
+    return;
+  }
+
+  /* =====================================================================
+     EVERYTHING BELOW IS SCROLL MOTION. Almost all of it is scrubbed, so
+     scrolling back up rewinds it.
+     ===================================================================== */
+  const sc = (trigger, start, end, more = {}) => ({ trigger, start, end, scrub: .7, ...more });
+
+  /* ---------- Preloader → hero ---------- */
+  split($('#hero-title'), 'chars', true);
+  const heroChars = $$('#hero-title .c');
+  // the preloader window (24% × 32% of the screen) opens over the photo's focus point
+  const [fx, fy] = (C.images.hero.focus || [.5, .5]).map(v => v * 100);
+  const wl = Math.min(Math.max(fx - 12, 4), 72), wt = Math.min(Math.max(fy - 14, 16), 52), wr = 100 - wl - 24, wb = 100 - wt - 32;
+  Object.entries({ '--wl': wl, '--wr': wr, '--wt': wt, '--wb': wb }).forEach(([k, v]) => $('#loader').style.setProperty(k, v + '%'));
+  gsap.set('#hero-media', { clipPath: `inset(${wt}% ${wr}% ${wb}% ${wl}%)` });
+  gsap.set(heroChars, { yPercent: 115, rotate: 6 });
+  gsap.set(['.hero-kicker', '.hero-foot', '.scroll-cue', '#bar', '.hero-shade'], { autoAlpha: 0 });
+  (async () => {
+    const num = $('#ld-num'), chap = $('#ld-chapter'), barI = $('#ld-bar');
+    const names = ['Prologue', 'The Actress', 'The Activist', 'The Reader', 'The Style', 'The Voice'];
+    const count = { v: 0 };
+    const paint = () => {
+      num.textContent = String(Math.round(count.v)).padStart(3, '0');
+      barI.style.transform = `scaleX(${count.v / 100})`;
+      const n = names[Math.min(names.length - 1, Math.floor(count.v / 100 * names.length))];
+      if (chap.textContent !== n) chap.textContent = n;
+    };
+    await new Promise(r => gsap.to(count, { v: 84, duration: 1.7, ease: 'power2.inOut', onUpdate: paint, onComplete: r }));
+    await fontsReady;
+    await new Promise(r => gsap.to(count, { v: 100, duration: .5, ease: 'power2.out', onUpdate: paint, onComplete: r }));
+    // The film has sound: ask first (browsers only play audio after a click or key press).
+    // With no answer in 8 seconds it enters in silence; the header button turns sound on later.
+    if (Sound) {
+      const gate = $('#ld-gate');
+      $('#loader').removeAttribute('aria-hidden'); gate.hidden = false;
+      gsap.to('#ld-num', { opacity: .14, duration: .8 });       // the count has done its job: hand focus to the choice
+      gsap.fromTo(gate.children, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: .8, stagger: .1, ease: 'expo.out' });
+      requestAnimationFrame(() => { gate.classList.add('counting'); $('#enter-sound').focus({ preventScroll: true }); });
+      const withSound = await new Promise(r => {
+        const t = setTimeout(() => r(false), 8000);
+        $('#enter-sound').addEventListener('click', () => { clearTimeout(t); r(true); }, { once: true });
+        $('#enter-silent').addEventListener('click', () => { clearTimeout(t); r(false); }, { once: true });
+      });
+      if (withSound) { await setSound(true); Sound.swell(); }
+      gsap.to(gate, { autoAlpha: 0, y: -20, duration: .5, ease: 'expo.in' });
+    }
+    gsap.timeline({ onComplete: () => { $('#loader').remove(); root.classList.remove('is-loading'); lenis && lenis.start(); ScrollTrigger.refresh(); } })
+      .to(['#ld-num', '#ld-chapter', '.ld-top', '.ld-bar'], { yPercent: -80, autoAlpha: 0, duration: .7, ease: 'expo.in', stagger: .05 })
+      .to('#hero-media', { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut' }, '-=.35')
+      .to(heroChars, { yPercent: 0, rotate: 0, duration: 1.5, stagger: .05, ease: 'expo.out' }, '-=.75')
+      .to('.hero-shade', { autoAlpha: 1, duration: 1 }, '-=1.4')
+      .to(['.hero-kicker', '.hero-foot', '.scroll-cue', '#bar'], { autoAlpha: 1, duration: .9, stagger: .08 }, '-=1.1');
+  })();
+
+  /* ---------- Hero on scroll ---------- */
+  ScrollTrigger.create({ trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true, onUpdate: s => { if (GL) GL.uniforms.uScroll.value = s.progress; } });
+  if (GL) ScrollTrigger.create({ trigger: '#hero', start: 'top bottom', end: 'bottom top', onToggle: s => GL.setActive(s.isActive) });
+  gsap.fromTo(heroChars, { y: 0, opacity: 1 }, { y: i => -(70 + (i * 41) % 130), opacity: 0, ease: 'none', stagger: .02, immediateRender: false,
+    scrollTrigger: sc('#hero', 'top top', 'bottom 15%', { scrub: true }) });
+  gsap.to(['.hero-kicker', '.hero-foot'], { y: -60, opacity: 0, ease: 'none', scrollTrigger: sc('#hero', 'top top', '60% top', { scrub: true }) });
+
+  /* ---------- Themes + chapter label ---------- */
+  const themed = $$('[data-theme]');
+
+  /* ---------- Intro ---------- */
+  split($('#intro-text'), 'words');
+  gsap.fromTo('#intro-text .wi', { opacity: .1, y: '.3em' }, { opacity: 1, y: 0, stagger: .05, ease: 'none', scrollTrigger: sc('#intro-text', 'top 82%', 'bottom 45%') });
+  gsap.fromTo('.intro-fig .mask', { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', scrollTrigger: sc('.intro-fig', 'top 92%', 'top 40%') });
+  gsap.fromTo('.intro-fig img', { scale: 1.35, yPercent: -8 }, { scale: 1.05, yPercent: 8, ease: 'none', scrollTrigger: sc('.intro-fig', 'top bottom', 'bottom top', { scrub: true }) });
+  gsap.fromTo('#facts > div', { y: 40, opacity: 0 }, { y: 0, opacity: 1, stagger: .15, ease: 'none', scrollTrigger: sc('#facts', 'top 95%', 'top 65%') });
+
+  /* ---------- Section titles: each chapter has its own entrance ---------- */
+  const PERSONALITY = {
+    prologue: { mask: true, from: { yPercent: 110 } },
+    actress:  { mask: false, from: { opacity: 0, filter: 'blur(14px)', scale: 1.18 } },                         // title sequence: out of focus
+    activist: { mask: true, from: { yPercent: 115 } },                                                           // assertive: slams up
+    reader:   { mask: false, from: { opacity: 0, y: 50, rotate: i => (i % 2 ? 7 : -7) } },                       // loose pages drifting
+    style:    { mask: false, from: { opacity: 0, xPercent: i => (i % 2 ? 70 : -70) } },                          // runway: in from the sides
+    voice:    { mask: false, from: { opacity: 0, y: 24, filter: 'blur(8px)' } }                                  // hushed, then clear
+  };
+  const to0 = { yPercent: 0, xPercent: 0, y: 0, rotate: 0, scale: 1, opacity: 1, filter: 'blur(0px)' };
+  $$('.sec-title').forEach(t => {
+    const p = PERSONALITY[t.closest('[data-chapter]') ? t.closest('[data-chapter]').dataset.chapter : 'prologue'];
+    split(t, 'words', p.mask);
+    gsap.fromTo($$('.wi', t), p.from, { ...to0, stagger: .1, ease: 'none', scrollTrigger: sc(t, 'top 92%', 'top 55%') });
+  });
+  $$('.sec-head .eyebrow').forEach(e => gsap.fromTo(e, { opacity: 0, x: -20 }, { opacity: 1, x: 0, ease: 'none', scrollTrigger: sc(e, 'top 95%', 'top 75%') }));
+
+  /* ---------- Chapter cards: five different wipes ---------- */
+  $$('.cc').forEach(cc => {
+    ScrollTrigger.create({ trigger: cc, start: 'top 70%', onEnter: () => Sound && Sound.whoosh(true, 1.1), onLeaveBack: () => Sound && Sound.whoosh(false, .9) });
+    const fill = $('.cc-fill', cc), kind = cc.dataset.wipe, st = sc(cc, 'top bottom', 'top top', { scrub: .5 });
+    if (kind === 'circle') gsap.fromTo(fill, { clipPath: 'circle(0% at 50% 100%)' }, { clipPath: 'circle(142% at 50% 100%)', ease: 'none', scrollTrigger: st });
+    if (kind === 'blinds') gsap.fromTo(fill.children, { scaleY: 0, transformOrigin: (i) => (i % 2 ? '50% 0%' : '50% 100%') }, { scaleY: 1, stagger: .1, ease: 'none', scrollTrigger: st });
+    if (kind === 'page') gsap.fromTo(fill, { clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 160% 100%)' }, { clipPath: 'polygon(-60% 0%, 100% 0%, 100% 100%, 0% 100%)', ease: 'none', scrollTrigger: st });
+    if (kind === 'doors') { gsap.fromTo(fill.children[0], { xPercent: -101 }, { xPercent: 0, ease: 'none', scrollTrigger: st }); gsap.fromTo(fill.children[1], { xPercent: 101 }, { xPercent: 0, ease: 'none', scrollTrigger: st }); }
+    if (kind === 'iris') gsap.fromTo(fill, { clipPath: 'ellipse(0% 0% at 50% 50%)' }, { clipPath: 'ellipse(110% 110% at 50% 50%)', ease: 'none', scrollTrigger: st });
+
+    const title = $('.cc-title', cc), chapter = cc.dataset.chapter;
+    split(title, 'chars', chapter === 'activist');
+    const chars = $$('.c', title);
+    const from = {
+      actress:  { opacity: 0, filter: 'blur(16px)', scale: 1.5 },
+      activist: { yPercent: 120 },
+      reader:   { opacity: 0, y: () => gsap.utils.random(-80, 80), rotate: () => gsap.utils.random(-25, 25) },
+      style:    { opacity: 0, xPercent: i => (i % 2 ? 160 : -160) },
+      voice:    { opacity: 0, scale: .4, filter: 'blur(10px)' }
+    }[chapter];
+    gsap.fromTo(chars, from, { ...to0, stagger: { each: .04, from: chapter === 'voice' ? 'center' : 'start' }, ease: 'none', scrollTrigger: sc(cc, 'top 55%', 'top 5%') });
+    gsap.fromTo([$('.cc-num', cc), $('.cc-sub', cc)], { opacity: 0, y: 20 }, { opacity: 1, y: 0, ease: 'none', scrollTrigger: sc(cc, 'top 35%', 'top top') });
+    gsap.to($('.cc-copy', cc), { yPercent: -25, opacity: 0, ease: 'none', scrollTrigger: sc(cc, 'bottom 75%', 'bottom 10%', { scrub: true }) });
+  });
+
+  /* ---------- I · Filmography ---------- */
+  $$('.film').forEach(row => {
+    const st = sc(row, 'top 95%', 'top 62%');
+    split($('.f-title', row), 'words');
+    gsap.fromTo($('.f-year', row), { opacity: 0, x: -40 }, { opacity: 1, x: 0, ease: 'none', scrollTrigger: st });
+    gsap.fromTo($$('.f-title .wi', row), { opacity: 0, filter: 'blur(10px)', y: 14 }, { opacity: 1, filter: 'blur(0px)', y: 0, stagger: .08, ease: 'none', scrollTrigger: st });
+    gsap.fromTo([$('.f-role', row), $('.f-thumb', row)].filter(Boolean), { opacity: 0 }, { opacity: 1, ease: 'none', scrollTrigger: st });
+    gsap.fromTo($('.f-line', row), { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: st });
+  });
+  if (FINE) {
+    const prev = $('.film-preview'), pImg = $('img', prev);
+    gsap.set(prev, { xPercent: -50, yPercent: -50 });
+    const px = gsap.quickTo(prev, 'x', { duration: .7, ease: 'power3' }), py = gsap.quickTo(prev, 'y', { duration: .7, ease: 'power3' });
+    addEventListener('pointermove', e => { px(e.clientX); py(e.clientY); });
+    $$('.film:not(.no-img)').forEach(row => {
+      row.addEventListener('pointerenter', () => { pImg.src = srcFor(row.dataset.slot, 600); gsap.to(prev, { autoAlpha: 1, scale: 1, rotate: gsap.utils.random(-5, 5), duration: .55, ease: 'expo.out' }); });
+      row.addEventListener('pointerleave', () => gsap.to(prev, { autoAlpha: 0, scale: .85, duration: .35, ease: 'power2.in' }));
+    });
+  }
+
+  /* ---------- Interlude · Moments (image trail) ---------- */
+  (() => {
+    const sec = $('#moments'), trail = $('#trail');
+    let srcs = [];
+    const pool = Array.from({ length: 14 }, () => { const i = document.createElement('img'); i.className = 'trail-img'; i.alt = ''; i.decoding = 'async'; trail.append(i); return i; });
+    const prep = new IntersectionObserver(es => { if (es[0].isIntersecting) { prep.disconnect(); fontsReady.then(() => { srcs = C.images.moments.map((_, i) => srcFor(`moments.${i}`, 520)); }); } }, { rootMargin: '600px 0px' });
+    prep.observe(sec);
+    let n = 0, z = 1, last = null;
+    const spawn = (x, y, auto) => {
+      if (!srcs.length) return;
+      if (Sound) Sound.pling(x / sec.clientWidth, auto ? .4 : 1);
+      const img = pool[n % pool.length]; img.src = srcs[n % srcs.length]; n++;
+      gsap.killTweensOf(img);
+      gsap.set(img, { x, y, xPercent: -50, yPercent: -50, scale: .3, opacity: 1, rotate: gsap.utils.random(-12, 12), zIndex: z++ });
+      gsap.timeline().to(img, { scale: 1, duration: .7, ease: 'expo.out' }).to(img, { opacity: 0, scale: .8, y: '+=70', duration: 1, ease: 'power2.in' }, '+=.3');
+    };
+    sec.addEventListener('pointermove', e => {
+      if (e.pointerType !== 'mouse') return;
+      const r = sec.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      if (!last || Math.hypot(x - last.x, y - last.y) > 85) { spawn(x, y); last = { x, y }; }
+    });
+    sec.addEventListener('pointerdown', e => {           // tap to add a few on touch screens
+      if (e.pointerType === 'mouse') return;
+      const r = sec.getBoundingClientRect();
+      for (let k = 0; k < 3; k++) gsap.delayedCall(k * .09, () => spawn(e.clientX - r.left + gsap.utils.random(-40, 40), e.clientY - r.top + gsap.utils.random(-40, 40)));
+    });
+    if (!FINE) {                                          // touch: the trail draws itself while the section is on screen
+      $('#mo-hint').textContent = 'Tap to add a moment';
+      let on = false, t = 0;
+      ScrollTrigger.create({ trigger: sec, start: 'top 75%', end: 'bottom 25%', onToggle: s => (on = s.isActive) });
+      gsap.ticker.add((time, dt) => {
+        if (!on) return; t += dt;
+        if (t < 150) return; t = 0;
+        const w = sec.clientWidth, h = sec.clientHeight;
+        spawn(w / 2 + Math.sin(time * 1.1) * w * .34, h / 2 + Math.sin(time * 1.7) * h * .3, true);
+      });
+    }
+    gsap.fromTo('.mo-title', { scale: .7, opacity: 0, letterSpacing: '.2em' }, { scale: 1, opacity: 1, letterSpacing: '-.05em', ease: 'none', scrollTrigger: sc(sec, 'top 85%', 'top 20%') });
+  })();
+
+  /* ---------- II · Activism ---------- */
+  gsap.fromTo('.tricolor i', { scaleX: 0 }, { scaleX: 1, stagger: .15, ease: 'none', scrollTrigger: sc('.tricolor', 'top 92%', 'top 70%') });
+  gsap.fromTo('.act-fig .mask', { clipPath: 'polygon(0% 100%, 0% 100%, 0% 100%, 0% 100%)' }, { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', ease: 'none', scrollTrigger: sc('.act-fig', 'top 90%', 'top 35%') });
+  gsap.fromTo('.act-fig img', { scale: 1.4 }, { scale: 1.02, ease: 'none', scrollTrigger: sc('.act-fig', 'top bottom', 'bottom top', { scrub: true }) });
+  const scrambleAt = (s, p) => [...s].map((ch, i) => (/[0-9]/.test(ch) && i / s.length >= p * 1.2) ? String((Math.random() * 10) | 0) : ch).join('');
+  $$('.act-row').forEach(row => {
+    const st = sc(row, 'top 92%', 'top 58%', { scrub: .4 });
+    const date = $('.act-date', row), final = date.dataset.final;
+    const srDate = document.createElement('span'); srDate.className = 'sr-only'; srDate.textContent = final;
+    date.before(srDate); date.setAttribute('aria-hidden', 'true');
+    date.textContent = scrambleAt(final, 0);
+    ScrollTrigger.create({ ...st, onUpdate: s => { date.textContent = s.progress > .98 ? final : scrambleAt(final, s.progress); } });
+    gsap.fromTo($('.act-line', row), { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: st });
+    split($('h4', row), 'words', true);
+    gsap.fromTo($$('h4 .wi', row), { yPercent: 115 }, { yPercent: 0, stagger: .08, ease: 'none', scrollTrigger: st });
+    gsap.fromTo($('p', row), { opacity: 0, x: 40 }, { opacity: 1, x: 0, ease: 'none', scrollTrigger: st });
+  });
+
+  /* ---------- III · Reading ---------- */
+  $$('.pen').forEach(mark => {
+    mark.insertAdjacentHTML('beforeend', '<svg viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 8 C 22 3, 40 11, 60 6 S 90 4, 98 7"/></svg>');
+    const path = $('path', mark);
+    gsap.fromTo(path, { strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDashoffset: 0, ease: 'none', scrollTrigger: sc(mark, 'top 88%', 'top 58%') });
+  });
+  $$('.rd').forEach(p => gsap.fromTo(p, { opacity: 0, y: 40, rotate: .6 }, { opacity: 1, y: 0, rotate: 0, ease: 'none', scrollTrigger: sc(p, 'top 95%', 'top 70%') }));
+  (() => {
+    const books = $$('.book'), notes = $$('#book-notes li');
+    const tl = gsap.timeline({ scrollTrigger: sc('#shelf', 'top 88%', 'bottom 25%', { scrub: .9 }) });
+    tl.fromTo(books, { opacity: 0, y: 60, rotate: i => [-14, 9, -7, 12][i] }, { opacity: 1, y: 0, rotate: 0, stagger: .15, ease: 'sine.out' });
+    books.forEach((b, i) => {
+      tl.to(b, { y: -26, rotateY: -14, duration: .35, ease: 'sine.out' })
+        .fromTo(notes[i], { opacity: .15, x: -16 }, { opacity: 1, x: 0, duration: .35, ease: 'sine.out' }, '<')
+        .to(b, { y: 0, rotateY: 0, duration: .35, ease: 'sine.in' });
+    });
+  })();
+
+  /* ---------- IV · Style: pinned horizontal gallery ---------- */
+  const track = $('#hs-track'), hsBar = $('#hs-bar'), bgword = $('#hs-bgword');
+  const hsDist = () => Math.max(0, track.scrollWidth - innerWidth);
+  const hTween = gsap.to(track, { x: () => -hsDist(), ease: 'none', scrollTrigger: {
+    trigger: '#hs-pin', start: 'top top', end: () => '+=' + hsDist(), pin: true, scrub: 1, invalidateOnRefresh: true,
+    onUpdate: s => { hsBar.style.transform = `scaleX(${s.progress})`; gsap.set(bgword, { xPercent: -28 * s.progress }); } } });
+  $$('.hs-card').forEach(card => {
+    const media = $('.hs-media', card), img = $('img', media);
+    gsap.fromTo(media, { clipPath: 'inset(0% 0% 0% 100%)', rotateY: -22, scale: .84 }, { clipPath: 'inset(0% 0% 0% 0%)', rotateY: 0, scale: 1, ease: 'none',
+      scrollTrigger: { containerAnimation: hTween, trigger: card, start: 'left 100%', end: 'left 55%', scrub: true } });
+    gsap.fromTo(media, { rotateY: 0, scale: 1 }, { rotateY: 16, scale: .9, ease: 'none', immediateRender: false,
+      scrollTrigger: { containerAnimation: hTween, trigger: card, start: 'right 40%', end: 'right 0%', scrub: true } });
+    gsap.fromTo(img, { xPercent: -9, scale: 1.25 }, { xPercent: 9, scale: 1.05, ease: 'none', scrollTrigger: { containerAnimation: hTween, trigger: card, start: 'left right', end: 'right left', scrub: true } });
+    gsap.fromTo($('.hs-cap', card), { y: 50, opacity: 0 }, { y: 0, opacity: 1, ease: 'none', scrollTrigger: { containerAnimation: hTween, trigger: card, start: 'left 85%', end: 'left 45%', scrub: true } });
+  });
+
+  $$('.hs-fact').forEach(f => {
+    const st = (start, end) => ({ containerAnimation: hTween, trigger: f, start, end, scrub: true });
+    gsap.fromTo($('.hf-yr', f), { yPercent: 70, opacity: 0, letterSpacing: '.2em' }, { yPercent: 0, opacity: 1, letterSpacing: '-.04em', ease: 'none', scrollTrigger: st('left 98%', 'left 60%') });
+    gsap.fromTo([$('h4', f), $('p', f)], { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: .15, ease: 'none', scrollTrigger: st('left 92%', 'left 50%') });
+  });
+
+  /* ---------- V · Voice: pinned scenes that change colour, image and quote ---------- */
+  (() => {
+    const stage = $('#vs-stage'), quotes = $$('.vs-q'), imgs = $$('.vs-media img'), counter = $('#vs-n');
+    // scene colours are read from the live palette, so switching palettes repaints the scene
+    const vstate = { bg: 0, fg: 0 };
+    const sceneColour = (key, t) => { const S = C.voiceScenes, n = S.length - 1, a = Math.min(Math.floor(t), n - 1); return gsap.utils.interpolate(S[a][key], S[a + 1][key], Math.min(1, t - a)); };
+    paintVoice = () => { stage.style.setProperty('--vbg', sceneColour('bg', vstate.bg)); stage.style.setProperty('--vfg', sceneColour('fg', vstate.fg)); stage.style.setProperty('--vac', sceneColour('accent', vstate.fg)); };
+    paintVoice();
+    quotes.forEach(q => split($('p', q), 'words', true));
+    const words = quotes.map(q => $$('.wi', q));
+    gsap.set(quotes.slice(1), { autoAlpha: 0 });
+    gsap.set(imgs.slice(1), { clipPath: 'inset(100% 0% 0% 0%)' });
+    // first quote arrives before the pin
+    gsap.fromTo(words[0], { yPercent: 115, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: .05, ease: 'none', scrollTrigger: sc('#voice', 'top 75%', 'top top') });
+    gsap.fromTo(imgs[0], { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.3 }, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, ease: 'none', scrollTrigger: sc('#voice', 'top 80%', 'top top') });
+    const tl = gsap.timeline({ scrollTrigger: { trigger: '#voice', start: 'top top', end: () => '+=' + innerHeight * quotes.length * 1.1, pin: stage, scrub: 1, invalidateOnRefresh: true,
+      onUpdate: s => { const i = Math.min(quotes.length - 1, Math.round(s.progress * (quotes.length - 1))); counter.textContent = String(i + 1).padStart(2, '0'); if (Sound) Sound.voice(s.progress); } } });
+    tl.to({}, { duration: .6 });
+    for (let i = 1; i < quotes.length; i++) {
+      tl.addLabel(`s${i}`)
+        .to(words[i - 1], { yPercent: -115, opacity: 0, stagger: .02, duration: .5, ease: 'power2.in' }, `s${i}`)
+        .to(vstate, { bg: i, duration: .5, ease: 'power2.inOut', onUpdate: paintVoice }, `s${i}+=.2`)
+        .to(vstate, { fg: i, duration: .1, ease: 'none', onUpdate: paintVoice }, `s${i}+=.42`)
+        .fromTo(imgs[i], { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.3 }, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, duration: 1, ease: 'power2.inOut' }, `s${i}`)
+        .set(quotes[i], { autoAlpha: 1 }, `s${i}+=.45`)
+        .fromTo(words[i], { yPercent: 115, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: .05, duration: .6, ease: 'power3.out' }, `s${i}+=.45`)
+        .to({}, { duration: .6 });
+    }
+    gsap.fromTo('.vs-q p', { fontVariationSettings: '"wght" 220, "opsz" 144, "SOFT" 50' }, { fontVariationSettings: '"wght" 420, "opsz" 144, "SOFT" 50', ease: 'none',
+      scrollTrigger: { trigger: '#voice', start: 'top top', end: () => '+=' + innerHeight * quotes.length * 1.1, scrub: true } });
+  })();
+
+  /* ---------- Credits roll ---------- */
+  gsap.fromTo('#cr-fin', { letterSpacing: '.35em', opacity: 0, scale: .85 }, { letterSpacing: '-.04em', opacity: 1, scale: 1, ease: 'none', scrollTrigger: sc('#credits', 'top 85%', 'top 25%') });
+  gsap.fromTo('.cr-list > div, .cr-note, .cr-top', { y: i => 60 + i * 24, opacity: 0 }, { y: 0, opacity: 1, stagger: .1, ease: 'none', scrollTrigger: sc('.cr-list', 'top 95%', 'bottom 60%') });
+
+  /* ---------- Marquees: speed and skew follow scroll velocity ---------- */
+  (() => {
+    const list = $$('.marquee').map(el => {
+      const track = $('.mq-track', el);
+      return { el, track, x: 0, dir: +el.dataset.dir || 1, on: false, skew: gsap.quickTo(track, 'skewX', { duration: .5, ease: 'power3' }) };
+    });
+    const io = new IntersectionObserver(es => es.forEach(e => { const m = list.find(q => q.el === e.target); if (m) m.on = e.isIntersecting; }));
+    list.forEach(m => io.observe(m.el));
+    let vel = 0, dir = 1;
+    ScrollTrigger.create({ start: 0, end: 'max', onUpdate: s => { vel = s.getVelocity(); dir = s.direction; } });
+    gsap.ticker.add((time, dt) => {
+      vel *= .9;
+      if (Sound) Sound.air(vel);
+      const skew = gsap.utils.clamp(-16, 16, vel / -160);
+      list.forEach(m => {
+        if (!m.on) return;
+        const half = m.track.scrollWidth / 2;
+        m.x -= (.06 + Math.abs(vel) * .0003) * dt * m.dir * dir;
+        m.x = gsap.utils.wrap(-half, 0, m.x);
+        gsap.set(m.track, { x: m.x });
+        m.skew(skew * m.dir);
+      });
+    });
+  })();
+
+  /* ---------- Chapter themes (created last so pinned sections are measured with their spacers) ---------- */
+  themed.forEach((sec, i) => ScrollTrigger.create({
+    trigger: sec, start: sec.classList.contains('cc') ? 'top top' : 'top 50%', end: 'bottom 50%',
+    onEnter: () => applyTheme(sec.dataset.theme, sec.dataset.label),
+    onEnterBack: () => applyTheme(sec.dataset.theme, sec.dataset.label),
+    onLeaveBack: () => i && applyTheme(themed[i - 1].dataset.theme, themed[i - 1].dataset.label)
+  }));
+
+  fontsReady.then(() => ScrollTrigger.refresh());
+})();
+</script>
+</body>
+</html>

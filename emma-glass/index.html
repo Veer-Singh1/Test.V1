@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Emma Watson Window</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="An unofficial fan tribute to Emma Watson, told in a stained-glass cathedral window that lights up panel by panel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Alegreya+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Alegreya+Sans+SC:wght@500&display=swap" rel="stylesheet">
+
+<script>
+/* =========================================================================
+   CONFIG: optional artwork for the window.
+   Leave src empty and that panel is drawn in code (leaded glass with a symbol).
+   Fill it in and your image becomes the glass in that panel, lit from behind.
+   Panels are read from the bottom up, left then right, like a medieval window.
+   ========================================================================= */
+window.WINDOW_ART = {
+  panels: [
+    { src: '' },   // I   bottom left  · 1990, born in Paris        (drawn: a star)
+    { src: '' },   // II  bottom right · Hermione, 2001–2011        (drawn: a film reel)
+    { src: '' },   // III middle left  · Brown University, 2014     (drawn: a mortarboard)
+    { src: '' },   // IV  middle right · HeForShe, 2014             (drawn: two circles)
+    { src: '' },   // V   top left     · Our Shared Shelf, 2016     (drawn: an open book)
+    { src: '' }    // VI  top right    · Belle and Meg, 2017–2019   (drawn: a rose)
+  ],
+  rose: { src: '' } // the round rose window at the top (drawn: thirteen petals, one per film)
+};
+</script>
+
+<style>
+  /* Layout: a fixed WebGL nave (stone wall, a Gothic lancet window, coloured light beams) behind one
+     1180px column. The camera climbs the window as you scroll; text sits on dark glass cards. */
+  :root {
+    --nave: #0c0a09;          /* the dark of the church */
+    --parch: #f2e8d5;         /* text: candlelit parchment */
+    --muted: #c2b49c;
+    --gold: #e8b85c;          /* gold leaf */
+    --card: rgba(16, 12, 10, .66);
+    --edge: rgba(242, 232, 213, .16);
+    --light: #e8b85c;         /* colour of the light falling on the page; JS follows the lit glass */
+
+    --display: 'IM Fell English', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+    --body: 'Alegreya Sans', 'Gill Sans', 'Helvetica Neue', Arial, sans-serif;
+    --caps: 'Alegreya Sans SC', 'Alegreya Sans', 'Gill Sans', Arial, sans-serif;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --gl: max(20px, env(safe-area-inset-left, 0px));
+    --gr: max(20px, env(safe-area-inset-right, 0px));
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body { margin: 0; background: var(--nave); color: var(--parch); font-family: var(--body); font-size: 1.08rem; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  button, input, textarea { font: inherit; color: inherit; }
+  button { background: none; border: 0; padding: 0; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .sr-only { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .skip { position: fixed; z-index: 100; left: 16px; top: -60px; background: var(--parch); color: var(--nave); padding: .6rem 1rem; border-radius: 6px; text-decoration: none; }
+  .skip:focus { top: calc(12px + env(safe-area-inset-top, 0px)); }
+
+  /* ---------- The nave ---------- */
+  #nave { position: fixed; inset: 0; z-index: 0;
+    background: radial-gradient(40% 55% at 70% 45%, rgba(40, 70, 170, .55), transparent 70%), radial-gradient(30% 40% at 60% 70%, rgba(170, 30, 50, .35), transparent 70%), var(--nave); }
+  #nave canvas { width: 100%; height: 100%; display: block; }
+
+  /* ---------- Header + menu ---------- */
+  .bar { position: fixed; z-index: 20; inset: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
+    padding: calc(14px + env(safe-area-inset-top, 0px)) var(--gr) 14px var(--gl);
+    background: linear-gradient(180deg, rgba(8, 6, 5, .7), rgba(8, 6, 5, 0)); }
+  .logo { display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; }
+  .logo svg { width: 22px; height: 30px; }
+  .logo span, .menu-btn { font-family: var(--caps); font-size: .82rem; letter-spacing: .16em; }
+  .menu-btn { min-height: 44px; padding: 0 .2rem; }
+  #menu { position: fixed; inset: 0; z-index: 15; display: grid; align-content: center; padding: 90px calc(var(--gr) + 8px) 40px calc(var(--gl) + 8px);
+    background: rgba(10, 8, 7, .78); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+  #menu[hidden] { display: none; }
+  #menu ol { list-style: none; margin: 0 auto; padding: 0; width: min(100%, 900px); }
+  #menu li { border-bottom: 1px solid var(--edge); }
+  #menu a { display: flex; align-items: baseline; gap: 1rem; padding: .3em 0; text-decoration: none; font-family: var(--display); font-size: clamp(2rem, 7vw, 4.4rem); line-height: 1.1; transition: color .3s, padding-left .6s var(--ease); }
+  #menu a:hover, #menu a:focus-visible { color: var(--gold); padding-left: .5rem; }
+  #menu a small { font-family: var(--caps); font-size: .8rem; letter-spacing: .14em; color: var(--muted); min-width: 2.4rem; }
+  #menu p { margin: 2rem auto 0; width: min(100%, 900px); color: var(--muted); font-size: .9rem; }
+
+  /* ---------- Shared ---------- */
+  main { position: relative; z-index: 5; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding-left: var(--gl); padding-right: var(--gr); }
+  section { position: relative; }
+  .label { margin: 0 0 1rem; font-family: var(--caps); font-size: .86rem; letter-spacing: .18em; color: var(--gold); }
+  h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; text-wrap: balance; }
+  h2 { font-size: clamp(2.5rem, 6vw, 4.6rem); line-height: 1.02; max-width: 14ch; text-shadow: 0 1px 3px rgba(0,0,0,.85), 0 2px 30px rgba(0,0,0,.75); }
+  h2 em, h1 em { color: var(--gold); }
+  .lede { margin: 1rem 0 0; max-width: 46ch; color: var(--parch); font-size: 1.15rem; text-shadow: 0 1px 2px rgba(0,0,0,.95), 0 0 22px rgba(0,0,0,.85); }
+  .label { text-shadow: 0 1px 2px rgba(0,0,0,.9); }
+  .card { background: var(--card); border: 1px solid var(--edge); border-radius: 4px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 0 0 1px rgba(0,0,0,.4), 0 30px 60px -30px rgba(0,0,0,.8), inset 0 1px 0 color-mix(in srgb, var(--light) 45%, transparent); }
+  .btn { display: inline-flex; align-items: center; gap: .9rem; min-height: 50px; padding: .6rem 1.4rem; border: 1px solid color-mix(in srgb, var(--gold) 70%, transparent); border-radius: 999px;
+    background: rgba(12, 10, 9, .55); text-decoration: none; font-family: var(--caps); font-size: .9rem; letter-spacing: .14em; transition: background-color .3s, color .3s; }
+  .btn:hover { background: var(--gold); color: var(--nave); }
+  .rv { opacity: 0; transform: translateY(28px); transition: opacity 1.1s var(--ease), transform 1.1s var(--ease); }
+  .rv.in, .rm .rv { opacity: 1; transform: none; }
+
+  /* ---------- Hero ---------- */
+  .hero { min-height: 100svh; display: flex; align-items: center; padding-block: 100px 60px; }
+  .hero h1 { font-size: clamp(3.8rem, 11vw, 9.5rem); line-height: .9; letter-spacing: -.01em; text-shadow: 0 4px 40px rgba(0,0,0,.7); }
+  .hero h1 span { display: block; }
+  .hero h1 em { font-size: .5em; display: block; margin-top: .25em; }
+  .hero .wrap { width: 100%; }
+  .hero .lede { max-width: 38ch; }
+  .hero .btn { margin-top: 2rem; }
+  @media (max-width: 819px) { .hero { align-items: flex-start; padding-top: 110px; } .hero h1 { font-size: clamp(3.4rem, 16vw, 5rem); } }
+
+  /* ---------- The window (pinned story) ---------- */
+  #window { height: calc(6 * 85svh + 100svh); }
+  .sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+  .sticky .wrap { height: 100%; display: grid; grid-template-rows: auto 1fr auto; padding-top: 92px; padding-bottom: 28px; }
+  .panes { display: grid; align-items: center; }
+  .pane { grid-area: 1 / 1; width: min(440px, 100%); padding: 1.6rem 1.6rem 1.7rem; opacity: 0; will-change: opacity, transform;
+    border-top: 3px solid var(--c); }
+  .pane .no { font-family: var(--caps); font-size: .86rem; letter-spacing: .16em; color: var(--c-text, var(--gold)); }
+  .pane h3 { font-size: clamp(2rem, 4vw, 2.9rem); line-height: 1.02; margin: .4rem 0 .7rem; }
+  .pane p { margin: 0; }
+  .pane .motif { margin-top: 1rem; font-size: .9rem; color: var(--muted); font-style: italic; }
+  .ticks { display: flex; gap: .5rem; list-style: none; margin: 0; padding: 0; }
+  .ticks li { min-width: 2.3rem; padding: .3rem .4rem; text-align: center; font-family: var(--caps); font-size: .8rem; letter-spacing: .08em; color: var(--muted);
+    border: 1px solid var(--edge); border-radius: 2px; transition: color .4s, border-color .4s, background-color .4s; }
+  .ticks li.on { color: var(--nave); background: var(--gold); border-color: var(--gold); }
+  @media (max-width: 819px) { .panes { align-items: end; margin-bottom: .9rem; } .pane { padding: 1.2rem 1.25rem 1.3rem; } .pane h3 { font-size: 1.9rem; } }
+  .rm #window { height: auto; }
+  .rm .sticky { position: relative; height: auto; overflow: visible; }
+  .rm .sticky .wrap { display: block; padding-block: 6rem; }
+  .rm .panes { gap: 1rem; margin: 2rem 0; }
+  .rm .pane { grid-area: auto; opacity: 1; }
+  .rm .ticks { display: none; }
+
+  /* ---------- Rose of roles ---------- */
+  .roles { padding-block: 26vh 20vh; }
+  .films { margin-top: 2rem; padding: .5rem 1.5rem; width: min(560px, 100%); }
+  .films ol { list-style: none; margin: 0; padding: 0; }
+  .films li { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: .2rem 1rem; padding: .7rem 0; border-bottom: 1px solid var(--edge); cursor: default; transition: padding-left .5s var(--ease); }
+  .films li:last-child { border-bottom: 0; }
+  .films li:hover, .films li:focus-visible { padding-left: .4rem; }
+  .films .y { font-family: var(--caps); font-size: .84rem; letter-spacing: .08em; color: var(--gold); padding-top: .2rem; font-variant-numeric: tabular-nums; }
+  .films .t { font-family: var(--display); font-size: 1.3rem; line-height: 1.2; }
+  .films .r { grid-column: 2; font-size: .92rem; color: var(--muted); }
+
+  /* ---------- Portraits ---------- */
+  .portraits { padding-block: 22vh 16vh; }
+  .arches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; margin-top: 2.4rem; max-width: 760px; }
+  @media (min-width: 820px) { .arches { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 820px; } .arches figure:nth-child(even) { transform: translateY(2.2rem); } }
+  .arch { margin: 0; }
+  .arch .lead, .arch .glass, .arch .pic {
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 140' preserveAspectRatio='none'%3E%3Cpath d='M0 140V58A100 100 0 0 1 50 5.4A100 100 0 0 1 100 58V140Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 140' preserveAspectRatio='none'%3E%3Cpath d='M0 140V58A100 100 0 0 1 50 5.4A100 100 0 0 1 100 58V140Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat; }
+  .arch .lead { position: relative; aspect-ratio: 5 / 7; max-width: 100%; background: #070504; padding: 3px; }
+  .arch .glass { height: 100%; padding: 7px; background: linear-gradient(160deg, var(--g), color-mix(in srgb, var(--g) 45%, #000)); }
+  .arch .pic { position: relative; height: 100%; background: #070504; }
+  .arch img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); filter: brightness(.5) sepia(.4); transition: transform 1.6s var(--ease), filter 1.6s var(--ease); }
+  .arch .pic::after { content: ''; position: absolute; inset: 0; background: var(--g); mix-blend-mode: color; opacity: .85; transition: opacity 1.6s var(--ease); }
+  .arch.in img { transform: none; filter: none; }
+  .arch.in .pic::after { opacity: 0; }
+  .arch figcaption { margin-top: .6rem; font-family: var(--caps); font-size: .8rem; letter-spacing: .12em; color: var(--muted); text-align: center; }
+  .rm .arch img { transform: none; filter: none; } .rm .arch .pic::after { opacity: 0; }
+
+  /* ---------- Words ---------- */
+  .words { padding-block: 24vh 18vh; }
+  .quotes { display: grid; gap: clamp(3rem, 12vh, 7rem); margin-top: 2.6rem; }
+  .quotes blockquote { margin: 0; }
+  .quotes p { margin: 0; font-family: var(--display); font-style: italic; font-size: clamp(2rem, 5vw, 3.9rem); line-height: 1.1; max-width: 20ch; text-wrap: balance;
+    text-shadow: 0 2px 4px rgba(0,0,0,.6), 0 0 40px color-mix(in srgb, var(--light) 40%, transparent); }
+  .quotes .w { opacity: .2; transition: opacity .4s; }
+  .quotes .w.on, .rm .quotes .w { opacity: 1; }
+  .cite { margin-top: 1.4rem; font-family: var(--caps); font-size: .84rem; letter-spacing: .12em; color: var(--muted); }
+
+  /* ---------- Candles ---------- */
+  .candles { padding-block: 22vh 14vh; }
+  .candle-grid { display: grid; gap: 2rem; margin-top: 2.4rem; max-width: 960px; }
+  @media (min-width: 900px) { .candle-grid { grid-template-columns: minmax(0, 420px) minmax(0, 1fr); align-items: start; } }
+  .light-form { padding: 1.4rem; display: grid; gap: 1rem; }
+  .light-form label { display: grid; gap: .35rem; font-family: var(--caps); font-size: .84rem; letter-spacing: .1em; color: var(--muted); }
+  .light-form input, .light-form textarea { width: 100%; padding: .7rem .8rem; background: rgba(0,0,0,.35); border: 1px solid var(--edge); border-radius: 3px; color: var(--parch);
+    font-family: var(--body); font-size: 1.05rem; letter-spacing: 0; resize: vertical; outline: none; transition: border-color .3s; }
+  .light-form input:focus, .light-form textarea:focus { border-color: var(--gold); }
+  .form-foot { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+  .count { font-family: var(--caps); font-size: .8rem; letter-spacing: .1em; color: var(--muted); }
+  .status { margin: 0; min-height: 1.4em; font-size: .95rem; color: var(--muted); }
+  .wall { display: grid; gap: .7rem; align-content: start; }
+  .tally { margin: 0 0 .4rem; font-family: var(--caps); letter-spacing: .12em; color: var(--gold); }
+  .votive { position: relative; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 1rem; align-items: end; padding: 1rem 1.1rem; }
+  .votive.new { animation: rise .9s var(--ease) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  .wick { position: relative; height: 54px; }
+  .wick i { position: absolute; left: 7px; bottom: 0; width: 16px; height: 30px; border-radius: 3px 3px 2px 2px; background: linear-gradient(90deg, #d9cdb4, #f6efe0 45%, #c9bc9f); }
+  .wick b { position: absolute; left: 9px; bottom: 28px; width: 12px; height: 22px; border-radius: 50% 50% 45% 45% / 62% 62% 38% 38%; transform-origin: 50% 90%;
+    background: radial-gradient(60% 70% at 50% 70%, #fffbe6 0%, #ffd77a 35%, #ff9a2e 65%, rgba(255,110,30,0) 100%);
+    box-shadow: 0 0 18px 6px rgba(255, 170, 60, .35), 0 0 50px 14px rgba(255, 140, 40, .15); animation: flicker 2.2s ease-in-out infinite alternate; }
+  .votive:nth-child(3n) .wick b { animation-duration: 1.7s; animation-delay: -.6s; }
+  .votive:nth-child(3n+1) .wick b { animation-duration: 2.6s; animation-delay: -1.1s; }
+  @keyframes flicker { 0% { transform: scale(1, 1) rotate(-1deg); } 30% { transform: scale(.94, 1.06) rotate(2deg); } 60% { transform: scale(1.04, .95) rotate(-2deg); } 100% { transform: scale(.97, 1.03) rotate(1deg); } }
+  .votive p { margin: 0 0 .3rem; font-family: var(--display); font-size: 1.2rem; line-height: 1.3; overflow-wrap: anywhere; }
+  .votive footer { font-family: var(--caps); font-size: .8rem; letter-spacing: .1em; color: var(--muted); }
+  .votive footer b { color: var(--gold); font-weight: 500; }
+  .votive .rm-btn { position: absolute; top: .5rem; right: .6rem; font-family: var(--caps); font-size: .74rem; letter-spacing: .08em; color: var(--muted); border: 1px solid var(--edge); border-radius: 999px; padding: .2rem .6rem; }
+  .empty { padding: 1.2rem; color: var(--muted); }
+
+  /* ---------- End ---------- */
+  .end { min-height: 90svh; display: flex; align-items: flex-end; padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
+  .end h2 { font-size: clamp(3rem, 9vw, 7rem); max-width: 12ch; }
+  .credits { margin-top: 2rem; padding: 1.3rem 1.4rem; max-width: 720px; display: grid; gap: .8rem; font-size: .95rem; }
+  .credits p { margin: 0; color: var(--muted); }
+  .credits strong { color: var(--parch); font-weight: 500; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div id="nave" role="img" aria-label="A dark stone cathedral wall with a tall Gothic stained-glass window. Six leaded panels light up one by one as you scroll, throwing coloured beams of light across the page.">
+  <canvas id="gl" aria-hidden="true"></canvas>
+</div>
+
+<header class="bar">
+  <a class="logo" href="#top" aria-label="The Emma Watson Window, back to the top">
+    <svg viewBox="0 0 22 30" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1.5 29V12.5A19 19 0 0 1 11 1.5a19 19 0 0 1 9.5 11V29z"/><path d="M11 9v20M1.5 19h19"/></svg>
+    <span>Fan tribute</span>
+  </a>
+  <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+</header>
+
+<nav id="menu" aria-label="Sections" hidden>
+  <ol>
+    <li><a href="#window"><small>I–VI</small>The window</a></li>
+    <li><a href="#roles"><small>✣</small>The rose of roles</a></li>
+    <li><a href="#portraits"><small>✣</small>In the light</a></li>
+    <li><a href="#words"><small>✣</small>In her words</a></li>
+    <li><a href="#candles"><small>✣</small>Light a candle</a></li>
+  </ol>
+  <p>Unofficial fan site. Not affiliated with Emma Watson or her representatives.</p>
+</nav>
+
+<main id="main" tabindex="-1">
+  <section id="top" class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <p class="label rv">An unofficial fan tribute</p>
+      <h1 id="hero-title"><span>Emma</span> <span>Watson</span> <em>A life held up to the light</em></h1>
+      <p class="lede rv">Medieval windows are read from the bottom up. Scroll to light this one, panel by panel.</p>
+      <a class="btn rv" href="#window">Light the window <span aria-hidden="true">↓</span></a>
+    </div>
+  </section>
+
+  <section id="window" aria-labelledby="window-title">
+    <div class="sticky">
+      <div class="wrap">
+        <div>
+          <p class="label" id="window-title">The window · read from the bottom up</p>
+        </div>
+        <div class="panes">
+          <article class="pane card" style="--c:#2c5fe0"><p class="no">Panel I · 1990</p><h3>Born in Paris</h3><p>Emma Watson was born in Paris on 15 April 1990 and grew up in Oxfordshire, England.</p><p class="motif">In the glass: a star.</p></article>
+          <article class="pane card" style="--c:#c4142f; --c-text:#ff8a8a"><p class="no">Panel II · 2001–2011</p><h3>Eight films as Hermione</h3><p>Cast at nine as Hermione Granger, she played her across all eight Harry Potter films.</p><p class="motif">In the glass: a film reel.</p></article>
+          <article class="pane card" style="--c:#1d8c4a; --c-text:#7fe0a6"><p class="no">Panel III · 2014</p><h3>A degree in English</h3><p>She graduated from Brown University with a degree in English literature.</p><p class="motif">In the glass: a mortarboard.</p></article>
+          <article class="pane card" style="--c:#7a2bd0; --c-text:#c8a2ff"><p class="no">Panel IV · 2014</p><h3>HeForShe</h3><p>Appointed a UN Women Goodwill Ambassador, she launched HeForShe at UN headquarters in New York on 20 September 2014.</p><p class="motif">In the glass: two circles, in the suffragette colours.</p></article>
+          <article class="pane card" style="--c:#1f4fc4; --c-text:#9cc0ff"><p class="no">Panel V · 2016</p><h3>A shared shelf</h3><p>She started the feminist book club Our Shared Shelf, and hid copies of Maya Angelou's <em>Mom &amp; Me &amp; Mom</em> on the London Underground.</p><p class="motif">In the glass: an open book.</p></article>
+          <article class="pane card" style="--c:#d81f4a; --c-text:#ff9ab2"><p class="no">Panel VI · 2017–2019</p><h3>Belle and Meg</h3><p>She played Belle in <em>Beauty and the Beast</em> (2017) and Meg March in <em>Little Women</em> (2019).</p><p class="motif">In the glass: a rose.</p></article>
+        </div>
+        <ol class="ticks" aria-hidden="true"><li>I</li><li>II</li><li>III</li><li>IV</li><li>V</li><li>VI</li></ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="roles" class="roles" aria-labelledby="roles-title">
+    <div class="wrap">
+      <p class="label rv">The rose window</p>
+      <h2 id="roles-title" class="rv">The rose of <em>roles</em></h2>
+      <p class="lede rv">Thirteen roles, thirteen petals. Point at a film to light its petal.</p>
+      <div class="films card rv">
+        <ol id="film-list">
+          <li tabindex="0"><span class="y">2001–11</span><span class="t">Harry Potter, eight films</span><span class="r">Hermione Granger</span></li>
+          <li tabindex="0"><span class="y">2007</span><span class="t">Ballet Shoes</span><span class="r">Pauline Fossil · TV film</span></li>
+          <li tabindex="0"><span class="y">2008</span><span class="t">The Tale of Despereaux</span><span class="r">Princess Pea · voice</span></li>
+          <li tabindex="0"><span class="y">2011</span><span class="t">My Week with Marilyn</span><span class="r">Lucy</span></li>
+          <li tabindex="0"><span class="y">2012</span><span class="t">The Perks of Being a Wallflower</span><span class="r">Sam</span></li>
+          <li tabindex="0"><span class="y">2013</span><span class="t">The Bling Ring</span><span class="r">Nicki</span></li>
+          <li tabindex="0"><span class="y">2013</span><span class="t">This Is the End</span><span class="r">Herself</span></li>
+          <li tabindex="0"><span class="y">2014</span><span class="t">Noah</span><span class="r">Ila</span></li>
+          <li tabindex="0"><span class="y">2015</span><span class="t">Colonia</span><span class="r">Lena</span></li>
+          <li tabindex="0"><span class="y">2015</span><span class="t">Regression</span><span class="r">Angela Gray</span></li>
+          <li tabindex="0"><span class="y">2017</span><span class="t">Beauty and the Beast</span><span class="r">Belle</span></li>
+          <li tabindex="0"><span class="y">2017</span><span class="t">The Circle</span><span class="r">Mae Holland</span></li>
+          <li tabindex="0"><span class="y">2019</span><span class="t">Little Women</span><span class="r">Meg March</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="portraits" class="portraits" aria-labelledby="portraits-title">
+    <div class="wrap">
+      <p class="label rv">Portraits</p>
+      <h2 id="portraits-title" class="rv">In the <em>light</em></h2>
+      <p class="lede rv">Each portrait is set in its own lancet, and the colour of the glass clears as it comes into view.</p>
+      <div class="arches">
+        <figure class="arch" style="--g:#2c5fe0"><div class="lead"><div class="glass"><div class="pic"><img src="images/portrait-blazer.jpg" alt="Black-and-white portrait of Emma Watson in a black blazer and a silver choker" loading="lazy"></div></div></div><figcaption>Portrait</figcaption></figure>
+        <figure class="arch" style="--g:#c4142f"><div class="lead"><div class="glass"><div class="pic"><img src="images/wonderland-laugh.jpg" alt="Emma Watson laughing with her eyes shut, in a pleated top and a dark skirt" loading="lazy"></div></div></div><figcaption>Wonderland</figcaption></figure>
+        <figure class="arch" style="--g:#1d8c4a"><div class="lead"><div class="glass"><div class="pic"><img src="images/hero.jpg" alt="Black-and-white portrait of Emma Watson looking back over her shoulder in a knitted cardigan" loading="lazy"></div></div></div><figcaption>Studio</figcaption></figure>
+        <figure class="arch" style="--g:#e0a020"><div class="lead"><div class="glass"><div class="pic"><img src="images/talk-show.jpg" alt="Emma Watson smiling in a cream dress, seated in a talk-show guest chair" loading="lazy"></div></div></div><figcaption>On air</figcaption></figure>
+        <figure class="arch" style="--g:#7a2bd0"><div class="lead"><div class="glass"><div class="pic"><img src="images/wonderland-profile.jpg" alt="Black-and-white profile of Emma Watson with her eyes closed" loading="lazy"></div></div></div><figcaption>Wonderland</figcaption></figure>
+        <figure class="arch" style="--g:#d81f4a"><div class="lead"><div class="glass"><div class="pic"><img src="images/hollywood-authentic.jpg" alt="Emma Watson shouting with joy on a pickleball court, on a magazine cover" loading="lazy"></div></div></div><figcaption>Hollywood Authentic, 2025</figcaption></figure>
+        <figure class="arch" style="--g:#1f4fc4"><div class="lead"><div class="glass"><div class="pic"><img src="images/interview.jpg" alt="Emma Watson smiling with shoulder-length wavy hair" loading="lazy"></div></div></div><figcaption>Candid</figcaption></figure>
+        <figure class="arch" style="--g:#138a8a"><div class="lead"><div class="glass"><div class="pic"><img src="images/portrait-bob.jpg" alt="Black-and-white close-up of Emma Watson with a short bob" loading="lazy"></div></div></div><figcaption>Portrait</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="words" class="words" aria-labelledby="words-title">
+    <div class="wrap">
+      <p class="label rv">From her HeForShe speech</p>
+      <h2 id="words-title" class="rv">In her <em>words</em></h2>
+      <div class="quotes">
+        <blockquote><p class="q">Both men and women should feel free to be sensitive. Both men and women should feel free to be strong.</p></blockquote>
+        <blockquote><p class="q">Gender equality is your issue too.</p></blockquote>
+        <blockquote><p class="q">If not me, who? If not now, when?</p><p class="cite">Emma Watson · United Nations, New York · 20 September 2014</p></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section id="candles" class="candles" aria-labelledby="candles-title">
+    <div class="wrap">
+      <p class="label rv">Votive candles</p>
+      <h2 id="candles-title" class="rv">Light a <em>candle</em></h2>
+      <p class="lede rv">Leave a few words and a candle will burn for them here. Everyone who can open this page sees the candles.</p>
+      <div class="candle-grid">
+        <form class="light-form card rv" id="candle-form" novalidate>
+          <label for="c-name">Your name<input id="c-name" maxlength="40" autocomplete="nickname" required></label>
+          <label for="c-words">Your words<textarea id="c-words" rows="3" maxlength="160" required></textarea></label>
+          <div class="form-foot">
+            <button class="btn" type="submit">Light it <span aria-hidden="true">✦</span></button>
+            <span class="count" id="c-count">0 / 160</span>
+          </div>
+          <p class="status" id="c-status" aria-live="polite"></p>
+        </form>
+        <div>
+          <p class="tally" id="tally" aria-live="polite"></p>
+          <div class="wall" id="wall"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="end" aria-labelledby="end-title">
+    <div class="wrap">
+      <h2 id="end-title" class="rv">The window stays <em>lit</em>.</h2>
+      <div class="credits card rv">
+        <p><strong>Unofficial fan site.</strong> Not affiliated with Emma Watson or her representatives, UN Women or HeForShe. Made by Veer Singh.</p>
+        <p>The window, the stone and the light are drawn live in your browser. Photographs belong to their photographers and publishers, including Wonderland and Hollywood Authentic. Quotes are from her HeForShe speech at the United Nations on 20 September 2014.</p>
+      </div>
+      <a class="btn rv" href="#top" style="margin-top:1.6rem">Back to the top <span aria-hidden="true">↑</span></a>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+  'use strict';
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const COARSE = matchMedia('(pointer: coarse)').matches;
+  const root = document.documentElement;
+  if (REDUCE) root.classList.add('rm');
+
+  /* ===================================================================
+     THE WINDOW IN NUMBERS (window units: 1.0 wide, springing line at 1.6,
+     apex at about 2.47; panels read bottom-up, left then right)
+     =================================================================== */
+  const N = 6;
+  const panelCentre = k => [k % 2 ? 0.261 : -0.261, 0.29 + Math.floor(k / 2) * 0.52];
+  const GLASS = [[.10, .24, .78], [.70, .05, .12], [.10, .55, .28], [.42, .14, .70], [.12, .30, .76], [.78, .22, .46]];  // each panel's field colour
+  const CSS_LIGHT = ['#2c5fe0', '#e0283f', '#1d9c55', '#8a3be0', '#2a62e0', '#e0336a'];
+
+  /* ===================================================================
+     SHADERS
+     =================================================================== */
+  const COMMON = `
+    precision highp float;
+    uniform vec2 uRes, uAnchor; uniform vec3 uCam; uniform float uTime;
+    #define YA 1.6
+    #define OC vec2(0.0, 2.02)
+    #define OR 0.3
+    float h1(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
+    vec2 h2(vec2 p){ return vec2(h1(p), h1(p + 17.31)); }
+    float noise(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+      return mix(mix(h1(i), h1(i + vec2(1, 0)), f.x), mix(h1(i + vec2(0, 1)), h1(i + vec2(1, 1)), f.x), f.y); }
+    float fbm(vec2 p){ float v = 0.0, a = 0.5; for (int i = 0; i < 4; i++) { v += a * noise(p); p *= 2.07; a *= 0.5; } return v; }
+    vec2 toWin(){ vec2 sp = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y);
+      return vec2((sp.x - uAnchor.x) / uCam.z + uCam.x, (uAnchor.y - sp.y) / uCam.z + uCam.y); }
+    float sdWindow(vec2 p){
+      if (p.y < YA) return max(abs(p.x) - 0.5, -p.y);
+      return max(length(p - vec2(0.5, YA)) - 1.0, length(p - vec2(-0.5, YA)) - 1.0);
+    }`;
+
+  const GLASS_FRAG = COMMON + `
+    uniform float uLit[6]; uniform float uHas[7];
+    uniform float uOc, uDawn, uPetal, uPetalAmt, uRot, uAvg;
+    uniform vec2 uSun; uniform sampler2D uAtlas;
+
+    float litOf(float k){ if (k < .5) return uLit[0]; if (k < 1.5) return uLit[1]; if (k < 2.5) return uLit[2]; if (k < 3.5) return uLit[3]; if (k < 4.5) return uLit[4]; return uLit[5]; }
+    float hasOf(float k){ if (k < .5) return uHas[0]; if (k < 1.5) return uHas[1]; if (k < 2.5) return uHas[2]; if (k < 3.5) return uHas[3]; if (k < 4.5) return uHas[4]; if (k < 5.5) return uHas[5]; return uHas[6]; }
+    // per-panel glass: F field, M medallion ground, S symbol, T second symbol colour, B border
+    vec3 palF(float k){ if (k < .5) return vec3(.10,.24,.78); if (k < 1.5) return vec3(.70,.05,.12); if (k < 2.5) return vec3(.10,.55,.28); if (k < 3.5) return vec3(.42,.14,.70); if (k < 4.5) return vec3(.12,.30,.76); return vec3(.78,.22,.46); }
+    vec3 palM(float k){ if (k < .5) return vec3(.04,.10,.42); if (k < 1.5) return vec3(.32,.02,.07); if (k < 2.5) return vec3(.03,.30,.20); if (k < 3.5) return vec3(.12,.04,.26); if (k < 4.5) return vec3(.02,.34,.42); return vec3(.05,.08,.36); }
+    vec3 palS(float k){ if (k < .5) return vec3(1.0,.80,.28); if (k < 1.5) return vec3(.88,.88,.82); if (k < 2.5) return vec3(.95,.92,.80); if (k < 3.5) return vec3(.55,.18,.85); if (k < 4.5) return vec3(.97,.90,.74); return vec3(.86,.05,.18); }
+    vec3 palT(float k){ if (k < 2.5) return vec3(1.0,.74,.2); if (k < 3.5) return vec3(.12,.62,.32); if (k < 4.5) return vec3(.97,.90,.74); return vec3(.12,.55,.25); }
+    vec3 palB(float k){ if (k < .5) return vec3(.78,.07,.14); if (k < 1.5) return vec3(.98,.68,.16); if (k < 2.5) return vec3(.12,.25,.75); if (k < 3.5) return vec3(.96,.92,.85); if (k < 4.5) return vec3(.98,.66,.12); return vec3(1.0,.76,.24); }
+
+    // Voronoi: x = distance to the nearest piece edge, y = this piece's random value
+    vec2 vor(vec2 x){
+      vec2 n = floor(x), f = fract(x), mg = vec2(0.0), mr = vec2(0.0); float md = 8.0;
+      for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++) {
+        vec2 g = vec2(float(i), float(j)); vec2 r = g + 0.15 + 0.7 * h2(n + g) - f; float d = dot(r, r);
+        if (d < md) { md = d; mr = r; mg = g; } }
+      md = 8.0;
+      for (int j = -2; j <= 2; j++) for (int i = -2; i <= 2; i++) {
+        vec2 g = mg + vec2(float(i), float(j)); vec2 r = g + 0.15 + 0.7 * h2(n + g) - f;
+        if (dot(mr - r, mr - r) > 1e-5) md = min(md, dot(0.5 * (mr + r), normalize(r - mr))); }
+      return vec2(md, h1(n + mg));
+    }
+    float sdBox(vec2 p, vec2 b){ vec2 d = abs(p) - b; return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0); }
+    float sdSeg(vec2 p, vec2 a, vec2 b){ vec2 pa = p - a, ba = b - a; return length(pa - ba * clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0)); }
+    float sdStar5(vec2 p, float r, float rf){
+      const vec2 k1 = vec2(0.809016994, -0.587785252); const vec2 k2 = vec2(-k1.x, k1.y);
+      p.x = abs(p.x); p -= 2.0 * max(dot(k1, p), 0.0) * k1; p -= 2.0 * max(dot(k2, p), 0.0) * k2; p.x = abs(p.x); p.y -= r;
+      vec2 ba = rf * vec2(-k1.y, k1.x) - vec2(0, 1); float h = clamp(dot(p, ba) / dot(ba, ba), 0.0, r);
+      return length(p - ba * h) * sign(p.y * ba.x - p.x * ba.y); }
+    mat2 rot(float a){ float c = cos(a), s = sin(a); return mat2(c, -s, s, c); }
+
+    // glass lit from behind: the sun is a warm hot spot that wanders behind the window
+    vec3 shade(vec3 col, vec2 p, float lit, float v){
+      float l = dot(col, vec3(.3, .59, .11));
+      col = mix(vec3(l), col, mix(.3, 1.0, lit));
+      float tex = .8 + .4 * fbm(vec2(p.x * 26.0, p.y * 80.0) + v * 13.0);    // streaks and seeds in old glass
+      vec2 d = p - uSun; float s2 = dot(d, d);
+      float on = mix(.05, 1.0, lit) * uDawn;
+      vec3 c = col * (.8 + .4 * v) * tex * (.55 + 1.1 * exp(-s2 * 2.2)) * on;
+      return c + col * col * on * 1.3 * exp(-s2 * 8.0);
+    }
+
+    // one panel, drawn in code: a border band, a field of quarries and a medallion with its symbol
+    vec3 drawn(float k, vec2 q, out float ld, out float v){
+      vec3 colr; ld = 1e3;
+      float bx = max(abs(q.x) - 0.80, abs(q.y) - 0.84);
+      float mr = length(q) - 0.70;
+      ld = min(abs(bx), abs(mr));
+      if (bx > 0.0) {
+        vec2 w = vor(q * 5.0 + k * 7.0); colr = palB(k); v = w.y; ld = min(ld, w.x / 5.0);
+        float bead = length(fract(vec2(q.x, q.y) * 2.6 + 0.5) - 0.5) - 0.18;   // little roundels along the border
+        if (bead < 0.0 && abs(bx) > 0.04) colr = palF(k) * 1.2;
+        ld = min(ld, abs(bead) / 2.6);
+      } else if (mr > 0.0) {
+        vec2 w = vor(q * 3.4 + k * 3.0); colr = palF(k); v = w.y; ld = min(ld, w.x / 3.4);
+        colr *= .85 + .3 * step(.5, fract(w.y * 7.0));
+      } else {
+        vec2 m = q / 0.70; float sd; vec3 sc = palS(k);
+        if (k < .5) {                                   // I · a star
+          sd = sdStar5(m * rot(0.0) - vec2(0.0, 0.03), 0.78, 0.42);
+        } else if (k < 1.5) {                           // II · a film reel
+          float holes = length(m) - 0.09;
+          for (int i = 0; i < 5; i++) { float a = float(i) * 1.2566 + 0.3; holes = min(holes, length(m - 0.43 * vec2(cos(a), sin(a))) - 0.16); }
+          sd = max(length(m) - 0.8, -holes);
+        } else if (k < 2.5) {                           // III · a mortarboard with its tassel
+          float top = (abs(m.x) / 0.78 + abs(m.y - 0.16) / 0.30 - 1.0) * 0.26;
+          float cap = sdBox(m - vec2(0.0, -0.14), vec2(0.36, 0.2));
+          float tas = min(sdSeg(m, vec2(0.0, 0.16), vec2(0.6, -0.32)) - 0.035, length(m - vec2(0.6, -0.4)) - 0.08);
+          sd = min(min(top, cap), tas);
+          if (tas < min(top, cap)) sc = palT(k);
+        } else if (k < 3.5) {                           // IV · two circles: violet, green and white where they meet
+          float dl = length(m - vec2(-0.27, 0.0)) - 0.55, dr = length(m - vec2(0.27, 0.0)) - 0.55;
+          sd = min(dl, dr); ld = min(ld, min(abs(dl), abs(dr)) * 0.7);
+          sc = (dl < 0.0 && dr < 0.0) ? vec3(.96) : (dl < 0.0 ? palS(k) : palT(k));
+        } else if (k < 4.5) {                           // V · an open book
+          vec2 a = rot(-0.12) * (m - vec2(-0.37, 0.0)), b = rot(0.12) * (m - vec2(0.37, 0.0));
+          float pl = sdBox(a, vec2(0.33, 0.44)), pr = sdBox(b, vec2(0.33, 0.44));
+          sd = min(pl, pr);
+          float lines = abs(fract(m.y * 4.5 + 0.5) - 0.5) / 4.5;                 // lines of text, leaded
+          if (sd < -0.08 && abs(m.y) < 0.32) ld = min(ld, lines * 0.7 + 0.004);
+          ld = min(ld, abs(m.x) * 0.7);
+        } else {                                        // VI · a rose on a stem
+          vec2 c = m - vec2(0.0, 0.2); float a = atan(c.y, c.x), r = length(c);
+          float petals = r - (0.40 + 0.09 * cos(5.0 * a));
+          float stem = sdSeg(m, vec2(0.0, -0.18), vec2(0.0, -0.86)) - 0.045;
+          float leaf = min(length((m - vec2(0.22, -0.56)) * vec2(1.0, 2.0)) - 0.16, length((m - vec2(-0.22, -0.66)) * vec2(1.0, 2.0)) - 0.16);
+          float green = min(stem, leaf);
+          sd = min(petals, green);
+          if (green < petals) sc = palT(k);
+          if (petals < 0.0 && r < 0.18) sc = sc * 0.62;
+          ld = min(ld, abs(r - 0.18) * 0.7 + (petals < 0.0 ? 0.0 : 1.0));
+        }
+        vec2 w = vor(m * (sd < 0.0 ? 2.4 : 3.8) + k * 5.0); v = w.y;
+        colr = sd < 0.0 ? sc : palM(k);
+        ld = min(ld, w.x / (sd < 0.0 ? 2.4 : 3.8) * 0.7);
+        ld = min(ld, abs(sd) * 0.7);
+      }
+      return colr;
+    }
+
+    void main(){
+      vec2 p = toWin(); float pxu = 1.0 / uCam.z;
+      float sd = sdWindow(p);
+      if (sd > 0.0) { gl_FragColor = vec4(0.0); return; }
+      float ocd = length(p - OC);
+      // stone inside the window (left to the composite pass): sill, mullion, transom, the rose's ring
+      if (p.y < 0.04 || (abs(p.x) < 0.022 && p.y < YA) || abs(p.y - YA) < 0.022 || abs(ocd - OR) < 0.02) { gl_FragColor = vec4(0.0); return; }
+      // iron saddle bars between the rows of panels
+      if (p.y < YA && (abs(p.y - 0.55) < 0.011 || abs(p.y - 1.07) < 0.011)) { gl_FragColor = vec4(vec3(0.018, 0.016, 0.014), 1.0); return; }
+
+      vec3 colr; float ld, v, lit; float lw = 0.0055;
+      if (p.y < YA) {
+        float col = step(0.0, p.x), row = clamp(floor((p.y - 0.04) / 0.52), 0.0, 2.0), k = row * 2.0 + col;
+        vec2 c = vec2(col < .5 ? -0.261 : 0.261, 0.29 + row * 0.52);
+        vec2 q = (p - c) / 0.25;
+        lit = litOf(k);
+        if (hasOf(k) > .5) {                            // your artwork becomes the glass
+          vec2 uv = vec2((p.x - c.x + 0.239) / 0.478, (p.y - c.y + 0.25) / 0.5);
+          colr = texture2D(uAtlas, vec2((mod(k, 3.0) + uv.x) / 3.0, 1.0 - (floor(k / 3.0) + 1.0 - uv.y) / 3.0)).rgb;
+          colr = pow(colr, vec3(1.2)) * 1.25;
+          v = vor(q * 6.0).y * 0.3 + 0.35; ld = 1e3;
+        } else {
+          colr = drawn(k, q, ld, v); ld *= 0.25;
+        }
+      } else if (ocd < OR) {                            // the rose window: one petal per film
+        vec2 d = p - OC; float r = ocd / OR;
+        float N = 13.0, seg = 6.28318 / N;
+        float a = mod(atan(d.y, d.x) + uRot, 6.28318), k = floor(a / seg), la = a - (k + 0.5) * seg;
+        lit = uOc;
+        if (hasOf(6.0) > .5) {
+          vec2 rd = rot(-uRot) * (d / OR) * 0.5 + 0.5;
+          colr = texture2D(uAtlas, vec2(rd.x / 3.0, 1.0 - (2.0 + 1.0 - rd.y) / 3.0)).rgb; colr = pow(colr, vec3(1.2)) * 1.25;
+          v = 0.5; ld = abs(r - 0.98) * OR;
+        } else if (r < 0.26) {
+          colr = vec3(1.0, .78, .3); vec2 w = vor(d / OR * 9.0); v = w.y; ld = min(abs(r - 0.26) * OR, w.x / 9.0 * OR);
+        } else {
+          vec2 lp = vec2(r - 0.62, la * r);
+          float pe = length(lp / vec2(0.33, 0.17)) - 1.0;
+          colr = pe < 0.0 ? palF(mod(k, 6.0)) : vec3(0.04, 0.08, 0.36);
+          v = h1(vec2(k, 3.0));
+          ld = min(min(abs(pe) * 0.17, (seg * 0.5 - abs(la)) * r), min(abs(r - 0.26), abs(r - 0.985))) * OR;
+          float hi = abs(k - uPetal) < 0.5 ? 1.0 : 0.0;
+          colr *= mix(1.0, mix(0.4, 1.9, hi), uPetalAmt);
+        }
+      } else {                                          // spandrels around the rose: small blue quarries
+        vec2 w = vor(p * 11.0); v = w.y; ld = w.x / 11.0;
+        colr = mix(vec3(.05, .13, .52), vec3(.08, .30, .62), w.y);
+        if (w.y > .9) colr = vec3(.75, .08, .14);
+        lit = max(uOc * 0.7, uAvg * 0.6);
+      }
+      vec3 g = shade(colr, p, lit, v);
+      float lead = 1.0 - smoothstep(lw, lw + pxu * 1.2, ld);
+      g = mix(g, vec3(0.02, 0.017, 0.014), lead);
+      g *= smoothstep(0.012, 0.012 + pxu, -sd);          // lead came against the stone frame
+      gl_FragColor = vec4(g, 1.0);
+    }`;
+
+  const NAVE_FRAG = COMMON + `
+    uniform sampler2D uGlass; uniform vec2 uLight; uniform float uRays, uDawn, uAvg, uDpr; uniform vec3 uTint;
+    vec3 ashlar(vec2 p){                                 // dressed stone blocks in courses
+      float ch = 0.11, row = floor(p.y / ch), off = mod(row, 2.0) * 0.13;
+      float bx = floor((p.x + off) / 0.26);
+      vec2 f = vec2(fract((p.x + off) / 0.26) * 0.26, fract(p.y / ch) * ch);
+      float mort = min(min(f.x, 0.26 - f.x), min(f.y, ch - f.y));
+      float n = fbm(p * 16.0) * 0.6 + fbm(p * 70.0) * 0.4;
+      vec3 c = vec3(.17, .145, .125) * (.75 + .5 * h1(vec2(bx, row))) * (.7 + .6 * n);
+      return c * mix(0.3, 1.0, smoothstep(0.0, 0.006, mort));
+    }
+    void main(){
+      vec2 uv = gl_FragCoord.xy / uRes;
+      vec4 g = texture2D(uGlass, uv);
+      vec2 p = toWin(); float sd = sdWindow(p);
+      float glow = 0.12 + 1.6 * exp(-max(sd, 0.0) * 2.4);
+      vec3 amb = mix(vec3(.55, .5, .45), uTint, .65) * (.18 + .8 * uAvg) * uDawn;
+      vec3 col;
+      if (sd > 0.0) {
+        if (sd < 0.075) {                                // the moulded stone frame around the glass
+          float t = sd / 0.075;
+          float bevel = t < 0.55 ? mix(0.5, 1.2, t / 0.55) : (t < 0.6 ? 0.45 : 0.95);
+          col = vec3(.30, .26, .22) * (.8 + .3 * fbm(p * 40.0)) * bevel;
+        } else col = ashlar(p);
+        col *= glow * amb * 2.2 + 0.02;
+      } else {
+        col = vec3(.26, .22, .19) * (.8 + .3 * fbm(p * 50.0)) * (amb * 3.4 + 0.02);
+        col = mix(col, g.rgb, g.a);
+      }
+      // light shafts: march from each pixel toward the sun and gather the glass it passes through
+      #ifndef STEPS
+      #define STEPS 40
+      #endif
+      vec2 toL = uLight - uv; float reach = min(length(toL), 0.75);
+      vec2 dl = -normalize(toL) * (reach / float(STEPS));
+      vec2 s = uv - dl * h1(gl_FragCoord.xy + fract(uTime) * 61.0);
+      vec3 acc = vec3(0.0); float dec = 1.0;
+      for (int i = 0; i < STEPS; i++) { s -= dl; vec4 t = texture2D(uGlass, s);
+        float inside = step(0.0, s.x) * step(s.x, 1.0) * step(0.0, s.y) * step(s.y, 1.0);
+        acc += t.rgb * t.a * dec * inside; dec *= 0.955; }
+      acc *= uRays * 2.6 / float(STEPS);
+      col += acc * (g.a > 0.5 ? 0.3 : 1.0);
+      // dust drifting through the beams
+      vec2 dp = gl_FragCoord.xy / (24.0 * uDpr) + vec2(sin(uTime * 0.07) * 0.8, -uTime * 0.16);
+      vec2 cell = floor(dp), f = fract(dp);
+      float mote = smoothstep(0.09, 0.0, length(f - (0.2 + 0.6 * h2(cell)))) * step(0.55, h1(cell + 3.1));
+      col += mote * dot(acc, vec3(.33)) * 3.5 * vec3(1.0, .95, .85);
+      // finish
+      vec2 vq = uv - 0.5; col *= 1.0 - dot(vq, vq) * 0.55;
+      col += (h1(gl_FragCoord.xy + fract(uTime) * 97.0) - 0.5) * 0.02;
+      col = col / (1.0 + col * 0.22);
+      gl_FragColor = vec4(col, 1.0);
+    }`;
+
+  /* ===================================================================
+     RENDERER
+     =================================================================== */
+  const canvas = $('#gl');
+  const DPR = Math.min(window.devicePixelRatio || 1, COARSE ? 1.25 : 1.5);
+  const S = { x: 0, y: 1.25, z: 1, ax: .7, ay: .52, lit: [.8, .8, .8, .8, .8, .8], oc: 1, rays: 1 };   // the camera and the light, now
+  let target = null;
+  const sun = { x: 0, y: 1.2, mx: -1, my: -1, last: -1e9 };
+  let dawn = REDUCE ? 1 : 0, petal = -1, petalAmt = 0, petalTarget = 0;
+
+  const GL = (() => {
+    if (!window.THREE) return null;
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' }); } catch (e) { return null; }
+    renderer.setPixelRatio(DPR);
+    const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1), quad = new THREE.PlaneGeometry(2, 2);
+    const shared = { uRes: { value: new THREE.Vector2(1, 1) }, uAnchor: { value: new THREE.Vector2() }, uCam: { value: new THREE.Vector3(0, 1.2, 300) }, uTime: { value: 0 } };
+    const atlasCanvas = document.createElement('canvas'); atlasCanvas.width = atlasCanvas.height = 4;
+    const atlas = new THREE.CanvasTexture(atlasCanvas); atlas.minFilter = THREE.LinearFilter; atlas.generateMipmaps = false;
+    const gU = Object.assign({}, shared, {
+      uLit: { value: S.lit.slice() }, uHas: { value: [0, 0, 0, 0, 0, 0, 0] }, uOc: { value: 1 }, uDawn: { value: 0 }, uPetal: { value: -1 }, uPetalAmt: { value: 0 },
+      uRot: { value: 0 }, uAvg: { value: .8 }, uSun: { value: new THREE.Vector2(0, 1.2) }, uAtlas: { value: atlas }
+    });
+    const nU = Object.assign({}, shared, {
+      uGlass: { value: null }, uLight: { value: new THREE.Vector2(.8, 1.2) }, uRays: { value: 1 }, uDawn: gU.uDawn, uAvg: gU.uAvg, uDpr: { value: DPR }, uTint: { value: new THREE.Vector3(.5, .4, .6) }
+    });
+    const glassScene = new THREE.Scene(), naveScene = new THREE.Scene();
+    glassScene.add(new THREE.Mesh(quad, new THREE.ShaderMaterial({ uniforms: gU, vertexShader: 'void main(){ gl_Position = vec4(position, 1.0); }', fragmentShader: GLASS_FRAG })));
+    naveScene.add(new THREE.Mesh(quad, new THREE.ShaderMaterial({ uniforms: nU, defines: { STEPS: COARSE ? 24 : 40 }, vertexShader: 'void main(){ gl_Position = vec4(position, 1.0); }', fragmentShader: NAVE_FRAG })));
+    const rt = new THREE.WebGLRenderTarget(4, 4, { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBAFormat, depthBuffer: false });
+    nU.uGlass.value = rt.texture;
+
+    function resize() {
+      renderer.setSize(innerWidth, innerHeight, false);
+      const w = Math.round(innerWidth * DPR), h = Math.round(innerHeight * DPR);
+      rt.setSize(w, h); shared.uRes.value.set(w, h);
+    }
+    addEventListener('resize', resize); resize();
+
+    // your artwork: every image is cropped to its panel and packed into one 3 × 3 texture
+    const art = window.WINDOW_ART || { panels: [], rose: {} };
+    const sources = [...(art.panels || []).slice(0, 6).map(p => p && p.src), art.rose && art.rose.src];
+    if (sources.some(Boolean)) {
+      atlasCanvas.width = atlasCanvas.height = 1536;
+      const ctx = atlasCanvas.getContext('2d');
+      sources.forEach((src, i) => {
+        if (!src) return;
+        const img = new Image();
+        img.onload = () => {
+          const want = i < 6 ? 0.956 : 1, have = img.naturalWidth / img.naturalHeight;
+          let sw = img.naturalWidth, sh = img.naturalHeight;
+          if (have > want) sw = sh * want; else sh = sw / want;
+          ctx.drawImage(img, (img.naturalWidth - sw) / 2, (img.naturalHeight - sh) / 2, sw, sh, (i % 3) * 512, Math.floor(i / 3) * 512, 512, 512);
+          atlas.needsUpdate = true; gU.uHas.value[i] = 1;
+        };
+        img.src = src;
+      });
+    }
+
+    return {
+      render(view, t) {
+        const W = innerWidth * DPR, H = innerHeight * DPR;
+        const s0 = Math.min(0.86 * innerHeight / 2.47, 0.92 * innerWidth) * DPR;
+        const scale = s0 * view.z, ax = view.ax * W, ay = view.ay * H;
+        shared.uRes.value.set(W, H); shared.uAnchor.value.set(ax, ay); shared.uCam.value.set(view.x, view.y, scale); shared.uTime.value = t;
+        for (let i = 0; i < 6; i++) gU.uLit.value[i] = view.lit[i];
+        const avg = view.lit.reduce((a, b) => a + b, 0) / 6;
+        gU.uOc.value = view.oc; gU.uDawn.value = dawn; gU.uAvg.value = avg; gU.uRot.value = (REDUCE ? 0 : t * 0.012) + scrollY * 0.00035;
+        gU.uPetal.value = petal; gU.uPetalAmt.value = petalAmt; gU.uSun.value.set(sun.x, sun.y);
+        // tint of the light in the room: the lit glass, mixed
+        let r = 0, g = 0, b = 0, wsum = 0.001;
+        view.lit.forEach((l, i) => { r += GLASS[i][0] * l; g += GLASS[i][1] * l; b += GLASS[i][2] * l; wsum += l; });
+        nU.uTint.value.set(r / wsum * 1.6, g / wsum * 1.6, b / wsum * 1.6);
+        // the light source sits high above and to the right of the window; the sun nudges it
+        const lx = 3.4 + sun.x * 0.6, ly = 2.3 + (sun.y - 1.2) * 0.35;      // to the right, so the beams fall leftward across the text
+        nU.uLight.value.set((ax + (lx - view.x) * scale) / W, 1 - (ay - (ly - view.y) * scale) / H);
+        nU.uRays.value = view.rays * dawn;
+        renderer.setRenderTarget(rt); renderer.render(glassScene, cam);
+        renderer.setRenderTarget(null); renderer.render(naveScene, cam);
+      },
+      toWin(mx, my, view) {
+        const s0 = Math.min(0.86 * innerHeight / 2.47, 0.92 * innerWidth);
+        const scale = s0 * view.z;
+        return [(mx - view.ax * innerWidth) / scale + view.x, (view.ay * innerHeight - my) / scale + view.y];
+      }
+    };
+  })();
+
+  /* ===================================================================
+     THE CAMERA PATH: keyframes pinned to scroll positions, so scrolling
+     back up plays everything in reverse
+     =================================================================== */
+  const mobile = () => innerWidth < 820;
+  const fill = v => Array(6).fill(v);
+  let keys = [];
+  function panelView(k) { const [x, y] = panelCentre(k), m = mobile(); return { x, y, z: m ? 2.0 : 2.6, ax: m ? .5 : .68, ay: m ? .34 : .5 }; }
+  function buildKeys() {
+    const vh = innerHeight, m = mobile(), top = el => el.getBoundingClientRect().top + scrollY;
+    const story = $('#window'), s0 = top(story), len = story.offsetHeight - vh;
+    const max = document.documentElement.scrollHeight - vh;
+    keys = [
+      { at: 0, x: 0, y: 1.25, z: m ? .62 : 1, ax: m ? .5 : .7, ay: m ? .78 : .52, lit: fill(.75), oc: 1, rays: 1 },
+      { at: s0, ...panelView(0), lit: fill(.1), oc: .25, rays: .9 }
+    ];
+    for (let k = 0; k < N; k++) keys.push({ at: s0 + (k + .55) / N * len, ...panelView(k), lit: fill(0).map((_, j) => j <= k ? 1 : .1), oc: .25, rays: 1.1 });
+    // each section holds its framing while you read it, then the camera moves on to the next one
+    const hold = (id, view) => {
+      const el = $(id), from = top(el) - vh * .25, to = top(el) + el.offsetHeight - vh * .85;
+      keys.push({ at: from, ...view }); if (to > from + 10) keys.push({ at: to, ...view });
+    };
+    hold('#roles', { x: 0, y: 2.02, z: m ? 1.8 : 3.1, ax: m ? .5 : .72, ay: m ? .56 : .5, lit: fill(1), oc: 1, rays: 1 });
+    hold('#portraits', { x: 0, y: 1.25, z: m ? .8 : .72, ax: m ? .5 : .885, ay: .52, lit: fill(m ? .3 : .5), oc: m ? .35 : .5, rays: m ? .4 : .55 });
+    hold('#words', { x: 0, y: .62, z: m ? 1.5 : 1.8, ax: m ? .5 : .74, ay: m ? .3 : .42, lit: fill(1), oc: 1, rays: 1.5 });
+    hold('#candles', { x: 0, y: 1.25, z: m ? .8 : .72, ax: m ? .5 : .885, ay: .55, lit: fill(m ? .4 : .7), oc: .8, rays: .9 });
+    keys.push({ at: Math.max(max, top($('#candles')) + 10), x: 0, y: 1.25, z: m ? .7 : .62, ax: m ? .5 : .72, ay: m ? .4 : .48, lit: fill(1), oc: 1, rays: 1.25 });
+    keys.sort((a, b) => a.at - b.at);
+  }
+  const smooth = t => t * t * (3 - 2 * t);
+  function viewAt(y) {
+    if (REDUCE) { const m = mobile(); return { x: 0, y: 1.25, z: m ? .8 : 1, ax: m ? .5 : .74, ay: .52, lit: fill(1), oc: 1, rays: 1 }; }
+    let i = 0; while (i < keys.length - 2 && keys[i + 1].at <= y) i++;
+    const a = keys[i], b = keys[i + 1] || a, t = b.at > a.at ? smooth(Math.min(1, Math.max(0, (y - a.at) / (b.at - a.at)))) : 0;
+    const mix = (u, v) => u + (v - u) * t;
+    return { x: mix(a.x, b.x), y: mix(a.y, b.y), z: mix(a.z, b.z), ax: mix(a.ax, b.ax), ay: mix(a.ay, b.ay), lit: a.lit.map((v, j) => mix(v, b.lit[j])), oc: mix(a.oc, b.oc), rays: mix(a.rays, b.rays) };
+  }
+  buildKeys();
+  addEventListener('resize', buildKeys);
+  if (document.fonts) document.fonts.ready.then(buildKeys);
+  new ResizeObserver(buildKeys).observe($('main'));
+
+  /* ===================================================================
+     STORY PANES, QUOTES AND THE LIGHT ON THE PAGE
+     =================================================================== */
+  const panes = $$('.pane'), ticks = $$('.ticks li'), story = $('#window');
+  const quotes = $$('.q').map(q => { q.innerHTML = q.textContent.split(' ').map(w => `<span class="w">${w}</span>`).join(' '); return { el: q, words: $$('.w', q) }; });
+  let lastActive = -2;
+  function updatePage() {
+    const vh = innerHeight;
+    if (!REDUCE) {
+      const r = story.getBoundingClientRect(), len = story.offsetHeight - vh;
+      const p = Math.min(1, Math.max(0, -r.top / len)) * N;
+      let active = -1;
+      panes.forEach((el, i) => {
+        const t = p - (i + .55);
+        const o = Math.min(1, Math.max(0, 1.7 - Math.abs(t) * 3.2));
+        el.style.opacity = o.toFixed(3);
+        el.style.transform = `translateY(${(-t * 46).toFixed(1)}px)`;
+        el.style.visibility = o < .01 ? 'hidden' : 'visible';
+        if (o > .5) active = i;
+      });
+      ticks.forEach((li, i) => li.classList.toggle('on', p >= i + .3));
+      if (active !== lastActive && active >= 0) { root.style.setProperty('--light', CSS_LIGHT[active]); lastActive = active; }
+      quotes.forEach(({ el, words }) => {
+        const qr = el.getBoundingClientRect();
+        const prog = Math.min(1, Math.max(0, (vh * .85 - qr.top) / (qr.height + vh * .35)));
+        const n = Math.round(prog * words.length);
+        words.forEach((w, i) => w.classList.toggle('on', i < n));
+      });
+    }
+  }
+
+  /* ===================================================================
+     THE LOOP
+     =================================================================== */
+  let lenis = null;
+  if (!REDUCE && window.Lenis) lenis = new Lenis({ duration: 1.25, smoothWheel: true });
+  addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    sun.mx = e.clientX; sun.my = e.clientY; sun.last = performance.now();
+  }, { passive: true });
+
+  const start = performance.now();
+  function frame(now) {
+    if (lenis) lenis.raf(now);
+    const t = (now - start) / 1000;
+    const want = viewAt(scrollY);
+    if (!target) target = want;
+    const k = REDUCE ? 1 : .085;
+    ['x', 'y', 'z', 'ax', 'ay', 'oc', 'rays'].forEach(key => { S[key] += (want[key] - S[key]) * k; });
+    S.lit = S.lit.map((v, i) => v + (want.lit[i] - v) * k);
+    // the sun: follows the cursor on desktop, otherwise wanders slowly behind the glass in view
+    let sx = S.x + Math.sin(t * .17) * .32, sy = S.y + .25 + Math.sin(t * .11) * .3;
+    if (GL && performance.now() - sun.last < 4000) { const w = GL.toWin(sun.mx, sun.my, S); sx = w[0]; sy = w[1]; }
+    sun.x += (sx - sun.x) * (REDUCE ? 1 : .06); sun.y += (sy - sun.y) * (REDUCE ? 1 : .06);
+    if (!REDUCE && dawn < 1) dawn = Math.min(1, t / 2.6);          // sunrise on arrival
+    petalAmt += (petalTarget - petalAmt) * .12;
+    updatePage();
+    if (GL) GL.render(S, REDUCE ? 0 : t);
+    if (!REDUCE) requestAnimationFrame(frame);
+  }
+  if (REDUCE) {
+    const still = () => frame(performance.now());
+    addEventListener('resize', still); addEventListener('scroll', still, { passive: true }); setTimeout(still, 200); still();
+  } else {
+    requestAnimationFrame(frame);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) requestAnimationFrame(() => {}); });
+  }
+
+  /* petals follow the film list */
+  $$('#film-list li').forEach((li, i) => {
+    const on = () => { petal = i; petalTarget = 1; }, off = () => { petalTarget = 0; };
+    li.addEventListener('pointerenter', on); li.addEventListener('focus', on);
+    li.addEventListener('pointerleave', off); li.addEventListener('blur', off);
+  });
+
+  /* reveals (both ways, so scrolling up rewinds them) */
+  const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('in', e.isIntersecting)), { rootMargin: '0px 0px -12% 0px' });
+  $$('.rv, .arch').forEach(el => io.observe(el));
+
+  /* in-page links glide */
+  $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const el = $(a.getAttribute('href')); if (!el) return;
+    e.preventDefault(); closeMenu(false);
+    if (lenis) lenis.scrollTo(el, { duration: 1.8 }); else el.scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth' });
+    el.setAttribute('tabindex', '-1'); setTimeout(() => el.focus({ preventScroll: true }), REDUCE ? 0 : 1000);
+  }));
+
+  /* ===================================================================
+     MENU
+     =================================================================== */
+  const menu = $('#menu'), menuBtn = $('#menu-btn');
+  function openMenu() { menu.hidden = false; menuBtn.setAttribute('aria-expanded', 'true'); menuBtn.textContent = 'Close'; if (lenis) lenis.stop(); requestAnimationFrame(() => $('#menu a').focus({ preventScroll: true })); }
+  function closeMenu(focusBtn = true) { if (menu.hidden) return; menu.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.textContent = 'Menu'; if (lenis) lenis.start(); if (focusBtn) menuBtn.focus({ preventScroll: true }); }
+  menuBtn.addEventListener('click', () => (menu.hidden ? openMenu() : closeMenu()));
+  document.addEventListener('keydown', e => {
+    if (menu.hidden) return;
+    if (e.key === 'Escape') { closeMenu(); return; }
+    if (e.key !== 'Tab') return;
+    const f = [menuBtn, ...$$('#menu a')], first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  /* ===================================================================
+     CANDLES: a shared wall when the page can reach its database,
+     otherwise kept in this browser
+     =================================================================== */
+  const wall = $('#wall'), form = $('#candle-form'), statusEl = $('#c-status'), wordsEl = $('#c-words'), tally = $('#tally');
+  const setStatus = t => { statusEl.textContent = t; };
+  let db = null, canWrite = null, isOwner = false, shared = [], local = [], seen = new Set(), first = true;
+  try { local = JSON.parse(localStorage.getItem('ew-candles') || '[]'); } catch (e) { local = []; }
+  const saveLocal = () => { try { localStorage.setItem('ew-candles', JSON.stringify(local.slice(0, 20))); } catch (e) {} };
+  function renderWall() {
+    const all = [...shared.map(n => ({ ...n, shared: true })), ...local.map(n => ({ ...n, shared: false }))].sort((a, b) => (b.at || 0) - (a.at || 0));
+    tally.textContent = all.length ? `${all.length} ${all.length === 1 ? 'candle' : 'candles'} burning` : '';
+    wall.textContent = '';
+    if (!all.length) { const e = document.createElement('p'); e.className = 'empty card'; e.textContent = 'No candles yet. Light the first one.'; wall.append(e); return; }
+    all.slice(0, 14).forEach((n, i) => {
+      const key = (n.shared ? 's' : 'l') + n.id, card = document.createElement('article');
+      card.className = 'votive card' + (!seen.has(key) && !REDUCE ? ' new' : '');
+      if (first) card.style.animationDelay = (i * .07) + 's';
+      seen.add(key);
+      const wick = document.createElement('div'); wick.className = 'wick'; wick.setAttribute('aria-hidden', 'true'); wick.innerHTML = '<b></b><i></i>';
+      const body = document.createElement('div');
+      const p = document.createElement('p'); p.textContent = n.words;
+      const f = document.createElement('footer'); const b = document.createElement('b'); b.textContent = n.name;
+      f.append(b, document.createTextNode(` · ${n.shared ? '' : 'this device · '}${new Date(n.at).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}`));
+      body.append(p, f); card.append(wick, body);
+      if (n.shared && isOwner) {
+        const rm = document.createElement('button'); rm.type = 'button'; rm.className = 'rm-btn'; rm.textContent = 'Remove'; rm.setAttribute('aria-label', `Remove the candle from ${n.name}`);
+        rm.addEventListener('click', () => db.collection('candles').doc(n.id).delete().catch(() => setStatus('That candle could not be removed. Try again.')));
+        card.append(rm);
+      }
+      wall.append(card);
+    });
+    first = false;
+  }
+  renderWall();
+  (async () => {
+    if (!window.claude || !window.claude.use) { setStatus('Candles are kept in this browser.'); return; }
+    let user = null;
+    try { [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]); } catch (e) { db = null; }
+    if (user) { try { canWrite = await user.can('data.write'); } catch (e) {} try { isOwner = !!(await user.isOwner()); } catch (e) {} }
+    if (!db) { setStatus('Candles are kept in this browser.'); return; }
+    setStatus('Finding the candles…');
+    const timer = setTimeout(() => setStatus("The shared candles can't be reached yet. New candles are kept in this browser."), 10000);
+    db.collection('candles').orderBy('at', 'desc').limit(60).onSnapshot(snap => {
+      if (!snap.metadata.fromCache) { clearTimeout(timer); setStatus(canWrite === false ? 'You can see the candles. Ones you light are kept in this browser.' : ''); }
+      shared = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderWall();
+    }, () => { clearTimeout(timer); db = null; setStatus('The shared candles are unavailable right now. New candles are kept in this browser.'); });
+  })();
+  wordsEl.addEventListener('input', () => { $('#c-count').textContent = `${wordsEl.value.length} / 160`; });
+  let posting = false;
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = $('#c-name').value.trim(), words = wordsEl.value.trim();
+    if (!name || !words) { setStatus('Add your name and a few words, then light it.'); (name ? wordsEl : $('#c-name')).focus(); return; }
+    if (posting) return; posting = true;
+    const c = { name: name.slice(0, 40), words: words.slice(0, 160), at: Date.now() };
+    let ok = false;
+    if (db && canWrite !== false) {
+      try { await db.collection('candles').add(c); ok = true; setStatus('Your candle is lit.'); }
+      catch (err) { if (err && err.code === 'invalid_argument') canWrite = false; if (err && err.code === 'quota_exceeded') setStatus('There is no room for more candles. Yours is kept in this browser.'); }
+    }
+    if (!ok) {
+      local.unshift({ id: String(c.at), ...c }); saveLocal(); renderWall();
+      if (!/room/.test(statusEl.textContent)) setStatus(db ? 'Only people this page is shared with as Contributors can add to the shared candles. Yours is kept in this browser.' : 'Your candle is lit in this browser.');
+    }
+    form.reset(); $('#c-count').textContent = '0 / 160'; posting = false;
+  });
+})();
+</script>
+</body>
+</html>

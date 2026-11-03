@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en" class="is-intro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A Life in Chapters</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="An unofficial fan tribute to Emma Watson: a picture book in ink and candlelight that you read by scrolling.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+
+<script>
+/* =========================================================================
+   CONFIG: everything you are likely to change lives here.
+   • colours / fonts  – the whole palette is ink, paper and one flame.
+   • images           – leave src empty to show a labelled placeholder plate.
+                        Use only photos you own or have a licence for.
+   • audio            – leave a URL empty and that sound is synthesised live.
+   • chapters         – the text of each chapter, card by card.
+   Facts and quotes here are verifiable; quotes come from Emma Watson's
+   HeForShe speech at the United Nations, 20 September 2014.
+   ========================================================================= */
+window.CONFIG = {
+  credit: 'Veer Singh',
+  colors: { ink: '#0d0c0b', paper: '#efe9dc', flame: '#f29a3a', gold: '#c9a45c' },
+  fonts: { serif: '"Cormorant Garamond", "Iowan Old Style", Garamond, Georgia, serif' },
+  audio: { music: '', crackle: '', pageTurn: '' },
+
+  // focus = [x, y] from 0 to 1: the part of the photo to keep when it is cropped into a plate.
+  frontispiece: { src: 'images/portrait-blazer.jpg', alt: 'Engraved portrait of Emma Watson in a black blazer and a silver choker', focus: [0.5, 0.42], caption: 'Frontispiece' },
+
+  chapters: [
+    {
+      num: 'I', title: 'The Girl Who Read', place: 'Paris · 1990',
+      plate: { src: 'images/hero.jpg', alt: 'Engraved portrait of Emma Watson looking back over her shoulder in a knitted cardigan', focus: [0.56, 0.3], caption: '“Born in Paris, 1990.”' },
+      effect: 'pages', tint: 'paper',
+      cards: [
+        { text: 'Emma Watson was born in Paris on 15 April 1990, and grew up in Oxfordshire, England.' },
+        { text: 'At nine years old she was cast as Hermione Granger, the girl who always had a book open.' },
+        { text: 'The pages she would turn next were her own.' }
+      ]
+    },
+    {
+      num: 'II', title: 'The Spell', place: '2001 – 2019',
+      plate: { src: 'images/talk-show.jpg', alt: 'Engraved portrait of Emma Watson smiling, seated in a talk-show guest chair', focus: [0.5, 0.32], caption: '“Eight films, then many more.”' },
+      effect: 'sparks', tint: 'warm', flash: true,
+      cards: [
+        { text: 'From 2001 to 2011 she played Hermione in all eight Harry Potter films.' },
+        { text: 'Then came new roles: Sam in The Perks of Being a Wallflower, Belle in Beauty and the Beast, and Meg March in Little Women.' },
+        { text: 'A generation grew up watching her on screen.' }
+      ]
+    },
+    {
+      num: 'III', title: 'The Speech', place: 'New York · 2014',
+      plate: { src: 'images/wonderland-profile.jpg', alt: 'Engraved profile of Emma Watson with her eyes closed, hands folded against her chest', focus: [0.5, 0.3], caption: '“Gender equality is your issue too.”' },
+      effect: 'dust', tint: 'spot',
+      cards: [
+        { text: 'In July 2014 she was appointed a UN Women Goodwill Ambassador.' },
+        { text: 'On 20 September 2014, at UN headquarters in New York, she launched HeForShe.' },
+        { quote: true, text: '“Both men and women should feel free to be sensitive.\nBoth men and women should feel free to be strong.”', cite: 'Emma Watson · HeForShe · 2014' },
+        { quote: true, text: '“Gender equality\nis your issue too.”', cite: 'Emma Watson · HeForShe · 2014' }
+      ]
+    },
+    {
+      num: 'IV', title: 'The Bookshelf', place: '2014 – 2016',
+      plate: { src: 'images/wonderland-laugh.jpg', alt: 'Engraved portrait of Emma Watson laughing with her eyes shut', focus: [0.5, 0.26], caption: '“A shelf shared with strangers.”' },
+      effect: 'letters', tint: 'paper', shelf: true,
+      cards: [
+        { text: 'In 2014 she graduated from Brown University with a degree in English literature.' },
+        { text: 'In January 2016 she started Our Shared Shelf, a feminist book club. Its first pick was Gloria Steinem’s My Life on the Road.' },
+        { text: 'That November she hid copies of Maya Angelou’s Mom & Me & Mom on the London Underground for strangers to find.' }
+      ]
+    },
+    {
+      num: 'V', title: 'The Last Page', place: 'Today',
+      plate: { src: 'images/portrait-bob.jpg', alt: 'Engraved close-up portrait of Emma Watson with a short bob', focus: [0.5, 0.4], caption: '“If not now, when?”' },
+      effect: 'snow', tint: 'night',
+      cards: [
+        { text: 'A story is never quite finished while someone is still reading it.' },
+        { quote: true, text: '“If not me, who?\nIf not now, when?”', cite: 'Emma Watson · HeForShe speech · United Nations · 20 September 2014' }
+      ]
+    }
+  ],
+
+  // Chapter IV: books from her story. Tapping a spine opens its page.
+  shelf: [
+    { title: 'My Life on the Road', author: 'Gloria Steinem', note: 'The first book chosen for Our Shared Shelf, January 2016.', tone: 'ink' },
+    { title: 'Mom & Me & Mom', author: 'Maya Angelou', note: 'Hidden on the London Underground with Books on the Underground, November 2016.', tone: 'paper' },
+    { title: 'Little Women', author: 'Louisa May Alcott', note: 'She played Meg March in Greta Gerwig’s 2019 film of the novel.', tone: 'gold' },
+    { title: 'Hogwarts: A History', author: 'a fictional book', note: 'The history book Hermione keeps quoting in the Harry Potter novels.', tone: 'ink' }
+  ]
+};
+
+(function applyConfig() {
+  const C = window.CONFIG, s = document.documentElement.style;
+  s.setProperty('--ink', C.colors.ink); s.setProperty('--paper', C.colors.paper);
+  s.setProperty('--flame', C.colors.flame); s.setProperty('--gold', C.colors.gold);
+  s.setProperty('--serif', C.fonts.serif);
+})();
+</script>
+
+<style>
+  /* Layout: one fixed 3D stage (a book on a pool of light) driven by a tall invisible scroller; the story text
+     lives in a semantic <article> that doubles as the "read as text" version. Ink, paper and one flame. */
+  :root {
+    --ink: #0d0c0b; --paper: #efe9dc; --flame: #f29a3a; --gold: #c9a45c;
+    --mist: rgba(239, 233, 220, .72);
+    --serif: 'Cormorant Garamond', 'Iowan Old Style', Garamond, Georgia, serif;
+    --W: 300px; --t: 2px; --P: 1000px;
+    --heat: .5; --fk: 1; --out: 0; --len: 1;
+    --gl: max(16px, env(safe-area-inset-left, 0px));
+    --gr: max(16px, env(safe-area-inset-right, 0px));
+    color-scheme: dark;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  html.is-intro, html.is-intro body { overflow: hidden; }
+  body { margin: 0; background: var(--ink); color: var(--paper); font-family: var(--serif); font-size: 1.2rem; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--flame); outline-offset: 3px; }
+  .sr-only, .book-mode #story { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+  .skip { position: fixed; z-index: 120; left: 16px; top: -80px; padding: .6rem 1rem; background: var(--paper); color: var(--ink); text-decoration: none; font-style: italic; }
+  .skip:focus { top: calc(12px + env(safe-area-inset-top, 0px)); }
+  .caps { font-weight: 600; letter-spacing: .32em; text-transform: uppercase; font-size: .78em; }
+
+  /* ---------- Intro ---------- */
+  #intro { position: fixed; inset: 0; z-index: 90; background: var(--ink); display: grid; place-items: center; text-align: center;
+    padding: calc(70px + env(safe-area-inset-top, 0px)) var(--gr) calc(90px + env(safe-area-inset-bottom, 0px)) var(--gl); transition: opacity 1.2s ease, visibility 1.2s; }
+  #intro::before { content: ''; position: absolute; left: 50%; top: 58%; width: 520px; height: 220px; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(242, 154, 58, .14), transparent); }
+  #intro.gone { opacity: 0; visibility: hidden; }
+  .intro-in { position: relative; max-width: 34rem; display: grid; justify-items: center; }
+  .kicker { margin: 0; font-style: italic; letter-spacing: .06em; color: var(--mist); font-size: 1.15rem; }
+  .intro-in h1 { margin: .5rem 0 1.4rem; font-style: italic; font-weight: 500; font-size: clamp(3.1rem, 13vw, 6rem); line-height: .98; text-wrap: balance; }
+  .intro-in .lede { margin: 0; font-size: clamp(1.3rem, 4.6vw, 1.6rem); line-height: 1.35; max-width: 26ch; text-wrap: balance; }
+  .intro-in .hint { margin: 1.3rem 0 0; font-style: italic; color: var(--mist); max-width: 30ch; text-wrap: balance; }
+  .open-btn { margin-top: 2.2rem; width: min(100%, 22rem); min-height: 64px; padding: 1rem 1.6rem; background: #a29d93; color: var(--ink); font-size: 1.3rem; box-shadow: 0 0 60px rgba(242, 154, 58, .12); transition: background-color .3s; }
+  .open-btn:hover { background: var(--paper); }
+  .quiet-link { margin-top: 1.2rem; font-style: italic; font-size: 1.25rem; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; color: var(--mist); min-height: 44px; }
+  .quiet-link:hover { color: var(--paper); }
+  .small-link { margin-top: .3rem; font-size: 1rem; }
+  .intro-foot { position: absolute; left: var(--gl); right: var(--gr); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 1rem;
+    font-style: italic; color: var(--mist); font-size: 1rem; }
+
+  /* ---------- HUD ---------- */
+  .hud { position: fixed; z-index: 50; inset: 0 0 auto; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none;
+    padding: calc(14px + env(safe-area-inset-top, 0px)) var(--gr) 0 var(--gl); }
+  .hud > * { pointer-events: auto; }
+  .box-btn { min-height: 46px; padding: .35rem 1.05rem; border: 1px solid rgba(239, 233, 220, .38); background: rgba(13, 12, 11, .72); color: var(--paper); font-style: italic; font-weight: 500; font-size: 1.25rem; transition: background-color .3s, color .3s; }
+  .box-btn:hover { background: var(--paper); color: var(--ink); }
+  .is-intro .hud { opacity: 0; pointer-events: none; }
+  .is-intro .hud > * { pointer-events: none; }
+
+  /* ---------- The stage ---------- */
+  #stage { position: fixed; inset: 0; z-index: 1; overflow: hidden; background: var(--ink); perspective: var(--P); perspective-origin: 50% 50%; }
+  #stage::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 90% at 50% 52%, transparent 45%, rgba(0, 0, 0, .55)); }
+  #world { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; will-change: transform; }
+  #pool { position: absolute; width: calc(var(--W) * 3.8); height: calc(var(--W) * 3.8); left: calc(var(--W) * -1.9); top: calc(var(--W) * -1.9); border-radius: 50%;
+    background: radial-gradient(circle, var(--paper) 0 64%, rgba(239, 233, 220, .55) 68.5%, rgba(239, 233, 220, 0) 70.5%); transform: translateZ(calc(var(--t) * -1.5)); }
+  .shadow { position: absolute; top: calc(var(--W) * -2 / 3); height: calc(var(--W) * 4 / 3); width: var(--W); background: rgba(0, 0, 0, .3);
+    box-shadow: calc(var(--W) * .03) calc(var(--W) * .05) calc(var(--W) * .09) calc(var(--W) * .02) rgba(0, 0, 0, .45); transform: translateZ(calc(var(--t) * -1)); }
+  .shadow.r { left: 0; } .shadow.l { left: calc(var(--W) * -1); }
+  #book { position: absolute; left: 0; top: 0; transform-style: preserve-3d; }
+  .leaf { position: absolute; left: 0; top: calc(var(--W) * -2 / 3); width: var(--W); height: calc(var(--W) * 4 / 3); transform-origin: 0 50%; transform-style: preserve-3d; }
+  .face { position: absolute; inset: 0; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; background: var(--paper); color: var(--ink); opacity: var(--op, 1); }
+  .face.front { transform: translateZ(calc(var(--t) / 2)); background: linear-gradient(90deg, rgba(40, 30, 15, .2), rgba(40, 30, 15, 0) 9%), var(--paper); }
+  .face.back { transform: rotateY(180deg) translateZ(calc(var(--t) / 2)); background: linear-gradient(270deg, rgba(40, 30, 15, .2), rgba(40, 30, 15, 0) 9%), var(--paper); }
+  .face::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: var(--sh, 0); }
+  .face.front::after { background: linear-gradient(90deg, rgba(0, 0, 0, .55), rgba(0, 0, 0, .05)); }
+  .face.back::after { background: linear-gradient(270deg, rgba(0, 0, 0, .45), rgba(255, 245, 225, .1)); }
+  .edge { position: absolute; background: repeating-linear-gradient(0deg, #d9d0bd 0 1px, #efe8d8 1px 2px); opacity: var(--op, 1); }
+  .edge.b { left: 0; width: 100%; height: var(--t); top: calc(100% - var(--t) / 2); transform: rotateX(90deg); }
+  .edge.r { top: 0; height: 100%; width: var(--t); left: calc(100% - var(--t) / 2); transform: rotateY(90deg); background: repeating-linear-gradient(90deg, #d9d0bd 0 1px, #efe8d8 1px 2px); }
+  .leaf.board .face, .leaf.board .edge { background: #121110; color: var(--gold); }
+  .leaf.board .face.back.inside, .leaf.board .face.front.inside { background: var(--paper); color: var(--ink); }
+
+  /* page content, sized from the book's width */
+  .pg { position: absolute; inset: 0; display: grid; align-content: center; justify-items: center; text-align: center; padding: calc(var(--W) * .1); }
+  .pg .folio { position: absolute; left: 0; right: 0; bottom: calc(var(--W) * .055); font-style: italic; font-size: calc(var(--W) * .042); color: #4a4438; }
+  .cover-pg { border: calc(var(--W) * .006) solid var(--gold); outline: calc(var(--W) * .003) solid var(--gold); outline-offset: calc(var(--W) * -.03); margin: calc(var(--W) * .055); padding: calc(var(--W) * .08); align-content: space-between; }
+  .cover-pg .ct { font-weight: 600; text-transform: uppercase; letter-spacing: .18em; font-size: calc(var(--W) * .068); line-height: 1.25; }
+  .cover-pg .cs { font-style: italic; font-size: calc(var(--W) * .045); letter-spacing: .04em; }
+  .cover-pg svg { width: calc(var(--W) * .18); height: calc(var(--W) * .28); }
+  .title-pg .orn, .open-pg .orn { font-size: calc(var(--W) * .06); color: #6a5a3a; letter-spacing: .4em; }
+  .title-pg .tt { margin: calc(var(--W) * .05) 0; font-style: italic; font-weight: 500; font-size: calc(var(--W) * .13); line-height: 1; }
+  .title-pg .ts { font-size: calc(var(--W) * .048); max-width: 16ch; line-height: 1.3; }
+  .title-pg .tb { margin-top: calc(var(--W) * .14); font-style: italic; font-size: calc(var(--W) * .04); color: #4a4438; }
+  .open-pg .on { font-weight: 500; font-size: calc(var(--W) * .3); line-height: 1; }
+  .open-pg .ol { margin-top: calc(var(--W) * .02); letter-spacing: .3em; text-transform: uppercase; font-weight: 600; font-size: calc(var(--W) * .034); color: #4a4438; }
+  .open-pg .ot { margin: calc(var(--W) * .05) 0 calc(var(--W) * .04); font-style: italic; font-weight: 500; font-size: calc(var(--W) * .108); line-height: 1.02; max-width: 9ch; }
+  .open-pg .op { font-style: italic; font-size: calc(var(--W) * .045); color: #4a4438; }
+  .plate { position: absolute; left: calc(var(--W) * .17); top: calc(var(--W) * .12); width: calc(var(--W) * .66); height: calc(var(--W) * .88); padding: calc(var(--W) * .016);
+    border: calc(var(--W) * .004) solid var(--ink); box-shadow: 0 0 0 calc(var(--W) * .008) var(--paper), 0 0 0 calc(var(--W) * .011) var(--ink); background: var(--paper); }
+  .plate canvas { display: block; width: 100%; height: 100%; }
+  .plate-cap { position: absolute; left: 0; right: 0; top: calc(var(--W) * 1.05); text-align: center; }
+  .plate-cap .pc { font-style: italic; font-size: calc(var(--W) * .048); }
+  .plate-cap .pl { margin-top: calc(var(--W) * .015); letter-spacing: .32em; text-transform: uppercase; font-weight: 600; font-size: calc(var(--W) * .03); color: #4a4438; }
+  .end-pg .ef { font-style: italic; font-weight: 500; font-size: calc(var(--W) * .16); }
+  .end-pg .es { margin-top: calc(var(--W) * .04); font-style: italic; font-size: calc(var(--W) * .048); max-width: 15ch; }
+  .paper-pg { background-image: radial-gradient(circle at 50% 50%, transparent 0 2px, transparent 2px), repeating-linear-gradient(45deg, rgba(13, 12, 11, .08) 0 1px, transparent 1px calc(var(--W) * .045)), repeating-linear-gradient(-45deg, rgba(13, 12, 11, .08) 0 1px, transparent 1px calc(var(--W) * .045)); }
+  .back-pg { align-content: end; padding-bottom: calc(var(--W) * .14); }
+  .back-pg p { margin: 0; font-style: italic; font-size: calc(var(--W) * .04); max-width: 22ch; color: var(--gold); }
+
+  /* ---------- Light ---------- */
+  #dim { position: fixed; inset: 0; z-index: 10; pointer-events: none; background: #000; opacity: .5; }
+  #warm { position: fixed; inset: 0; z-index: 11; pointer-events: none; mix-blend-mode: screen;
+    background: radial-gradient(60% 55% at 100% 42%, rgba(242, 154, 58, .34), rgba(242, 154, 58, 0) 70%); opacity: .6; }
+
+  /* ---------- Scene (inside a plate) ---------- */
+  #scene { position: fixed; inset: 0; z-index: 30; overflow: hidden; background: var(--paper); opacity: 0; visibility: hidden; }
+  #scene .art { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(var(--kb, 1)); }
+  #scene .art canvas { display: block; width: 100%; height: 100%; }
+  .tint { position: absolute; inset: 0; pointer-events: none; }
+  .tint.warm { background: radial-gradient(50% 40% at 50% 42%, rgba(255, 196, 110, .32), rgba(255, 196, 110, 0) 70%), radial-gradient(90% 80% at 50% 45%, rgba(13, 12, 11, 0) 35%, rgba(13, 12, 11, .82)); }
+  .tint.spot { background: radial-gradient(34% 62% at 50% 28%, rgba(13, 12, 11, 0) 0 30%, rgba(13, 12, 11, .9) 78%); }
+  .tint.night { background: linear-gradient(rgba(8, 10, 16, .84), rgba(8, 10, 16, .62) 60%, rgba(8, 10, 16, .8)); }
+  .tint.paper { background: radial-gradient(90% 80% at 50% 45%, rgba(13, 12, 11, 0) 50%, rgba(13, 12, 11, .38)); }
+  #flash { position: absolute; inset: 0; background: #fffaf0; opacity: 0; pointer-events: none; mix-blend-mode: screen; }
+  #fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .card { position: absolute; left: 50%; bottom: calc(26px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); width: min(600px, calc(100% - 52px));
+    min-height: 9.5rem; padding: 1.1rem 1.4rem 1.3rem; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 9px 9px 0 var(--ink); }
+  .card .ck { margin: 0 0 .35rem; letter-spacing: .26em; text-transform: uppercase; font-weight: 600; font-size: .78rem; color: #5a5040; }
+  .card .ct { margin: 0; font-weight: 500; font-size: clamp(1.45rem, 5.2vw, 1.85rem); line-height: 1.25; text-wrap: pretty; }
+  .card.quote .ct { font-style: italic; }
+  .card .ln { display: block; }
+  .card .cc { margin: .6rem 0 0; font-style: italic; font-size: 1rem; color: #5a5040; }
+  .card .w { transition: opacity .25s; }
+  .shelf-wrap { position: absolute; left: 50%; top: calc(80px + env(safe-area-inset-top, 0px)); transform: translateX(-50%); width: min(560px, calc(100% - 48px)); text-align: center; }
+  .shelf { display: flex; justify-content: center; align-items: flex-end; gap: 10px; height: 11.5rem; padding: 0 8px; border-bottom: 10px solid var(--ink); }
+  .spine { position: relative; width: 3.4rem; border: 2px solid var(--ink); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: .55rem 0;
+    transform-origin: 50% 100%; transition: transform .5s cubic-bezier(.2, .9, .3, 1.2), box-shadow .3s; box-shadow: 4px 4px 0 var(--ink); }
+  .spine:hover, .spine:focus-visible, .spine[aria-expanded="true"] { transform: translateY(-10px) rotate(-3deg); }
+  .spine .st { writing-mode: vertical-rl; transform: rotate(180deg); font-style: italic; font-weight: 600; font-size: 1.05rem; line-height: 1.1; white-space: nowrap; }
+  .spine .sa { font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+  .spine.ink { background: var(--ink); color: var(--paper); height: 100%; }
+  .spine.paper { background: var(--paper); color: var(--ink); height: 86%; }
+  .spine.gold { background: var(--gold); color: var(--ink); height: 94%; }
+  .spine.ink:nth-child(4) { height: 80%; }
+  .shelf-hint { margin: .6rem 0 0; font-style: italic; font-size: 1.05rem; color: var(--ink); background: rgba(239, 233, 220, .85); display: inline-block; padding: 0 .5rem; }
+  .spine-page { position: absolute; left: 50%; top: calc(100% + 14px); transform: translateX(-50%) perspective(700px) rotateX(0); transform-origin: 50% 0; width: min(360px, 100%);
+    padding: 1rem 1.2rem 1.1rem; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 7px 7px 0 var(--ink); text-align: left; z-index: 2; animation: unfold .5s cubic-bezier(.2, .9, .3, 1); }
+  @keyframes unfold { from { opacity: 0; transform: translateX(-50%) perspective(700px) rotateX(-70deg); } }
+  .spine-page h3 { margin: 0; font-style: italic; font-weight: 600; font-size: 1.5rem; line-height: 1.1; }
+  .spine-page .by { margin: .2rem 0 .5rem; letter-spacing: .14em; text-transform: uppercase; font-size: .76rem; font-weight: 600; color: #5a5040; }
+  .spine-page p { margin: 0; font-size: 1.15rem; line-height: 1.35; }
+  .spine-page .x { position: absolute; top: .3rem; right: .4rem; width: 40px; height: 40px; font-size: 1.4rem; }
+
+  /* ---------- The flame ---------- */
+  #flame { position: fixed; z-index: 46; right: max(6px, env(safe-area-inset-right, 0px)); top: 26vh; width: 46px; height: 46vh; }
+  #flame .stick { position: absolute; left: 50%; bottom: 0; width: 8px; margin-left: -4px; height: calc(var(--len) * 100%); border-radius: 2px 2px 1px 1px;
+    background: linear-gradient(90deg, #8f6c3c, #ecd29a 42%, #b8925a); box-shadow: 0 0 calc(var(--heat) * 18px) rgba(242, 154, 58, calc(var(--heat) * .5)); }
+  #flame .stick::before { content: ''; position: absolute; left: -1px; right: -1px; top: 0; height: 14px; border-radius: 3px 3px 0 0; background: linear-gradient(#120d08, #3a2410 60%, rgba(58, 36, 16, 0)); }
+  #flame .glow { position: absolute; left: 50%; bottom: calc(var(--len) * 100%); width: 200px; height: 200px; transform: translate(-50%, 40%); border-radius: 50%; pointer-events: none; mix-blend-mode: screen;
+    background: radial-gradient(circle, rgba(255, 170, 70, .6), rgba(255, 120, 40, 0) 62%); opacity: calc(var(--heat) * var(--fk) * (1 - var(--out))); }
+  #flame .fl { position: absolute; left: 50%; bottom: calc(var(--len) * 100% - 4px); width: 20px; height: 38px; margin-left: -10px; transform-origin: 50% 92%;
+    transform: scale(calc((.42 + var(--heat) * .7) * var(--fk))); opacity: calc(1 - var(--out)); transition: opacity .6s; }
+  #flame .fl i { position: absolute; border-radius: 50% 50% 45% 45% / 64% 64% 36% 36%; }
+  #flame .fl .o { inset: 0; background: radial-gradient(58% 70% at 50% 74%, #fffbea 0 16%, #ffd479 30%, #ff9a2c 56%, rgba(255, 90, 20, .0) 74%); animation: flick 1.7s ease-in-out infinite alternate; transform-origin: 50% 90%; }
+  #flame .fl .c { left: 35%; right: 35%; top: 52%; bottom: 8%; background: radial-gradient(circle at 50% 70%, rgba(120, 170, 255, .85), rgba(120, 170, 255, 0) 70%); }
+  @keyframes flick { 0% { transform: scale(1, 1) skewX(0); } 25% { transform: scale(.94, 1.06) skewX(2deg); } 55% { transform: scale(1.04, .95) skewX(-3deg); } 80% { transform: scale(.97, 1.04) skewX(1deg); } 100% { transform: scale(1.02, .98) skewX(-1deg); } }
+  #flame .sp { position: absolute; left: 50%; bottom: calc(var(--len) * 100% + 22px); width: 0; height: 0; opacity: calc(var(--heat) * (1 - var(--out))); }
+  #flame .sp i { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #ffd98a; box-shadow: 0 0 4px #ffb347; animation: spark 2.2s linear infinite; }
+  #flame .sp i:nth-child(2) { animation-delay: -.7s; left: 3px; } #flame .sp i:nth-child(3) { animation-delay: -1.4s; left: -4px; } #flame .sp i:nth-child(4) { animation-delay: -1.9s; left: 1px; }
+  @keyframes spark { 0% { transform: translate(0, 0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(-10px, -70px); opacity: 0; } }
+  #flame .smoke { position: absolute; left: 50%; bottom: calc(var(--len) * 100% + 4px); width: 40px; height: 120px; margin-left: -20px; opacity: var(--out); overflow: visible; pointer-events: none; }
+  #flame .smoke path { fill: none; stroke: rgba(239, 233, 220, .45); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 30 180; animation: smoke 3.2s linear infinite; }
+  @keyframes smoke { from { stroke-dashoffset: 210; } to { stroke-dashoffset: 0; } }
+  .is-intro #flame { opacity: 0; pointer-events: none; }
+
+  /* ---------- Prompt, end card, contents ---------- */
+  #prompt { position: fixed; z-index: 45; left: 50%; bottom: calc(30px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); margin: 0; padding: .55rem 1.6rem; white-space: nowrap;
+    border: 1px solid rgba(239, 233, 220, .4); background: rgba(13, 12, 11, .85); font-style: italic; font-size: 1.45rem; pointer-events: none; }
+  #endcard { position: fixed; z-index: 44; inset: 0; display: grid; place-items: center; text-align: center; padding: 90px var(--gr) 60px var(--gl); opacity: 0; visibility: hidden; }
+  #endcard .fin { margin: 0; font-style: italic; font-weight: 500; font-size: clamp(4rem, 16vw, 7rem); line-height: 1; }
+  #endcard .fl2 { margin: .8rem 0 1.6rem; font-style: italic; font-size: 1.4rem; color: var(--mist); max-width: 28ch; text-wrap: balance; }
+  #endcard .btns { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; }
+  #endcard .legal { margin: 2rem 0 0; font-size: 1rem; color: var(--mist); max-width: 40ch; }
+  #contents { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 80px var(--gr) 40px var(--gl); background: rgba(8, 7, 6, .9); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  #contents[hidden] { display: none; }
+  .toc { width: min(100%, 30rem); background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 10px 10px 0 #000; padding: 1.4rem 1.6rem 1.6rem; position: relative; }
+  .toc h2 { margin: 0 0 .8rem; font-style: italic; font-weight: 500; font-size: 2.2rem; }
+  .toc ol { list-style: none; margin: 0; padding: 0; }
+  .toc li + li { border-top: 1px solid rgba(13, 12, 11, .18); }
+  .toc button { display: flex; width: 100%; gap: 1rem; align-items: baseline; padding: .55rem 0; text-align: left; font-size: 1.35rem; font-style: italic; min-height: 44px; }
+  .toc button span { min-width: 2.6rem; font-style: normal; font-weight: 600; letter-spacing: .12em; font-size: .9rem; color: #5a5040; }
+  .toc button:hover { color: #8a4a10; }
+  .toc .x { position: absolute; right: .6rem; top: .5rem; width: 44px; height: 44px; font-size: 1.6rem; }
+  .toc .text-btn { margin-top: 1rem; text-decoration: underline; text-underline-offset: 4px; font-style: italic; font-size: 1.15rem; min-height: 44px; }
+
+  /* ---------- The story as text ---------- */
+  .text-mode #stage, .text-mode #dim, .text-mode #warm, .text-mode #scene, .text-mode #prompt, .text-mode #endcard, .text-mode #flame, .text-mode #scroller { display: none !important; }
+  #story { max-width: 46rem; margin: 0 auto; padding: calc(96px + env(safe-area-inset-top, 0px)) var(--gr) 6rem var(--gl); }
+  #story .page { background: var(--paper); color: var(--ink); padding: clamp(1.6rem, 6vw, 3.4rem); box-shadow: 10px 10px 0 #000; }
+  #story header { text-align: center; padding-bottom: 1.4rem; border-bottom: 1px solid rgba(13, 12, 11, .25); }
+  #story h1 { margin: .3rem 0 .6rem; font-style: italic; font-weight: 500; font-size: clamp(2.6rem, 9vw, 4rem); line-height: 1; }
+  #story h2 { margin: 2.6rem 0 1rem; font-style: italic; font-weight: 500; font-size: clamp(2rem, 6vw, 2.8rem); line-height: 1.05; }
+  #story h2 small { display: block; font-style: normal; letter-spacing: .28em; text-transform: uppercase; font-weight: 600; font-size: .9rem; color: #5a5040; margin-bottom: .3rem; }
+  #story p { margin: 0 0 1rem; font-size: 1.32rem; line-height: 1.5; font-weight: 500; }
+  #story blockquote { margin: 1.4rem 0; padding-left: 1.2rem; border-left: 3px solid var(--ink); }
+  #story blockquote p { font-style: italic; font-size: 1.6rem; line-height: 1.25; }
+  #story blockquote footer { font-style: italic; color: #5a5040; }
+  #story figure { margin: 1.2rem auto 1.6rem; width: min(100%, 22rem); }
+  #story figure canvas { display: block; width: 100%; height: auto; aspect-ratio: .738; border: 1px solid var(--ink); outline: 3px double var(--ink); outline-offset: 4px; background: var(--paper); }
+  #story figcaption { margin-top: .8rem; text-align: center; font-style: italic; color: #5a5040; }
+  #story ul.books { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: .8rem; }
+  #story ul.books li { padding: .8rem 1rem; border: 1px solid rgba(13, 12, 11, .3); }
+  #story ul.books b { font-style: italic; font-size: 1.3rem; }
+  #story footer.legal { margin-top: 2.6rem; padding-top: 1.2rem; border-top: 1px solid rgba(13, 12, 11, .25); font-size: 1.05rem; }
+  #story footer.legal p { font-size: 1.1rem; }
+  .back-to-book { margin: 2rem auto 0; display: block; }
+
+  /* ---------- Texture + cursor ---------- */
+  .grain { position: fixed; inset: -20%; z-index: 95; pointer-events: none; opacity: .13; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .cursor { position: fixed; z-index: 110; left: 0; top: 0; width: 30px; height: 30px; margin: -15px 0 0 -15px; border: 1px solid #fff; border-radius: 50%; pointer-events: none; mix-blend-mode: difference;
+    transition: width .3s, height .3s, margin .3s, background-color .3s; display: none; }
+  .cursor.big { width: 56px; height: 56px; margin: -28px 0 0 -28px; background: rgba(255, 255, 255, .15); }
+  @media (hover: hover) and (pointer: fine) { .has-cursor .cursor { display: block; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#story" id="skip">Read the story as text</a>
+
+<!-- Intro -->
+<section id="intro" aria-labelledby="intro-title">
+  <div class="intro-in">
+    <p class="kicker">Emma Watson · An unofficial fan tribute</p>
+    <h1 id="intro-title">A Life in Chapters</h1>
+    <p class="lede">A picture book in ink and candlelight. Scroll to turn the pages of an actor, an activist and a reader.</p>
+    <p class="hint">There is quiet music, a crackling flame and the sound of pages turning, so headphones are best.</p>
+    <button class="open-btn caps" id="open-sound" type="button">Open the book</button>
+    <button class="quiet-link" id="open-silent" type="button">Continue without sound</button>
+    <button class="quiet-link small-link" id="open-text" type="button">Skip the animation and read it as text</button>
+  </div>
+  <div class="intro-foot">
+    <span>An unofficial fan tribute, not affiliated with Emma Watson or her representatives.</span>
+    <span>Created by <span class="credit"></span></span>
+  </div>
+</section>
+
+<header class="hud">
+  <button class="box-btn" id="contents-btn" type="button" aria-haspopup="dialog" aria-controls="contents">Contents</button>
+  <button class="box-btn" id="sound-btn" type="button" aria-pressed="false">Sound off</button>
+</header>
+
+<!-- The book on the desk -->
+<div id="stage" aria-hidden="true">
+  <div id="world">
+    <div id="pool"></div>
+    <div class="shadow r"></div><div class="shadow l"></div>
+    <div id="book"></div>
+  </div>
+</div>
+<div id="dim" aria-hidden="true"></div>
+<div id="warm" aria-hidden="true"></div>
+
+<!-- Inside a plate -->
+<div id="scene">
+  <div class="art" aria-hidden="true"></div>
+  <div class="tint" aria-hidden="true"></div>
+  <div id="flash" aria-hidden="true"></div>
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="shelf-wrap" id="shelf-wrap" hidden>
+    <div class="shelf" id="shelf" role="group" aria-label="Books from her story. Each spine opens a small page."></div>
+    <p class="shelf-hint">Tap or click a spine to open its page</p>
+  </div>
+  <div class="card" aria-hidden="true"><p class="ck"></p><p class="ct"></p><p class="cc"></p></div>
+</div>
+
+<button id="flame" type="button" aria-pressed="false" aria-label="Flame. Turns the sound on.">
+  <span class="glow"></span><span class="stick"></span>
+  <span class="sp"><i></i><i></i><i></i><i></i></span>
+  <span class="fl"><i class="o"></i><i class="c"></i></span>
+  <svg class="smoke" viewBox="0 0 40 120" aria-hidden="true"><path d="M20 118 C 8 96, 32 84, 18 62 S 30 30, 16 4"/></svg>
+</button>
+
+<p id="prompt" aria-hidden="true">Scroll to continue</p>
+
+<div id="endcard">
+  <div>
+    <p class="fin">Fin.</p>
+    <p class="fl2">The flame is out, but the story is still being written.</p>
+    <div class="btns">
+      <button class="box-btn" id="again-btn" type="button">Read again</button>
+      <button class="box-btn" id="text-btn" type="button">Read as text</button>
+    </div>
+    <p class="legal">An unofficial fan tribute, not affiliated with Emma Watson or her representatives. Created by <span class="credit"></span>.</p>
+  </div>
+</div>
+
+<div id="contents" role="dialog" aria-modal="true" aria-labelledby="toc-title" hidden>
+  <div class="toc">
+    <button class="x" id="toc-close" type="button" aria-label="Close contents">×</button>
+    <h2 id="toc-title">Contents</h2>
+    <ol id="toc-list"></ol>
+    <button class="text-btn" id="toc-text" type="button">Read the whole story as text</button>
+  </div>
+</div>
+
+<main>
+  <div id="scroller" aria-hidden="true"></div>
+  <article id="story" aria-labelledby="story-title" tabindex="-1"></article>
+</main>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"></div>
+<noscript><p style="position:fixed;inset:auto 0 0;z-index:200;margin:0;padding:1rem;background:#efe9dc;color:#0d0c0b;text-align:center">This picture book needs JavaScript to turn its pages.</p></noscript>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(() => {
+  'use strict';
+  const C = window.CONFIG, CH = C.chapters;
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const root = document.documentElement;
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const HAS_GSAP = !!(window.gsap && window.ScrollTrigger);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const mix = (a, b, t) => a + (b - a) * t;
+  const ease = t => t * t * (3 - 2 * t);
+  const fontsReady = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise(r => setTimeout(r, 2500))]);
+  $$('.credit').forEach(el => { el.textContent = C.credit; });
+  root.classList.add('book-mode');
+
+  /* =====================================================================
+     ENGRAVING: turns a photo into a black-and-white line-screen plate
+     ===================================================================== */
+  const PLATE_ASPECT = 0.62 / 0.84;           // inner plate width / height
+  const PAPER = C.colors.paper, INK = C.colors.ink;
+  const rgb = h => h.replace('#', '').match(/../g).map(x => parseInt(x, 16));
+  const PAP = rgb(PAPER), INKC = rgb(INK);
+  const images = new Map();
+  function loadImage(src) {
+    if (!src) return Promise.resolve(null);
+    if (!images.has(src)) images.set(src, new Promise(res => { const im = new Image(); im.onload = () => res(im); im.onerror = () => res(null); im.src = src; }));
+    return images.get(src);
+  }
+  function engrave(img, w, h, focus, lines) {
+    const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+    const g = cv.getContext('2d', { willReadFrequently: true });
+    const iw = img.naturalWidth, ih = img.naturalHeight, r = w / h;
+    let sw = iw, sh = ih; if (iw / ih > r) sw = ih * r; else sh = iw / r;
+    const sx = clamp(focus[0] * iw - sw / 2, 0, iw - sw), sy = clamp(focus[1] * ih - sh / 2, 0, ih - sh);
+    g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
+    g.drawImage(img, sx, sy, sw, sh, 0, 0, w, h);
+    const id = g.getImageData(0, 0, w, h), d = id.data, n = w * h;
+    let L = new Float32Array(n);
+    for (let i = 0, j = 0; i < n; i++, j += 4) L[i] = (d[j] * .299 + d[j + 1] * .587 + d[j + 2] * .114) / 255;
+    // soften (two box passes) so the line screen reads tone, not noise
+    const rad = Math.max(1, Math.round(h / 420)), tmp = new Float32Array(n);
+    for (let pass = 0; pass < 2; pass++) {
+      for (let y = 0; y < h; y++) { let acc = 0, row = y * w; for (let x = -rad; x <= rad; x++) acc += L[row + clamp(x, 0, w - 1)];
+        for (let x = 0; x < w; x++) { tmp[row + x] = acc / (2 * rad + 1); acc += L[row + Math.min(w - 1, x + rad + 1)] - L[row + Math.max(0, x - rad)]; } }
+      for (let x = 0; x < w; x++) { let acc = 0; for (let y = -rad; y <= rad; y++) acc += tmp[clamp(y, 0, h - 1) * w + x];
+        for (let y = 0; y < h; y++) { L[y * w + x] = acc / (2 * rad + 1); acc += tmp[Math.min(h - 1, y + rad + 1) * w + x] - tmp[Math.max(0, y - rad) * w + x]; } }
+    }
+    const hist = new Uint32Array(256); for (let i = 0; i < n; i++) hist[(L[i] * 255) | 0]++;
+    const pct = q => { let s = 0; for (let k = 0; k < 256; k++) { s += hist[k]; if (s >= q * n) return k / 255; } return 1; };
+    const lo = pct(.02), hi = Math.max(lo + .1, pct(.985));
+    const period = h / lines, ang = .42, ca = Math.cos(ang), sa = Math.sin(ang), aa = 1.15 / period, es = h / 520;
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      const i = y * w + x;
+      const v = Math.pow(clamp((L[i] - lo) / (hi - lo), 0, 1), 1.12), dark = 1 - v;
+      const u = (x * sa + y * ca) / period + .2 * Math.sin(x / (period * 5.5) + y / (period * 9));
+      const f = Math.abs(u - Math.floor(u) - .5) * 2;
+      let a = clamp((dark * 1.05 - f) / aa + .5, 0, 1);
+      const gx = L[i + (x < w - 1 ? 1 : 0)] - L[i - (x > 0 ? 1 : 0)], gy = L[i + (y < h - 1 ? w : 0)] - L[i - (y > 0 ? w : 0)];
+      a = Math.max(a, clamp((Math.sqrt(gx * gx + gy * gy) * es - .05) * 7, 0, 1) * .85);
+      const j = i * 4; d[j] = PAP[0] + (INKC[0] - PAP[0]) * a; d[j + 1] = PAP[1] + (INKC[1] - PAP[1]) * a; d[j + 2] = PAP[2] + (INKC[2] - PAP[2]) * a; d[j + 3] = 255;
+    }
+    g.putImageData(id, 0, 0);
+    return cv;
+  }
+  function placeholder(w, h, label) {
+    const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+    const g = cv.getContext('2d');
+    g.fillStyle = PAPER; g.fillRect(0, 0, w, h);
+    g.strokeStyle = INK; g.globalAlpha = .18; g.lineWidth = Math.max(1, w / 400);
+    for (let k = -h; k < w; k += w / 22) { g.beginPath(); g.moveTo(k, 0); g.lineTo(k + h, h); g.stroke(); }
+    g.globalAlpha = 1; g.lineWidth = Math.max(1, w / 260); g.strokeRect(w * .06, h * .06, w * .88, h * .88);
+    g.fillStyle = INK; g.textAlign = 'center'; g.textBaseline = 'middle';
+    const fs = Math.round(w * .062);
+    g.fillStyle = PAPER; g.fillRect(w * .1, h * .4, w * .8, h * .2); g.fillStyle = INK;
+    g.font = `italic 600 ${fs}px ${C.fonts.serif}`; g.fillText('Replace with licensed', w / 2, h * .46); g.fillText('or owned photo', w / 2, h * .46 + fs * 1.15);
+    g.font = `600 ${Math.round(fs * .55)}px ${C.fonts.serif}`; g.fillText(label.toUpperCase(), w / 2, h * .57);
+    return cv;
+  }
+  // plate keys: 'front' or chapter index. Each is made at two sizes: for the book page and for the full-screen scene.
+  const plateInfo = k => (k === 'front' ? C.frontispiece : CH[k].plate);
+  const plateLabel = k => (k === 'front' ? 'Frontispiece' : `Plate ${CH[k].num}`);
+  const made = { small: new Map(), big: new Map(), text: new Map() };
+  async function makePlate(k, size, w, h) {
+    const cache = made[size];
+    if (cache.has(k)) return cache.get(k);
+    const job = (async () => {
+      await fontsReady;
+      const info = plateInfo(k), img = await loadImage(info.src);
+      await new Promise(r => setTimeout(r, 0));
+      return img ? engrave(img, w, h, info.focus || [.5, .4], 112) : placeholder(w, h, plateLabel(k));
+    })();
+    cache.set(k, job);
+    return job;
+  }
+
+  /* =====================================================================
+     BOOK: eight leaves (cover, six pages, back cover), built from CONFIG
+     ===================================================================== */
+  const N = 8, T = 0.0075;                     // leaves; thickness of one leaf (in book widths)
+  const emblem = `<svg viewBox="0 0 36 56" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M18 4c4 7 9 10 9 18a9 9 0 0 1-18 0c0-5 3-8 5-11 1 4 3 5 4 5-1-5 0-9 0-12z" fill="currentColor" fill-opacity=".18"/><path d="M6 44c4-2 8-2 12 1 4-3 8-3 12-1v8c-4-2-8-2-12 1-4-3-8-3-12-1z"/><path d="M18 45v8"/></svg>`;
+  const plateHTML = (k, folio) => {
+    const info = plateInfo(k);
+    return `<div class="pg"><div class="plate"><canvas data-plate="${k}"></canvas></div>
+      <div class="plate-cap"><div class="pc">${esc(info.caption || '')}</div><div class="pl">${esc(plateLabel(k))}</div></div>${folio ? `<div class="folio">${folio}</div>` : ''}</div>`;
+  };
+  const openerHTML = (c, folio) => `<div class="pg open-pg"><div class="orn">✦ ✦ ✦</div><div class="on">${esc(CH[c].num)}</div><div class="ol">Chapter</div>
+      <div class="ot">${esc(CH[c].title)}</div><div class="op">${esc(CH[c].place)}</div><div class="folio">${folio}</div></div>`;
+  const FACES = [
+    [`<div class="pg cover-pg"><div class="ct">A Life<br>in Chapters</div>${emblem}<div class="cs">Emma Watson<br>an unofficial tribute</div></div>`, plateHTML('front')],
+    [`<div class="pg title-pg"><div class="orn">✦</div><div class="tt">A Life in Chapters</div><div class="ts">An unofficial fan tribute to Emma Watson, in five chapters</div><div class="tb">Created by ${esc(C.credit)}</div></div>`, openerHTML(0, 2)],
+    [plateHTML(0, 3), openerHTML(1, 4)],
+    [plateHTML(1, 5), openerHTML(2, 6)],
+    [plateHTML(2, 7), openerHTML(3, 8)],
+    [plateHTML(3, 9), openerHTML(4, 10)],
+    [plateHTML(4, 11), `<div class="pg end-pg"><div class="ef">Fin.</div><div class="es">Here the story pauses, for now.</div><div class="folio">12</div></div>`],
+    [`<div class="pg paper-pg"></div>`, `<div class="pg cover-pg back-pg"><p>An unofficial fan tribute, not affiliated with Emma Watson or her representatives.</p></div>`]
+  ];
+  const book = $('#book');
+  const leaves = FACES.map(([front, back], i) => {
+    const leaf = document.createElement('div');
+    const board = i === 0 || i === N - 1;
+    leaf.className = 'leaf' + (board ? ' board' : '');
+    leaf.innerHTML = `<div class="face front${i === N - 1 ? ' inside' : ''}">${front}</div><div class="face back${i === 0 ? ' inside' : ''}">${back}</div><div class="edge b"></div><div class="edge r"></div>`;
+    book.append(leaf);
+    return leaf;
+  });
+  let W = 300, VW = innerWidth, VH = innerHeight;
+  function sizeBook() {
+    VW = innerWidth; VH = innerHeight;
+    const portrait = VW < VH * .9;
+    W = Math.round(portrait ? Math.min(VW * .66, VH * .42) : Math.min(VW * .33, VH * .58));
+    root.style.setProperty('--W', W + 'px'); root.style.setProperty('--t', (T * W).toFixed(2) + 'px'); root.style.setProperty('--P', Math.round(W * 3.4) + 'px');
+    // paint the small plates at the book's resolution
+    const dpr = Math.min(window.devicePixelRatio || 1, 2), pw = Math.round(.62 * W * dpr), ph = Math.round(pw / PLATE_ASPECT);
+    $$('canvas[data-plate]', book).forEach(cv => {
+      const k = cv.dataset.plate === 'front' ? 'front' : +cv.dataset.plate;
+      made.small.delete(k);
+      makePlate(k, 'small', pw, ph).then(src => { cv.width = src.width; cv.height = src.height; cv.getContext('2d').drawImage(src, 0, 0); });
+    });
+    made.big.clear(); bigShown = -1;
+  }
+
+  /* =====================================================================
+     SOUND: an original, quiet score, synthesised live (or files from CONFIG.audio)
+     ===================================================================== */
+  const Sound = (() => {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    let ctx, master, music, fx, verb, noise, rum, padVoices = [], on = false, timer = null, heat = .5, quietUntil = 0;
+    let nextChord = 0, chordIx = 0, nextNote = 0, nextPop = 0;
+    const files = {};
+    const hz = m => 440 * Math.pow(2, (m - 69) / 12);
+    const CHORDS = [[45, 57, 60, 64, 67], [41, 53, 57, 60, 65], [48, 55, 60, 64, 67], [43, 55, 59, 62, 67]];   // Am – F – C – G, softly
+    const PENTA = [69, 72, 74, 76, 79, 81, 84];
+    const env = (p, t, peak, a, r) => { p.setValueAtTime(.0001, t); p.exponentialRampToValueAtTime(peak, t + a); p.exponentialRampToValueAtTime(.0001, t + a + r); };
+    async function load(url) { try { const r = await fetch(url); return await ctx.decodeAudioData(await r.arrayBuffer()); } catch (e) { return null; } }
+    function build() {
+      ctx = new AC();
+      const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -20; comp.ratio.value = 3;
+      master = ctx.createGain(); master.gain.value = 0; master.connect(comp).connect(ctx.destination);
+      verb = ctx.createConvolver();
+      const len = ctx.sampleRate * 2.8, ir = ctx.createBuffer(2, len, ctx.sampleRate);
+      for (let c = 0; c < 2; c++) { const b = ir.getChannelData(c); for (let i = 0; i < len; i++) b[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3); }
+      verb.buffer = ir; const wet = ctx.createGain(); wet.gain.value = .5; verb.connect(wet).connect(master);
+      music = ctx.createGain(); music.gain.value = .55; music.connect(master);
+      fx = ctx.createGain(); fx.gain.value = .9; fx.connect(master);
+      noise = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+      const nd = noise.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+      // the hearth: a low rumble whose level follows the flame
+      const rs = ctx.createBufferSource(); rs.buffer = noise; rs.loop = true;
+      const rf = ctx.createBiquadFilter(); rf.type = 'lowpass'; rf.frequency.value = 340;
+      rum = ctx.createGain(); rum.gain.value = 0; rs.connect(rf).connect(rum).connect(fx); rs.start();
+      // optional files
+      const A = C.audio || {};
+      if (A.music) load(A.music).then(b => { if (!b) return startPad(); files.music = b; const s = ctx.createBufferSource(); s.buffer = b; s.loop = true; const g = ctx.createGain(); g.gain.value = .6; s.connect(g).connect(music); s.start(); });
+      else startPad();
+      if (A.pageTurn) load(A.pageTurn).then(b => { files.page = b; });
+      if (A.crackle) load(A.crackle).then(b => { if (!b) return; files.crackle = b; const s = ctx.createBufferSource(); s.buffer = b; s.loop = true; files.crackleGain = ctx.createGain(); files.crackleGain.gain.value = heat * .5; s.connect(files.crackleGain).connect(fx); s.start(); });
+    }
+    function startPad() {
+      const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; lp.Q.value = .5;
+      const lfo = ctx.createOscillator(), la = ctx.createGain(); lfo.frequency.value = .05; la.gain.value = 220; lfo.connect(la).connect(lp.frequency); lfo.start();
+      const pg = ctx.createGain(); pg.gain.value = .8; lp.connect(pg); pg.connect(music); const ps = ctx.createGain(); ps.gain.value = .5; pg.connect(ps).connect(verb);
+      CHORDS[0].forEach((m, i) => {
+        const g = ctx.createGain(); g.gain.value = i === 0 ? .07 : .026; g.connect(lp);
+        padVoices.push(['triangle', 'sine'].map((type, k) => { const o = ctx.createOscillator(); o.type = type; o.frequency.value = hz(m); o.detune.value = k ? 6 : -6; o.connect(g); o.start(); return o; }));
+      });
+    }
+    function bell(m, t, amt) {
+      const out = ctx.createGain(); out.gain.value = amt; out.connect(music); out.connect(verb);
+      [[1, .1, 2.4], [2.01, .035, 1.2], [3.98, .015, .5]].forEach(([r, peak, dec]) => {
+        const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = hz(m) * r; env(g.gain, t, peak, .005, dec); o.connect(g).connect(out); o.start(t); o.stop(t + dec + .1); });
+    }
+    function pop(t, amt) {
+      const s = ctx.createBufferSource(); s.buffer = noise;
+      const f = ctx.createBiquadFilter(); f.type = 'highpass'; f.frequency.value = 1400 + Math.random() * 3600;
+      const g = ctx.createGain(); env(g.gain, t, .14 * amt, .001, .012 + Math.random() * .03);
+      s.connect(f).connect(g).connect(fx); s.start(t, Math.random() * 1.5, .06);
+    }
+    function sweep(t, from, to, dur, peak) {
+      const s = ctx.createBufferSource(); s.buffer = noise;
+      const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.1;
+      f.frequency.setValueAtTime(from, t); f.frequency.exponentialRampToValueAtTime(to, t + dur);
+      const g = ctx.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + dur * .35); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      s.connect(f).connect(g).connect(fx); s.start(t, Math.random(), dur + .05);
+    }
+    function schedule() {
+      const now = ctx.currentTime, ahead = now + .25;
+      if (padVoices.length && nextChord < ahead) {
+        chordIx = (chordIx + 1) % CHORDS.length;
+        padVoices.forEach((oscs, i) => oscs.forEach(o => o.frequency.setTargetAtTime(hz(CHORDS[chordIx][i]), Math.max(now, nextChord), 1.6)));
+        nextChord = Math.max(nextChord, now) + 8;
+      }
+      if (!files.music && nextNote < ahead) { if (nextNote > now) bell(PENTA[(Math.random() * PENTA.length) | 0], nextNote, .28); nextNote = Math.max(nextNote, now) + 1.6 + Math.random() * 2.8; }
+      if (!files.crackle) while (nextPop < ahead) { if (nextPop > now && heat > .04) pop(nextPop, (.35 + Math.random() * .65) * heat); nextPop = Math.max(nextPop, now) + (.04 + Math.random() * .45) / Math.max(.25, heat * 1.8); }
+    }
+    document.addEventListener('visibilitychange', () => { if (!ctx || !on) return; if (document.hidden) { clearInterval(timer); ctx.suspend(); } else { ctx.resume(); timer = setInterval(schedule, 60); } });
+    return {
+      get on() { return on; },
+      async enable() {
+        if (!ctx) build();
+        try { await ctx.resume(); } catch (e) { return false; }
+        on = true; master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setTargetAtTime(.85, ctx.currentTime, .9);
+        clearInterval(timer); timer = setInterval(schedule, 60);
+        return ctx.state === 'running';
+      },
+      disable() { on = false; clearInterval(timer); if (!ctx) return; master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setTargetAtTime(0, ctx.currentTime, .15); setTimeout(() => { if (!on) ctx.suspend(); }, 700); },
+      heat(h) { heat = h; if (ctx && on) { rum.gain.setTargetAtTime(h * .045, ctx.currentTime, .3); if (files.crackleGain) files.crackleGain.gain.setTargetAtTime(h * .5, ctx.currentTime, .3); } },
+      hush(ms) { quietUntil = performance.now() + ms; },
+      page(fwd) {
+        if (!on || performance.now() < quietUntil) return; const t = ctx.currentTime + .01;
+        if (files.page) { const s = ctx.createBufferSource(); s.buffer = files.page; s.connect(fx); s.start(t); return; }
+        sweep(t, fwd ? 700 : 3200, fwd ? 3400 : 650, .34, .5);
+        const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.setValueAtTime(110, t + .22); o.frequency.exponentialRampToValueAtTime(55, t + .4); env(g.gain, t + .22, .12, .01, .2); o.connect(g).connect(fx); o.start(t + .2); o.stop(t + .5);
+      },
+      swell() { if (!on || performance.now() < quietUntil) return; sweep(ctx.currentTime + .01, 300, 2200, 1.3, .18); },
+      spell() { if (!on || performance.now() < quietUntil) return; const t = ctx.currentTime + .02; [81, 84, 88, 93].forEach((m, i) => bell(m, t + i * .09, .45)); },
+      puff() { if (!on || performance.now() < quietUntil) return; sweep(ctx.currentTime + .01, 900, 180, .9, .5); }
+    };
+  })();
+  const soundBtn = $('#sound-btn'), flameBtn = $('#flame');
+  async function setSound(want) {
+    if (!Sound) { soundBtn.hidden = true; return; }
+    if (want) want = await Sound.enable(); else Sound.disable();
+    soundBtn.textContent = want ? 'Sound on' : 'Sound off';
+    soundBtn.setAttribute('aria-pressed', String(want));
+    flameBtn.setAttribute('aria-pressed', String(want));
+    flameBtn.setAttribute('aria-label', want ? 'Flame. Turns the sound off.' : 'Flame. Turns the sound on.');
+  }
+  soundBtn.addEventListener('click', () => setSound(!(Sound && Sound.on)));
+  flameBtn.addEventListener('click', () => setSound(!(Sound && Sound.on)));
+  if (!Sound) { soundBtn.hidden = true; }
+
+  /* =====================================================================
+     THE SCENE inside each plate: the engraving, a tint, particles and the text box
+     ===================================================================== */
+  const scene = $('#scene'), art = $('.art', scene), tint = $('.tint', scene), flash = $('#flash'), fxCanvas = $('#fx');
+  const card = $('.card', scene), cardK = $('.ck', card), cardT = $('.ct', card), cardC = $('.cc', card);
+  const shelfWrap = $('#shelf-wrap'), shelfEl = $('#shelf');
+  let bigShown = -1, sceneCh = -2, cardShown = '', wordEls = [], lineEls = [];
+  function coverScale() { return Math.max(VW / (.62 * W), VH / (.84 * W)) * 1.02; }
+  function sizeArt() { const s = coverScale(); art.style.width = (.62 * W * s) + 'px'; art.style.height = (.84 * W * s) + 'px'; }
+  function showBig(c) {
+    if (bigShown === c) return;
+    bigShown = c; art.textContent = '';
+    const s = coverScale(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const h = Math.min(1700, Math.round(.84 * W * s * dpr)), w = Math.round(h * PLATE_ASPECT);
+    makePlate(c, 'big', w, h).then(cv => { if (bigShown === c) { art.textContent = ''; art.append(cv); } });
+  }
+  function setSceneChapter(c) {
+    sceneCh = c; cardShown = '';
+    if (c < 0) return;
+    const ch = CH[c];
+    tint.className = 'tint ' + (ch.tint || 'paper');
+    showBig(c);
+    shelfWrap.hidden = !ch.shelf;
+    fxInit(ch.effect);
+  }
+  function setCard(c, i) {
+    const key = c + ':' + i; if (key === cardShown) return; cardShown = key;
+    const cd = CH[c].cards[i];
+    card.classList.toggle('quote', !!cd.quote);
+    cardK.textContent = `Chapter ${CH[c].num} · ${CH[c].title}`;
+    cardC.textContent = cd.cite || '';
+    cardT.textContent = '';
+    wordEls = []; lineEls = [];
+    cd.text.split('\n').forEach(line => {
+      const ln = document.createElement('span'); ln.className = 'ln';
+      line.split(' ').forEach((w, k) => { const s = document.createElement('span'); s.className = 'w'; s.textContent = w; if (k) ln.append(' '); ln.append(s); wordEls.push(s); });
+      cardT.append(ln); lineEls.push(ln);
+    });
+  }
+  function revealCard(c, read) {
+    const cards = CH[c].cards, i = clamp(Math.floor(read), 0, cards.length - 1);
+    setCard(c, i);
+    const q = clamp((read - i) / .72, 0, 1);
+    if (cards[i].quote) {                      // speeches arrive line by line
+      lineEls.forEach((ln, k) => { const o = REDUCE ? (q > k / lineEls.length ? 1 : 0) : clamp(q * lineEls.length * 1.2 - k, 0, 1); ln.style.opacity = o; ln.style.transform = `translateY(${(1 - o) * 8}px)`; });
+      wordEls.forEach(w => { w.style.opacity = 1; });
+    } else {                                   // narration arrives word by word
+      lineEls.forEach(ln => { ln.style.opacity = 1; ln.style.transform = ''; });
+      const shown = q * wordEls.length;
+      wordEls.forEach((w, k) => { w.style.opacity = clamp(shown - k, 0, 1).toFixed(2); });
+    }
+  }
+  // the bookshelf (Chapter IV)
+  let openSpine = null;
+  C.shelf.forEach((b, i) => {
+    const sp = document.createElement('button');
+    sp.type = 'button'; sp.className = 'spine ' + (b.tone || 'ink'); sp.setAttribute('aria-expanded', 'false');
+    sp.setAttribute('aria-label', `${b.title} by ${b.author}`);
+    sp.innerHTML = `<span class="st">${esc(b.title)}</span><span class="sa">${esc(b.author.split(' ').pop().slice(0, 9))}</span>`;
+    sp.addEventListener('click', () => toggleSpine(i, sp));
+    shelfEl.append(sp);
+  });
+  function toggleSpine(i, sp) {
+    const was = openSpine && openSpine.i === i;
+    closeSpine();
+    if (was) return;
+    const b = C.shelf[i], pg = document.createElement('div');
+    pg.className = 'spine-page'; pg.setAttribute('role', 'region'); pg.setAttribute('aria-label', b.title);
+    pg.innerHTML = `<button class="x" type="button" aria-label="Close this page">×</button><h3>${esc(b.title)}</h3><p class="by">${esc(b.author)}</p><p>${esc(b.note)}</p>`;
+    $('.x', pg).addEventListener('click', () => { closeSpine(); sp.focus(); });
+    shelfWrap.append(pg); sp.setAttribute('aria-expanded', 'true'); openSpine = { i, pg, sp };
+    if (Sound) Sound.page(true);
+  }
+  function closeSpine() { if (!openSpine) return; openSpine.pg.remove(); openSpine.sp.setAttribute('aria-expanded', 'false'); openSpine = null; }
+
+  // particles: each chapter has its own weather
+  const fx = fxCanvas.getContext('2d');
+  let parts = [], fxType = '', FXDPR = 1;
+  const LETTERS = 'abcdefghijklmnopqrstuvwxyzAEW&';
+  function sizeFx() { FXDPR = Math.min(window.devicePixelRatio || 1, 2); fxCanvas.width = VW * FXDPR; fxCanvas.height = VH * FXDPR; }
+  function fxInit(type) {
+    fxType = type; parts = [];
+    const n = { pages: 22, sparks: 70, dust: 70, letters: 26, snow: 150 }[type] || 0;
+    for (let i = 0; i < n; i++) parts.push(spawn(type, true));
+  }
+  function spawn(type, anywhere) {
+    const r = Math.random;
+    const p = { x: r() * VW, y: anywhere ? r() * VH : (type === 'sparks' || type === 'letters' ? VH + 20 : -20), s: r(), ph: r() * 6.28, rot: r() * 6.28 };
+    if (type === 'pages') { p.vx = (r() - .5) * 14; p.vy = 16 + r() * 22; p.w = 10 + p.s * 18; }
+    if (type === 'sparks') { p.vx = (r() - .5) * 20; p.vy = -(30 + r() * 70); p.life = r(); }
+    if (type === 'dust') { p.vx = (r() - .5) * 6; p.vy = (r() - .5) * 6; }
+    if (type === 'letters') { p.vx = (r() - .5) * 10; p.vy = -(10 + r() * 18); p.ch = LETTERS[(r() * LETTERS.length) | 0]; }
+    if (type === 'snow') { p.vx = (r() - .5) * 12; p.vy = 30 + p.s * 70; }
+    return p;
+  }
+  function fxDraw(dt, t, alpha) {
+    fx.setTransform(FXDPR, 0, 0, FXDPR, 0, 0); fx.clearRect(0, 0, VW, VH);
+    if (REDUCE || alpha < .01) return;
+    parts.forEach((p, i) => {
+      p.x += (p.vx + Math.sin(t * .6 + p.ph) * 8) * dt; p.y += p.vy * dt; p.rot += dt * (p.s - .5) * 2;
+      const off = p.y > VH + 30 || p.y < -40 || p.x < -40 || p.x > VW + 40;
+      if (fxType === 'sparks') { p.life += dt * .35; if (p.life > 1 || off) parts[i] = spawn('sparks', false); }
+      else if (off) parts[i] = spawn(fxType, false);
+      fx.save(); fx.translate(p.x, p.y);
+      if (fxType === 'pages') {
+        fx.rotate(p.rot); fx.scale(Math.cos(t * 1.4 + p.ph), 1);
+        fx.fillStyle = PAPER; fx.strokeStyle = INK; fx.lineWidth = 1; fx.fillRect(-p.w / 2, -p.w * .65, p.w, p.w * 1.3); fx.strokeRect(-p.w / 2, -p.w * .65, p.w, p.w * 1.3);
+        fx.globalAlpha = .5; for (let k = 0; k < 4; k++) fx.fillRect(-p.w * .35, -p.w * .4 + k * p.w * .22, p.w * .7, 1);
+      } else if (fxType === 'sparks') {
+        const a = Math.sin(p.life * Math.PI); fx.fillStyle = `rgba(255, 205, 120, ${a})`; fx.shadowColor = '#ff9a2c'; fx.shadowBlur = 8;
+        fx.beginPath(); fx.arc(0, 0, 1 + p.s * 2, 0, 6.28); fx.fill();
+      } else if (fxType === 'dust') {
+        const inBeam = Math.max(0, 1 - Math.abs(p.x - VW / 2) / (VW * .32)); fx.fillStyle = `rgba(255, 246, 225, ${.15 + inBeam * .55 * (.6 + .4 * Math.sin(t * 2 + p.ph))})`;
+        fx.beginPath(); fx.arc(0, 0, .6 + p.s * 1.8, 0, 6.28); fx.fill();
+      } else if (fxType === 'letters') {
+        fx.rotate(Math.sin(t + p.ph) * .3); fx.fillStyle = `rgba(13, 12, 11, ${.35 + p.s * .4})`; fx.font = `italic 600 ${14 + p.s * 18}px ${C.fonts.serif}`; fx.fillText(p.ch, 0, 0);
+      } else if (fxType === 'snow') {
+        const rr = 1 + p.s * 3.4; fx.fillStyle = `rgba(250, 248, 242, ${.55 + p.s * .45})`; fx.beginPath(); fx.arc(0, 0, rr, 0, 6.28); fx.fill();
+      }
+      fx.restore();
+    });
+  }
+
+  /* =====================================================================
+     THE STORY AS TEXT (also what screen readers read during the animation)
+     ===================================================================== */
+  const story = $('#story');
+  story.innerHTML = `<div class="page">
+    <header><p class="kicker" style="color:#5a5040">Emma Watson · An unofficial fan tribute</p><h1 id="story-title">A Life in Chapters</h1>
+      <figure><canvas data-tplate="front" role="img" aria-label="${esc(C.frontispiece.alt)}"></canvas><figcaption>${esc(C.frontispiece.caption)}</figcaption></figure></header>
+    ${CH.map((ch, c) => `<section id="ch-${c}" aria-labelledby="ch-${c}-h"><h2 id="ch-${c}-h"><small>Chapter ${esc(ch.num)} · ${esc(ch.place)}</small>${esc(ch.title)}</h2>
+      <figure><canvas data-tplate="${c}" role="img" aria-label="${esc(ch.plate.alt)}"></canvas><figcaption>Plate ${esc(ch.num)} · ${esc(ch.plate.caption)}</figcaption></figure>
+      ${ch.cards.map(cd => cd.quote ? `<blockquote><p>${esc(cd.text).replace(/\n/g, ' ')}</p><footer>${esc(cd.cite || '')}</footer></blockquote>` : `<p>${esc(cd.text)}</p>`).join('')}
+      ${ch.shelf ? `<h3 class="sr-only">Books from her story</h3><ul class="books">${C.shelf.map(b => `<li><b>${esc(b.title)}</b>, ${esc(b.author)}. ${esc(b.note)}</li>`).join('')}</ul>` : ''}
+    </section>`).join('')}
+    <footer class="legal"><p><strong>Unofficial fan tribute.</strong> Not affiliated with Emma Watson or her representatives, UN Women or HeForShe.</p>
+      <p>Quotes are from her HeForShe speech at the United Nations, 20 September 2014. Photographs belong to their photographers and publishers.</p>
+      <p>Created by ${esc(C.credit)}.</p></footer>
+  </div>
+  <button class="box-btn back-to-book" id="back-book" type="button">Back to the book</button>`;
+  function paintTextPlates() {
+    $$('canvas[data-tplate]', story).forEach(cv => {
+      const k = cv.dataset.tplate === 'front' ? 'front' : +cv.dataset.tplate;
+      makePlate(k, 'text', 520, Math.round(520 / PLATE_ASPECT)).then(src => { cv.width = src.width; cv.height = src.height; cv.getContext('2d').drawImage(src, 0, 0); });
+    });
+  }
+
+  /* =====================================================================
+     THE TIMELINE: one scroll-scrubbed GSAP timeline drives the whole book
+     ===================================================================== */
+  const S = { phase: 0, near: 0, pan: 1, dive: 0, scene: 0, ch: -1, read: 0, heat: .45, out: 0, end: 0, prompt: 1 };
+  for (let i = 0; i < N; i++) S['l' + i] = 0;
+  const MARK = {};
+  let TL = null, ST = null, lenis = null;
+  if (HAS_GSAP) {
+    gsap.registerPlugin(ScrollTrigger);
+    TL = gsap.timeline({ paused: true, defaults: { ease: 'none' } });
+    let t = 0;
+    TL.to(S, { near: 1, duration: 1, ease: 'sine.inOut' }, 0).to(S, { prompt: 0, duration: .45 }, .1);
+    t = 1;
+    TL.to(S, { l0: 1, duration: 1.3, ease: 'power2.inOut' }, t).to(S, { phase: 1, duration: 1.3, ease: 'power2.inOut' }, t).to(S, { heat: .6, duration: 1 }, t);
+    t += 1.3; MARK.title = t; t += .7;
+    CH.forEach((ch, c) => {
+      const k = c + 1;
+      MARK['turn' + c] = t;
+      TL.to(S, { ['l' + k]: 1, duration: 1.1, ease: 'power2.inOut' }, t).to(S, { pan: 0, duration: 1.1, ease: 'power2.inOut' }, t);
+      t += 1.1; MARK['ch' + c] = t;
+      TL.to(S, { heat: .8, duration: .4 }, t - .3);
+      TL.to(S, { pan: 1, duration: .7, ease: 'power2.inOut' }, t + .45);   // on phones: read the title, then look across at the plate
+      t += 1.1;
+      TL.set(S, { ch: c, read: 0 }, t);
+      TL.to(S, { dive: 1, duration: 1.15, ease: 'power2.inOut' }, t);
+      TL.to(S, { scene: 1, duration: .32 }, t + .85);
+      TL.to(S, { heat: 1, duration: .5 }, t + .6);
+      t += 1.2;
+      const n = ch.cards.length;
+      TL.fromTo(S, { read: 0 }, { read: n, duration: n * 1.05, immediateRender: false }, t);
+      t += n * 1.05 + .2;
+      TL.to(S, { scene: 0, duration: .32 }, t);
+      TL.to(S, { dive: 0, duration: 1.05, ease: 'power2.inOut' }, t);
+      TL.to(S, { heat: .6, duration: .6 }, t + .2);
+      t += 1.1;
+    });
+    TL.to(S, { l6: 1, duration: 1.1, ease: 'power2.inOut' }, t).to(S, { pan: 0, duration: 1.1, ease: 'power2.inOut' }, t); t += 1.1; MARK.end = t; t += .9;
+    TL.to(S, { l7: 1, duration: 1.5, ease: 'power2.inOut' }, t).to(S, { phase: 2, duration: 1.5, ease: 'power2.inOut' }, t); t += 1.6;
+    TL.to(S, { heat: 0, out: 1, duration: 1.1, ease: 'power1.in' }, t); t += 1.3;
+    TL.to(S, { end: 1, duration: .7 }, t); t += .9;
+    TL.to({}, { duration: .3 }, t);
+  }
+  const scroller = $('#scroller');
+  function sizeScroller() { if (TL) scroller.style.height = Math.round(TL.duration() * Math.max(300, VH * .62) + VH) + 'px'; }
+  function timeToY(time) { return ST ? ST.start + (time / TL.duration()) * (ST.end - ST.start) : 0; }
+  window.__book = { marks: MARK, y: t => timeToY(t), duration: () => (TL ? TL.duration() : 0) };   // handy for testing jumps
+
+  /* =====================================================================
+     RENDER: every frame, turn the state into the book, the camera and the light
+     ===================================================================== */
+  const world = $('#world'), shadowR = $('.shadow.r'), shadowL = $('.shadow.l'), dim = $('#dim'), warm = $('#warm'), prompt = $('#prompt'), endcard = $('#endcard');
+  const presets = () => {
+    const p = VW < VH * .9;
+    return {
+      closed: { cx: .5, cy: .05, s: p ? 1.28 : 1.22, tilt: 50, rz: -15, oy: VH * .03 },
+      open: { cx: p ? mix(-.47, .47, ease(S.pan)) : 0, cy: .03, s: p ? 1.06 : 1, tilt: 38, rz: p ? mix(4, -4, S.pan) : -4, oy: VH * .03 },
+      end: { cx: -.5, cy: .05, s: p ? 1.24 : 1.2, tilt: 52, rz: 12, oy: VH * .03 }
+    };
+  };
+  const lerpView = (a, b, t) => ({ cx: mix(a.cx, b.cx, t), cy: mix(a.cy, b.cy, t), s: Math.exp(mix(Math.log(a.s), Math.log(b.s), t)), tilt: mix(a.tilt, b.tilt, t), rz: mix(a.rz, b.rz, t), oy: mix(a.oy, b.oy, t) });
+  const prevLeaf = new Array(N).fill(0), VEIL = { v: 0 };
+  let prevScene = 0, prevOut = 0, prevRead = 0, lastT = 0, textMode = false;
+  function render(time) {
+    const dt = Math.min(.05, time - lastT); lastT = time;
+    if (textMode) return;
+    const fk = REDUCE ? 0 : Math.sin(time * 13.1) * .5 + Math.sin(time * 7.3 + 1) * .3 + Math.sin(time * 23.7) * .2;
+    const heat = S.heat * (1 - S.out);
+    const fs = flameBtn.style;                                // the flame burns down as you read
+    fs.setProperty('--heat', heat.toFixed(3)); fs.setProperty('--fk', (1 + fk * .07).toFixed(3));
+    fs.setProperty('--out', S.out.toFixed(3)); fs.setProperty('--len', (1 - (TL ? TL.progress() : 0) * .55).toFixed(3));
+    if (Sound) Sound.heat(heat);
+
+    // camera
+    const P = presets();
+    let v = S.phase <= 1 ? lerpView(P.closed, P.open, ease(S.phase)) : lerpView(P.open, P.end, ease(S.phase - 1));
+    v.s *= 1 + .07 * S.near * (1 - Math.min(1, S.phase));
+    if (!REDUCE) { v.rz += Math.sin(time * .21) * .7; v.tilt += Math.sin(time * .17) * .9; v.oy += Math.sin(time * .13) * 4; }
+    const d = REDUCE ? 0 : S.dive;
+    if (d > 0) {
+      const leafZ = ((N - 1 - (S.ch + 1)) * T + T / 2) * W, want = coverScale(), Pp = W * 3.4;
+      const dv = { cx: .5, cy: -2 / 3 + .12 + .44, s: want * Pp / (Pp + leafZ * want), tilt: 0, rz: 0, oy: 0 };
+      v = lerpView(v, dv, d);
+    }
+    world.style.transform = `translate3d(0, ${v.oy.toFixed(1)}px, 0) scale3d(${v.s.toFixed(4)}, ${v.s.toFixed(4)}, ${v.s.toFixed(4)}) rotateX(${v.tilt.toFixed(2)}deg) rotateZ(${v.rz.toFixed(2)}deg) translate3d(${(-v.cx * W).toFixed(1)}px, ${(-v.cy * W).toFixed(1)}px, 0)`;
+
+    // leaves
+    for (let i = 0; i < N; i++) {
+      const p = S['l' + i], zr = (N - 1 - i) * T, zl = i * T;
+      let ang, z;
+      if (REDUCE) {                                            // fade, don't fly
+        ang = p < .5 ? 0 : -180; z = p < .5 ? zr : zl;
+        leaves[i].style.setProperty('--op', p <= 0 || p >= 1 ? 1 : Math.abs(1 - 2 * p).toFixed(3));
+      } else { ang = -180 * p; z = mix(zr, zl, p) + Math.sin(p * Math.PI) * .015; }
+      leaves[i].style.transform = `translateZ(${(z * W).toFixed(2)}px) rotateY(${ang.toFixed(2)}deg)`;
+      leaves[i].style.setProperty('--sh', (Math.sin(p * Math.PI) * .6).toFixed(3));
+      if ((prevLeaf[i] < .5) !== (p < .5) && Sound) Sound.page(p > prevLeaf[i]);
+      prevLeaf[i] = p;
+    }
+    shadowR.style.opacity = (1 - S.l7).toFixed(3); shadowL.style.opacity = Math.min(S.l0, 1).toFixed(3);
+
+    // light: the flame is the only light in the room
+    dim.style.opacity = Math.max(VEIL.v, clamp(.8 - heat * .72 + S.out * .14 + (REDUCE ? 0 : fk * .03 * heat), 0, .96)).toFixed(3);
+    warm.style.opacity = (heat * (.7 + fk * .1)).toFixed(3);
+    prompt.style.opacity = S.prompt.toFixed(3);
+    endcard.style.opacity = S.end.toFixed(3); endcard.style.visibility = S.end > .01 ? 'visible' : 'hidden'; endcard.inert = S.end < .5;
+
+    // scene
+    const sc = S.scene;
+    scene.style.opacity = sc.toFixed(3); scene.style.visibility = sc > .002 ? 'visible' : 'hidden'; scene.inert = sc < .5;
+    if (sc < .5 && openSpine) closeSpine();
+    if (S.ch !== sceneCh) setSceneChapter(S.ch);
+    if (S.ch >= 0) {
+      const n = CH[S.ch].cards.length;
+      revealCard(S.ch, S.read);
+      art.style.setProperty('--kb', REDUCE ? 1 : (1 + .07 * clamp(S.read / n, 0, 1)).toFixed(4));
+      flash.style.opacity = CH[S.ch].flash && !REDUCE ? (Math.exp(-Math.pow((S.read - .12) / .07, 2)) * .85).toFixed(3) : 0;
+      if (CH[S.ch].flash && prevRead < .12 && S.read >= .12 && Sound) Sound.spell();
+      if (CH[S.ch].shelf) {                                     // the shelf rises once the photo has been seen
+        const so = REDUCE ? (S.read > 1 ? 1 : 0) : clamp((S.read - .9) / .4, 0, 1);
+        shelfWrap.style.opacity = so; shelfWrap.style.transform = `translate(-50%, ${((1 - so) * 30).toFixed(1)}px)`; shelfWrap.inert = so < .5;
+        if (so < .5 && openSpine) closeSpine();
+      }
+      if (sc > .01) fxDraw(dt, time, sc); else if (prevScene > .01) fx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+    }
+    if (prevScene < .5 && sc >= .5 && Sound) Sound.swell();
+    if (prevOut < .5 && S.out >= .5 && Sound) Sound.puff();
+    // warm the next big plate in advance
+    const upcoming = S.phase > 0 ? CH.findIndex((_, c) => S['l' + (c + 2)] < .5) : 0;
+    if (S.scene < .01 && upcoming >= 0 && upcoming !== bigShown && S.ch !== upcoming) showBig(upcoming);
+    prevScene = sc; prevOut = S.out; prevRead = S.read;
+  }
+
+  /* =====================================================================
+     START-UP, SCROLL, INTRO, CONTENTS, TEXT MODE
+     ===================================================================== */
+  function resize() { sizeBook(); sizeArt(); sizeFx(); sizeScroller(); if (HAS_GSAP) ScrollTrigger.refresh(); }
+  sizeBook(); sizeArt(); sizeFx(); sizeScroller();
+  addEventListener('resize', () => { clearTimeout(resize.t); resize.t = setTimeout(resize, 150); });
+  fontsReady.then(() => { if (HAS_GSAP) ScrollTrigger.refresh(); });
+
+  if (HAS_GSAP) {
+    if (!REDUCE && window.Lenis) {
+      lenis = new Lenis({ duration: 1.25, smoothWheel: true });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(t => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0);
+      lenis.stop();
+    }
+    ST = ScrollTrigger.create({ trigger: scroller, start: 'top top', end: 'bottom bottom', animation: TL, scrub: REDUCE ? true : .6 });
+    gsap.ticker.add(t => render(t));
+  } else {
+    setTextMode(true);
+  }
+
+  const intro = $('#intro');
+  function begin(withSound) {
+    if (withSound) setSound(true);
+    intro.classList.add('gone'); intro.inert = true;
+    root.classList.remove('is-intro');
+    if (lenis) lenis.start();
+    if (HAS_GSAP) ScrollTrigger.refresh();
+    $('#contents-btn').focus({ preventScroll: true });
+  }
+  $('#open-sound').addEventListener('click', () => begin(true));
+  $('#open-silent').addEventListener('click', () => begin(false));
+  $('#open-text').addEventListener('click', () => { begin(false); setTextMode(true); });
+  $('#skip').addEventListener('click', e => { e.preventDefault(); begin(false); setTextMode(true); });
+
+  // jump: a breath of darkness, then the page
+  function jumpTo(time) {
+    if (!ST) return;
+    if (Sound) Sound.hush(900);
+    const go = () => { const y = timeToY(time); if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo(0, y); };
+    if (REDUCE) { go(); return; }
+    gsap.timeline().to(VEIL, { v: 1, duration: .3, overwrite: true }).add(go).to(VEIL, { v: 0, duration: .6 }, '+=.2');
+  }
+  function setTextMode(on) {
+    textMode = on;
+    root.classList.toggle('text-mode', on); root.classList.toggle('book-mode', !on);
+    if (on) {
+      paintTextPlates(); if (ST) ST.disable(false);
+      if (lenis) lenis.scrollTo(0, { immediate: true, force: true }); else window.scrollTo(0, 0);
+      story.focus({ preventScroll: true });
+    } else {
+      if (ST) { ST.enable(); ScrollTrigger.refresh(); }
+      jumpTo(MARK.title || 0);
+    }
+  }
+  $('#back-book').addEventListener('click', () => setTextMode(false));
+  $('#text-btn').addEventListener('click', () => setTextMode(true));
+  $('#again-btn').addEventListener('click', () => jumpTo(0));
+  if (!HAS_GSAP) $('#back-book').hidden = true;
+
+  // contents
+  const contents = $('#contents'), tocList = $('#toc-list'), contentsBtn = $('#contents-btn');
+  const tocItems = [['', 'Title page', 'title'], ...CH.map((ch, c) => [ch.num, ch.title, 'ch' + c]), ['', 'The end', 'end']];
+  tocItems.forEach(([num, label, mark], i) => {
+    const li = document.createElement('li'), b = document.createElement('button');
+    b.type = 'button'; b.innerHTML = `<span>${esc(num || '·')}</span>${esc(label)}`;
+    b.addEventListener('click', () => {
+      closeContents(false);
+      if (textMode) { const el = i === 0 ? story : (mark === 'end' ? $('.legal', story) : $('#ch-' + (i - 1))); el.scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth' }); return; }
+      jumpTo(MARK[mark]);
+    });
+    li.append(b); tocList.append(li);
+  });
+  function openContents() { contents.hidden = false; contentsBtn.setAttribute('aria-expanded', 'true'); if (lenis) lenis.stop(); $('button', tocList).focus(); }
+  function closeContents(focus = true) { if (contents.hidden) return; contents.hidden = true; contentsBtn.setAttribute('aria-expanded', 'false'); if (lenis) lenis.start(); if (focus) contentsBtn.focus({ preventScroll: true }); }
+  contentsBtn.addEventListener('click', openContents);
+  $('#toc-close').addEventListener('click', () => closeContents());
+  $('#toc-text').addEventListener('click', () => { closeContents(false); setTextMode(true); });
+  contents.addEventListener('click', e => { if (e.target === contents) closeContents(); });
+  document.addEventListener('keydown', e => {
+    if (!contents.hidden) {
+      if (e.key === 'Escape') { closeContents(); return; }
+      if (e.key === 'Tab') { const f = $$('button', contents), first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); } }
+      return;
+    }
+    if (e.key === 'Escape' && openSpine) { const sp = openSpine.sp; closeSpine(); sp.focus(); }
+  });
+
+  // cursor (desktop only)
+  if (FINE && !REDUCE) {
+    root.classList.add('has-cursor');
+    const cur = $('.cursor'); let cx = -100, cy = -100, x = -100, y = -100;
+    addEventListener('pointermove', e => { x = e.clientX; y = e.clientY; }, { passive: true });
+    document.addEventListener('pointerover', e => cur.classList.toggle('big', !!e.target.closest('button, a')));
+    (function loop() { cx += (x - cx) * .25; cy += (y - cy) * .25; cur.style.transform = `translate(${cx}px, ${cy}px)`; requestAnimationFrame(loop); })();
+  }
+})();
+</script>
+</body>
+</html>
