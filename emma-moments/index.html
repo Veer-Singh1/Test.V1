@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en" class="is-loading">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A Thousand Moments</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Made of a Thousand Moments: an unofficial fan tribute to Emma Watson. A portrait made of hundreds of tiles that scatters into a cloud you can explore.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script>
+/* =========================================================================
+   CONFIG: everything you are likely to change lives here.
+
+   PORTRAIT_URL  The photo the mosaic is sampled from. Use a portrait you own or
+                 are licensed to use. A plain background works best (it is removed
+                 automatically). Leave it '' and a generated silhouette is used.
+   items         The moments. imageUrl: leave '' to show a labelled placeholder
+                 card, or point it at a photo you own or have a licence for.
+                 Every fact can be checked; every quote is from her HeForShe speech
+                 at the United Nations, 20 September 2014.
+   heroTiles     How many large, selectable tiles float in the cloud. The items
+                 are repeated, each copy tinted, to reach this number.
+   ========================================================================= */
+window.CONFIG = {
+  credit: 'Veer Singh',
+  PORTRAIT_URL: 'images/portrait.jpg',
+  heroTiles: 320,
+  title: ['Emma', 'Watson'],
+  kicker: 'Made of a Thousand Moments',
+
+  items: [
+    { title: 'The Dragon School', year: 'Childhood', category: 'Books', imageUrl: '', caption: 'She went to the Dragon School in Oxford.' },
+    { title: 'Harry Potter and the Philosopher’s Stone', year: '2001', category: 'Film', imageUrl: '', caption: 'Her first film. She was cast as Hermione Granger at nine years old.' },
+    { title: 'Hogwarts: A History', year: 'Fiction', category: 'Books', imageUrl: '', caption: 'The book Hermione keeps quoting in the Harry Potter novels. It is fictional.' },
+    { title: 'Harry Potter and the Chamber of Secrets', year: '2002', category: 'Film', imageUrl: '', caption: 'The second of the eight Harry Potter films.' },
+    { title: 'Harry Potter and the Prisoner of Azkaban', year: '2004', category: 'Film', imageUrl: '', caption: 'The third film, directed by Alfonso Cuarón.' },
+    { title: 'Harry Potter and the Goblet of Fire', year: '2005', category: 'Film', imageUrl: '', caption: 'The fourth film, directed by Mike Newell.' },
+    { title: 'Ballet Shoes', year: '2007', category: 'Film', imageUrl: '', caption: 'A BBC television film in which she played Pauline Fossil.' },
+    { title: 'Harry Potter and the Order of the Phoenix', year: '2007', category: 'Film', imageUrl: '', caption: 'The fifth film, the first directed by David Yates.' },
+    { title: 'The Tale of Despereaux', year: '2008', category: 'Film', imageUrl: '', caption: 'She voiced Princess Pea in the animated film.' },
+    { title: 'Harry Potter and the Half-Blood Prince', year: '2009', category: 'Film', imageUrl: '', caption: 'The sixth of the eight films.' },
+    { title: 'Burberry', year: '2009', category: 'Style', imageUrl: '', caption: 'She fronted Burberry’s autumn/winter 2009 campaign.' },
+    { title: 'People Tree', year: '2010', category: 'Style', imageUrl: '', caption: 'She worked with the fair-trade label People Tree on a collection.' },
+    { title: 'Harry Potter and the Deathly Hallows – Part 1', year: '2010', category: 'Film', imageUrl: '', caption: 'The final book, told in two films. This is the first.' },
+    { title: 'Harry Potter and the Deathly Hallows – Part 2', year: '2011', category: 'Film', imageUrl: '', caption: 'The eighth and last Harry Potter film.' },
+    { title: 'My Week with Marilyn', year: '2011', category: 'Film', imageUrl: '', caption: 'She played Lucy, a wardrobe assistant.' },
+    { title: 'Lancôme', year: '2011', category: 'Style', imageUrl: '', caption: 'She became a Lancôme ambassador.' },
+    { title: 'Worcester College, Oxford', year: '2011', category: 'Books', imageUrl: '', caption: 'She spent part of her degree as a visiting student at Worcester College, Oxford.' },
+    { title: 'The Perks of Being a Wallflower', year: '2012', category: 'Film', imageUrl: '', caption: 'She played Sam in Stephen Chbosky’s film of his own novel.' },
+    { title: 'The Bling Ring', year: '2013', category: 'Film', imageUrl: '', caption: 'She played Nicki in Sofia Coppola’s film.' },
+    { title: 'Noah', year: '2014', category: 'Film', imageUrl: '', caption: 'She played Ila in Darren Aronofsky’s film.' },
+    { title: 'Brown University', year: '2014', category: 'Books', imageUrl: '', caption: 'In May 2014 she graduated from Brown University with a degree in English literature.' },
+    { title: 'UN Women', year: '2014', category: 'Activism', imageUrl: '', caption: 'In July 2014 she was appointed a UN Women Goodwill Ambassador.' },
+    { title: 'HeForShe', year: '2014', category: 'Activism', imageUrl: '', caption: 'On 20 September 2014 she launched HeForShe with a speech at UN headquarters in New York.' },
+    { title: '“If not me, who? If not now, when?”', year: '2014', category: 'Quote', imageUrl: '', caption: 'Emma Watson, HeForShe speech, United Nations, 20 September 2014.' },
+    { title: '“Gender equality is your issue too.”', year: '2014', category: 'Quote', imageUrl: '', caption: 'Emma Watson, HeForShe speech, United Nations, 20 September 2014.' },
+    { title: '“Both men and women should feel free to be sensitive. Both men and women should feel free to be strong.”', year: '2014', category: 'Quote', imageUrl: '', caption: 'Emma Watson, HeForShe speech, United Nations, 20 September 2014.' },
+    { title: '“It is time that we all perceive gender on a spectrum, not as two opposing sets of ideals.”', year: '2014', category: 'Quote', imageUrl: '', caption: 'Emma Watson, HeForShe speech, United Nations, 20 September 2014.' },
+    { title: 'Davos', year: '2015', category: 'Activism', imageUrl: '', caption: 'At the World Economic Forum in Davos in January 2015 she launched HeForShe’s IMPACT 10x10x10 initiative.' },
+    { title: 'TIME 100', year: '2015', category: 'Activism', imageUrl: '', caption: 'TIME named her one of the 100 most influential people of 2015.' },
+    { title: 'Our Shared Shelf', year: '2016', category: 'Books', imageUrl: '', caption: 'In January 2016 she started Our Shared Shelf, a feminist book club.' },
+    { title: 'My Life on the Road', year: '2016', category: 'Books', imageUrl: '', caption: 'Gloria Steinem’s memoir was the book club’s first pick.' },
+    { title: 'Books on the Underground', year: '2016', category: 'Books', imageUrl: '', caption: 'In November 2016 she hid copies of Maya Angelou’s Mom & Me & Mom on the London Underground for strangers to find.' },
+    { title: 'The Met Gala', year: '2016', category: 'Style', imageUrl: '', caption: 'She wore a Calvin Klein gown made partly from recycled plastic bottles.' },
+    { title: 'Beauty and the Beast', year: '2017', category: 'Film', imageUrl: '', caption: 'She played Belle in Disney’s live-action film.' },
+    { title: 'The Circle', year: '2017', category: 'Film', imageUrl: '', caption: 'She played Mae Holland, opposite Tom Hanks.' },
+    { title: 'The Press Tour', year: '2017', category: 'Style', imageUrl: '', caption: 'She shared the sustainable outfits from her Beauty and the Beast press tour on the Instagram account @the_press_tour.' },
+    { title: 'Justice and Equality Fund', year: '2018', category: 'Activism', imageUrl: '', caption: 'She gave £1 million to the UK’s Justice and Equality Fund, set up to support people facing sexual harassment and abuse.' },
+    { title: 'Little Women', year: '2019', category: 'Film', imageUrl: '', caption: 'She played Meg March in Greta Gerwig’s film.' },
+    { title: 'Kering', year: '2020', category: 'Activism', imageUrl: '', caption: 'She joined the board of the luxury group Kering, chairing its sustainability committee.' },
+    { title: 'Prada Paradoxe', year: '2022', category: 'Style', imageUrl: '', caption: 'She became the face of Prada’s Paradoxe fragrance.' }
+  ]
+};
+</script>
+
+<style>
+  /* Black, one high-contrast italic serif for names and numbers, one quiet sans for everything else.
+     All colour comes from the tiles themselves. */
+  :root {
+    --bg: #050505; --fg: #f4f1ea; --mute: rgba(244, 241, 234, .68); --line: rgba(244, 241, 234, .36);
+    --serif: 'Bodoni Moda', 'Bodoni 72', Didot, 'Times New Roman', serif;
+    --sans: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --gl: max(20px, env(safe-area-inset-left, 0px)); --gr: max(20px, env(safe-area-inset-right, 0px));
+    --gt: env(safe-area-inset-top, 0px); --gb: env(safe-area-inset-bottom, 0px);
+    --ease: cubic-bezier(.2, .8, .2, 1);
+    color-scheme: dark;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; background: var(--bg); color: var(--fg); }
+  body { font-family: var(--sans); font-size: 1rem; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow: hidden; overscroll-behavior: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  :focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+  .sr-only { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+  .skip { position: fixed; z-index: 200; left: var(--gl); top: -80px; padding: .7rem 1.1rem; background: var(--fg); color: var(--bg); border-radius: 999px; text-decoration: none; font-weight: 500; }
+  .skip:focus { top: calc(14px + var(--gt)); }
+
+  #gl { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 1; touch-action: none; outline: none; }
+  .is-cloud #gl { cursor: grab; } .is-cloud #gl.dragging { cursor: grabbing; } .is-cloud #gl.over { cursor: pointer; }
+  .vignette { position: fixed; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(120% 90% at 50% 45%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, .7)); }
+  .grain { position: fixed; inset: -20%; z-index: 3; pointer-events: none; opacity: .09; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain 1.2s steps(6) infinite; }
+  @keyframes grain { 0% { transform: translate(0, 0); } 33% { transform: translate(-4%, 3%); } 66% { transform: translate(3%, -5%); } 100% { transform: translate(-2%, 2%); } }
+
+  /* ---------- top bar ---------- */
+  .top { position: fixed; z-index: 60; inset: 0 0 auto; display: flex; justify-content: space-between; align-items: center; pointer-events: none;
+    padding: calc(18px + var(--gt)) var(--gr) 0 var(--gl); }
+  .top > * { pointer-events: auto; }
+  .logo { display: grid; place-items: center; width: 52px; height: 52px; margin: -4px 0 0 -4px; }
+  .logo svg { width: 46px; height: 46px; display: block; }
+  .menu-btn { min-height: 48px; padding: 0 .2rem; font-size: 1.32rem; font-weight: 500; letter-spacing: -.01em; }
+  .loading-hide { transition: opacity 1s; } .is-loading .loading-hide { opacity: 0; pointer-events: none; }
+
+  /* ---------- hero ---------- */
+  #hero { position: fixed; z-index: 20; left: 0; right: 0; bottom: 0; padding: 0 var(--gr) calc(14px + var(--gb)) var(--gl); pointer-events: none; }
+  #hero .kicker { margin: 0 0 .6rem; font-size: .95rem; color: var(--mute); letter-spacing: .01em; transition: opacity .8s, transform .9s var(--ease); }
+  #hero .kicker b { color: var(--fg); font-weight: 500; }
+  #hero h1 { margin: 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(4.9rem, 26vw, 14.5rem); line-height: .84; letter-spacing: -.035em;
+    text-shadow: 0 0 40px rgba(0, 0, 0, .5); }
+  #hero h1 span { display: block; transition: opacity 1s, transform 1.4s var(--ease), filter 1.2s; }
+  #hero h1 span:nth-child(2) { padding-left: .02em; transition-delay: .08s; }
+  .down { position: absolute; right: var(--gr); bottom: calc(.6rem + clamp(4.9rem, 26vw, 14.5rem) * .84 + 14px + var(--gb)); width: 64px; height: 64px; border-radius: 50%; border: 1px solid var(--line);
+    display: grid; place-items: center; pointer-events: auto; transition: background-color .3s, color .3s, opacity .8s, transform .8s var(--ease); }
+  .down:hover { background: var(--fg); color: var(--bg); }
+  .down svg { width: 22px; height: 22px; animation: bob 2.2s ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(4px); } }
+  .hint { position: fixed; z-index: 20; left: 50%; top: calc(84px + var(--gt)); transform: translateX(-50%); margin: 0; width: max-content; max-width: calc(100% - 40px); text-align: center;
+    font-size: .88rem; color: var(--mute); pointer-events: none; transition: opacity .8s; }
+  .is-loading #hero, .is-loading .hint { opacity: 0; }
+  #hero, .hint { transition: opacity 1.2s; }
+  .is-cloud #hero h1 span, .is-detail #hero h1 span { opacity: 0; transform: translateY(40%) skewX(-8deg); filter: blur(14px); }
+  .is-cloud #hero .kicker, .is-detail #hero .kicker, .is-cloud .down, .is-detail .down { opacity: 0; transform: translateY(20px); pointer-events: none; }
+  .is-cloud .hint.h-hero, .is-detail .hint.h-hero, .is-hero .hint.h-cloud, .is-detail .hint.h-cloud, .hint.spent { opacity: 0; }
+  .is-hero .hint.h-cloud, .is-loading .hint.h-cloud { visibility: hidden; }
+
+  /* ---------- explore HUD ---------- */
+  .hud { position: fixed; z-index: 20; left: var(--gl); bottom: calc(20px + var(--gb)); margin: 0; pointer-events: none; transition: opacity .8s .2s; opacity: 0; }
+  .hud .n { font-family: var(--serif); font-style: italic; font-size: 2.2rem; line-height: 1; }
+  .hud .l { display: block; font-size: .9rem; color: var(--mute); }
+  .is-cloud .hud { opacity: 1; }
+  #chip { position: fixed; z-index: 30; left: 50%; top: calc(24px + var(--gt)); transform: translate(-50%, -8px); display: flex; align-items: center; gap: .3rem; opacity: 0; pointer-events: none;
+    padding: .3rem .35rem .3rem 1rem; border-radius: 999px; background: rgba(20, 20, 20, .82); border: 1px solid var(--line); font-size: .95rem; transition: opacity .5s, transform .6s var(--ease);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  #chip.on { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  .is-detail #chip { opacity: 0; pointer-events: none; }
+  #chip .cn { font-family: var(--serif); font-style: italic; font-size: 1.15rem; }
+  #chip button { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 1.3rem; line-height: 1; }
+  #chip button:hover { background: var(--fg); color: var(--bg); }
+
+  /* the label that follows a hovered tile, and the ring around a tile chosen with the keyboard */
+  #pill { position: fixed; z-index: 25; left: 0; top: 0; padding: .45rem 1rem; border-radius: 999px; background: rgba(12, 12, 12, .86); border: 1px solid rgba(244, 241, 234, .3);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .4), 0 8px 30px rgba(0, 0, 0, .5); font-size: 1.05rem; white-space: nowrap; max-width: 60vw; overflow: hidden; text-overflow: ellipsis;
+    pointer-events: none; opacity: 0; transform: translate(-9999px, 0); transition: opacity .25s; }
+  #pill.on { opacity: 1; }
+  #ring { position: fixed; z-index: 24; left: 0; top: 0; border: 2px solid #fff; border-radius: 10px; pointer-events: none; opacity: 0; transition: opacity .2s; box-shadow: 0 0 0 4px rgba(0, 0, 0, .5); }
+  #ring.on { opacity: 1; }
+
+  /* ---------- a chosen tile ---------- */
+  #detail { position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem;
+    padding: 0 var(--gr) calc(22px + var(--gb)) var(--gl); pointer-events: none; }
+  #detail .dt { display: grid; grid-template-columns: auto 1fr; column-gap: .9rem; align-items: end; min-width: 0; max-width: 40rem; }
+  #detail .idx { grid-row: span 2; margin: 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(3.7rem, 17vw, 6.4rem); line-height: .8; letter-spacing: -.04em; }
+  #detail h2 { margin: 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(1.4rem, 5.6vw, 2.1rem); line-height: 1.02; letter-spacing: -.01em;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  #detail .cat { margin: .15rem 0 0; font-size: 1.02rem; color: var(--mute); }
+  #detail .cap { grid-column: 1 / -1; margin: .8rem 0 0; font-size: .98rem; line-height: 1.45; color: rgba(244, 241, 234, .86); max-width: 34rem; }
+  #detail .ctl { display: flex; flex-direction: column; align-items: flex-end; gap: .7rem; flex: none; }
+  #detail .ctl .row { display: flex; gap: .5rem; }
+  .round { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; background: rgba(10, 10, 10, .5); transition: background-color .3s, color .3s; }
+  .round:hover { background: var(--fg); color: var(--bg); }
+  .round svg { width: 18px; height: 18px; }
+  .back { display: inline-flex; align-items: center; gap: .55rem; min-height: 64px; padding: 0 1.5rem 0 1.2rem; border-radius: 999px; background: #fff; color: #0b0b0b; font-size: 1.3rem; font-weight: 500;
+    transition: transform .3s var(--ease); }
+  .back:hover { transform: scale(1.04); }
+  .back svg { width: 22px; height: 22px; }
+  #detail > * { opacity: 0; transform: translateY(24px); transition: opacity .5s, transform .8s var(--ease); }
+  .is-detail #detail > * { opacity: 1; transform: none; pointer-events: auto; transition-delay: .55s; }
+  .is-detail #detail .ctl { transition-delay: .7s; }
+  #detail .dt > * { transition: opacity .35s; }
+  #detail.swap .dt > * { opacity: 0; }
+
+  /* ---------- menu ---------- */
+  #menu { position: fixed; inset: 0; z-index: 80; background: rgba(5, 5, 5, .94); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); overflow-y: auto;
+    padding: calc(96px + var(--gt)) var(--gr) calc(40px + var(--gb)) var(--gl); display: grid; align-content: start; }
+  #menu[hidden] { display: none; }
+  #menu .close { position: fixed; top: calc(14px + var(--gt)); right: var(--gr); min-height: 52px; font-size: 1.32rem; font-weight: 500; }
+  #menu nav { display: grid; gap: 2.2rem; max-width: 46rem; }
+  #menu h2 { margin: 0 0 .6rem; font-size: .82rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+  #menu ul { list-style: none; margin: 0; padding: 0; display: grid; }
+  .big { display: flex; align-items: baseline; gap: .8rem; width: 100%; text-align: left; padding: .12rem 0; font-family: var(--serif); font-style: italic; font-size: clamp(2.6rem, 11vw, 4.6rem);
+    line-height: 1.04; letter-spacing: -.025em; transition: color .3s, transform .5s var(--ease); }
+  .big:hover, .big:focus-visible { transform: translateX(8px); }
+  .big small { font-family: var(--sans); font-style: normal; font-size: .95rem; letter-spacing: 0; color: var(--mute); }
+  .big[aria-current="true"]::after { content: ''; width: .22em; height: .22em; border-radius: 50%; background: currentColor; align-self: center; }
+  #menu nav > section, #menu .about > * { opacity: 0; transform: translateY(18px); animation: in .8s var(--ease) forwards; }
+  #menu nav > section:nth-child(2) { animation-delay: .07s; } #menu nav > section:nth-child(3) { animation-delay: .14s; }
+  @keyframes in { to { opacity: 1; transform: none; } }
+  .about { max-width: 38rem; }
+  .about p { margin: 0 0 1rem; font-size: 1.08rem; line-height: 1.6; color: rgba(244, 241, 234, .88); }
+  .about .lead { font-family: var(--serif); font-style: italic; font-size: clamp(1.6rem, 6vw, 2.3rem); line-height: 1.15; color: var(--fg); }
+  .about .legal { padding-top: 1rem; border-top: 1px solid var(--line); color: var(--mute); font-size: .98rem; }
+  .text-link { text-decoration: underline; text-underline-offset: 4px; font-size: 1.05rem; min-height: 44px; }
+
+  /* ---------- the list of every moment (for screen readers; it appears when a keyboard reaches it) ---------- */
+  #list { position: fixed; z-index: 90; left: var(--gl); top: calc(80px + var(--gt)); bottom: calc(20px + var(--gb)); width: min(26rem, calc(100% - 40px)); }
+  #list:not(:focus-within) { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); }
+  #list:focus-within { overflow-y: auto; background: rgba(8, 8, 8, .96); border: 1px solid var(--line); border-radius: 18px; padding: 1rem; }
+  #list h2 { margin: 0 0 .5rem; font-size: .82rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+  #list ol { list-style: none; margin: 0; padding: 0; }
+  #list button { display: block; width: 100%; text-align: left; padding: .5rem .4rem; border-radius: 8px; font-size: 1rem; }
+  #list button:focus-visible { background: var(--fg); color: var(--bg); outline: none; }
+
+  /* ---------- loading ---------- */
+  #loader { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; pointer-events: none; transition: opacity .9s; }
+  #loader p { margin: 0; font-family: var(--serif); font-style: italic; font-size: 1.4rem; color: var(--mute); }
+  html:not(.is-loading) #loader { opacity: 0; }
+
+  /* ---------- no WebGL: a plain gallery with the same content ---------- */
+  #fallback { position: relative; z-index: 10; padding: calc(100px + var(--gt)) var(--gr) 4rem var(--gl); }
+  .no-gl body { overflow: auto; }
+  .no-gl #gl, .no-gl #hero, .no-gl .hint, .no-gl .hud, .no-gl #loader, .no-gl .vignette { display: none; }
+  #fallback h1 { margin: 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(4rem, 20vw, 10rem); line-height: .86; letter-spacing: -.035em; }
+  #fallback .fk { margin: 0 0 1rem; color: var(--mute); }
+  #fallback .filters { display: flex; flex-wrap: wrap; gap: .5rem; margin: 2rem 0 1.6rem; }
+  #fallback .filters button { min-height: 44px; padding: 0 1.1rem; border: 1px solid var(--line); border-radius: 999px; }
+  #fallback .filters button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+  #fallback ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 1.4rem; }
+  #fallback li canvas { display: block; width: 100%; height: auto; aspect-ratio: 1.28; border-radius: 10px; }
+  #fallback li h3 { margin: .7rem 0 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.35rem; line-height: 1.1; }
+  #fallback li p { margin: .3rem 0 0; color: var(--mute); font-size: .95rem; }
+  #fallback li .num { font-family: var(--serif); font-style: italic; color: var(--fg); margin-right: .3rem; }
+  #fallback footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line); color: var(--mute); }
+
+  @media (max-width: 640px) {
+    #detail { flex-direction: column; align-items: stretch; gap: .9rem; }
+    #detail .ctl { flex-direction: row; justify-content: space-between; align-items: center; }
+    #detail .dt { max-width: none; }
+    #detail h2 { -webkit-line-clamp: 3; }
+  }
+  @media (min-width: 900px) {
+    #hero h1 { font-size: clamp(6rem, 13.5vw, 15rem); }
+    #hero h1 span { display: inline-block; } #hero h1 span:nth-child(2) { padding-left: .22em; }
+    .down { bottom: calc(clamp(6rem, 13.5vw, 15rem) * .3 + 14px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; transition-delay: 0ms !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#list" id="skip">Skip to the list of every moment</a>
+
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="top">
+  <button class="logo loading-hide" id="logo" type="button" aria-label="Back to the portrait">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#fff" d="M9 9h20.5l-1.6 5.3H17.2l-2 6.6h9.2l-1.6 5.3h-9.2l-2.1 7h11.6l-1.6 5.3H0.6z" transform="translate(4 0) skewX(-12)"/><circle cx="38" cy="36.5" r="3.1" fill="#fff"/></svg>
+  </button>
+  <button class="menu-btn loading-hide" id="menu-btn" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false">Menu</button>
+</header>
+
+<section id="hero" aria-labelledby="hero-title">
+  <p class="kicker"><b class="kick"></b> · An unofficial fan tribute</p>
+  <h1 id="hero-title"><span></span><span></span></h1>
+  <button class="down" id="down" type="button" aria-label="Scatter the portrait and explore the moments">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"/></svg>
+  </button>
+</section>
+<p class="hint h-hero" id="hint-hero" aria-hidden="true"></p>
+<p class="hint h-cloud" id="hint-cloud" aria-hidden="true"></p>
+<p class="hud" aria-hidden="true"><span class="n" id="hud-n">320</span><span class="l" id="hud-l">moments, drifting</span></p>
+<div id="chip" role="status"><span>Showing</span> <span class="cn" id="chip-name"></span> <button type="button" id="chip-x" aria-label="Show every category">×</button></div>
+<div id="pill" aria-hidden="true"></div>
+<div id="ring" aria-hidden="true"></div>
+
+<section id="detail" aria-labelledby="d-title" aria-hidden="true">
+  <div class="dt">
+    <p class="idx" id="d-idx"></p>
+    <h2 id="d-title"></h2>
+    <p class="cat" id="d-cat"></p>
+    <p class="cap" id="d-cap"></p>
+  </div>
+  <div class="ctl">
+    <div class="row">
+      <button class="round" id="d-prev" type="button" aria-label="Previous moment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="round" id="d-next" type="button" aria-label="Next moment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <button class="back" id="d-back" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.4-5.5"/><path d="M4 4v4.5h4.5"/></svg>Back</button>
+  </div>
+</section>
+
+<div id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <button class="close" id="menu-close" type="button">Close</button>
+  <nav aria-label="Main">
+    <section><h2>Visit</h2><ul>
+      <li><button class="big" type="button" data-go="explore">Explore</button></li>
+      <li><button class="big" type="button" data-go="portrait">The portrait</button></li>
+    </ul></section>
+    <section><h2>Chapters</h2><ul id="menu-cats"></ul></section>
+    <section class="about" aria-labelledby="about-h">
+      <h2 id="about-h">About this tribute</h2>
+      <p class="lead">A portrait made of moments: films, a speech, a book club, a dress made of bottles.</p>
+      <p>Scatter it and every tile becomes something to read. Drag to orbit, scroll or pinch to travel through the cloud, and tap a tile to bring it forward.</p>
+      <p>Every image here is a labelled placeholder until it is replaced with a photo the site’s owner took or is licensed to use. Facts come from the public record, and every quote is from her HeForShe speech at the United Nations on 20 September 2014.</p>
+      <p class="legal">An unofficial fan tribute, not affiliated with Emma Watson or her representatives.<br>Created by <span class="credit"></span>.</p>
+    </section>
+  </nav>
+</div>
+
+<nav id="list" aria-labelledby="list-h"><h2 id="list-h">Every moment</h2><ol id="list-ol"></ol></nav>
+<div id="fallback" hidden></div>
+<div id="loader" aria-hidden="true"><p>Gathering a thousand moments…</p></div>
+<p id="live" class="sr-only" aria-live="polite"></p>
+<noscript><p style="position:fixed;inset:auto 0 0;z-index:300;margin:0;padding:1rem;background:#f4f1ea;color:#050505;text-align:center">This tribute needs JavaScript to draw the portrait.</p></noscript>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+  'use strict';
+  const C = window.CONFIG, root = document.documentElement;
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const COARSE = matchMedia('(pointer: coarse)').matches;
+  const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const mix = (a, b, t) => a + (b - a) * t;
+  const sstep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const pad3 = n => String(n).padStart(3, '0');
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const QS = new URLSearchParams(location.search);
+  let VW = innerWidth, VH = innerHeight;
+
+  const CATS = ['Film', 'Activism', 'Books', 'Style', 'Quote'];
+  const CAT_LABEL = { Film: 'Film', Activism: 'Activism', Books: 'Books', Style: 'Style', Quote: 'Quotes' };
+  const ITEMS = C.items.map((it, i) => ({ ...it, n: i + 1, category: CATS.includes(it.category) ? it.category : 'Film' }));
+  const NI = ITEMS.length;
+  const say = txt => { const l = $('#live'); l.textContent = ''; setTimeout(() => { l.textContent = txt; }, 50); };
+  const itemLabel = it => `${pad3(it.n)}. ${it.title.replace(/[“”]/g, '')}${/^\d{4}$/.test(it.year) ? ', ' + it.year : ''}. ${CAT_LABEL[it.category]}. ${it.caption}`;
+
+  $$('.credit').forEach(el => { el.textContent = C.credit; });
+  $('.kick').textContent = C.kicker;
+  $$('#hero-title span').forEach((s, i) => { s.textContent = C.title[i] || ''; });
+  $('#hint-hero').textContent = COARSE ? 'Touch the portrait to stir it. Tap or swipe up to scatter it.' : 'Move across the portrait to stir it. Scroll or click to scatter it.';
+  $('#hint-cloud').textContent = COARSE ? 'Drag to orbit · pinch to travel · tap a tile' : 'Drag to orbit · scroll to travel · click a tile';
+
+  const fontsReady = (async () => {
+    if (!document.fonts || !document.fonts.load) return;
+    try { await Promise.race([Promise.all(['italic 400 40px "Bodoni Moda"', 'italic 600 40px "Bodoni Moda"', '500 20px Inter', '600 20px Inter'].map(f => document.fonts.load(f))), sleep(3000)]); } catch (e) {}
+  })();
+  const images = new Map();
+  const loadImage = src => {
+    if (!src) return Promise.resolve(null);
+    if (!images.has(src)) images.set(src, new Promise(res => { const im = new Image(); im.decoding = 'async'; im.onload = () => res(im); im.onerror = () => res(null); im.src = src; }));
+    return images.get(src);
+  };
+  // a small seeded random, so the cloud is the same on every visit
+  const rng = (seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; })(1990);
+
+  /* =====================================================================
+     TILE ART: a labelled placeholder card for each moment, drawn on a canvas.
+     The same drawing makes the small atlas cells and the large card you open.
+     ===================================================================== */
+  const PAL = {
+    Film:     { a: '#100e33', b: '#4434d4', ink: '#f4f1ea', acc: '#b4a9ff' },
+    Activism: { a: '#e02d66', b: '#3f137a', ink: '#fff3f6', acc: '#ffd2e0' },
+    Books:    { a: '#f6bc45', b: '#c2501b', ink: '#1a1108', acc: '#fff3d6' },
+    Style:    { a: '#f3e8de', b: '#d6b0a2', ink: '#141110', acc: '#8a2f2b' },
+    Quote:    { a: '#f6f3ed', b: '#e2dbcf', ink: '#0e0d0b', acc: '#c0482c' }
+  };
+  const SERIF = '"Bodoni Moda", "Bodoni 72", Didot, serif', SANS = 'Inter, system-ui, sans-serif';
+  function wrapText(g, str, maxW) { const out = []; let line = ''; str.split(' ').forEach(w => { const t = line ? line + ' ' + w : w; if (g.measureText(t).width > maxW && line) { out.push(line); line = w; } else line = t; }); if (line) out.push(line); return out; }
+  function fitLines(g, str, maxW, maxLines, size, weight, italic, family) {
+    let s = size, lines;
+    for (let k = 0; k < 8; k++) { g.font = `${italic ? 'italic ' : ''}${weight} ${s}px ${family}`; lines = wrapText(g, str, maxW); if (lines.length <= maxLines) break; s *= .88; }
+    if (lines.length > maxLines) { lines = lines.slice(0, maxLines); lines[maxLines - 1] = lines[maxLines - 1].replace(/\s*\S*$/, '') + '…'; }
+    return { lines, size: s };
+  }
+  function drawCard(g, it, W, H, img) {
+    const P = PAL[it.category], k = W / 256;
+    g.save();
+    if (img) {
+      const r = W / H, ir = img.naturalWidth / img.naturalHeight; let sw = img.naturalWidth, sh = img.naturalHeight;
+      if (ir > r) sw = sh * r; else sh = sw / r;
+      g.drawImage(img, (img.naturalWidth - sw) / 2, (img.naturalHeight - sh) / 2, sw, sh, 0, 0, W, H);
+      const gr = g.createLinearGradient(0, H * .45, 0, H); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,.75)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+      g.fillStyle = '#fff'; g.font = `600 ${9 * k}px ${SANS}`; g.fillText(`${CAT_LABEL[it.category].toUpperCase()} · ${it.year}`, 14 * k, H - 44 * k);
+      const t = fitLines(g, it.title.replace(/[“”]/g, ''), W - 28 * k, 1, 22 * k, 400, true, SERIF); g.font = `italic 400 ${t.size}px ${SERIF}`; g.fillText(t.lines[0], 14 * k, H - 18 * k);
+      g.restore(); return;
+    }
+    const bg = g.createLinearGradient(0, 0, W, H); bg.addColorStop(0, P.a); bg.addColorStop(1, P.b); g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    const glow = g.createRadialGradient(W * .78, H * .2, 0, W * .78, H * .2, W * .7); glow.addColorStop(0, 'rgba(255,255,255,.22)'); glow.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = glow; g.fillRect(0, 0, W, H);
+    g.fillStyle = P.ink; g.strokeStyle = P.ink; g.textBaseline = 'alphabetic'; g.textAlign = 'left';
+    const L = 16 * k;
+    // the motif for each kind of moment
+    if (it.category === 'Film') {
+      g.fillStyle = 'rgba(0,0,0,.45)'; g.fillRect(0, 0, W, 20 * k); g.fillRect(0, H - 20 * k, W, 20 * k);
+      g.fillStyle = 'rgba(244,241,234,.75)'; for (let x = 6 * k; x < W; x += 17 * k) { g.fillRect(x, 6 * k, 9 * k, 8 * k); g.fillRect(x, H - 14 * k, 9 * k, 8 * k); }
+      g.fillStyle = P.ink; g.font = `italic 400 ${84 * k}px ${SERIF}`; g.globalAlpha = .95; g.fillText(it.year, L - 3 * k, H * .58); g.globalAlpha = 1;
+    } else if (it.category === 'Activism') {
+      g.lineWidth = 3 * k; g.globalAlpha = .9;
+      g.beginPath(); g.arc(W * .67, H * .38, 38 * k, 0, 6.283); g.stroke();
+      g.fillStyle = P.acc; g.globalAlpha = .35; g.beginPath(); g.arc(W * .8, H * .38, 38 * k, 0, 6.283); g.fill(); g.globalAlpha = .9; g.beginPath(); g.arc(W * .8, H * .38, 38 * k, 0, 6.283); g.stroke();
+      g.globalAlpha = 1; g.fillStyle = P.ink; g.font = `italic 400 ${54 * k}px ${SERIF}`; g.fillText(it.year, L - 2 * k, H * .48);
+    } else if (it.category === 'Books') {
+      const cols = ['rgba(26,17,8,.9)', 'rgba(255,243,214,.9)', 'rgba(26,17,8,.55)', 'rgba(255,255,255,.6)', 'rgba(120,40,10,.8)'];
+      let x = W * .56; for (let i = 0; i < 6; i++) { const w = (10 + ((it.n * 7 + i * 5) % 9)) * k, h = (58 + ((it.n * 13 + i * 11) % 30)) * k; g.fillStyle = cols[(i + it.n) % cols.length]; g.fillRect(x, H * .62 - h, w, h); x += w + 3 * k; }
+      g.fillStyle = 'rgba(26,17,8,.85)'; g.fillRect(W * .52, H * .62, W * .44, 4 * k);
+      g.fillStyle = P.ink; g.font = `italic 400 ${44 * k}px ${SERIF}`; g.fillText(it.year, L - 2 * k, H * .42);
+    } else if (it.category === 'Style') {
+      g.fillStyle = 'rgba(20,17,16,.86)';
+      const cx = W * .76, top = H * .1; g.beginPath(); g.moveTo(cx - 9 * k, top); g.lineTo(cx + 9 * k, top); g.lineTo(cx + 14 * k, top + 34 * k); g.quadraticCurveTo(cx + 46 * k, top + 96 * k, cx + 52 * k, top + 128 * k);
+      g.lineTo(cx - 52 * k, top + 128 * k); g.quadraticCurveTo(cx - 46 * k, top + 96 * k, cx - 14 * k, top + 34 * k); g.closePath(); g.fill();
+      g.fillStyle = P.acc; g.fillRect(cx - 15 * k, top + 33 * k, 30 * k, 4 * k);
+      g.fillStyle = P.ink; g.font = `italic 400 ${50 * k}px ${SERIF}`; g.fillText(it.year, L - 2 * k, H * .44);
+    } else {
+      g.fillStyle = P.acc; g.font = `700 ${120 * k}px Georgia, 'Times New Roman', serif`; g.fillText('“', L - 6 * k, H * .56);
+    }
+    // the words
+    g.fillStyle = P.ink;
+    if (it.category === 'Quote') {
+      const q = it.title.replace(/[“”]/g, ''), t = fitLines(g, q, W - 2 * L, 4, 22 * k, 400, true, SERIF);
+      g.font = `italic 400 ${t.size}px ${SERIF}`; const lh = t.size * 1.08, y0 = H * .44 + Math.max(0, (3 - t.lines.length)) * lh * .4;
+      t.lines.forEach((ln, i) => g.fillText(ln, L, y0 + i * lh));
+    } else {
+      const t = fitLines(g, it.title, W - 2 * L, 2, 21 * k, 400, true, SERIF);
+      g.font = `italic 400 ${t.size}px ${SERIF}`; const lh = t.size * 1.04;
+      t.lines.forEach((ln, i) => g.fillText(ln, L, H * .76 - (t.lines.length - 1 - i) * lh));
+    }
+    g.font = `600 ${8.5 * k}px ${SANS}`; g.globalAlpha = .8;
+    g.fillText(`${CAT_LABEL[it.category].toUpperCase()}  ·  ${pad3(it.n)}`, L, (it.category === 'Film' ? 33 : 20) * k);
+    g.globalAlpha = .7; g.font = `500 ${7.6 * k}px ${SANS}`;
+    const lbl = 'Replace with licensed or owned photo', ly = H - (it.category === 'Film' ? 28 : 14) * k;
+    g.setLineDash([2.4 * k, 2 * k]); g.lineWidth = 1 * k; g.strokeRect(L, ly - 7.5 * k, 9 * k, 9 * k); g.setLineDash([]);
+    g.fillText(lbl, L + 14 * k, ly);
+    g.restore();
+  }
+
+  /* =====================================================================
+     PORTRAIT → MOSAIC: the photo is averaged into a grid of cells; a flood fill
+     from the border removes a plain background; what is left becomes tiles.
+     ===================================================================== */
+  function silhouette() {
+    const cv = document.createElement('canvas'); cv.width = 300; cv.height = 400; const g = cv.getContext('2d');
+    g.fillStyle = '#000'; g.fillRect(0, 0, 300, 400);
+    const lit = g.createRadialGradient(120, 120, 10, 150, 190, 260); lit.addColorStop(0, '#f4efe8'); lit.addColorStop(.55, '#8d8780'); lit.addColorStop(1, '#2a2826'); g.fillStyle = lit;
+    g.beginPath(); g.ellipse(150, 140, 62, 80, 0, 0, 6.283); g.fill();
+    g.beginPath(); g.moveTo(122, 200); g.lineTo(178, 200); g.lineTo(186, 262); g.quadraticCurveTo(270, 280, 296, 400); g.lineTo(4, 400); g.quadraticCurveTo(30, 280, 114, 262); g.closePath(); g.fill();
+    g.fillStyle = 'rgba(0,0,0,.55)'; g.beginPath(); g.ellipse(150, 92, 70, 52, 0, Math.PI, 6.283); g.fill();
+    return cv;
+  }
+  function sampleGrid(src, cols) {
+    const sw = src.naturalWidth || src.width, sh = src.naturalHeight || src.height, ar = sw / sh, rows = Math.round(cols / ar);
+    const cv = document.createElement('canvas'); cv.width = cols; cv.height = rows;
+    const g = cv.getContext('2d', { willReadFrequently: true }); g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
+    // average in two steps so every pixel counts
+    const mid = document.createElement('canvas'); mid.width = cols * 4; mid.height = rows * 4; const mg = mid.getContext('2d'); mg.imageSmoothingQuality = 'high';
+    mg.drawImage(src, 0, 0, mid.width, mid.height); g.drawImage(mid, 0, 0, cols, rows);
+    const d = g.getImageData(0, 0, cols, rows).data, n = cols * rows, L = new Float32Array(n), R = new Float32Array(n * 3);
+    for (let i = 0; i < n; i++) { R[i * 3] = d[i * 4] / 255; R[i * 3 + 1] = d[i * 4 + 1] / 255; R[i * 3 + 2] = d[i * 4 + 2] / 255; L[i] = R[i * 3] * .299 + R[i * 3 + 1] * .587 + R[i * 3 + 2] * .114; }
+    // the background colour is whatever the border mostly is
+    let br = 0, bg = 0, bb = 0, bc = 0;
+    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) if (x === 0 || y === 0 || x === cols - 1 || (y === rows - 1 && false)) { const i = y * cols + x; br += R[i * 3]; bg += R[i * 3 + 1]; bb += R[i * 3 + 2]; bc++; }
+    br /= bc; bg /= bc; bb /= bc;
+    const dist = i => Math.hypot(R[i * 3] - br, R[i * 3 + 1] - bg, R[i * 3 + 2] - bb);
+    const back = new Uint8Array(n), q = [], TOL = .085;
+    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) if (x === 0 || y === 0 || x === cols - 1) { const i = y * cols + x; if (dist(i) < TOL * 1.4) { back[i] = 1; q.push(i); } }
+    while (q.length) { const i = q.pop(), x = i % cols, y = (i / cols) | 0;
+      [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([dx, dy]) => { const nx = x + dx, ny = y + dy; if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) return; const j = ny * cols + nx; if (!back[j] && dist(j) < TOL) { back[j] = 1; q.push(j); } }); }
+    let bgCount = 0; for (let i = 0; i < n; i++) bgCount += back[i];
+    const useEllipse = bgCount < n * .12;    // a busy background: keep an oval instead
+    const keep = new Float32Array(n);
+    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+      const i = y * cols + x;
+      if (useEllipse) { const ex = (x / cols - .5) / .46, ey = (y / rows - .48) / .5; keep[i] = sstep(1, .82, Math.hypot(ex, ey)); }
+      else keep[i] = back[i] ? 0 : 1;
+    }
+    // levels across the subject only
+    const vals = []; for (let i = 0; i < n; i++) if (keep[i] > .5) vals.push(L[i]); vals.sort((a, b) => a - b);
+    const lo = vals[Math.floor(vals.length * .02)] || 0, hi = Math.max(lo + .2, vals[Math.floor(vals.length * .985)] || 1);
+    for (let i = 0; i < n; i++) L[i] = Math.pow(clamp((L[i] - lo) / (hi - lo), 0, 1), 1.08);
+    return { cols, rows, ar, L, R, keep };
+  }
+
+  /* =====================================================================
+     WEBGL SET-UP
+     ===================================================================== */
+  const canvas = $('#gl');
+  let renderer = null;
+  try { if (window.THREE && !QS.has('nogl')) { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance', alpha: false }); if (!renderer.getContext()) renderer = null; } } catch (e) { renderer = null; }
+  const GL = !!renderer && !!window.gsap;
+
+  // how much to draw: by device class, then adjusted by a frame-rate check
+  const MEM = navigator.deviceMemory || 4, CORES = navigator.hardwareConcurrency || 4;
+  const TIER = QS.get('tier') || (COARSE ? (MEM <= 3 || CORES <= 4 ? 'low' : 'mid') : (CORES <= 4 ? 'mid' : 'high'));
+  const COLS = { high: 82, mid: 62, low: 46 }[TIER] || 62;
+  let DPR = Math.min(window.devicePixelRatio || 1, TIER === 'high' ? 1.75 : TIER === 'mid' ? 1.6 : 1.3);
+  const FOV = 35, TAN = Math.tan(FOV * Math.PI / 360), PH = 2;   // the portrait is 2 units tall
+  const CELL_W = 256, CELL_H = 200, ATLAS_W = 2048, ATLAS_H = 1024, ATLAS_COLS = 8, TILE_AR = CELL_W / CELL_H;
+
+  let scene, camera, mesh, geo, U, N = 0, HERO = 0, PW = 1.5, grid = null;
+  let A = {};                     // per-tile attribute arrays
+  const CAM = { tx: 0, ty: 0, tz: 0, yaw: 0, pitch: 0, dist: 6 };
+  const ORB = { vy: 0, vp: 0, vd: 0 };
+  let introTL = null, introDone = false;
+  let state = 'loading', filter = null, sel = -1, focusEntry = -1, driftT = 0, driftRate = 1, lastInput = performance.now();
+
+  const VERT = `
+    attribute vec3 aMosaic; attribute vec3 aCloud; attribute vec3 aCluster; attribute vec3 aTint;
+    attribute vec2 aCell; attribute float aLum; attribute float aSeed; attribute float aIndex; attribute float aMatch; attribute float aSize;
+    uniform float uTime, uDriftT, uExplode, uFilterT, uSel, uSelAmt, uDim, uCell, uPointerAmt, uFocus, uFocusRange, uReduce, uSpan, uFade, uFocusIdx;
+    uniform vec3 uPointer; uniform vec2 uOrigin;
+    varying vec2 vUv, vCell; varying vec3 vTint; varying float vLum, vE, vBlur, vSel, vShade, vRad, vAspect, vGlow;
+    const float PI = 3.14159265;
+    void main() {
+      // each tile leaves the portrait a little after the one nearer the touch point
+      float delay = length(aMosaic.xy - uOrigin) / uSpan * .45 + fract(aSeed * 7.31) * .15;
+      float e = clamp(uExplode * 1.6 - delay, 0., 1.);
+      e = e * e * (3. - 2. * e);
+      vec3 drift = vec3(sin(uDriftT * .13 + aSeed * 6.283), cos(uDriftT * .11 + aSeed * 4.1), sin(uDriftT * .09 + aSeed * 2.7)) * .12;
+      vec3 target = mix(aCloud + drift * (1. - uReduce), aCluster, uFilterT * aMatch);
+      // the portrait: tiles near the pointer are pushed away and swirl, then settle back
+      vec3 mos = aMosaic;
+      vec2 d = mos.xy - uPointer.xy; float r2 = dot(d, d);
+      float f = exp(-r2 / (uPointer.z * uPointer.z)) * uPointerAmt * (1. - uReduce);
+      vec2 dir = d * inversesqrt(r2 + 1e-5);
+      mos.xy += dir * f * .07 + vec2(-dir.y, dir.x) * f * (.05 + .06 * sin(uTime * 2.3 + aSeed * 12.));
+      mos.z += f * .26 + sin(uTime * .9 + aMosaic.x * 2.1 - aMosaic.y * 1.4) * .012 * (1. - uReduce);
+      vec3 swirl = normalize(vec3(sin(aSeed * 91.7), cos(aSeed * 53.3), sin(aSeed * 17.9 + 1.))) * sin(PI * e) * 1.15 * (1. - uReduce);
+      vec3 pos = mix(mos, target, e) + swirl;
+      float isSel = 1. - step(.5, abs(aIndex - uSel));
+      float mosSize = uCell * (.28 + .68 * aLum) * (1. - .12 * f);
+      float cloudSize = aSize * (1. - .55 * uFilterT * (1. - aMatch));
+      float size = mix(mosSize, cloudSize, e);
+      vec4 mv = modelViewMatrix * vec4(pos, 1.);
+      float dist = -mv.z;
+      size *= smoothstep(.05, .35, dist) * mix(1., smoothstep(uFocus * .6, uFocus - .04, dist), uDim * (1. - isSel));
+      float aspect = mix(1., ${TILE_AR.toFixed(4)}, e);
+      float ang = sin(PI * e) * (aSeed - .5) * 3. * (1. - uReduce);
+      vec2 c = position.xy * vec2(aspect, 1.);
+      c = vec2(c.x * cos(ang) - c.y * sin(ang), c.x * sin(ang) + c.y * cos(ang));
+      mv.xy += c * size;
+      gl_Position = projectionMatrix * mv;
+      vUv = uv; vCell = aCell; vTint = aTint; vLum = aLum; vE = e; vAspect = aspect;
+      vSel = isSel * uSelAmt;
+      vBlur = clamp((abs(dist - uFocus) - .3) / uFocusRange, 0., 1.) * e * (1. - vSel);
+      float sh = mix(.84 + .16 * sin(uTime * 1.3 + aSeed * 40.) + pow(max(0., sin(uTime * .47 + aSeed * 113.)), 90.) * 1.2, 1., uReduce);
+      float hot = 1. - step(.5, abs(aIndex - uFocusIdx));
+      vShade = mix(sh, 1., e * .85) * (1. - uFilterT * (1. - aMatch) * .84) * (1. - uDim * (1. - isSel) * .82) * mix(1., .14 + .86 * smoothstep(17., 5.5, dist), e) * uFade * (1. + hot * .45 * e);
+      vRad = mix(.04, .1, e);
+      vGlow = f;
+    }`;
+  const FRAG = `
+    uniform sampler2D uAtlas, uSelTex; uniform vec2 uCellUV;
+    varying vec2 vUv, vCell; varying vec3 vTint; varying float vLum, vE, vBlur, vSel, vShade, vRad, vAspect, vGlow;
+    float rbox(vec2 p, vec2 b, float r) { vec2 q = abs(p) - b + r; return min(max(q.x, q.y), 0.) + length(max(q, 0.)) - r; }
+    void main() {
+      vec2 p = (vUv - .5) * vec2(vAspect, 1.);
+      float sd = rbox(p, vec2(vAspect, 1.) * .5, vRad);
+      float soft = fwidth(sd) * .9 + vBlur * .14;
+      float alpha = 1. - smoothstep(-soft, soft, sd);
+      if (alpha < .02) discard;
+      vec2 cuv = mix(vec2(.02, .025), vec2(.98, .975), vUv);
+      vec2 auv = vec2((vCell.x + cuv.x) * uCellUV.x, 1. - (vCell.y + 1. - cuv.y) * uCellUV.y);
+      vec3 tex;
+      if (vSel > .001) tex = texture2D(uSelTex, vUv).rgb;
+      else tex = texture2D(uAtlas, auv, vBlur * 5.).rgb * vTint;
+      vec3 face = mix(tex, vec3(vLum) * vec3(1., .975, .95), .55) * (.08 + 1.3 * vLum) * (1. + vGlow * .7);
+      gl_FragColor = vec4(mix(face, tex, vE) * vShade, alpha);
+    }`;
+
+  function initGL() {
+    renderer.setPixelRatio(DPR); renderer.setSize(VW, VH, false); renderer.setClearColor(0x050505, 1);
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(FOV, VW / VH, .03, 90);
+  }
+
+  async function buildAtlas() {
+    const cv = document.createElement('canvas'); cv.width = ATLAS_W; cv.height = ATLAS_H;
+    const g = cv.getContext('2d'); g.fillStyle = '#111'; g.fillRect(0, 0, ATLAS_W, ATLAS_H);
+    const imgs = await Promise.all(ITEMS.map(it => loadImage(it.imageUrl)));
+    ITEMS.forEach((it, i) => {
+      const x = (i % ATLAS_COLS) * CELL_W, y = Math.floor(i / ATLAS_COLS) * CELL_H;
+      g.save(); g.translate(x, y); g.beginPath(); g.rect(0, 0, CELL_W, CELL_H); g.clip(); drawCard(g, it, CELL_W, CELL_H, imgs[i]); g.restore();
+    });
+    const t = new THREE.CanvasTexture(cv);
+    t.minFilter = THREE.LinearMipmapLinearFilter; t.magFilter = THREE.LinearFilter; t.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
+    return { tex: t, imgs };
+  }
+  // the large card for a chosen tile; only the last few are kept on the GPU
+  const bigCache = new Map();
+  function bigTexture(i, imgs) {
+    if (bigCache.has(i)) { const t = bigCache.get(i); bigCache.delete(i); bigCache.set(i, t); return t; }
+    const cv = document.createElement('canvas'); cv.width = 1024; cv.height = Math.round(1024 / TILE_AR);
+    drawCard(cv.getContext('2d'), ITEMS[i], cv.width, cv.height, imgs[i]);
+    const t = new THREE.CanvasTexture(cv); t.minFilter = THREE.LinearFilter; t.generateMipmaps = false; t.anisotropy = 4;
+    bigCache.set(i, t);
+    while (bigCache.size > 3) { const [k, old] = bigCache.entries().next().value; old.dispose(); bigCache.delete(k); }
+    return t;
+  }
+
+  function buildTiles(gr) {
+    const { cols, rows, ar, L, keep } = gr;
+    PW = PH * ar; const s = PH / rows;
+    const cells = [];
+    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+      const i = y * cols + x, k = keep[i];
+      if (k > .5) cells.push([x, y, L[i] * (k < 1 ? k : 1)]);
+      else if (rng() < .045) cells.push([x, y, .03 + rng() * .1]);       // a faint dust of tiles around the figure
+    }
+    for (let i = cells.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [cells[i], cells[j]] = [cells[j], cells[i]]; }
+    N = cells.length; HERO = Math.min(C.heroTiles || 320, N);
+    const f3 = () => new Float32Array(N * 3), f1 = () => new Float32Array(N);
+    A = { mosaic: f3(), cloud: f3(), cluster: f3(), tint: f3(), cell: new Float32Array(N * 2), lum: f1(), seed: f1(), index: f1(), match: f1(), size: f1(), item: new Int16Array(N) };
+    const TINTS = [[1, 1, 1], [.86, .93, 1.18], [1.16, .96, .86], [.92, 1.12, 1.02], [1.1, .9, 1.1], [1.2, 1.12, .92], [.8, .88, 1.05], [1.05, 1.05, 1.05]];
+    const v = new THREE.Vector3();
+    for (let i = 0; i < N; i++) {
+      const [x, y, lum] = cells[i], hero = i < HERO;
+      A.mosaic.set([(x + .5) * s - PW / 2, PH / 2 - (y + .5) * s, (rng() - .5) * .02], i * 3);
+      // the cloud: bigger, readable tiles in a loose shell; a fine dust everywhere else
+      v.set(rng() * 2 - 1, rng() * 2 - 1, rng() * 2 - 1); while (v.lengthSq() > 1 || v.lengthSq() < 1e-3) v.set(rng() * 2 - 1, rng() * 2 - 1, rng() * 2 - 1); v.normalize();
+      const r = hero ? .9 + 2.9 * Math.sqrt(rng()) : (rng() < .06 ? 4.8 + rng() * 4 : .25 + 4.6 * Math.pow(rng(), .6));
+      A.cloud.set([v.x * r, v.y * r * .78, v.z * r], i * 3); A.cluster.set([v.x * r, v.y * r * .78, v.z * r], i * 3);
+      const item = hero ? i % NI : Math.floor(rng() * NI);
+      A.item[i] = item;
+      A.cell.set([item % ATLAS_COLS, Math.floor(item / ATLAS_COLS)], i * 2);
+      A.tint.set(hero ? TINTS[Math.floor(i / NI) % TINTS.length] : TINTS[Math.floor(rng() * TINTS.length)], i * 3);
+      A.lum[i] = lum; A.seed[i] = rng(); A.index[i] = i; A.match[i] = 1;
+      A.size[i] = hero ? .155 + .06 * rng() : .02 + .046 * rng() * rng();
+    }
+    geo = new THREE.InstancedBufferGeometry();
+    const base = new THREE.PlaneGeometry(1, 1);
+    geo.index = base.index; geo.setAttribute('position', base.attributes.position); geo.setAttribute('uv', base.attributes.uv);
+    const ia = (arr, n, dyn) => { const a = new THREE.InstancedBufferAttribute(arr, n); if (dyn) a.setUsage(THREE.DynamicDrawUsage); return a; };
+    geo.setAttribute('aMosaic', ia(A.mosaic, 3)); geo.setAttribute('aCloud', ia(A.cloud, 3)); geo.setAttribute('aCluster', ia(A.cluster, 3, true));
+    geo.setAttribute('aTint', ia(A.tint, 3)); geo.setAttribute('aCell', ia(A.cell, 2)); geo.setAttribute('aLum', ia(A.lum, 1)); geo.setAttribute('aSeed', ia(A.seed, 1));
+    geo.setAttribute('aIndex', ia(A.index, 1)); geo.setAttribute('aMatch', ia(A.match, 1, true)); geo.setAttribute('aSize', ia(A.size, 1));
+    geo.instanceCount = N;
+    return s;
+  }
+
+  /* =====================================================================
+     CAMERA: always looking at a target from (yaw, pitch, distance)
+     ===================================================================== */
+  const heroPose = () => {
+    const a = VW / VH, land = a > 1;
+    const dW = (PW / (land ? .9 : .94)) / (2 * TAN * a), dH = (PH / (land ? .84 : .62)) / (2 * TAN);
+    const d = Math.max(dW, dH), vh = 2 * d * TAN;
+    return { tx: 0, ty: -vh * (land ? .045 : .11), tz: 0, yaw: 0, pitch: 0, dist: d };
+  };
+  const cloudPose = () => ({ tx: 0, ty: 0, tz: 0, dist: clamp(2.2 / (TAN * Math.min(1, VW / VH)), 7.6, 11) });
+  const maxDist = () => cloudPose().dist * 1.55;
+  const camPos = new THREE.Vector3(), camTarget = new THREE.Vector3();
+  let parX = 0, parY = 0;
+  function applyCamera() {
+    const yaw = CAM.yaw + parX, pitch = clamp(CAM.pitch + parY, -1.35, 1.35), cp = Math.cos(pitch);
+    camTarget.set(CAM.tx, CAM.ty, CAM.tz);
+    camPos.set(CAM.tx + CAM.dist * Math.sin(yaw) * cp, CAM.ty + CAM.dist * Math.sin(pitch), CAM.tz + CAM.dist * Math.cos(yaw) * cp);
+    camera.position.copy(camPos); camera.lookAt(camTarget); camera.updateMatrixWorld();
+  }
+
+  /* where tile i is right now in the cloud: the same sums as the shader, for picking */
+  const _p = new THREE.Vector3();
+  function tilePos(i, out = _p) {
+    const s = A.seed[i], t = driftT, red = REDUCE ? 0 : 1, f = U.uFilterT.value * A.match[i];
+    const x = A.cloud[i * 3] + Math.sin(t * .13 + s * 6.283) * .12 * red, y = A.cloud[i * 3 + 1] + Math.cos(t * .11 + s * 4.1) * .12 * red, z = A.cloud[i * 3 + 2] + Math.sin(t * .09 + s * 2.7) * .12 * red;
+    return out.set(mix(x, A.cluster[i * 3], f), mix(y, A.cluster[i * 3 + 1], f), mix(z, A.cluster[i * 3 + 2], f));
+  }
+  const _v = new THREE.Vector3();
+  // screen rectangle of tile i: [x, y, halfW, halfH, depth], or null when behind the camera
+  function tileRect(i) {
+    tilePos(i, _v).applyMatrix4(camera.matrixWorldInverse);
+    const z = -_v.z; if (z < .12) return null;
+    const size = A.size[i] * (1 - .55 * U.uFilterT.value * (1 - A.match[i])) * sstep(.05, .35, z);
+    const pm = camera.projectionMatrix.elements, ndcX = (pm[0] * _v.x) / z, ndcY = (pm[5] * _v.y) / z;
+    const hy = size / 2 * pm[5] / z * VH / 2;
+    return [(ndcX * .5 + .5) * VW, (1 - (ndcY * .5 + .5)) * VH, hy * TILE_AR, hy, z];
+  }
+  function pick(x, y) {
+    if (U.uExplode.value < .98) return -1;
+    let best = -1, bz = 1e9; const ft = U.uFilterT.value;
+    for (let i = 0; i < HERO; i++) {
+      if (ft > .5 && !A.match[i]) continue;
+      const r = tileRect(i); if (!r) continue;
+      if (Math.abs(x - r[0]) < r[2] + 4 && Math.abs(y - r[1]) < r[3] + 4 && r[4] < bz) { bz = r[4]; best = i; }
+    }
+    return best;
+  }
+  // the copy of item k closest to the middle of the screen
+  function copyOf(k) {
+    let best = -1, bs = 1e9;
+    for (let i = k; i < HERO; i += NI) { const r = tileRect(i); const sc = r ? Math.hypot(r[0] - VW / 2, r[1] - VH / 2) + r[4] * 30 : 1e8; if (sc < bs) { bs = sc; best = i; } }
+    return best;
+  }
+
+  /* =====================================================================
+     STATES: portrait → cloud → one tile; plus filters
+     ===================================================================== */
+  function setState(s) {
+    state = s;
+    root.classList.toggle('is-hero', s === 'hero'); root.classList.toggle('is-cloud', s === 'cloud'); root.classList.toggle('is-detail', s === 'detail');
+    $('#detail').setAttribute('aria-hidden', String(s !== 'detail'));
+    if (s !== 'cloud') { hidePill(); setRing(-1); }
+  }
+  const normYaw = () => { CAM.yaw = Math.atan2(Math.sin(CAM.yaw), Math.cos(CAM.yaw)); };
+  function fadeSwap(fn, then) {        // for reduced motion: fade out, change everything, fade back in
+    gsap.timeline().to(U.uFade, { value: 0, duration: .3, ease: 'power1.in' }).add(fn).to(U.uFade, { value: 1, duration: .5, ease: 'power1.out' }).add(() => then && then());
+  }
+  function explode(ox = 0, oy = 0) {
+    if (state !== 'hero') return;
+    if (introTL) { introTL.kill(); introTL = null; }
+    setState('cloud'); say(`The portrait scatters into ${HERO} moments. ${COARSE ? 'Drag to orbit and pinch to travel.' : 'Drag to orbit and scroll to travel.'} Tap a tile to bring it forward, or use the list of every moment.`);
+    hintCloudLater();
+    gsap.killTweensOf(CAM); gsap.killTweensOf(U.uExplode);
+    const cp = cloudPose();
+    if (REDUCE) { fadeSwap(() => { U.uExplode.value = 1; Object.assign(CAM, cp, { yaw: .5, pitch: .12 }); }); return; }
+    U.uOrigin.value.set(ox, oy);
+    gsap.to(U.uExplode, { value: 1, duration: 2.6, ease: 'power2.inOut' });
+    gsap.to(CAM, { ...cp, yaw: .55, pitch: .14, duration: 2.9, ease: 'power3.inOut' });
+    ORB.vy = 0; ORB.vp = 0; ORB.vd = 0;
+  }
+  function implode() {
+    if (state === 'hero' || state === 'loading') return;
+    if (state === 'detail') closeDetail(true);
+    if (filter) setFilter(null, true);
+    setState('hero'); say('The tiles gather back into her portrait.');
+    gsap.killTweensOf(CAM); gsap.killTweensOf(U.uExplode); normYaw();
+    if (REDUCE) { fadeSwap(() => { U.uExplode.value = 0; Object.assign(CAM, heroPose()); }); return; }
+    U.uOrigin.value.set(0, 0);
+    gsap.to(U.uExplode, { value: 0, duration: 2.4, ease: 'power2.inOut' });
+    gsap.to(CAM, { ...heroPose(), duration: 2.6, ease: 'power3.inOut' });
+  }
+  let prevCam = null;
+  const detailDist = i => {
+    const pxH = Math.min(VW * .82 / TILE_AR, 560 / TILE_AR, VH * (VW > VH ? .52 : .4));
+    return A.size[i] * VH / (pxH * 2 * TAN);
+  };
+  function flyTo(i, dur) {
+    const p = tilePos(i, new THREE.Vector3()), d = detailDist(i), yaw = CAM.yaw, pitch = CAM.pitch;
+    // keep the tile a little above the middle, clear of the words below it
+    const up = new THREE.Vector3(-Math.sin(pitch) * Math.sin(yaw), Math.cos(pitch), -Math.sin(pitch) * Math.cos(yaw)), lift = 2 * d * TAN * (VW > VH ? .04 : .08);
+    p.addScaledVector(up, -lift);
+    if (REDUCE) { fadeSwap(() => Object.assign(CAM, { tx: p.x, ty: p.y, tz: p.z, dist: d })); return; }
+    gsap.to(CAM, { tx: p.x, ty: p.y, tz: p.z, dist: d, duration: dur, ease: 'power3.inOut', overwrite: 'auto' });
+  }
+  function showDetail(i, swap) {
+    const it = ITEMS[A.item[i]], el = $('#detail');
+    const fill = () => {
+      $('#d-idx').textContent = pad3(it.n); $('#d-title').textContent = it.title; $('#d-cat').textContent = `${CAT_LABEL[it.category]}${/^\d{4}$/.test(it.year) ? ' · ' + it.year : ''}`;
+      $('#d-cap').textContent = it.caption; el.classList.remove('swap');
+    };
+    if (swap) { el.classList.add('swap'); setTimeout(fill, 260); } else fill();
+    say(itemLabel(it));
+  }
+  function openTile(i) {
+    if (i < 0 || state === 'loading') return;
+    if (state === 'hero') { explode(); setTimeout(() => openTile(copyOf(A.item[i])), REDUCE ? 900 : 2700); return; }
+    const first = state !== 'detail';
+    if (first) { prevCam = { tx: CAM.tx, ty: CAM.ty, tz: CAM.tz, dist: CAM.dist }; ORB.vy = ORB.vp = ORB.vd = 0; }
+    sel = i; U.uSelTex.value = bigTexture(A.item[i], atlasImgs); U.uSel.value = i;
+    driftRate = 0;
+    setState('detail'); showDetail(i, !first);
+    gsap.to(U.uDim, { value: 1, duration: 1.1, ease: 'power2.out', overwrite: true });
+    U.uSelAmt.value = 1;
+    flyTo(i, first ? 1.7 : 1.2);
+    if (first) setTimeout(() => { if (state === 'detail') $('#d-back').focus({ preventScroll: true }); }, 400);
+  }
+  function closeDetail(quiet) {
+    if (state !== 'detail') return;
+    setState('cloud'); driftRate = 1;
+    gsap.to(U.uDim, { value: 0, duration: .9, ease: 'power2.inOut', overwrite: true, onComplete: () => { if (state !== 'detail') { U.uSel.value = -1; U.uSelAmt.value = 0; } } });
+    const back = prevCam || cloudPose();
+    if (REDUCE) fadeSwap(() => Object.assign(CAM, back));
+    else gsap.to(CAM, { ...back, duration: 1.6, ease: 'power3.inOut', overwrite: 'auto' });
+    if (!quiet) { say('Back in the cloud.'); canvas.focus({ preventScroll: true }); }
+  }
+  const visibleItems = () => ITEMS.map((it, k) => k).filter(k => !filter || ITEMS[k].category === filter);
+  function stepDetail(dir) {
+    if (state !== 'detail') return;
+    const vis = visibleItems(), cur = vis.indexOf(A.item[sel]), k = vis[(cur + dir + vis.length) % vis.length];
+    openTile(copyOf(k));
+  }
+
+  function setFilter(cat, quiet) {
+    if (cat && state === 'hero') { explode(); setTimeout(() => setFilter(cat), REDUCE ? 900 : 1600); return; }
+    if (state === 'detail') closeDetail(true);
+    const apply = () => {
+      filter = cat;
+      const hits = [];
+      for (let i = 0; i < N; i++) { const m = ITEMS[A.item[i]].category === cat ? 1 : 0; A.match[i] = m; if (m) hits.push(i); }
+      // matching tiles regroup: the large ones on a sphere, the fine dust inside it
+      const heroes = hits.filter(i => i < HERO), dust = hits.filter(i => i >= HERO), R = 1.15 + Math.sqrt(heroes.length) * .05;
+      heroes.forEach((i, j) => { const y = 1 - (j + .5) / heroes.length * 2, r = Math.sqrt(1 - y * y), th = j * 2.39996; A.cluster.set([Math.cos(th) * r * R, y * R * .9, Math.sin(th) * r * R], i * 3); });
+      dust.forEach(i => { const x = A.cloud[i * 3], y = A.cloud[i * 3 + 1], z = A.cloud[i * 3 + 2], l = Math.hypot(x, y, z) || 1, rr = R * 1.25 * Math.cbrt(A.seed[i]); A.cluster.set([x / l * rr, y / l * rr, z / l * rr], i * 3); });
+      geo.attributes.aMatch.needsUpdate = true; geo.attributes.aCluster.needsUpdate = true;
+      gsap.to(U.uFilterT, { value: 1, duration: REDUCE ? .01 : 1.6, ease: 'power3.inOut' });
+      if (!REDUCE) gsap.to(CAM, { tx: 0, ty: 0, tz: 0, dist: clamp(R * 2.4 / (TAN * Math.min(1, VW / VH)) * .5, 4.2, 11), duration: 1.6, ease: 'power3.inOut', overwrite: 'auto' });
+      $('#chip-name').textContent = CAT_LABEL[cat]; $('#chip').classList.add('on');
+      $('#hud-n').textContent = heroes.length; $('#hud-l').textContent = `${CAT_LABEL[cat].toLowerCase()} moments`;
+      if (!quiet) say(`Showing ${CAT_LABEL[cat]}: ${new Set(heroes.map(i => A.item[i])).size} moments. The others fade back.`);
+    };
+    $$('#menu-cats .big').forEach(b => b.setAttribute('aria-current', String(b.dataset.cat === (cat || ''))));
+    if (!cat) { $('#chip').classList.remove('on'); $('#hud-n').textContent = HERO; $('#hud-l').textContent = 'moments, drifting'; if (!quiet && filter) say('Showing every moment.'); }
+    if (U.uFilterT.value > .001) gsap.to(U.uFilterT, { value: 0, duration: REDUCE ? .01 : .6, ease: 'power2.inOut', overwrite: true, onComplete: () => { if (cat) apply(); else filter = null; } });
+    else if (cat) apply(); else filter = null;
+  }
+
+  /* =====================================================================
+     INPUT
+     ===================================================================== */
+  const PT = { x: 0, y: 0, sx: 0, sy: 0, amt: 0, want: 0, on: false };
+  const pointers = new Map();
+  let drag = null, pinch = null, wheelAcc = 0, wheelAt = 0;
+  const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), hit = new THREE.Vector3();
+  function toPlane(cx, cy) { ndc.set(cx / VW * 2 - 1, -(cy / VH) * 2 + 1); ray.setFromCamera(ndc, camera); return ray.ray.intersectPlane(plane, hit) ? hit : null; }
+  function stir(cx, cy) { const h = toPlane(cx, cy); if (h) { PT.x = h.x; PT.y = h.y; PT.want = 1; PT.on = true; } }
+
+  canvas.addEventListener('pointerdown', e => {
+    if (state === 'loading' || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    canvas.setPointerCapture(e.pointerId);
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    lastInput = performance.now();
+    if (pointers.size === 2) { const [a, b] = [...pointers.values()]; pinch = { d: Math.hypot(a.x - b.x, a.y - b.y) }; drag = null; return; }
+    drag = { id: e.pointerId, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, t0: e.timeStamp, moved: 0, vx: 0, vy: 0, lt: e.timeStamp };
+    canvas.classList.add('dragging');
+    if (state === 'hero') stir(e.clientX, e.clientY);
+  });
+  canvas.addEventListener('pointermove', e => {
+    lastInput = performance.now();
+    if (pointers.has(e.pointerId)) pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pinch && pointers.size >= 2) {
+      const [a, b] = [...pointers.values()], d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (state === 'cloud') CAM.dist = clamp(CAM.dist * pinch.d / Math.max(d, 1), .3, maxDist());
+      pinch.d = d; return;
+    }
+    if (state === 'hero' && (e.pointerType === 'mouse' || drag)) stir(e.clientX, e.clientY);
+    if (!drag || e.pointerId !== drag.id) { if (state === 'cloud' && FINE && e.pointerType === 'mouse') hoverAt(e.clientX, e.clientY); return; }
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y, dt = Math.max(1, e.timeStamp - drag.lt) / 1000;
+    drag.x = e.clientX; drag.y = e.clientY; drag.lt = e.timeStamp; drag.moved += Math.abs(dx) + Math.abs(dy);
+    if (state === 'hero') { if (drag.y0 - e.clientY > 70 && Math.abs(e.clientX - drag.x0) < 90) { const h = toPlane(drag.x0, drag.y0); drag = null; explode(h ? h.x : 0, h ? h.y : 0); } return; }
+    if (state === 'cloud') {
+      const k = 3.2 / Math.min(VW, VH);
+      CAM.yaw -= dx * k; CAM.pitch = clamp(CAM.pitch + dy * k * .8, -1.2, 1.2);
+      drag.vx = mix(drag.vx, -dx * k / dt, .5); drag.vy = mix(drag.vy, dy * k * .8 / dt, .5);
+      hidePill();
+    }
+  });
+  const endPointer = e => {
+    pointers.delete(e.pointerId);
+    if (pointers.size < 2) pinch = null;
+    if (!drag || e.pointerId !== drag.id) return;
+    canvas.classList.remove('dragging');
+    const d = drag; drag = null;
+    if (state === 'hero') PT.want = 0;
+    const tap = d.moved < 9 && e.timeStamp - d.t0 < 450;
+    if (state === 'hero') { if (tap) { const h = toPlane(d.x, d.y); explode(h ? h.x : 0, h ? h.y : 0); } return; }
+    if (state === 'cloud') {
+      if (tap) { const i = pick(d.x, d.y); if (i >= 0) openTile(i); return; }
+      if (!REDUCE) { ORB.vy = clamp(d.vx, -4, 4); ORB.vp = clamp(d.vy, -3, 3); }
+      return;
+    }
+    if (state === 'detail') {
+      const dx = d.x - d.x0;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(d.y - d.y0)) stepDetail(dx < 0 ? 1 : -1);
+      else if (tap) { const r = tileRect(sel); if (!r || Math.abs(d.x - r[0]) > r[2] + 16 || Math.abs(d.y - r[1]) > r[3] + 16) closeDetail(); }   // a tap beside the tile goes back
+    }
+  };
+  canvas.addEventListener('pointerup', endPointer); canvas.addEventListener('pointercancel', endPointer);
+  canvas.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') { PT.want = 0; hidePill(); } });
+
+  addEventListener('wheel', e => {
+    if (state === 'loading' || !$('#menu').hidden || $('#list').matches(':focus-within')) return;
+    e.preventDefault(); lastInput = performance.now();
+    let dy = e.deltaY; if (e.deltaMode === 1) dy *= 32; else if (e.deltaMode === 2) dy *= VH;
+    const now = performance.now();
+    if (state === 'hero') { if (dy > 0) { wheelAcc += dy; if (wheelAcc > 40) { wheelAcc = 0; explode(); } } return; }
+    if (state === 'cloud') {
+      if (dy < 0 && CAM.dist >= maxDist() * .985) { wheelAcc = now - wheelAt > 400 ? -dy : wheelAcc - dy; wheelAt = now; if (wheelAcc > 420) { wheelAcc = 0; implode(); } return; }
+      if (REDUCE) CAM.dist = clamp(CAM.dist * Math.exp(dy * .0015), .3, maxDist());
+      else ORB.vd += clamp(dy, -160, 160) * .0042;
+      hidePill();
+    }
+  }, { passive: false });
+
+  addEventListener('keydown', e => {
+    if (state === 'loading') return;
+    const menuOpen = !$('#menu').hidden;
+    if (menuOpen) { if (e.key === 'Escape') closeMenu(); else if (e.key === 'Tab') trapTab(e); return; }
+    if (e.target.closest && e.target.closest('#list')) { if (e.key === 'Escape') { canvas.focus({ preventScroll: true }); } return; }
+    const onButton = e.target.closest && e.target.closest('button, a');
+    lastInput = performance.now();
+    if (state === 'hero') {
+      if (['Enter', 'ArrowDown', 'PageDown'].includes(e.key) || (e.key === ' ' && !onButton)) { if (!onButton || e.key !== 'Enter') { e.preventDefault(); explode(); } }
+      return;
+    }
+    if (state === 'cloud') {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); moveFocus(e.key === 'ArrowRight' ? 1 : -1); }
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') { e.preventDefault(); if (REDUCE) CAM.dist = clamp(CAM.dist * (e.key === 'ArrowUp' ? .8 : 1.25), .3, maxDist()); else ORB.vd += e.key === 'ArrowUp' ? -.9 : .9; }
+      else if ((e.key === 'Enter' || e.key === ' ') && focusEntry >= 0 && !onButton) { e.preventDefault(); openTile(copyOf(focusEntry)); }
+      else if (e.key === 'Escape') { e.preventDefault(); if (filter) setFilter(null); else implode(); }
+      return;
+    }
+    if (state === 'detail') {
+      if (e.key === 'ArrowRight') { e.preventDefault(); stepDetail(1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); stepDetail(-1); }
+      else if (e.key === 'Escape' || e.key === 'Backspace') { e.preventDefault(); closeDetail(); }
+    }
+  });
+  function moveFocus(dir) {
+    const vis = visibleItems(); if (!vis.length) return;
+    const cur = vis.indexOf(focusEntry);
+    focusEntry = vis[cur < 0 ? (dir > 0 ? 0 : vis.length - 1) : (cur + dir + vis.length) % vis.length];
+    const i = copyOf(focusEntry); setRing(i);
+    const it = ITEMS[focusEntry]; say(`${pad3(it.n)}, ${it.title.replace(/[“”]/g, '')}, ${CAT_LABEL[it.category]}. Press Enter to open.`);
+  }
+  // device tilt nudges the portrait on phones that allow it
+  let tiltX = 0, tiltY = 0;
+  if (COARSE && !REDUCE) addEventListener('deviceorientation', e => { if (e.gamma == null) return; tiltX = clamp(e.gamma / 45, -1, 1); tiltY = clamp((e.beta - 45) / 45, -1, 1); });
+
+  // hover label and keyboard ring
+  const pill = $('#pill'), ring = $('#ring');
+  let hoverI = -1, hoverXY = null, ringI = -1;
+  function hoverAt(x, y) { hoverXY = [x, y]; }
+  function hidePill() { hoverXY = null; hoverI = -1; pill.classList.remove('on'); canvas.classList.remove('over'); }
+  function setRing(i) { ringI = i; ring.classList.toggle('on', i >= 0); U && (U.uFocusIdx.value = i); }
+  function placeOverlays() {
+    if (state === 'cloud' && hoverXY && !drag) {
+      const i = pick(hoverXY[0], hoverXY[1]);
+      if (i !== hoverI) { hoverI = i; if (i >= 0) pill.textContent = ITEMS[A.item[i]].title; pill.classList.toggle('on', i >= 0); canvas.classList.toggle('over', i >= 0); U.uFocusIdx.value = i >= 0 ? i : ringI; }
+    }
+    if (hoverI >= 0) { const r = tileRect(hoverI); if (r) pill.style.transform = `translate(${Math.round(r[0] + r[2] * .55)}px, ${Math.round(r[1] - r[3] - 26)}px)`; }
+    if (ringI >= 0 && state === 'cloud') { const r = tileRect(ringI); if (r) { ring.style.width = r[2] * 2 + 12 + 'px'; ring.style.height = r[3] * 2 + 12 + 'px'; ring.style.transform = `translate(${r[0] - r[2] - 6}px, ${r[1] - r[3] - 6}px)`; } }
+  }
+
+  /* =====================================================================
+     MENU, LIST, BUTTONS
+     ===================================================================== */
+  const menu = $('#menu'), menuBtn = $('#menu-btn');
+  CATS.forEach(cat => {
+    const li = document.createElement('li'), b = document.createElement('button');
+    b.className = 'big'; b.type = 'button'; b.dataset.cat = cat;
+    b.innerHTML = `${esc(CAT_LABEL[cat])} <small>${ITEMS.filter(it => it.category === cat).length}</small>`;
+    b.addEventListener('click', () => { closeMenu(); if (GL) setFilter(cat); else fallbackFilter(cat); });
+    li.append(b); $('#menu-cats').append(li);
+  });
+  { const li = document.createElement('li'), b = document.createElement('button'); b.className = 'big'; b.type = 'button'; b.dataset.cat = ''; b.innerHTML = 'Everything <small>' + NI + '</small>';
+    b.addEventListener('click', () => { closeMenu(); if (GL) { if (state === 'hero') explode(); else setFilter(null); } else fallbackFilter(null); }); li.append(b); $('#menu-cats').append(li); }
+  $$('#menu [data-go]').forEach(b => b.addEventListener('click', () => {
+    closeMenu();
+    if (!GL) return;
+    if (b.dataset.go === 'explore') { if (state === 'hero') explode(); else if (state === 'detail') closeDetail(); }
+    else implode();
+  }));
+  function openMenu() { menu.hidden = false; menuBtn.setAttribute('aria-expanded', 'true'); $('.big', menu).focus({ preventScroll: true }); }
+  function closeMenu() { if (menu.hidden) return; menu.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.focus({ preventScroll: true }); }
+  function trapTab(e) { const f = $$('button', menu), first = f[0], last = f[f.length - 1]; if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); } }
+  menuBtn.addEventListener('click', openMenu); $('#menu-close').addEventListener('click', closeMenu);
+  $('#logo').addEventListener('click', () => { if (GL) implode(); else scrollTo({ top: 0, behavior: REDUCE ? 'auto' : 'smooth' }); });
+  $('#down').addEventListener('click', () => explode());
+  $('#chip-x').addEventListener('click', () => setFilter(null));
+  $('#d-back').addEventListener('click', () => closeDetail());
+  $('#d-next').addEventListener('click', () => stepDetail(1)); $('#d-prev').addEventListener('click', () => stepDetail(-1));
+  ITEMS.forEach((it, k) => {
+    const li = document.createElement('li'), b = document.createElement('button'); b.type = 'button'; b.textContent = itemLabel(it);
+    b.addEventListener('click', () => { if (GL && state !== 'loading') { canvas.focus({ preventScroll: true }); openTile(state === 'hero' ? k : copyOf(k)); } else if (!GL) { const el = $(`#fb-${k}`); if (el) el.scrollIntoView({ block: 'center' }); } });
+    li.append(b); $('#list-ol').append(li);
+  });
+  $('#skip').addEventListener('click', e => { e.preventDefault(); $('#list button').focus(); });
+  let hintTimer = 0;
+  function hintCloudLater() { const h = $('#hint-cloud'); h.classList.remove('spent'); clearTimeout(hintTimer); hintTimer = setTimeout(() => h.classList.add('spent'), 6500); }
+
+  /* =====================================================================
+     NO WEBGL: the same moments as a plain gallery
+     ===================================================================== */
+  function buildFallback() {
+    root.classList.add('no-gl'); root.classList.remove('is-loading');
+    const fb = $('#fallback'); fb.hidden = false;
+    fb.innerHTML = `<p class="fk">${esc(C.kicker)} · An unofficial fan tribute</p><h1>${esc(C.title.join(' '))}</h1>
+      <div class="filters" role="group" aria-label="Chapters"><button type="button" data-f="" aria-pressed="true">Everything</button>${CATS.map(c => `<button type="button" data-f="${c}" aria-pressed="false">${CAT_LABEL[c]}</button>`).join('')}</div>
+      <ul>${ITEMS.map((it, k) => `<li id="fb-${k}" data-cat="${it.category}"><canvas width="512" height="400" role="img" aria-label="${esc(it.imageUrl ? it.title : 'Placeholder card: replace with a licensed or owned photo')}"></canvas>
+        <h3><span class="num">${pad3(it.n)}</span>${esc(it.title)}</h3><p>${esc(CAT_LABEL[it.category])}${/^\d{4}$/.test(it.year) ? ' · ' + it.year : ''}</p><p>${esc(it.caption)}</p></li>`).join('')}</ul>
+      <footer><p>An unofficial fan tribute, not affiliated with Emma Watson or her representatives.</p><p>Created by ${esc(C.credit)}.</p></footer>`;
+    fontsReady.then(() => Promise.all(ITEMS.map(it => loadImage(it.imageUrl)))).then(imgs => $$('canvas', fb).forEach((cv, k) => drawCard(cv.getContext('2d'), ITEMS[k], 512, 400, imgs[k])));
+    $$('.filters button', fb).forEach(b => b.addEventListener('click', () => fallbackFilter(b.dataset.f || null)));
+  }
+  function fallbackFilter(cat) {
+    $$('#fallback .filters button').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.f || null) === cat)));
+    $$('#fallback li').forEach(li => { li.hidden = !!cat && li.dataset.cat !== cat; });
+    say(cat ? `Showing ${CAT_LABEL[cat]}.` : 'Showing every moment.');
+  }
+
+  /* =====================================================================
+     EVERY FRAME
+     ===================================================================== */
+  let last = performance.now(), atlasImgs = [], fpsN = 0, fpsSum = 0, fpsStage = 0;
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (document.hidden) { last = now; return; }
+    const dt = Math.min(.05, Math.max(0, (now - last) / 1000)); last = now;
+    const t = now / 1000;
+    // drift slows to a stop while a tile is open
+    driftT += dt * driftRate * (REDUCE ? 0 : 1);
+    if (state === 'cloud') {
+      const idle = now - lastInput > 3500;
+      if (!drag && !pinch) {
+        CAM.yaw += (ORB.vy + (idle && !REDUCE ? .05 : 0)) * dt; CAM.pitch = clamp(CAM.pitch + ORB.vp * dt, -1.2, 1.2);
+        ORB.vy *= Math.exp(-dt * 2.6); ORB.vp *= Math.exp(-dt * 3);
+      }
+      if (Math.abs(ORB.vd) > 1e-4) { CAM.dist = clamp(CAM.dist * Math.exp(ORB.vd * dt), .3, maxDist()); ORB.vd *= Math.exp(-dt * 4.2); }
+    }
+    // a little parallax: the mouse on desktop, tilt on phones
+    const wantX = state === 'hero' ? (FINE ? PT.sx / PW * .16 : tiltX * .12) : 0, wantY = state === 'hero' ? (FINE ? -PT.sy / PH * .1 : -tiltY * .08) : 0;
+    parX += (wantX - parX) * (1 - Math.exp(-dt * 2.5)); parY += (wantY - parY) * (1 - Math.exp(-dt * 2.5));
+    // the stirring pointer eases in and out, so the tiles settle back smoothly
+    PT.sx += (PT.x - PT.sx) * (1 - Math.exp(-dt * 9)); PT.sy += (PT.y - PT.sy) * (1 - Math.exp(-dt * 9));
+    PT.amt += ((state === 'hero' ? PT.want : 0) - PT.amt) * (1 - Math.exp(-dt * (PT.want ? 6 : 1.8)));
+    if (!REDUCE && FINE && state === 'hero' && now - lastInput > 1600) PT.want = 0;
+    U.uTime.value = REDUCE ? 0 : t; U.uDriftT.value = driftT;
+    U.uPointer.value.set(PT.sx, PT.sy, .24); U.uPointerAmt.value = PT.amt;
+    applyCamera();
+    if (state === 'detail' && sel >= 0) { U.uFocus.value = tilePos(sel).distanceTo(camPos); U.uFocusRange.value = 1.2; }
+    else { U.uFocus.value = mix(U.uFocus.value, CAM.dist, 1 - Math.exp(-dt * 4)); U.uFocusRange.value = 3.6; }
+    renderer.render(scene, camera);
+    placeOverlays();
+    // frame-rate check, once the intro is over: lower the resolution, then thin the tiles
+    if (state !== 'loading' && !QS.has('fixed') && fpsStage < 2) {
+      fpsN++; fpsSum += dt;
+      if (fpsN === 150) {
+        const avg = fpsSum / fpsN; fpsN = 0; fpsSum = 0;
+        if (avg > .026 && DPR > 1) { DPR = Math.max(1, DPR - .5); renderer.setPixelRatio(DPR); renderer.setSize(VW, VH, false); }
+        else if (avg > .032) { geo.instanceCount = Math.max(HERO, Math.floor(N * .6)); fpsStage = 2; }
+        else fpsStage++;
+      }
+    }
+  }
+
+  function resize() {
+    VW = innerWidth; VH = innerHeight;
+    if (!GL || !camera) return;
+    renderer.setSize(VW, VH, false); camera.aspect = VW / VH; camera.updateProjectionMatrix();
+    if (state === 'hero' && !gsap.isTweening(CAM)) Object.assign(CAM, heroPose());
+  }
+  addEventListener('resize', resize);
+
+  /* =====================================================================
+     START: draw the atlas, sample the portrait, then let the tiles fly in
+     ===================================================================== */
+  async function start() {
+    if (!GL) { buildFallback(); return; }
+    initGL();
+    await fontsReady;
+    const [{ tex, imgs }, portrait] = await Promise.all([buildAtlas(), loadImage(C.PORTRAIT_URL)]);
+    atlasImgs = imgs;
+    grid = sampleGrid(portrait || silhouette(), COLS);
+    const cellSize = buildTiles(grid);
+    U = {
+      uTime: { value: 0 }, uDriftT: { value: 0 }, uExplode: { value: 1 }, uFilterT: { value: 0 }, uSel: { value: -1 }, uSelAmt: { value: 0 }, uDim: { value: 0 },
+      uCell: { value: cellSize }, uPointerAmt: { value: 0 }, uFocus: { value: 6 }, uFocusRange: { value: 3.6 }, uReduce: { value: REDUCE ? 1 : 0 }, uSpan: { value: Math.hypot(PW, PH) },
+      uFade: { value: REDUCE ? 0 : 1 }, uFocusIdx: { value: -1 }, uPointer: { value: new THREE.Vector3(0, 0, .36) }, uOrigin: { value: new THREE.Vector2(0, 0) },
+      uAtlas: { value: tex }, uSelTex: { value: tex }, uCellUV: { value: new THREE.Vector2(CELL_W / ATLAS_W, CELL_H / ATLAS_H) }
+    };
+    const mat = new THREE.ShaderMaterial({ uniforms: U, vertexShader: VERT, fragmentShader: FRAG, extensions: { derivatives: true }, transparent: false, depthWrite: true, depthTest: true });
+    mat.alphaToCoverage = true;
+    mesh = new THREE.Mesh(geo, mat); mesh.frustumCulled = false; scene.add(mesh);
+    Object.assign(CAM, heroPose());
+    $('#hud-n').textContent = HERO;
+    requestAnimationFrame(frame);
+    // the tiles come in from the cloud and settle into the portrait
+    U.uOrigin.value.set(0, -.2);
+    const ready = () => { if (introDone) return; introDone = true; setState('hero'); root.classList.remove('is-loading'); say('A portrait of Emma Watson made of small tiles. Scroll, tap or press Enter to scatter it into a cloud of moments.'); };
+    if (REDUCE) { U.uExplode.value = 0; gsap.to(U.uFade, { value: 1, duration: .6, onComplete: ready }); return; }
+    introTL = gsap.timeline({ onComplete: () => { introTL = null; } })
+      .to(U.uExplode, { value: 0, duration: 3.2, ease: 'power3.inOut' }, .15)
+      .add(() => { root.classList.remove('is-loading'); }, 1.4)
+      .add(ready, 2.6);
+  }
+  start().catch(err => { console.error(err); buildFallback(); });
+
+  window.__moments = { get state() { return state; }, get N() { return N; }, get HERO() { return HERO; }, CAM, U: () => U, open: i => openTile(i), explode: () => explode(), implode: () => implode(), filter: c => setFilter(c), pick, tileRect };
+})();
+</script>
+</body>
+</html>
