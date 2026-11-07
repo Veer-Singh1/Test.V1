@@ -81,6 +81,7 @@ export const Full = () => {
   const [ready, setReady] = useState(false);
   const props = getInputProps();
   const preview = props.quality === 'preview';
+  const draft = props.quality === 'draft'; // full size, no supersampling (cloud preview renders)
   useEffect(() => {
     Promise.all([
       document.fonts.load('100px "Bebas Neue"'),
@@ -92,7 +93,7 @@ export const Full = () => {
       {ready ? (
         <ThreeCanvas width={W} height={H} linear flat legacy dpr={preview ? 0.5 : 1}
           gl={{ antialias: false, preserveDrawingBuffer: true, powerPreference: 'high-performance' }}>
-          <Scene frame={frame} ss={preview ? 1 : 2} />
+          <Scene frame={frame} ss={preview || draft ? 1 : 2} />
         </ThreeCanvas>
       ) : null}
     </AbsoluteFill>
