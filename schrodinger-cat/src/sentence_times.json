@@ -1,0 +1,149 @@
+{
+  "source": "Kokoro TTS v1.0, voice am_fenrir, speed 1.12",
+  "sentences": [
+    {
+      "shot": 1,
+      "text": "Physics, please.",
+      "start": 0.0,
+      "end": 0.842
+    },
+    {
+      "shot": 1,
+      "text": "What is this quantum physics nonsense?",
+      "start": 1.082,
+      "end": 2.865
+    },
+    {
+      "shot": 1,
+      "text": "A physicist invented a cat that's alive and dead at once.",
+      "start": 3.105,
+      "end": 6.117
+    },
+    {
+      "shot": 2,
+      "text": "He wasn't bragging.",
+      "start": 6.517,
+      "end": 7.389
+    },
+    {
+      "shot": 2,
+      "text": "He was complaining.",
+      "start": 7.629,
+      "end": 8.566
+    },
+    {
+      "shot": 3,
+      "text": "A cat sits in a sealed box next to an atom with a fifty-fifty chance of decaying.",
+      "start": 8.966,
+      "end": 13.466
+    },
+    {
+      "shot": 4,
+      "text": "But if it decays, a Geiger counter trips a hammer, the poison flask breaks, and the cat's evening gets worse.",
+      "start": 13.866,
+      "end": 19.823
+    },
+    {
+      "shot": 5,
+      "text": "Then the quantum part.",
+      "start": 20.223,
+      "end": 21.268
+    },
+    {
+      "shot": 5,
+      "text": "Until it's measured, the atom is described as a mix of decayed and not decayed.",
+      "start": 21.508,
+      "end": 25.902
+    },
+    {
+      "shot": 6,
+      "text": "The atom is linked to the cat.",
+      "start": 26.302,
+      "end": 27.628
+    },
+    {
+      "shot": 6,
+      "text": "On paper, the cat is alive and dead until someone looks.",
+      "start": 27.868,
+      "end": 30.692
+    },
+    {
+      "shot": 7,
+      "text": "Relax.",
+      "start": 31.092,
+      "end": 31.685
+    },
+    {
+      "shot": 7,
+      "text": "It's a thought experiment.",
+      "start": 31.925,
+      "end": 33.053
+    },
+    {
+      "shot": 7,
+      "text": "It was never actually done.",
+      "start": 33.293,
+      "end": 34.477
+    },
+    {
+      "shot": 8,
+      "text": "You see, Schr\u00f6dinger invented it in 1935 to criticise the theory.",
+      "start": 34.877,
+      "end": 39.318
+    },
+    {
+      "shot": 8,
+      "text": "If it says this about a cat, something's wrong.",
+      "start": 39.558,
+      "end": 41.508
+    },
+    {
+      "shot": 9,
+      "text": "Today's leading explanation is decoherence.",
+      "start": 41.908,
+      "end": 44.331
+    },
+    {
+      "shot": 9,
+      "text": "A cat is trillions of particles, always bumping into air and light.",
+      "start": 44.571,
+      "end": 48.292
+    },
+    {
+      "shot": 10,
+      "text": "Every bump acts like a tiny measurement, so the quantum weirdness leaks away almost instantly.",
+      "start": 48.692,
+      "end": 53.952
+    },
+    {
+      "shot": 11,
+      "text": "So a real cat is alive or dead.",
+      "start": 54.352,
+      "end": 56.01
+    },
+    {
+      "shot": 11,
+      "text": "The box just hides which.",
+      "start": 56.25,
+      "end": 57.572
+    },
+    {
+      "shot": 11,
+      "text": "Physicists still argue about the rest.",
+      "start": 57.812,
+      "end": 59.544
+    },
+    {
+      "shot": 12,
+      "text": "The cat was never about cats.",
+      "start": 59.944,
+      "end": 61.261
+    },
+    {
+      "shot": 12,
+      "text": "It was a complaint about physics.",
+      "start": 61.501,
+      "end": 62.89
+    }
+  ]
+}
