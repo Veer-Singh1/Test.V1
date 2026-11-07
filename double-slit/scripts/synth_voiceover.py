@@ -3,7 +3,7 @@
 import json, sys, numpy as np, soundfile as sf
 from kokoro_onnx import Kokoro
 model_dir, src_json, out_wav, out_json, voice, speed = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], float(sys.argv[6])
-SAY = {"1973": "nineteen seventy-three", "1979": "nineteen seventy-nine"}
+SAY = {"1973": "nineteen seventy-three", "1979": "nineteen seventy-nine", "1935": "nineteen thirty-five", "Schrödinger": "Schroedinger", "Geiger": "Guygurr"}
 k = Kokoro(f"{model_dir}/kokoro-v1.0.onnx", f"{model_dir}/voices-v1.0.bin")
 sents = json.load(open(src_json))["sentences"]
 PAUSE_IN, PAUSE_SHOT = 0.24, 0.40
