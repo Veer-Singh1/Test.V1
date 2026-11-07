@@ -1,0 +1,89 @@
+{
+  "source": "Kokoro TTS v1.0, voice af_heart, speed 1.2",
+  "sentences": [
+    {
+      "shot": 1,
+      "text": "In 1973, two thousand workers in Durban did something illegal.",
+      "start": 0.0,
+      "end": 4.031
+    },
+    {
+      "shot": 1,
+      "text": "They stopped making bricks.",
+      "start": 4.271,
+      "end": 5.529
+    },
+    {
+      "shot": 2,
+      "text": "It was the ninth of January, at the Coronation Brick and Tile works.",
+      "start": 5.929,
+      "end": 9.298
+    },
+    {
+      "shot": 3,
+      "text": "They earned under nine rand a week, and they marched to a football stadium to demand more.",
+      "start": 9.698,
+      "end": 13.727
+    },
+    {
+      "shot": 4,
+      "text": "But Black workers had no union, and striking was against the law.",
+      "start": 14.127,
+      "end": 17.357
+    },
+    {
+      "shot": 5,
+      "text": "Then the company offered one rand fifty more.",
+      "start": 17.757,
+      "end": 19.828
+    },
+    {
+      "shot": 5,
+      "text": "They said no, and got just over two rand.",
+      "start": 20.068,
+      "end": 22.24
+    },
+    {
+      "shot": 6,
+      "text": "Within weeks, six thousand Frame textile workers walked out too.",
+      "start": 22.64,
+      "end": 25.866
+    },
+    {
+      "shot": 7,
+      "text": "By March, more than sixty thousand workers at over a hundred Durban firms had downed tools.",
+      "start": 26.266,
+      "end": 31.261
+    },
+    {
+      "shot": 8,
+      "text": "You see, a boss can fire one worker.",
+      "start": 31.661,
+      "end": 33.49
+    },
+    {
+      "shot": 8,
+      "text": "But no factory runs without all of them.",
+      "start": 33.73,
+      "end": 35.747
+    },
+    {
+      "shot": 9,
+      "text": "So the government set up an inquiry.",
+      "start": 36.147,
+      "end": 37.732
+    },
+    {
+      "shot": 9,
+      "text": "In 1979, it said Black unions should be recognised.",
+      "start": 37.972,
+      "end": 41.504
+    },
+    {
+      "shot": 10,
+      "text": "It all started with two thousand people who stopped making bricks.",
+      "start": 41.904,
+      "end": 44.975
+    }
+  ]
+}
