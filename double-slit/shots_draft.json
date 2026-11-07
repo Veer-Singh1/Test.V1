@@ -1,0 +1,104 @@
+[
+ {
+  "shot": 1,
+  "loc": "Lab set (host)",
+  "sentences": [
+   "[CHANNEL NAME], what is this quantum physics nonsense?",
+   "One electron. Two gaps. It went through both."
+  ],
+  "visual": "Deadpan host at a lab bench, a double-slit rig behind. Chalkboard: \"DOUBLE-SLIT EXPERIMENT\"."
+ },
+ {
+  "shot": 2,
+  "loc": "Lab doorway (host)",
+  "sentences": [
+   "I can't even get through one door without hitting the frame."
+  ],
+  "visual": "Host walks into the lab door frame. Bonk. Door sign: \"LAB\"."
+ },
+ {
+  "shot": 3,
+  "loc": "Paintball range",
+  "sentences": [
+   "Fire paintballs at a wall with two slits, and you get two stripes.",
+   "Makes sense.",
+   "Nobody's crying."
+  ],
+  "visual": "Paintball turret fires; two neat splat stripes build up on the back wall. Range sign: \"ROUND 1: PAINTBALLS\"."
+ },
+ {
+  "shot": 4,
+  "loc": "Wave tank",
+  "sentences": [
+   "But water waves make many stripes.",
+   "Where peaks meet, waves grow.",
+   "Where a peak meets a dip, they cancel.",
+   "That's an interference pattern."
+  ],
+  "visual": "Ripples spread from two gaps and overlap; a striped band shows on the far wall. Sign: \"ROUND 2: WAVES\"; label \"INTERFERENCE PATTERN\" appears on its name."
+ },
+ {
+  "shot": 5,
+  "loc": "Electron lab",
+  "sentences": [
+   "Then scientists fired electrons, one at a time.",
+   "Each one lands as a single dot, like a tiny bullet."
+  ],
+  "visual": "Electron in sunglasses struts out of an electron gun. One dot on the screen. Sign: \"ROUND 3: ELECTRONS\"; counter \"FIRED: 1\"."
+ },
+ {
+  "shot": 6,
+  "loc": "Electron lab (screen)",
+  "sentences": [
+   "But thousands of dots build the stripes.",
+   "One electron, alone, interfering with itself.",
+   "Like using both doors of a shop and meeting yourself at the till."
+  ],
+  "visual": "Counter races to 10 000 as the dots build stripes. Cutaway gag: electron at a shop till meets itself."
+ },
+ {
+  "shot": 7,
+  "loc": "Electron lab (detector)",
+  "sentences": [
+   "Scientists got suspicious and put a detector at the slits.",
+   "The pattern vanished.",
+   "Two boring stripes."
+  ],
+  "visual": "A detector swings in at the slits, \"DETECTOR ON\" light. The electron sweats. The screen shows only two stripes."
+ },
+ {
+  "shot": 8,
+  "loc": "Detector close-up",
+  "sentences": [
+   "You see, the detector has to interact with the electron to record its slit.",
+   "Once that record exists, the pattern's gone."
+  ],
+  "visual": "Close on the detector writing \"SLIT: LEFT\" on its readout as the electron passes."
+ },
+ {
+  "shot": 9,
+  "loc": "Lab bench (host)",
+  "sentences": [
+   "Camera or coffee cup, it makes no difference.",
+   "'Observer' doesn't mean a person."
+  ],
+  "visual": "Host points along the bench: camera, coffee cup, clipboard. Each has a \"DETECTOR\" tag."
+ },
+ {
+  "shot": 10,
+  "loc": "Electron lab (cloud)",
+  "sentences": [
+   "So until you measure it, the electron acts like a spread-out wave of possibilities.",
+   "Measure it, and you get one answer."
+  ],
+  "visual": "The electron spreads into a glowing wave cloud through both slits, then snaps to one dot on \"one answer\"."
+ },
+ {
+  "shot": 11,
+  "loc": "Lab set (host)",
+  "sentences": [
+   "Electrons are particles, waves, and drama queens."
+  ],
+  "visual": "Host deadpan; the electron in sunglasses beside him strikes a pose. Camera comes to rest."
+ }
+]
