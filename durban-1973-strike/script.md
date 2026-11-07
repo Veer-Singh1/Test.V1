@@ -1,25 +1,25 @@
 # The brickworks that woke up a country (Durban, 1973)
 
-EMS Module 14: Trade Unions. Vertical 9:16, about 43 s. Status: **approved, video built (estimated timing until a voiceover exists)**.
+EMS Module 14: Trade Unions. Vertical 9:16, about 46 s (45.0 s of voiceover + 1.2 s hold). Status: **approved, video built (estimated timing until a voiceover exists)**.
 
 ## Shot table
 
-Timing is estimated at 3.35 words per second until a voiceover exists.
+Times are the real cut times from the generated voiceover (`voiceover.wav`, Kokoro TTS voice af_heart).
 
 | Shot | Start | Words | Line (voiceover) | On screen (in-world labels) |
 |---|---|---|---|---|
 | 1 | 0:00.0 | 14 | In 1973, two thousand workers in Durban did something illegal. They stopped making bricks. | Brickworks at dawn: kilns, chimneys, brick stacks. Workers set their bricks down. "1973" chalked on a board at the gate. |
-| 2 | 0:04.2 | 13 | It was the ninth of January, at the Coronation Brick and Tile works. | Push in on the painted gate sign "CORONATION BRICK & TILE · DURBAN" and a wall calendar showing "9 JANUARY". |
-| 3 | 0:08.1 | 17 | They earned under nine rand a week, and they marched to a football stadium to demand more. | Pay-office window "WEEKLY WAGE R8,97". Dissolve to a football stadium filling with workers. |
-| 4 | 0:13.1 | 12 | But Black workers had no union, and striking was against the law. | A notice nailed to the gate: "STRIKES ILLEGAL". An empty noticeboard space where a union notice would go. |
-| 5 | 0:16.7 | 17 | Then the company offered one rand fifty more. They said no, and got just over two rand. | Manager's office with a desk nameplate. A chalkboard shows "+R1,50", which gets crossed out, then "+R2,07" with a tick. |
-| 6 | 0:21.8 | 10 | Within weeks, six thousand Frame textile workers walked out too. | Textile mill with "FRAME TEXTILES" painted on it. The looms stop and workers stream out of the gates. A gate chalkboard reads "6 000 OUT". |
-| 7 | 0:24.8 | 16 | By March, more than sixty thousand workers at over a hundred Durban firms had downed tools. | A big 3D table map titled "DURBAN 1973". Factory pins light up across it, and a tally board reads "60 000+ WORKERS · 100+ FIRMS". |
-| 8 | 0:29.6 | 16 | You see, a boss can fire one worker. But no factory runs without all of them. | Back at the brickworks: a boss in a bowler hat faces one worker. The camera cranes up to reveal the whole crowd and the silent kilns. |
-| 9 | 0:34.3 | 16 | So the government set up an inquiry. In 1979, it said Black unions should be recognised. | Government office: a report on the desk reads "WIEHAHN COMMISSION · 1979", and a stamp comes down: "RECOGNISED". |
-| 10 | 0:39.1 | 11 | It all started with two thousand people who stopped making bricks. | Brickworks at sunrise: one brick placed on a stack, with the crowd behind it. The camera comes to rest. |
+| 2 | 0:05.7 | 13 | It was the ninth of January, at the Coronation Brick and Tile works. | Push in on the painted gate sign "CORONATION BRICK & TILE · DURBAN" and a wall calendar showing "9 JANUARY". |
+| 3 | 0:09.5 | 17 | They earned under nine rand a week, and they marched to a football stadium to demand more. | Pay-office window "WEEKLY WAGE R8,97". Dissolve to a football stadium filling with workers. |
+| 4 | 0:13.9 | 12 | But Black workers had no union, and striking was against the law. | A notice nailed to the gate: "STRIKES ILLEGAL". An empty noticeboard space where a union notice would go. |
+| 5 | 0:17.6 | 17 | Then the company offered one rand fifty more. They said no, and got just over two rand. | Manager's office with a desk nameplate. A chalkboard shows "+R1,50", which gets crossed out, then "+R2,07" with a tick. |
+| 6 | 0:22.4 | 10 | Within weeks, six thousand Frame textile workers walked out too. | Textile mill with "FRAME TEXTILES" painted on it. The looms stop and workers stream out of the gates. A gate chalkboard reads "6 000 OUT". |
+| 7 | 0:26.1 | 16 | By March, more than sixty thousand workers at over a hundred Durban firms had downed tools. | A big 3D table map titled "DURBAN 1973". Factory pins light up across it, and a tally board reads "60 000+ WORKERS · 100+ FIRMS". |
+| 8 | 0:31.5 | 16 | You see, a boss can fire one worker. But no factory runs without all of them. | Back at the brickworks: a boss in a bowler hat faces one worker. The camera cranes up to reveal the whole crowd and the silent kilns. |
+| 9 | 0:36.0 | 16 | So the government set up an inquiry. In 1979, it said Black unions should be recognised. | Government office: a report on the desk reads "WIEHAHN COMMISSION · 1979", and a stamp comes down: "RECOGNISED". |
+| 10 | 0:41.7 | 11 | It all started with two thousand people who stopped making bricks. | Brickworks at sunrise: one brick placed on a stack, with the crowd behind it. The camera comes to rest. |
 
-The voiceover ends at about 42.4 s. The video holds the last frame for about 1 s, giving roughly 43.4 s in total.
+The voiceover ends at 44.98 s and the video holds for 1.2 s after it, giving 46.2 s in total.
 
 ## Voiceover text
 
@@ -30,14 +30,14 @@ In 1973, two thousand workers in Durban did something illegal. They stopped maki
 | Rule | Target | This script | OK? |
 |---|---|---|---|
 | First word at t=0, premise in first sentence | yes | "In 1973 ... did something illegal" | ✅ |
-| Hook length | 5-23 words (aim 16), ends about 4-5 s | 14 words, ends at 4.2 s | ✅ |
+| Hook length | 5-23 words (aim 16), ends about 4-5 s | 14 words, ends at 4.0 s | ✅ |
 | Shots | 9-12, one location each | 10 | ✅ |
-| Words / duration | 140-150 words, 43-48 s | 142 words, about 42.4 s (43.4 s with the end hold) | ✅ (just under 43 s of speech) |
+| Words / duration | 140-150 words, 43-48 s (3.05-3.65 words/s) | 142 words, 45.0 s of speech at 3.16 words/s | ✅ |
 | "But" | shot 4 | shot 4 | ✅ |
 | "Then" | shot 5 | shot 5 | ✅ |
 | Conflict / escalation | shot 6 | shot 6 (the strike spreads) | ✅ |
 | "You see" pivot | 53-87% of runtime | shot 8, at 70% | ✅ (it lands in shot 8, not 7) |
-| "So..." consequence | 80-93% | shot 9, at 81% | ✅ |
+| "So..." consequence | 80-93% | shot 9, at 80% | ✅ (at the low edge) |
 | Closing line | 5-19 words (about 9) | 11 words | ✅ |
 | No outro, no call to action | yes | yes | ✅ |
 

@@ -28,14 +28,22 @@ export const shotStart = (n) => CUTS[n - 1];
 export const shotEnd = (n) => CUTS[n];
 
 const norm = (w) => w.toLowerCase().replace(/[^a-z0-9]/g, '');
-// Time a word starts being spoken (word positions by proportion inside its sentence).
+// Spoken length of each written word (numbers are said as words), used to place
+// words inside a sentence by proportion of spoken letters.
+const SAY = { '1973': 'nineteenseventythree', '1979': 'nineteenseventynine' };
+const weight = (w) => { const n = norm(w); return (SAY[n] || n).length + 1; };
+function wordStarts(s) {
+  const words = s.text.split(/\s+/), ws = words.map(weight), total = ws.reduce((a, b) => a + b, 0);
+  let acc = 0;
+  return words.map((w, i) => { const st = s.start + ((s.end - s.start) * acc) / total; acc += ws[i]; return { w, st, en: s.start + ((s.end - s.start) * acc) / total }; });
+}
+// Time a word starts being spoken.
 export function beat(shot, word, occurrence = 0, offset = 0) {
   let seen = 0;
   for (const s of byShot(shot)) {
-    const words = s.text.split(/\s+/);
-    for (let i = 0; i < words.length; i++) {
-      if (norm(words[i]) === norm(word)) {
-        if (seen === occurrence) return s.start + ((s.end - s.start) * i) / words.length + offset;
+    for (const x of wordStarts(s)) {
+      if (norm(x.w) === norm(word)) {
+        if (seen === occurrence) return x.st + offset;
         seen++;
       }
     }
@@ -44,7 +52,7 @@ export function beat(shot, word, occurrence = 0, offset = 0) {
 }
 // Time a word finishes.
 export function beatEnd(shot, word, occurrence = 0) {
-  const s0 = byShot(shot).find((s) => s.text.split(/\s+/).some((w) => norm(w) === norm(word)));
-  const n = s0.text.split(/\s+/).length;
-  return beat(shot, word, occurrence) + (s0.end - s0.start) / n;
+  let seen = 0;
+  for (const s of byShot(shot)) for (const x of wordStarts(s)) if (norm(x.w) === norm(word)) { if (seen === occurrence) return x.en; seen++; }
+  throw new Error(`beatEnd: word "${word}" not found in shot ${shot}`);
 }
