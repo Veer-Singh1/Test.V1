@@ -74,6 +74,14 @@ function hangingSign(text, w, h, { bg = '#efe2c0', fg = INK, size = 160, rod = 0
   return g;
 }
 
+// Moving groups need live edge lines (baked lines would stay where the group started).
+function makeDynamic(group) {
+  group.traverse((o) => {
+    if (o.isMesh && o.userData.edges && !o.userData.isHull) { o.add(edgeLines(o.geometry, o.userData.edges, o.userData.thin)); delete o.userData.edges; }
+  });
+  return group;
+}
+
 // ---------- the electron (a cartoon prop character, not the base person design) ----------
 const GLOW = (() => {
   const t = canvasTex(128, 128, (g, w, h) => {
@@ -327,7 +335,7 @@ function locBox() {
   const tagAtom = paperTag('ATOM', 0.16, 0.06, { size: 150 }); tagAtom.position.set(-0.52, th + 0.02, 0.17); tagAtom.rotation.x = -0.4; boxG.add(tagAtom);
   const tag50 = paperTag('50 / 50', 0.2, 0.07, { size: 150, bg: '#ffd36a' }); tag50.position.set(-0.52, th + 0.36, 0.0); boxG.add(tag50);
   const tagDND = paperTag('DECAYED + NOT DECAYED', 0.46, 0.07, { size: 120, bg: '#bff0ff' }); tagDND.position.set(-0.52, th + 0.33, 0.06); boxG.add(tagDND);
-  const thought = hangingSign('THOUGHT EXPERIMENT · NEVER DONE', 1.4, 0.2, { size: 120, bg: '#f6efd8', rod: 0.5 }); thought.position.set(0, BY0 + bh + 0.3, BZ0 + 0.15); G.add(thought);
+  const thought = hangingSign('THOUGHT EXPERIMENT · NEVER DONE', 1.4, 0.2, { size: 120, bg: '#f6efd8', rod: 0.5 }); thought.position.set(0, BY0 + bh + 0.3, BZ0 + 0.15); G.add(thought); makeDynamic(thought);
   // floating question marks around the closed box (shot 6)
   const qs = [];
   for (let i = 0; i < 6; i++) { const q = qMark(0.24 + (i % 3) * 0.06); G.add(q); qs.push(q); }
@@ -428,7 +436,7 @@ function locStudy() {
 function locDecoherence() {
   const G = room({ w: 8, d: 7, h: 3.6, wall: M.plaster('#2f3e56', 501), floor: M.concrete('#3a4250', 502), wainscot: '#22304a', ceil: '#2a3448', interior: '#1a2236' });
   const D = 7;
-  const sign = hangingSign('DECOHERENCE', 2.4, 0.5, { bg: '#ffd36a', size: 220, rod: 0.8 }); sign.position.set(0.4, 2.3, -D / 2 + 0.3); G.add(sign);
+  const sign = hangingSign('DECOHERENCE', 2.4, 0.5, { bg: '#ffd36a', size: 220, rod: 0.8 }); sign.position.set(0.4, 2.3, -D / 2 + 0.3); G.add(sign); makeDynamic(sign);
   // vacuum bell jar with the lone electron
   const ped = cyl(0.35, 0.3, 0.8, M.flat('#5a6a7a', 503), { seg: 20 }); ped.position.set(-1.9, 0, -0.9); G.add(ped);
   const jar = new THREE.Mesh(new THREE.SphereGeometry(0.42, 28, 16, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#cfefff', transparent: true, opacity: 0.16, depthWrite: false, side: THREE.DoubleSide }));

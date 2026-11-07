@@ -74,6 +74,14 @@ function hangingSign(text, w, h, { bg = '#efe2c0', fg = INK, size = 160, rod = 0
   return g;
 }
 
+// Moving groups need live edge lines (baked lines would stay where the group started).
+function makeDynamic(group) {
+  group.traverse((o) => {
+    if (o.isMesh && o.userData.edges && !o.userData.isHull) { o.add(edgeLines(o.geometry, o.userData.edges, o.userData.thin)); delete o.userData.edges; }
+  });
+  return group;
+}
+
 // ---------- the electron (a cartoon prop character, not the base person design) ----------
 const GLOW = (() => {
   const t = canvasTex(128, 128, (g, w, h) => {
@@ -443,7 +451,7 @@ function locTank() {
   const sT = labelTex({ w: 1000, h: 300, bg: '#efe2c0', border: INK, seed: 41, lines: [{ text: 'ROUND 2: WAVES', size: 180, y: 0.53, spacing: '4px' }] });
   const sign = signBoard({ w: 1.9, h: 0.55, texture: sT, postH: 0 }); sign.position.set(-1.8, 2.6, -5.4); G.add(sign);
   const ipT = labelTex({ w: 1400, h: 260, bg: '#ffd36a', border: INK, seed: 42, lines: [{ text: 'INTERFERENCE PATTERN', size: 170, y: 0.54, spacing: '4px' }] });
-  const ip = hangingSign('INTERFERENCE PATTERN', 2.6, 0.42, { bg: '#ffd36a', size: 190, rod: 0.8 }); ip.position.set(0, 2.2, -TL / 2 - 0.1); G.add(ip);
+  const ip = hangingSign('INTERFERENCE PATTERN', 2.6, 0.42, { bg: '#ffd36a', size: 190, rod: 0.8 }); ip.position.set(0, 2.2, -TL / 2 - 0.1); G.add(ip); makeDynamic(ip);
   G.add(pendant(-1.5, 3.6, -1.0)); G.add(pendant(1.5, 3.6, 1.5));
   bakeEdges(G);
   const t0 = shotStart(4) - 6.0, tI = beat(4, 'interference');
@@ -510,6 +518,7 @@ function locElectronLab() {
   const onT = labelTex({ w: 640, h: 160, bg: '#22282c', fg: '#ff5a4a', seed: 53, wearAmount: 0.2, lines: [{ text: 'DETECTOR ON', size: 110, y: 0.55, color: '#ff6a5a', spacing: '6px' }] });
   const onLabel = plane(0.34, 0.085, basic('#ffffff', { map: onT }), { y: 0.03, z: 0.152 }); det.add(onLabel);
   det.position.set(-1.62, 1.05, 0); detPivot.add(det);
+  makeDynamic(detPivot);
   // wave-of-possibilities cloud (shot 11)
   const cm = cloudMaterial({ k: (2 * Math.PI) / 0.32, c: 1.6, s1: [-0.25, 0.0], s2: [0.25, 0.0], bar: 0.0, src: 2.3 });
   cm.uniforms.uSpread.value = 0.6;
