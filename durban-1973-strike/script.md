@@ -1,6 +1,6 @@
 # The brickworks that woke up a country (Durban, 1973)
 
-EMS Module 14: Trade Unions. Vertical 9:16, about 43 s. Status: **draft v1, waiting for approval**.
+EMS Module 14: Trade Unions. Vertical 9:16, about 43 s. Status: **approved, video built (estimated timing until a voiceover exists)**.
 
 ## Shot table
 
