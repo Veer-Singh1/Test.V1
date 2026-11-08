@@ -1,0 +1,25 @@
+{
+  "name": "why-you-dont-fall-apart",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Schrodinger's cat - 9:16 animated short (Remotion + three.js)",
+  "scripts": {
+    "studio": "remotion studio src/index.jsx",
+    "render": "remotion render src/index.jsx WhyYouDontFallApart out/full_silent.mp4 --gl=angle"
+  },
+  "dependencies": {
+    "@fontsource/bebas-neue": "5.2.5",
+    "@fontsource/permanent-marker": "5.2.5",
+    "@react-three/fiber": "8.17.14",
+    "@remotion/cli": "4.0.538",
+    "@remotion/three": "4.0.538",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.538",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@remotion/bundler": "4.0.538",
+    "@remotion/renderer": "4.0.538"
+  }
+}

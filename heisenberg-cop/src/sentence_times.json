@@ -1,0 +1,87 @@
+{
+  "source": "Kokoro TTS v1.0, voice am_fenrir, speed 1.12",
+  "sentences": [
+    {
+      "shot": 1,
+      "text": "Physics, please.",
+      "start": 0.0,
+      "end": 0.842
+    },
+    {
+      "shot": 1,
+      "text": "What is this quantum physics nonsense?",
+      "start": 1.082,
+      "end": 2.865
+    },
+    {
+      "shot": 2,
+      "text": "A cop pulls over Heisenberg.",
+      "start": 3.265,
+      "end": 4.713
+    },
+    {
+      "shot": 3,
+      "text": "Do you know how fast you were going?",
+      "start": 5.113,
+      "end": 6.687,
+      "voice": "am_michael",
+      "speed": 1.22
+    },
+    {
+      "shot": 4,
+      "text": "Heisenberg says,",
+      "start": 7.087,
+      "end": 8.033
+    },
+    {
+      "shot": 4,
+      "text": "No, but I know exactly where I am.",
+      "start": 8.273,
+      "end": 10.378,
+      "voice": "bm_george",
+      "speed": 1.12
+    },
+    {
+      "shot": 5,
+      "text": "That's the uncertainty principle.",
+      "start": 10.778,
+      "end": 12.24
+    },
+    {
+      "shot": 6,
+      "text": "The more precisely you pin down where a particle is, the less precisely its momentum is defined.",
+      "start": 12.64,
+      "end": 18.052
+    },
+    {
+      "shot": 7,
+      "text": "That's basically its speed and direction.",
+      "start": 18.452,
+      "end": 20.204
+    },
+    {
+      "shot": 7,
+      "text": "Squeeze one, and the other gets blurry.",
+      "start": 20.444,
+      "end": 22.251
+    },
+    {
+      "shot": 8,
+      "text": "Heisenberg got a ticket.",
+      "start": 22.651,
+      "end": 23.827
+    },
+    {
+      "shot": 8,
+      "text": "Or didn't.",
+      "start": 24.067,
+      "end": 24.742
+    },
+    {
+      "shot": 8,
+      "text": "It's uncertain.",
+      "start": 24.982,
+      "end": 25.79
+    }
+  ]
+}
