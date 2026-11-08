@@ -197,7 +197,7 @@ function locLab() {
   const lidP = new THREE.Group(); lidP.position.set(0, 0.26, -0.15); tb.add(lidP);
   const lid = box(0.6, 0.05, 0.3, M.flat('#a82e22', 803), { z: 0.15, inkOpts: { hull: 0.005, edges: 30, dynamic: true } }); lidP.add(lid);
   for (let i = 0; i < 3; i++) tb.add(box(0.04, 0.2, 0.04, M.dark('#5a5a60'), { x: -0.15 + i * 0.15, y: 0.2, z: 0.02, inkOpts: { hull: 0.003, edges: 30, thin: true } }));
-  tb.position.set(0.1, 0.9, -0.95); G.add(tb);
+  tb.position.set(0.1, 0.9, -0.95); G.add(tb); makeDynamic(tb);
   const ntf = hangingSign('NOTHING TO FIX', 1.6, 0.36, { bg: '#ffd36a', size: 190, rod: 0.7 }); ntf.position.set(0.1, 2.2, -0.9); G.add(ntf); makeDynamic(ntf);
   bakeEdges(G);
   const tW = beat(1, 'Wrong'), tIs = beat(2, 'isnt'), tNa = beat(2, 'nature'), tNo = beat(8, 'Nothing');
@@ -306,7 +306,7 @@ function locStudio() {
   } });
   const p1 = plane(0.78, 0.68, M.label(photo(false)), { x: -2.35, y: 1.35 + 0.6, z: -D / 2 + 0.29 }); G.add(p1);
   const p2 = plane(0.78, 0.68, M.label(photo(true)), { x: -1.45, y: 1.35 + 0.6, z: -D / 2 + 0.29 }); G.add(p2);
-  const notBoth = hangingSign('CAN’T HAVE BOTH', 1.6, 0.3, { bg: '#ffd36a', size: 170, rod: 0.4 }); notBoth.position.set(-1.9, 2.75, -D / 2 + 0.35); G.add(notBoth);
+  const notBoth = hangingSign('CAN’T HAVE BOTH', 1.6, 0.3, { bg: '#ffd36a', size: 170, rod: 0.4 }); notBoth.position.set(-1.9, 2.75, -D / 2 + 0.35); G.add(notBoth); makeDynamic(notBoth);
   G.add(pendant(0, 3.0, -0.6, '#3a3a3c'));
   bakeEdges(G);
   const tPh = beat(6, 'photo'), tSn = beat(6, 'snapshot'), tBl = beat(6, 'blur'), tSame = beat(6, 'same');
@@ -314,7 +314,8 @@ function locStudio() {
     group: G,
     update(t, camPos, shot) {
       const run = ((t - shotStart(6)) * 0.9) % 1;
-      e.root.position.set(lerp(1.4, -1.2, run), 0, -D / 2 + 1.0);
+      e.root.position.set(t > tBl - 0.3 ? 1.6 : lerp(1.4, -1.2, run), 0, -D / 2 + 1.0);
+      e.root.visible = !(t > tBl - 0.3 && t < tBl - 0.1);
       animElectron(e, t, camPos, { strut: 1 });
       flash.visible = (t > tPh - 0.05 && t < tPh + 0.25) || (t > tSn && t < tSn + 0.2) || (t > tBl && t < tBl + 0.2);
       p1.visible = t > tSn - 0.1; p2.visible = t > tBl - 0.1;
