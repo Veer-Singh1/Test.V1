@@ -1,0 +1,211 @@
+{
+ "title": "Why are clouds white when the sky is blue",
+ "sentences": [
+  {
+   "n": 1,
+   "display": "Why are clouds white… when the sky is blue?",
+   "pauseBefore": null,
+   "title": true,
+   "start": 0.08,
+   "end": 3.25,
+   "marks": [
+    [
+     3,
+     1.68,
+     1.94
+    ]
+   ]
+  },
+  {
+   "n": 2,
+   "display": "Same sunlight.",
+   "pauseBefore": null,
+   "start": 3.72,
+   "end": 4.56
+  },
+  {
+   "n": 3,
+   "display": "Same air.",
+   "pauseBefore": null,
+   "start": 4.78,
+   "end": 5.62
+  },
+  {
+   "n": 4,
+   "display": "Totally DIFFERENT colour.",
+   "pauseBefore": null,
+   "start": 5.94,
+   "end": 7.23
+  },
+  {
+   "n": 5,
+   "display": "Here's what's actually happening.",
+   "pauseBefore": null,
+   "start": 7.7,
+   "end": 9.24
+  },
+  {
+   "n": 6,
+   "display": "A cloud is made of billions of tiny water droplets.",
+   "pauseBefore": null,
+   "start": 9.63,
+   "end": 12.91
+  },
+  {
+   "n": 7,
+   "display": "Air molecules are so small, they mostly scatter blue light.",
+   "pauseBefore": null,
+   "start": 13.3,
+   "end": 16.9
+  },
+  {
+   "n": 8,
+   "display": "That's why the sky is blue.",
+   "pauseBefore": null,
+   "start": 17.23,
+   "end": 18.53
+  },
+  {
+   "n": 9,
+   "display": "But cloud droplets are HUGE compared to light waves.",
+   "pauseBefore": null,
+   "start": 18.93,
+   "end": 21.88
+  },
+  {
+   "n": 10,
+   "display": "So they scatter every colour… *equally*.",
+   "pauseBefore": null,
+   "start": 22.12,
+   "end": 24.48,
+   "marks": [
+    [
+     4,
+     22.89,
+     23.02
+    ]
+   ]
+  },
+  {
+   "n": 11,
+   "display": "Red.",
+   "pauseBefore": null,
+   "start": 24.89,
+   "end": 25.33
+  },
+  {
+   "n": 12,
+   "display": "Green.",
+   "pauseBefore": null,
+   "start": 25.61,
+   "end": 26.08
+  },
+  {
+   "n": 13,
+   "display": "Blue.",
+   "pauseBefore": null,
+   "start": 26.31,
+   "end": 26.65
+  },
+  {
+   "n": 14,
+   "display": "All bounced back together.",
+   "pauseBefore": null,
+   "start": 26.98,
+   "end": 28.35
+  },
+  {
+   "n": 15,
+   "display": "And every colour mixed together… is WHITE.",
+   "pauseBefore": null,
+   "start": 28.69,
+   "end": 31.16,
+   "marks": [
+    [
+     4,
+     30.34,
+     30.59
+    ]
+   ]
+  },
+  {
+   "n": 16,
+   "display": "That's called MIE SCATTERING.",
+   "pauseBefore": null,
+   "concept": true,
+   "start": 31.54,
+   "end": 33.12
+  },
+  {
+   "n": 17,
+   "display": "Now look at a storm cloud.",
+   "pauseBefore": null,
+   "start": 33.55,
+   "end": 34.91
+  },
+  {
+   "n": 18,
+   "display": "Same water.",
+   "pauseBefore": null,
+   "start": 35.24,
+   "end": 36.03
+  },
+  {
+   "n": 19,
+   "display": "Same droplets.",
+   "pauseBefore": null,
+   "start": 36.19,
+   "end": 37.18
+  },
+  {
+   "n": 20,
+   "display": "So why is it GREY?",
+   "pauseBefore": null,
+   "start": 37.47,
+   "end": 38.87
+  },
+  {
+   "n": 21,
+   "display": "Because it's so thick, most of the light gets scattered back out of the top… before it ever reaches the bottom.",
+   "pauseBefore": null,
+   "start": 39.3,
+   "end": 45.12,
+   "marks": [
+    [
+     3,
+     40.62,
+     40.79
+    ]
+   ]
+  },
+  {
+   "n": 22,
+   "display": "You're not seeing a dark cloud.",
+   "pauseBefore": null,
+   "start": 45.56,
+   "end": 47.23
+  },
+  {
+   "n": 23,
+   "display": "You're seeing a cloud that ran out of *light*.",
+   "pauseBefore": null,
+   "start": 47.66,
+   "end": 49.84
+  },
+  {
+   "n": 24,
+   "display": "So next time someone asks why clouds are white… you'll know.",
+   "pauseBefore": null,
+   "start": 50.21,
+   "end": 53.56,
+   "marks": [
+    [
+     8,
+     52.63,
+     52.96
+    ]
+   ]
+  }
+ ],
+ "voice": "Kokoro TTS v1.0, am_fenrir, speed 1.0"
+}
