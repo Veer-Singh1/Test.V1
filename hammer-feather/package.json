@@ -1,0 +1,30 @@
+{
+  "name": "hammer-feather",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Physics line-art short: Your head is older than your feet (Remotion, SVG)",
+  "scripts": {
+    "studio": "remotion studio src/index.jsx",
+    "render": "remotion render src/index.jsx HeadOlderThanFeet out/final.mp4"
+  },
+  "dependencies": {
+    "@fontsource/inter": "5.2.8",
+    "@fontsource/playfair-display": "5.2.8",
+    "@react-three/fiber": "^8.17.14",
+    "@remotion/cli": "4.0.538",
+    "@remotion/three": "^4.0.538",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.538",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@remotion/bundler": "4.0.538",
+    "@remotion/renderer": "4.0.538",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/three": "^0.187.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

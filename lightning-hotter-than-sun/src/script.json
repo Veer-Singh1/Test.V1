@@ -1,0 +1,215 @@
+{
+ "title": "Is lightning hotter than the Sun",
+ "sentences": [
+  {
+   "n": 1,
+   "display": "Is lightning hotter than the Sun?",
+   "title": true,
+   "start": 0.03,
+   "end": 1.78,
+   "pauseBefore": null
+  },
+  {
+   "n": 2,
+   "display": "Yes. About FIVE times hotter.",
+   "start": 2.07,
+   "end": 4.32,
+   "pauseBefore": null
+  },
+  {
+   "n": 3,
+   "display": "Most people think the Sun is the hottest thing they'll ever see.",
+   "start": 4.67,
+   "end": 7.8,
+   "pauseBefore": null
+  },
+  {
+   "n": 4,
+   "display": "It's not.",
+   "start": 8.18,
+   "end": 8.86,
+   "pauseBefore": null
+  },
+  {
+   "n": 5,
+   "display": "A flash in the sky.",
+   "start": 9.18,
+   "end": 10.43,
+   "pauseBefore": null
+  },
+  {
+   "n": 6,
+   "display": "A crack outside your window.",
+   "start": 10.73,
+   "end": 12.19,
+   "pauseBefore": null
+  },
+  {
+   "n": 7,
+   "display": "A storm rolling over the hills.",
+   "start": 12.53,
+   "end": 14.51,
+   "pauseBefore": null
+  },
+  {
+   "n": 8,
+   "display": "But look at what's actually happening.",
+   "start": 14.86,
+   "end": 16.7,
+   "pauseBefore": null
+  },
+  {
+   "n": 9,
+   "display": "A bolt of lightning slams through the air…",
+   "start": 17.08,
+   "end": 19.27,
+   "pauseBefore": null
+  },
+  {
+   "n": 10,
+   "display": "and in a split second, it heats that tiny channel to about… 30,000 degrees.",
+   "start": 19.52,
+   "end": 24.32,
+   "pauseBefore": null,
+   "marks": [
+    [
+     4,
+     20.67,
+     20.84
+    ],
+    [
+     11,
+     22.68,
+     22.84
+    ]
+   ]
+  },
+  {
+   "n": 11,
+   "display": "The surface of the Sun… only about five and a half thousand.",
+   "start": 24.62,
+   "end": 27.72,
+   "pauseBefore": null,
+   "marks": [
+    [
+     4,
+     25.76,
+     26.02
+    ]
+   ]
+  },
+  {
+   "n": 12,
+   "display": "That's called PLASMA.",
+   "concept": true,
+   "start": 28.04,
+   "end": 29.47,
+   "pauseBefore": null
+  },
+  {
+   "n": 13,
+   "display": "Air so hot, its atoms get ripped apart.",
+   "start": 29.76,
+   "end": 32.66,
+   "pauseBefore": null,
+   "marks": [
+    [
+     2,
+     30.79,
+     31.03
+    ]
+   ]
+  },
+  {
+   "n": 14,
+   "display": "And here's the *crazy* part.",
+   "start": 33.03,
+   "end": 34.34,
+   "pauseBefore": null
+  },
+  {
+   "n": 15,
+   "display": "All that superheated air explodes outward… faster than sound can travel.",
+   "start": 34.57,
+   "end": 39.19,
+   "pauseBefore": null,
+   "marks": [
+    [
+     5,
+     37.3,
+     37.45
+    ]
+   ]
+  },
+  {
+   "n": 16,
+   "display": "That's THUNDER.",
+   "start": 39.46,
+   "end": 40.48,
+   "pauseBefore": null
+  },
+  {
+   "n": 17,
+   "display": "It's not a rumble.",
+   "start": 40.72,
+   "end": 41.61,
+   "pauseBefore": null
+  },
+  {
+   "n": 18,
+   "display": "It's a sonic BOOM… made by lightning.",
+   "start": 41.81,
+   "end": 44.42,
+   "pauseBefore": null,
+   "marks": [
+    [
+     3,
+     43.24,
+     43.39
+    ]
+   ]
+  },
+  {
+   "n": 19,
+   "display": "So next time you see a flash, count the seconds until the bang.",
+   "start": 44.79,
+   "end": 48.2,
+   "pauseBefore": null,
+   "marks": [
+    [
+     6,
+     46.38,
+     46.56
+    ]
+   ]
+  },
+  {
+   "n": 20,
+   "display": "Every three seconds is about one kilometre away.",
+   "start": 48.48,
+   "end": 51.18,
+   "pauseBefore": null
+  },
+  {
+   "n": 21,
+   "display": "And the thing that just lit up your sky… was HOTTER than the Sun.",
+   "start": 51.51,
+   "end": 54.84,
+   "pauseBefore": null,
+   "marks": [
+    [
+     8,
+     53.17,
+     53.44
+    ]
+   ]
+  },
+  {
+   "n": 22,
+   "display": "Still think the Sun is hot?",
+   "start": 55.21,
+   "end": 56.65,
+   "pauseBefore": null
+  }
+ ]
+}

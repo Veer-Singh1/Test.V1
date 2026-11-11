@@ -1,0 +1,726 @@
+{
+ "source": "offline alignment of the uploaded narration (scripts/align_audio.py)",
+ "duration": 51.76,
+ "words": [
+  {
+   "text": "The",
+   "start": 0.05,
+   "end": 0.305
+  },
+  {
+   "text": "Moon",
+   "start": 0.305,
+   "end": 0.625
+  },
+  {
+   "text": "is",
+   "start": 0.625,
+   "end": 0.785
+  },
+  {
+   "text": "running",
+   "start": 0.785,
+   "end": 1.105
+  },
+  {
+   "text": "away",
+   "start": 1.105,
+   "end": 1.425
+  },
+  {
+   "text": "from",
+   "start": 1.425,
+   "end": 1.665
+  },
+  {
+   "text": "us.",
+   "start": 1.665,
+   "end": 1.83
+  },
+  {
+   "text": "About",
+   "start": 2.03,
+   "end": 2.385
+  },
+  {
+   "text": "FOUR",
+   "start": 2.385,
+   "end": 2.785
+  },
+  {
+   "text": "centimetres...",
+   "start": 2.785,
+   "end": 3.41
+  },
+  {
+   "text": "every",
+   "start": 3.68,
+   "end": 4.145
+  },
+  {
+   "text": "single",
+   "start": 4.145,
+   "end": 4.945
+  },
+  {
+   "text": "year.",
+   "start": 4.945,
+   "end": 5.13
+  },
+  {
+   "text": "Most",
+   "start": 5.61,
+   "end": 5.985
+  },
+  {
+   "text": "people",
+   "start": 5.985,
+   "end": 6.225
+  },
+  {
+   "text": "think",
+   "start": 6.225,
+   "end": 6.465
+  },
+  {
+   "text": "the",
+   "start": 6.465,
+   "end": 6.625
+  },
+  {
+   "text": "Moon",
+   "start": 6.625,
+   "end": 6.945
+  },
+  {
+   "text": "is",
+   "start": 6.945,
+   "end": 7.025
+  },
+  {
+   "text": "just",
+   "start": 7.025,
+   "end": 7.11
+  },
+  {
+   "text": "parked",
+   "start": 7.26,
+   "end": 7.745
+  },
+  {
+   "text": "up",
+   "start": 7.745,
+   "end": 7.985
+  },
+  {
+   "text": "there.",
+   "start": 7.985,
+   "end": 8.08
+  },
+  {
+   "text": "Forever.",
+   "start": 8.31,
+   "end": 8.78
+  },
+  {
+   "text": "Every",
+   "start": 9.22,
+   "end": 9.505
+  },
+  {
+   "text": "full",
+   "start": 9.505,
+   "end": 9.825
+  },
+  {
+   "text": "moon.",
+   "start": 9.825,
+   "end": 10.385
+  },
+  {
+   "text": "Every",
+   "start": 10.385,
+   "end": 10.625
+  },
+  {
+   "text": "high",
+   "start": 10.625,
+   "end": 10.945
+  },
+  {
+   "text": "tide.",
+   "start": 10.945,
+   "end": 11.35
+  },
+  {
+   "text": "Every",
+   "start": 11.6,
+   "end": 11.905
+  },
+  {
+   "text": "eclipse.",
+   "start": 11.905,
+   "end": 12.52
+  },
+  {
+   "text": "But",
+   "start": 12.99,
+   "end": 13.185
+  },
+  {
+   "text": "look",
+   "start": 13.185,
+   "end": 13.345
+  },
+  {
+   "text": "at",
+   "start": 13.345,
+   "end": 13.505
+  },
+  {
+   "text": "what's",
+   "start": 13.505,
+   "end": 13.985
+  },
+  {
+   "text": "actually",
+   "start": 13.985,
+   "end": 14.305
+  },
+  {
+   "text": "happening.",
+   "start": 14.305,
+   "end": 14.72
+  },
+  {
+   "text": "The",
+   "start": 15.3,
+   "end": 15.425
+  },
+  {
+   "text": "Moon",
+   "start": 15.425,
+   "end": 15.825
+  },
+  {
+   "text": "pulls",
+   "start": 15.825,
+   "end": 16.225
+  },
+  {
+   "text": "on",
+   "start": 16.225,
+   "end": 16.385
+  },
+  {
+   "text": "our",
+   "start": 16.385,
+   "end": 16.545
+  },
+  {
+   "text": "oceans...",
+   "start": 16.545,
+   "end": 17.09
+  },
+  {
+   "text": "and",
+   "start": 17.36,
+   "end": 17.505
+  },
+  {
+   "text": "our",
+   "start": 17.505,
+   "end": 17.665
+  },
+  {
+   "text": "spinning",
+   "start": 17.665,
+   "end": 18.065
+  },
+  {
+   "text": "Earth",
+   "start": 18.065,
+   "end": 18.465
+  },
+  {
+   "text": "drags",
+   "start": 18.465,
+   "end": 18.865
+  },
+  {
+   "text": "those",
+   "start": 18.865,
+   "end": 19.105
+  },
+  {
+   "text": "tides",
+   "start": 19.105,
+   "end": 19.585
+  },
+  {
+   "text": "slightly",
+   "start": 19.585,
+   "end": 19.985
+  },
+  {
+   "text": "ahead",
+   "start": 19.985,
+   "end": 20.305
+  },
+  {
+   "text": "of",
+   "start": 20.305,
+   "end": 20.385
+  },
+  {
+   "text": "it.",
+   "start": 20.385,
+   "end": 20.48
+  },
+  {
+   "text": "That",
+   "start": 20.89,
+   "end": 21.105
+  },
+  {
+   "text": "bulge",
+   "start": 21.105,
+   "end": 21.585
+  },
+  {
+   "text": "of",
+   "start": 21.585,
+   "end": 21.745
+  },
+  {
+   "text": "water",
+   "start": 21.745,
+   "end": 22.065
+  },
+  {
+   "text": "pulls",
+   "start": 22.065,
+   "end": 22.545
+  },
+  {
+   "text": "back",
+   "start": 22.545,
+   "end": 22.785
+  },
+  {
+   "text": "on",
+   "start": 22.785,
+   "end": 22.945
+  },
+  {
+   "text": "the",
+   "start": 22.945,
+   "end": 23.105
+  },
+  {
+   "text": "Moon...",
+   "start": 23.105,
+   "end": 23.34
+  },
+  {
+   "text": "and",
+   "start": 23.54,
+   "end": 23.745
+  },
+  {
+   "text": "flings",
+   "start": 23.745,
+   "end": 24.225
+  },
+  {
+   "text": "it",
+   "start": 24.225,
+   "end": 24.385
+  },
+  {
+   "text": "outward.",
+   "start": 24.385,
+   "end": 24.66
+  },
+  {
+   "text": "That's",
+   "start": 25.03,
+   "end": 25.505
+  },
+  {
+   "text": "called",
+   "start": 25.505,
+   "end": 25.745
+  },
+  {
+   "text": "TIDAL",
+   "start": 25.745,
+   "end": 26.305
+  },
+  {
+   "text": "FRICTION.",
+   "start": 26.305,
+   "end": 26.75
+  },
+  {
+   "text": "And",
+   "start": 26.99,
+   "end": 27.265
+  },
+  {
+   "text": "Earth",
+   "start": 27.265,
+   "end": 27.665
+  },
+  {
+   "text": "pays",
+   "start": 27.665,
+   "end": 28.065
+  },
+  {
+   "text": "for",
+   "start": 28.065,
+   "end": 28.305
+  },
+  {
+   "text": "it.",
+   "start": 28.305,
+   "end": 28.41
+  },
+  {
+   "text": "Our",
+   "start": 28.82,
+   "end": 29.105
+  },
+  {
+   "text": "spin",
+   "start": 29.105,
+   "end": 29.505
+  },
+  {
+   "text": "is",
+   "start": 29.505,
+   "end": 29.745
+  },
+  {
+   "text": "slowing",
+   "start": 29.745,
+   "end": 30.225
+  },
+  {
+   "text": "down,",
+   "start": 30.225,
+   "end": 30.53
+  },
+  {
+   "text": "so",
+   "start": 30.66,
+   "end": 30.945
+  },
+  {
+   "text": "days",
+   "start": 30.945,
+   "end": 31.345
+  },
+  {
+   "text": "are",
+   "start": 31.345,
+   "end": 31.665
+  },
+  {
+   "text": "getting",
+   "start": 31.665,
+   "end": 31.985
+  },
+  {
+   "text": "LONGER.",
+   "start": 31.985,
+   "end": 32.41
+  },
+  {
+   "text": "Four",
+   "start": 32.84,
+   "end": 33.047
+  },
+  {
+   "text": "hundred",
+   "start": 33.047,
+   "end": 33.505
+  },
+  {
+   "text": "million",
+   "start": 33.505,
+   "end": 33.985
+  },
+  {
+   "text": "years",
+   "start": 33.985,
+   "end": 34.225
+  },
+  {
+   "text": "ago...",
+   "start": 34.225,
+   "end": 34.49
+  },
+  {
+   "text": "a",
+   "start": 34.66,
+   "end": 34.865
+  },
+  {
+   "text": "day",
+   "start": 34.865,
+   "end": 35.105
+  },
+  {
+   "text": "was",
+   "start": 35.105,
+   "end": 35.345
+  },
+  {
+   "text": "only",
+   "start": 35.345,
+   "end": 35.585
+  },
+  {
+   "text": "about",
+   "start": 35.585,
+   "end": 35.825
+  },
+  {
+   "text": "twenty-two",
+   "start": 35.825,
+   "end": 36.465
+  },
+  {
+   "text": "hours.",
+   "start": 36.465,
+   "end": 36.86
+  },
+  {
+   "text": "Ancient",
+   "start": 37.19,
+   "end": 37.585
+  },
+  {
+   "text": "coral",
+   "start": 37.585,
+   "end": 37.985
+  },
+  {
+   "text": "fossils",
+   "start": 37.985,
+   "end": 38.465
+  },
+  {
+   "text": "recorded",
+   "start": 38.465,
+   "end": 38.945
+  },
+  {
+   "text": "it.",
+   "start": 38.945,
+   "end": 38.97
+  },
+  {
+   "text": "And",
+   "start": 39.46,
+   "end": 39.745
+  },
+  {
+   "text": "how",
+   "start": 39.745,
+   "end": 39.905
+  },
+  {
+   "text": "do",
+   "start": 39.905,
+   "end": 40.065
+  },
+  {
+   "text": "we",
+   "start": 40.065,
+   "end": 40.225
+  },
+  {
+   "text": "know",
+   "start": 40.225,
+   "end": 40.385
+  },
+  {
+   "text": "the",
+   "start": 40.385,
+   "end": 40.545
+  },
+  {
+   "text": "Moon",
+   "start": 40.545,
+   "end": 40.785
+  },
+  {
+   "text": "is",
+   "start": 40.785,
+   "end": 40.945
+  },
+  {
+   "text": "leaving?",
+   "start": 40.945,
+   "end": 41.21
+  },
+  {
+   "text": "Astronauts",
+   "start": 41.65,
+   "end": 42.305
+  },
+  {
+   "text": "left",
+   "start": 42.305,
+   "end": 42.545
+  },
+  {
+   "text": "mirrors",
+   "start": 42.545,
+   "end": 43.025
+  },
+  {
+   "text": "up",
+   "start": 43.025,
+   "end": 43.185
+  },
+  {
+   "text": "there.",
+   "start": 43.185,
+   "end": 43.34
+  },
+  {
+   "text": "We",
+   "start": 43.68,
+   "end": 43.76
+  },
+  {
+   "text": "bounce",
+   "start": 43.76,
+   "end": 44.225
+  },
+  {
+   "text": "lasers",
+   "start": 44.225,
+   "end": 44.625
+  },
+  {
+   "text": "off",
+   "start": 44.625,
+   "end": 44.865
+  },
+  {
+   "text": "them...",
+   "start": 44.865,
+   "end": 45.105
+  },
+  {
+   "text": "and",
+   "start": 45.105,
+   "end": 45.265
+  },
+  {
+   "text": "time",
+   "start": 45.265,
+   "end": 45.585
+  },
+  {
+   "text": "the",
+   "start": 45.585,
+   "end": 45.665
+  },
+  {
+   "text": "trip.",
+   "start": 45.665,
+   "end": 45.88
+  },
+  {
+   "text": "So",
+   "start": 46.27,
+   "end": 46.465
+  },
+  {
+   "text": "the",
+   "start": 46.465,
+   "end": 46.625
+  },
+  {
+   "text": "Moon",
+   "start": 46.625,
+   "end": 46.945
+  },
+  {
+   "text": "you",
+   "start": 46.945,
+   "end": 47.105
+  },
+  {
+   "text": "see",
+   "start": 47.105,
+   "end": 47.265
+  },
+  {
+   "text": "tonight...",
+   "start": 47.265,
+   "end": 47.67
+  },
+  {
+   "text": "is",
+   "start": 47.86,
+   "end": 48.065
+  },
+  {
+   "text": "farther",
+   "start": 48.065,
+   "end": 48.625
+  },
+  {
+   "text": "away",
+   "start": 48.625,
+   "end": 48.865
+  },
+  {
+   "text": "than",
+   "start": 48.865,
+   "end": 49.105
+  },
+  {
+   "text": "it",
+   "start": 49.105,
+   "end": 49.265
+  },
+  {
+   "text": "was",
+   "start": 49.265,
+   "end": 49.505
+  },
+  {
+   "text": "last",
+   "start": 49.505,
+   "end": 49.745
+  },
+  {
+   "text": "year.",
+   "start": 49.745,
+   "end": 49.97
+  },
+  {
+   "text": "...Better",
+   "start": 50.39,
+   "end": 50.705
+  },
+  {
+   "text": "wave",
+   "start": 50.705,
+   "end": 51.025
+  },
+  {
+   "text": "goodbye.",
+   "start": 51.025,
+   "end": 51.44
+  }
+ ]
+}

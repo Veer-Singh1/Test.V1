@@ -1,0 +1,133 @@
+{
+ "title": "That leaf hates green",
+ "sentences": [
+  {
+   "n": 1,
+   "display": "That leaf isn't green.",
+   "pauseBefore": 0,
+   "start": 0.0,
+   "end": 1.153
+  },
+  {
+   "n": 2,
+   "display": "It's REJECTING green.",
+   "pauseBefore": 0.35,
+   "start": 1.503,
+   "end": 2.756
+  },
+  {
+   "n": 3,
+   "display": "Most people think colour is something an object *has*.",
+   "pauseBefore": 0.6,
+   "start": 3.356,
+   "end": 6.289
+  },
+  {
+   "n": 4,
+   "display": "Your red shirt.",
+   "pauseBefore": 0.4,
+   "start": 6.689,
+   "end": 7.589
+  },
+  {
+   "n": 5,
+   "display": "Your blue jeans.",
+   "pauseBefore": 0.35,
+   "start": 7.939,
+   "end": 9.004
+  },
+  {
+   "n": 6,
+   "display": "That yellow banana on the counter.",
+   "pauseBefore": 0.35,
+   "start": 9.354,
+   "end": 11.076
+  },
+  {
+   "n": 7,
+   "display": "But look at what's actually happening.",
+   "pauseBefore": 0.55,
+   "start": 11.626,
+   "end": 13.329
+  },
+  {
+   "n": 8,
+   "display": "White light is every colour at once.",
+   "pauseBefore": 0.4,
+   "start": 13.729,
+   "end": 15.635
+  },
+  {
+   "n": 9,
+   "display": "When it hits your shirt, the shirt swallows almost all of it.",
+   "pauseBefore": 0.5,
+   "start": 16.135,
+   "end": 19.172
+  },
+  {
+   "n": 10,
+   "display": "The one colour it can't use bounces off, straight into your eyes.",
+   "pauseBefore": 0.45,
+   "start": 19.622,
+   "end": 23.128
+  },
+  {
+   "n": 11,
+   "display": "That's SELECTIVE ABSORPTION.",
+   "pauseBefore": 0.8,
+   "concept": true,
+   "start": 23.928,
+   "end": 25.29
+  },
+  {
+   "n": 12,
+   "display": "A leaf's chlorophyll eats red and blue light for energy.",
+   "pauseBefore": 0.6,
+   "start": 25.89,
+   "end": 29.034
+  },
+  {
+   "n": 13,
+   "display": "Green is the leftover.",
+   "pauseBefore": 0.4,
+   "start": 29.434,
+   "end": 30.682
+  },
+  {
+   "n": 14,
+   "display": "So the colour you see is the one thing it throws away.",
+   "pauseBefore": 0.35,
+   "start": 31.032,
+   "end": 33.929
+  },
+  {
+   "n": 15,
+   "display": "Turn off the lights, and *nothing* has colour at all.",
+   "pauseBefore": 0.5,
+   "start": 34.429,
+   "end": 36.715
+  },
+  {
+   "n": 16,
+   "display": "So every colour around you is a rejection letter.",
+   "pauseBefore": 0.85,
+   "start": 37.565,
+   "end": 40.142
+  },
+  {
+   "n": 17,
+   "display": "And that leaf?",
+   "pauseBefore": 0.5,
+   "start": 40.642,
+   "end": 41.401
+  },
+  {
+   "n": 18,
+   "display": "Still saying no to green.",
+   "pauseBefore": 0.75,
+   "start": 42.151,
+   "end": 43.578
+  }
+ ],
+ "voice": "Kokoro TTS v1.0, am_fenrir, speed 0.97"
+}

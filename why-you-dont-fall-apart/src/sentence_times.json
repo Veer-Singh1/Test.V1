@@ -1,0 +1,47 @@
+{
+  "source": "Kokoro TTS v1.0, voice am_fenrir, speed 1.12",
+  "sentences": [
+    {
+      "shot": 1,
+      "text": "Why don't the electrons in your body just crash into the nucleus?",
+      "start": 0.0,
+      "end": 3.322
+    },
+    {
+      "shot": 2,
+      "text": "If an electron got squeezed right next to the nucleus, its position would be super precise.",
+      "start": 3.722,
+      "end": 8.841
+    },
+    {
+      "shot": 3,
+      "text": "So its momentum would become hugely uncertain,",
+      "start": 9.241,
+      "end": 11.506
+    },
+    {
+      "shot": 4,
+      "text": "meaning it would have wild energy and fly right back out.",
+      "start": 11.906,
+      "end": 14.87
+    },
+    {
+      "shot": 5,
+      "text": "The uncertainty principle helps keep atoms from collapsing.",
+      "start": 15.27,
+      "end": 18.314
+    },
+    {
+      "shot": 6,
+      "text": "It's part of why you're solid, and not a puddle of sad particles.",
+      "start": 18.714,
+      "end": 22.157
+    },
+    {
+      "shot": 7,
+      "text": "Physics: still weird, still holding you together.",
+      "start": 22.557,
+      "end": 24.744
+    }
+  ]
+}

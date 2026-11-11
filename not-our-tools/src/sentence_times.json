@@ -1,0 +1,83 @@
+{
+  "source": "Kokoro TTS v1.0, voice am_fenrir, speed 1.12",
+  "sentences": [
+    {
+      "shot": 1,
+      "text": "Everyone says uncertainty just means our equipment is clumsy.",
+      "start": 0.0,
+      "end": 3.296
+    },
+    {
+      "shot": 1,
+      "text": "Wrong.",
+      "start": 3.536,
+      "end": 4.029
+    },
+    {
+      "shot": 2,
+      "text": "Uncertainty isn't a flaw in our measuring.",
+      "start": 4.429,
+      "end": 6.375
+    },
+    {
+      "shot": 2,
+      "text": "It's built into nature.",
+      "start": 6.615,
+      "end": 7.8
+    },
+    {
+      "shot": 3,
+      "text": "A particle is described by a wave.",
+      "start": 8.2,
+      "end": 9.923
+    },
+    {
+      "shot": 4,
+      "text": "A tightly squeezed wave pins down position, but has a messy spread of wavelengths, which means a messy spread of momentum.",
+      "start": 10.323,
+      "end": 16.921
+    },
+    {
+      "shot": 5,
+      "text": "A smooth wave does the opposite.",
+      "start": 17.321,
+      "end": 18.821
+    },
+    {
+      "shot": 6,
+      "text": "It's like a photo.",
+      "start": 19.221,
+      "end": 20.163
+    },
+    {
+      "shot": 6,
+      "text": "You can't have a perfectly sharp snapshot and a perfect measure of motion blur in the same picture.",
+      "start": 20.403,
+      "end": 25.559
+    },
+    {
+      "shot": 7,
+      "text": "Except here, it's not the camera.",
+      "start": 25.959,
+      "end": 27.393
+    },
+    {
+      "shot": 7,
+      "text": "It's the universe.",
+      "start": 27.633,
+      "end": 28.519
+    },
+    {
+      "shot": 8,
+      "text": "Better tools won't fix it.",
+      "start": 28.919,
+      "end": 30.108
+    },
+    {
+      "shot": 8,
+      "text": "Nothing to fix.",
+      "start": 30.348,
+      "end": 31.298
+    }
+  ]
+}

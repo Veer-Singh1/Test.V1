@@ -1,0 +1,861 @@
+{
+ "source": "offline alignment of the uploaded narration (scripts/align_audio.py)",
+ "duration": 65.04,
+ "words": [
+  {
+   "text": "In",
+   "start": 0.08,
+   "end": 0.375
+  },
+  {
+   "text": "1971,",
+   "start": 0.375,
+   "end": 1.655
+  },
+  {
+   "text": "an",
+   "start": 1.655,
+   "end": 1.815
+  },
+  {
+   "text": "astronaut",
+   "start": 1.815,
+   "end": 2.455
+  },
+  {
+   "text": "dropped",
+   "start": 2.455,
+   "end": 2.775
+  },
+  {
+   "text": "a",
+   "start": 2.775,
+   "end": 2.935
+  },
+  {
+   "text": "hammer",
+   "start": 2.935,
+   "end": 3.255
+  },
+  {
+   "text": "and",
+   "start": 3.255,
+   "end": 3.415
+  },
+  {
+   "text": "a",
+   "start": 3.415,
+   "end": 3.575
+  },
+  {
+   "text": "feather",
+   "start": 3.575,
+   "end": 3.975
+  },
+  {
+   "text": "on",
+   "start": 3.975,
+   "end": 4.135
+  },
+  {
+   "text": "the",
+   "start": 4.135,
+   "end": 4.295
+  },
+  {
+   "text": "Moon...",
+   "start": 4.295,
+   "end": 4.6
+  },
+  {
+   "text": "and",
+   "start": 5.15,
+   "end": 5.335
+  },
+  {
+   "text": "a",
+   "start": 5.335,
+   "end": 5.495
+  },
+  {
+   "text": "two-thousand-year-old",
+   "start": 5.495,
+   "end": 6.615
+  },
+  {
+   "text": "idea",
+   "start": 6.615,
+   "end": 7.095
+  },
+  {
+   "text": "fell",
+   "start": 7.095,
+   "end": 7.495
+  },
+  {
+   "text": "apart.",
+   "start": 7.495,
+   "end": 7.83
+  },
+  {
+   "text": "Most",
+   "start": 8.35,
+   "end": 8.775
+  },
+  {
+   "text": "people",
+   "start": 8.775,
+   "end": 9.015
+  },
+  {
+   "text": "think",
+   "start": 9.015,
+   "end": 9.335
+  },
+  {
+   "text": "heavy",
+   "start": 9.335,
+   "end": 9.735
+  },
+  {
+   "text": "things",
+   "start": 9.735,
+   "end": 10.055
+  },
+  {
+   "text": "fall",
+   "start": 10.055,
+   "end": 10.295
+  },
+  {
+   "text": "faster.",
+   "start": 10.295,
+   "end": 10.76
+  },
+  {
+   "text": "It",
+   "start": 11.07,
+   "end": 11.255
+  },
+  {
+   "text": "feels",
+   "start": 11.255,
+   "end": 11.575
+  },
+  {
+   "text": "obvious.",
+   "start": 11.575,
+   "end": 12.03
+  },
+  {
+   "text": "A",
+   "start": 12.44,
+   "end": 12.535
+  },
+  {
+   "text": "bowling",
+   "start": 12.535,
+   "end": 12.935
+  },
+  {
+   "text": "ball.",
+   "start": 12.935,
+   "end": 13.16
+  },
+  {
+   "text": "A",
+   "start": 13.38,
+   "end": 13.655
+  },
+  {
+   "text": "rock.",
+   "start": 13.655,
+   "end": 13.87
+  },
+  {
+   "text": "A",
+   "start": 14.3,
+   "end": 14.455
+  },
+  {
+   "text": "leaf",
+   "start": 14.455,
+   "end": 14.855
+  },
+  {
+   "text": "drifting",
+   "start": 14.855,
+   "end": 15.335
+  },
+  {
+   "text": "down",
+   "start": 15.335,
+   "end": 15.575
+  },
+  {
+   "text": "in",
+   "start": 15.575,
+   "end": 15.735
+  },
+  {
+   "text": "the",
+   "start": 15.735,
+   "end": 15.895
+  },
+  {
+   "text": "park.",
+   "start": 15.895,
+   "end": 16.15
+  },
+  {
+   "text": "But",
+   "start": 16.63,
+   "end": 16.775
+  },
+  {
+   "text": "look",
+   "start": 16.775,
+   "end": 17.015
+  },
+  {
+   "text": "at",
+   "start": 17.015,
+   "end": 17.175
+  },
+  {
+   "text": "what's",
+   "start": 17.175,
+   "end": 17.655
+  },
+  {
+   "text": "actually",
+   "start": 17.655,
+   "end": 17.975
+  },
+  {
+   "text": "happening.",
+   "start": 17.975,
+   "end": 18.44
+  },
+  {
+   "text": "On",
+   "start": 19.01,
+   "end": 19.255
+  },
+  {
+   "text": "Earth,",
+   "start": 19.255,
+   "end": 19.66
+  },
+  {
+   "text": "air",
+   "start": 19.78,
+   "end": 20.055
+  },
+  {
+   "text": "pushes",
+   "start": 20.055,
+   "end": 20.615
+  },
+  {
+   "text": "back",
+   "start": 20.615,
+   "end": 20.935
+  },
+  {
+   "text": "on",
+   "start": 20.935,
+   "end": 21.255
+  },
+  {
+   "text": "everything",
+   "start": 21.255,
+   "end": 21.575
+  },
+  {
+   "text": "that",
+   "start": 21.575,
+   "end": 21.815
+  },
+  {
+   "text": "falls.",
+   "start": 21.815,
+   "end": 22.14
+  },
+  {
+   "text": "A",
+   "start": 22.6,
+   "end": 22.695
+  },
+  {
+   "text": "feather",
+   "start": 22.695,
+   "end": 23.175
+  },
+  {
+   "text": "catches",
+   "start": 23.175,
+   "end": 23.655
+  },
+  {
+   "text": "loads",
+   "start": 23.655,
+   "end": 23.975
+  },
+  {
+   "text": "of",
+   "start": 23.975,
+   "end": 24.135
+  },
+  {
+   "text": "air.",
+   "start": 24.135,
+   "end": 24.38
+  },
+  {
+   "text": "A",
+   "start": 24.76,
+   "end": 24.935
+  },
+  {
+   "text": "hammer",
+   "start": 24.935,
+   "end": 25.415
+  },
+  {
+   "text": "barely",
+   "start": 25.415,
+   "end": 25.735
+  },
+  {
+   "text": "notices.",
+   "start": 25.735,
+   "end": 26.23
+  },
+  {
+   "text": "The",
+   "start": 26.61,
+   "end": 26.775
+  },
+  {
+   "text": "Moon",
+   "start": 26.775,
+   "end": 27.255
+  },
+  {
+   "text": "has",
+   "start": 27.255,
+   "end": 27.495
+  },
+  {
+   "text": "almost",
+   "start": 27.495,
+   "end": 27.895
+  },
+  {
+   "text": "NO",
+   "start": 27.895,
+   "end": 28.135
+  },
+  {
+   "text": "air.",
+   "start": 28.135,
+   "end": 28.55
+  },
+  {
+   "text": "So",
+   "start": 28.76,
+   "end": 29.095
+  },
+  {
+   "text": "Commander",
+   "start": 29.095,
+   "end": 29.575
+  },
+  {
+   "text": "David",
+   "start": 29.575,
+   "end": 29.975
+  },
+  {
+   "text": "Scott",
+   "start": 29.975,
+   "end": 30.455
+  },
+  {
+   "text": "held",
+   "start": 30.455,
+   "end": 30.615
+  },
+  {
+   "text": "out",
+   "start": 30.615,
+   "end": 30.775
+  },
+  {
+   "text": "a",
+   "start": 30.775,
+   "end": 30.935
+  },
+  {
+   "text": "hammer",
+   "start": 30.935,
+   "end": 31.255
+  },
+  {
+   "text": "and",
+   "start": 31.255,
+   "end": 31.415
+  },
+  {
+   "text": "a",
+   "start": 31.415,
+   "end": 31.495
+  },
+  {
+   "text": "falcon",
+   "start": 31.495,
+   "end": 31.975
+  },
+  {
+   "text": "feather...",
+   "start": 31.975,
+   "end": 32.2
+  },
+  {
+   "text": "and",
+   "start": 32.5,
+   "end": 32.695
+  },
+  {
+   "text": "let",
+   "start": 32.695,
+   "end": 33.095
+  },
+  {
+   "text": "go.",
+   "start": 33.095,
+   "end": 33.27
+  },
+  {
+   "text": "They",
+   "start": 33.71,
+   "end": 33.895
+  },
+  {
+   "text": "hit",
+   "start": 33.895,
+   "end": 34.215
+  },
+  {
+   "text": "the",
+   "start": 34.215,
+   "end": 34.455
+  },
+  {
+   "text": "ground...",
+   "start": 34.455,
+   "end": 34.72
+  },
+  {
+   "text": "at",
+   "start": 34.9,
+   "end": 35.255
+  },
+  {
+   "text": "the",
+   "start": 35.255,
+   "end": 35.575
+  },
+  {
+   "text": "SAME",
+   "start": 35.575,
+   "end": 36.055
+  },
+  {
+   "text": "time.",
+   "start": 36.055,
+   "end": 36.3
+  },
+  {
+   "text": "But",
+   "start": 36.66,
+   "end": 36.855
+  },
+  {
+   "text": "wait.",
+   "start": 36.855,
+   "end": 37.19
+  },
+  {
+   "text": "Gravity",
+   "start": 37.42,
+   "end": 37.975
+  },
+  {
+   "text": "pulls",
+   "start": 37.975,
+   "end": 38.295
+  },
+  {
+   "text": "harder",
+   "start": 38.295,
+   "end": 38.695
+  },
+  {
+   "text": "on",
+   "start": 38.695,
+   "end": 38.775
+  },
+  {
+   "text": "the",
+   "start": 38.775,
+   "end": 38.935
+  },
+  {
+   "text": "hammer.",
+   "start": 38.935,
+   "end": 39.21
+  },
+  {
+   "text": "So",
+   "start": 39.44,
+   "end": 39.735
+  },
+  {
+   "text": "why",
+   "start": 39.735,
+   "end": 39.975
+  },
+  {
+   "text": "doesn't",
+   "start": 39.975,
+   "end": 40.215
+  },
+  {
+   "text": "it",
+   "start": 40.215,
+   "end": 40.375
+  },
+  {
+   "text": "win?",
+   "start": 40.375,
+   "end": 40.64
+  },
+  {
+   "text": "Because",
+   "start": 41.03,
+   "end": 41.255
+  },
+  {
+   "text": "the",
+   "start": 41.255,
+   "end": 41.415
+  },
+  {
+   "text": "hammer",
+   "start": 41.415,
+   "end": 41.975
+  },
+  {
+   "text": "is",
+   "start": 41.975,
+   "end": 42.215
+  },
+  {
+   "text": "also",
+   "start": 42.215,
+   "end": 42.455
+  },
+  {
+   "text": "harder",
+   "start": 42.455,
+   "end": 42.855
+  },
+  {
+   "text": "to",
+   "start": 42.855,
+   "end": 43.015
+  },
+  {
+   "text": "speed",
+   "start": 43.015,
+   "end": 43.415
+  },
+  {
+   "text": "up.",
+   "start": 43.415,
+   "end": 43.51
+  },
+  {
+   "text": "Those",
+   "start": 43.92,
+   "end": 44.215
+  },
+  {
+   "text": "two",
+   "start": 44.215,
+   "end": 44.375
+  },
+  {
+   "text": "effects",
+   "start": 44.375,
+   "end": 44.855
+  },
+  {
+   "text": "cancel",
+   "start": 44.855,
+   "end": 45.415
+  },
+  {
+   "text": "out...",
+   "start": 45.415,
+   "end": 45.52
+  },
+  {
+   "text": "exactly.",
+   "start": 45.79,
+   "end": 46.55
+  },
+  {
+   "text": "That's",
+   "start": 46.95,
+   "end": 47.495
+  },
+  {
+   "text": "called",
+   "start": 47.495,
+   "end": 47.735
+  },
+  {
+   "text": "FREE",
+   "start": 47.735,
+   "end": 48.215
+  },
+  {
+   "text": "FALL.",
+   "start": 48.215,
+   "end": 48.55
+  },
+  {
+   "text": "Take",
+   "start": 48.77,
+   "end": 49.175
+  },
+  {
+   "text": "away",
+   "start": 49.175,
+   "end": 49.415
+  },
+  {
+   "text": "the",
+   "start": 49.415,
+   "end": 49.575
+  },
+  {
+   "text": "air,",
+   "start": 49.575,
+   "end": 49.895
+  },
+  {
+   "text": "and",
+   "start": 49.895,
+   "end": 50.01
+  },
+  {
+   "text": "everything",
+   "start": 50.13,
+   "end": 50.695
+  },
+  {
+   "text": "falls",
+   "start": 50.695,
+   "end": 51.095
+  },
+  {
+   "text": "the",
+   "start": 51.095,
+   "end": 51.335
+  },
+  {
+   "text": "same",
+   "start": 51.335,
+   "end": 51.575
+  },
+  {
+   "text": "way.",
+   "start": 51.575,
+   "end": 51.82
+  },
+  {
+   "text": "Scientists",
+   "start": 52.21,
+   "end": 52.935
+  },
+  {
+   "text": "even",
+   "start": 52.935,
+   "end": 53.095
+  },
+  {
+   "text": "filmed",
+   "start": 53.095,
+   "end": 53.495
+  },
+  {
+   "text": "it",
+   "start": 53.495,
+   "end": 53.655
+  },
+  {
+   "text": "on",
+   "start": 53.655,
+   "end": 53.815
+  },
+  {
+   "text": "Earth,",
+   "start": 53.815,
+   "end": 54.16
+  },
+  {
+   "text": "in",
+   "start": 54.3,
+   "end": 54.455
+  },
+  {
+   "text": "one",
+   "start": 54.455,
+   "end": 54.615
+  },
+  {
+   "text": "of",
+   "start": 54.615,
+   "end": 54.695
+  },
+  {
+   "text": "the",
+   "start": 54.695,
+   "end": 54.855
+  },
+  {
+   "text": "biggest",
+   "start": 54.855,
+   "end": 55.255
+  },
+  {
+   "text": "vacuum",
+   "start": 55.255,
+   "end": 55.815
+  },
+  {
+   "text": "chambers",
+   "start": 55.815,
+   "end": 56.295
+  },
+  {
+   "text": "ever",
+   "start": 56.295,
+   "end": 56.535
+  },
+  {
+   "text": "built.",
+   "start": 56.535,
+   "end": 56.86
+  },
+  {
+   "text": "A",
+   "start": 57.34,
+   "end": 57.495
+  },
+  {
+   "text": "bowling",
+   "start": 57.495,
+   "end": 57.895
+  },
+  {
+   "text": "ball",
+   "start": 57.895,
+   "end": 58.295
+  },
+  {
+   "text": "and",
+   "start": 58.295,
+   "end": 58.455
+  },
+  {
+   "text": "a",
+   "start": 58.455,
+   "end": 58.615
+  },
+  {
+   "text": "pile",
+   "start": 58.615,
+   "end": 58.855
+  },
+  {
+   "text": "of",
+   "start": 58.855,
+   "end": 59.015
+  },
+  {
+   "text": "feathers...",
+   "start": 59.015,
+   "end": 59.44
+  },
+  {
+   "text": "landing",
+   "start": 59.67,
+   "end": 60.295
+  },
+  {
+   "text": "together.",
+   "start": 60.295,
+   "end": 60.72
+  },
+  {
+   "text": "...Aristotle",
+   "start": 61.16,
+   "end": 61.895
+  },
+  {
+   "text": "wasn't",
+   "start": 61.895,
+   "end": 62.295
+  },
+  {
+   "text": "stupid.",
+   "start": 62.295,
+   "end": 62.79
+  },
+  {
+   "text": "He",
+   "start": 63.09,
+   "end": 63.495
+  },
+  {
+   "text": "just",
+   "start": 63.495,
+   "end": 63.735
+  },
+  {
+   "text": "never",
+   "start": 63.735,
+   "end": 63.975
+  },
+  {
+   "text": "visited",
+   "start": 63.975,
+   "end": 64.455
+  },
+  {
+   "text": "the",
+   "start": 64.455,
+   "end": 64.535
+  },
+  {
+   "text": "Moon.",
+   "start": 64.535,
+   "end": 64.89
+  }
+ ]
+}

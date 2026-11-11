@@ -1,0 +1,132 @@
+{
+ "sentences": [
+  {
+   "n": 1,
+   "display": "Your head is OLDER than your feet.",
+   "pauseBefore": 0.3,
+   "start": 0.0,
+   "end": 1.528
+  },
+  {
+   "n": 2,
+   "display": "Most people think time ticks the same for everyone, everywhere.",
+   "pauseBefore": 0.3,
+   "start": 1.828,
+   "end": 5.322
+  },
+  {
+   "n": 3,
+   "display": "You sleep on the top bunk, and you age faster than the person below.",
+   "pauseBefore": 0.3,
+   "start": 5.622,
+   "end": 9.253
+  },
+  {
+   "n": 4,
+   "display": "You live on a mountain, and your clock runs ahead of the beach.",
+   "pauseBefore": 0.3,
+   "start": 9.553,
+   "end": 12.544
+  },
+  {
+   "n": 5,
+   "display": "You stand up, and your head pulls ahead of your toes.",
+   "pauseBefore": 0.3,
+   "start": 12.844,
+   "end": 15.388
+  },
+  {
+   "n": 6,
+   "display": "But look at what's actually happening.",
+   "pauseBefore": 0.3,
+   "start": 15.688,
+   "end": 17.365
+  },
+  {
+   "n": 7,
+   "display": "Gravity doesn't just pull on you.",
+   "pauseBefore": 0.3,
+   "start": 17.665,
+   "end": 19.268
+  },
+  {
+   "n": 8,
+   "display": "It *slows* time itself.",
+   "pauseBefore": 0.3,
+   "start": 19.568,
+   "end": 20.843
+  },
+  {
+   "n": 9,
+   "display": "The closer you are to Earth, the slower your clock ticks.",
+   "pauseBefore": 0.3,
+   "start": 21.143,
+   "end": 23.921
+  },
+  {
+   "n": 10,
+   "display": "That's GRAVITATIONAL TIME DILATION.",
+   "pauseBefore": 0.75,
+   "start": 24.671,
+   "end": 26.611,
+   "concept": true
+  },
+  {
+   "n": 11,
+   "display": "In 2010, scientists measured it with two clocks just 33 centimetres apart.",
+   "pauseBefore": 0.5,
+   "start": 27.111,
+   "end": 32.198
+  },
+  {
+   "n": 12,
+   "display": "Over a whole lifetime, your head gains about half a *microsecond*.",
+   "pauseBefore": 0.3,
+   "start": 32.498,
+   "end": 36.383
+  },
+  {
+   "n": 13,
+   "display": "Tiny.",
+   "pauseBefore": 0.3,
+   "start": 36.683,
+   "end": 37.263
+  },
+  {
+   "n": 14,
+   "display": "But GPS satellites feel it every single day.",
+   "pauseBefore": 0.3,
+   "start": 37.563,
+   "end": 40.374
+  },
+  {
+   "n": 15,
+   "display": "Without correcting for it, your phone's map would drift by kilometres a day.",
+   "pauseBefore": 0.3,
+   "start": 40.674,
+   "end": 44.791
+  },
+  {
+   "n": 16,
+   "display": "So time isn't one clock everyone shares.",
+   "pauseBefore": 0.3,
+   "start": 45.091,
+   "end": 47.396
+  },
+  {
+   "n": 17,
+   "display": "Every part of you runs on its own time.",
+   "pauseBefore": 0.3,
+   "start": 47.696,
+   "end": 49.71
+  },
+  {
+   "n": 18,
+   "display": "And right now, the top of you is pulling AHEAD.",
+   "pauseBefore": 0.75,
+   "start": 50.46,
+   "end": 52.601
+  }
+ ],
+ "voice": "Kokoro TTS v1.0, am_fenrir, speed 1.01"
+}

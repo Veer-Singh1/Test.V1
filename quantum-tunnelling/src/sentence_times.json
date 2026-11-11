@@ -1,0 +1,119 @@
+{
+  "source": "Kokoro TTS v1.0, voice am_fenrir, speed 1.12",
+  "sentences": [
+    {
+      "shot": 1,
+      "text": "Physics, please.",
+      "start": 0.0,
+      "end": 0.842
+    },
+    {
+      "shot": 1,
+      "text": "What is this quantum physics nonsense?",
+      "start": 1.082,
+      "end": 2.865
+    },
+    {
+      "shot": 1,
+      "text": "Right now, inside the Sun, particles are doing something impossible.",
+      "start": 3.105,
+      "end": 6.726
+    },
+    {
+      "shot": 2,
+      "text": "Roll a ball at a hill without enough energy, and it rolls back.",
+      "start": 7.126,
+      "end": 10.328
+    },
+    {
+      "shot": 3,
+      "text": "Physics calls that hill an energy barrier.",
+      "start": 10.728,
+      "end": 12.658
+    },
+    {
+      "shot": 3,
+      "text": "No energy, no crossing.",
+      "start": 12.898,
+      "end": 14.154
+    },
+    {
+      "shot": 4,
+      "text": "But electrons are described by a wave, and a wave doesn't stop dead at a wall.",
+      "start": 14.554,
+      "end": 19.07
+    },
+    {
+      "shot": 5,
+      "text": "Then, inside the barrier, it fades fast, but if the wall is thin, a little wave makes it through.",
+      "start": 19.47,
+      "end": 24.587
+    },
+    {
+      "shot": 6,
+      "text": "That leftover wave is a real chance the particle turns up on the other side.",
+      "start": 24.987,
+      "end": 29.368
+    },
+    {
+      "shot": 6,
+      "text": "That's quantum tunnelling.",
+      "start": 29.608,
+      "end": 30.747
+    },
+    {
+      "shot": 7,
+      "text": "Thicker walls and heavier things make the odds crash.",
+      "start": 31.147,
+      "end": 33.697
+    },
+    {
+      "shot": 7,
+      "text": "You're about ten to the twenty-eight atoms.",
+      "start": 33.937,
+      "end": 35.636
+    },
+    {
+      "shot": 7,
+      "text": "Stop trying your bedroom wall.",
+      "start": 35.876,
+      "end": 37.289
+    },
+    {
+      "shot": 8,
+      "text": "You see, the Sun's protons repel each other, and even at fifteen million degrees, almost none are fast enough to fuse.",
+      "start": 37.689,
+      "end": 44.558
+    },
+    {
+      "shot": 9,
+      "text": "But enough of them tunnel through, every second, to power the Sun.",
+      "start": 44.958,
+      "end": 48.128
+    },
+    {
+      "shot": 10,
+      "text": "It also runs your phone's flash memory, and a microscope that sees single atoms.",
+      "start": 48.528,
+      "end": 53.191
+    },
+    {
+      "shot": 11,
+      "text": "So no, it's not teleporting, and it's not faster than light.",
+      "start": 53.591,
+      "end": 56.8
+    },
+    {
+      "shot": 11,
+      "text": "Just waves and odds.",
+      "start": 57.04,
+      "end": 58.072
+    },
+    {
+      "shot": 12,
+      "text": "Every sunny day is a particle doing something it isn't allowed to do.",
+      "start": 58.472,
+      "end": 62.1
+    }
+  ]
+}
