@@ -4,6 +4,9 @@ export const VOICE_ID = 'QhpsGjDKZmM9qRYdMhBD'; // "James - Conversational, Ener
 export const MODEL_ID = 'eleven_v4';
 export const OUTPUT_FORMAT = 'mp3_44100_128';
 
+// One soft word per line is set in Playfair italic. ALL-CAPS words in the script are punch words automatically.
+export const SOFT_WORDS = ['parked', 'Forever', 'goodbye'];
+
 export const SCRIPT = `[excited] The Moon is running away from us. About FOUR centimetres... every single year.
 [curious] Most people think the Moon is just parked up there. Forever.
 Every full moon. Every high tide. Every eclipse.
