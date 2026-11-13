@@ -1,0 +1,640 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>What's the hottest thing in the universe?</title>
+<style>
+@font-face { font-family: "Nunito"; font-weight: 700; src: url("../fonts/nunito-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Nunito"; font-weight: 800; src: url("../fonts/nunito-latin-800-normal.woff2") format("woff2"); }
+html, body { margin: 0; background: #000; }
+canvas { display: block; }
+body.preview canvas { height: 100vh; width: auto; margin: 0 auto; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script src="timeline.js"></script>
+<script>
+"use strict";
+/* ======================================================================
+   CONFIG
+   ====================================================================== */
+const HANDLE = "@myhandle";
+const TITLE = ["What's the hottest thing", "in the universe?"];
+const UNIT = " °C";
+const C = {
+  bgTop: "#140C26", bgBot: "#06050E", text: "#FFFFFF", mint: "#58F6CD",
+  ground: "#D3B682", hero: "#FFDEB4", heroEdge: "#E7B46E", grey: "#8A8A9A",
+};
+// enter: [dx, dy, seconds, startScale] — every step arrives differently
+const STEPS = [
+  { key: "body",    line: 3,  name: "Your body",     v: 37,     tint: "#6BF28A", enter: [-460, 0, 0.7, 1] },
+  { key: "pot",     line: 4,  name: "Boiling water", v: 100,    tint: "#4DE8FF", enter: [0, 300, 0.5, 1] },
+  { key: "volcano", line: 5,  name: "Lava",          v: 1200,   tint: "#FF6A3D", enter: [0, 420, 0.4, 0.6], prefix: "~" },
+  { key: "sun",     line: 6,  name: "Sun's surface", v: 5500,   tint: "#FFD84A", enter: [0, -700, 0.7, 1] },
+  { key: "bolt",    line: 7,  name: "Lightning",     v: 30000,  tint: "#C9A6FF", enter: [60, -900, 0.16, 1], flash: true },
+  { key: "core",    line: 8,  name: "Sun's core",    v: 15e6,   tint: "#FF9A3D", enter: [0, 0, 0.6, 4], short: "15 million °C" },
+  { key: "nova",    line: 9,  name: "Exploding star", v: 100e9, tint: "#FF7AC8", enter: [0, 0, 0.55, 0.1], short: "100 billion °C" },
+  { key: "record",  line: 12, name: "???",           v: 5.5e12, tint: "#FFFFFF", enter: [0, 0, 0.3, 1] },
+];
+const TOP = STEPS.length - 1, V_MIN = 10;
+
+/* ======================================================================
+   TIMELINE — derived from the narration clip durations
+   ====================================================================== */
+const TL = window.TIMELINE;
+const W = 1080, H = 1920, FPS = TL.fps, D = TL.duration;
+const LINE = Object.fromEntries(TL.lines.map(l => [l.n, l]));
+const L = n => LINE[n].start, E = n => LINE[n].end;
+const REWIND = 0.5;
+const CX = 540, GY = 1360, ST = 660, SH = GY - ST, HERO_H = 0.55 * SH, SLOT = 170;
+
+STEPS.forEach((r, i) => {
+  const prev = STEPS[i - 1], ratio = prev ? r.v / prev.v : 1;
+  r.t = L(r.line);
+  r.S = HERO_H / r.v;
+  r.zoomDelay = i === TOP ? 0.9 : ratio > 100 ? 0.55 : 0.35;
+  r.zoomDur = i === TOP ? 1.9 : ratio > 100 ? 1.5 : 1.0;      // big jumps get a longer pull-back
+  r.rollDur = i === TOP ? 2.6 : ratio > 100 ? 1.6 : 0.8;
+  r.rollLog = ratio > 50;
+  r.label = (r.prefix || "") + fmt(r.v) + UNIT;
+  r.logPos = Math.log10(r.v / V_MIN) / Math.log10(STEPS[TOP].v / V_MIN);
+});
+STEPS.forEach((r, i) => { const n = STEPS[i + 1]; if (n) r.zoomDur = Math.min(r.zoomDur, n.t - r.t - r.zoomDelay - 0.05); });
+
+const BEATS = TL.lines.map(l => {
+  const r = STEPS.find(r => r.line === l.n);
+  const b = { start: l.start, end: l.end, line: l.n, readout: null, actions: [] };
+  if (l.n === 1) { b.readout = "Hottest = ?"; b.actions = ["fadeIn", "sparkFlicker"]; }
+  if (l.n === 2) b.actions = ["drawGround", "heatUp"];
+  if (r) { b.readout = `${r.name} = ${r.label}`; b.actions = ["addStep", "rollNumber", "zoomTo", "fadeBars"]; }
+  if (l.n === 10) b.actions = ["popLabel:the record?"];
+  if (l.n === 11) b.actions = ["xOut", "dimBars", "musicOut"];
+  if (l.n === 13) b.actions = ["popLabel:×366,000 hotter than the Sun's core"];
+  if (l.n === 14) b.actions = ["starIcon", "xOut"];
+  if (l.n === 15) { b.readout = "Us = 5,500,000,000,000 °C"; b.actions = ["revealCollider"]; }
+  if (l.n === 16) b.actions = ["zoomToCollider", "collisions"];
+  if (l.n === 17) b.actions = ["drawFarmland", "depthArrow"];
+  if (l.n === 18) b.actions = ["finalLine", "hold", "rewind"];
+  return b;
+});
+window.BEATS = BEATS;
+
+/* ======================================================================
+   HELPERS
+   ====================================================================== */
+function fmt(n) { return Math.round(n).toLocaleString("en-US"); }
+function nice(v) {
+  for (const [d, w] of [[1e12, "trillion"], [1e9, "billion"], [1e6, "million"]]) if (v >= d) return fmt(v / d) + " " + w + UNIT;
+  return fmt(v) + UNIT;
+}
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, p) => a + (b - a) * p;
+const prog = (t, start, dur) => clamp((t - start) / dur);
+const easeIO = p => p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+const easeOut = p => 1 - Math.pow(1 - p, 3);
+const easeBack = p => { const c = 1.70158; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); };
+function rng(seed) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+function rgba(hex, a) { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; }
+
+const cv = document.getElementById("c"), ctx = cv.getContext("2d");
+function font(px, w = 700) { ctx.font = `${w} ${px}px Nunito, sans-serif`; }
+function text(s, x, y, { px = 48, w = 700, color = C.text, align = "center", alpha = 1, glow = 0, glowColor = "#FFFFFF", ls = 0 } = {}) {
+  if (alpha <= 0.003) return;
+  ctx.save();
+  font(px, w); ctx.textAlign = align; ctx.textBaseline = "alphabetic";
+  if (ls) ctx.letterSpacing = ls + "px";
+  ctx.globalAlpha *= alpha;
+  ctx.shadowColor = "rgba(6,5,14,0.9)"; ctx.shadowBlur = 10;
+  ctx.fillStyle = color; ctx.fillText(s, x, y);
+  if (glow) { ctx.shadowColor = rgba(glowColor, 0.35); ctx.shadowBlur = glow; ctx.fillText(s, x, y); }
+  ctx.restore();
+}
+function measure(s, px, w = 700) { font(px, w); return ctx.measureText(s).width; }
+
+// ---- reusable, time-pure animation helpers
+function rollNumber(t, start, dur, from, to, logScale) {
+  const p = easeIO(prog(t, start, dur));
+  return logScale ? Math.exp(lerp(Math.log(from), Math.log(to), p)) : lerp(from, to, p);
+}
+function zoomTo(t) {
+  let ls = Math.log(STEPS[0].S);
+  for (let i = 1; i < STEPS.length; i++) { const r = STEPS[i]; ls = lerp(ls, Math.log(r.S), easeIO(prog(t, r.t + r.zoomDelay, r.zoomDur))); }
+  return Math.exp(ls);
+}
+function addStep(r, t) { return easeOut(prog(t, r.t, r.key === "record" ? 0.45 : 0.35)); }
+function fadeBars(i, t) { let age = 0; for (let j = i + 1; j < STEPS.length; j++) age += easeIO(prog(t, STEPS[j].t, 0.5)); return age; }
+function popLabel(t, start) { const p = prog(t, start, 0.25); return { a: p, s: lerp(0.8, 1, easeBack(p)) }; }
+function xOut(x, y, r, t, start, color = "#FF5A5A") {      // two diagonal strokes, 0.15 s each
+  const a = prog(t, start, 0.15), b = prog(t, start + 0.15, 0.15);
+  if (a <= 0) return;
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = 9; ctx.lineCap = "round"; ctx.shadowColor = color; ctx.shadowBlur = 18;
+  ctx.beginPath(); ctx.moveTo(x - r, y - r); ctx.lineTo(x - r + 2 * r * a, y - r + 2 * r * a);
+  if (b > 0) { ctx.moveTo(x + r, y - r); ctx.lineTo(x + r - 2 * r * b, y - r + 2 * r * b); }
+  ctx.stroke(); ctx.restore();
+}
+// how "hot" the room feels (drives the glow and embers); goes cold for the fake-out
+function heat(t) {
+  let h = 0.1 * prog(t, L(2), 0.8);
+  STEPS.forEach(r => { h = lerp(h, 0.15 + 0.85 * r.logPos, easeIO(prog(t, r.t, 1))); });
+  return h * (1 - 0.92 * prog(t, L(11), 0.3) * (1 - prog(t, L(12), 0.3))) * (1 - 0.6 * prog(t, L(16), 1));
+}
+
+/* ======================================================================
+   ICONS — geometric outlines in a 100x100 box
+   ====================================================================== */
+function drawIcon(name, cx, cy, size, tint, alpha, t) {
+  if (alpha <= 0.003 || size <= 0.5) return;
+  const s = size / 100;
+  ctx.save(); ctx.translate(cx, cy); ctx.scale(s, s);
+  ctx.globalAlpha *= alpha;
+  ctx.strokeStyle = tint; ctx.fillStyle = tint;
+  ctx.lineWidth = clamp(2.6 / s, 2.2, 5); ctx.lineCap = "round"; ctx.lineJoin = "round";
+  ctx.shadowColor = tint; ctx.shadowBlur = 14;
+  const P = (...p) => { ctx.beginPath(); ctx.moveTo(p[0], p[1]); for (let i = 2; i < p.length; i += 2) ctx.lineTo(p[i], p[i + 1]); ctx.stroke(); };
+  const poly = (...p) => { ctx.beginPath(); ctx.moveTo(p[0], p[1]); for (let i = 2; i < p.length; i += 2) ctx.lineTo(p[i], p[i + 1]); ctx.closePath(); ctx.stroke(); };
+  const circ = (x, y, r, fill) => { ctx.beginPath(); ctx.arc(x, y, r, 0, 7); fill ? ctx.fill() : ctx.stroke(); };
+  const rays = (n, r1, r2, rot, alt = 1) => { for (let k = 0; k < n; k++) { const a = k * 2 * Math.PI / n + rot, rr = k % 2 ? r2 * alt : r2; P(Math.cos(a) * r1, Math.sin(a) * r1, Math.cos(a) * rr, Math.sin(a) * rr); } };
+  switch (name) {
+    case "body": {
+      const sw = Math.sin(t * 5) * 5;
+      circ(0, -34, 9); P(0, -25, 0, 6); P(0, 6, -11 - sw, 36); P(0, 6, 11 + sw, 36); P(0, -17, -11 + sw, 2); P(0, -17, 11 - sw, 2);
+      break;
+    }
+    case "pot": {
+      ctx.beginPath(); ctx.moveTo(-26, -2); ctx.lineTo(-22, 30); ctx.quadraticCurveTo(0, 38, 22, 30); ctx.lineTo(26, -2); ctx.closePath(); ctx.stroke();
+      P(-30, -2, 30, -2); P(-26, 6, -38, 10); P(26, 6, 38, 10);
+      for (let k = 0; k < 3; k++) {            // steam
+        const ph = (t * 1.3 + k / 3) % 1, x = -14 + k * 14;
+        ctx.save(); ctx.globalAlpha *= Math.sin(ph * Math.PI);
+        ctx.beginPath(); ctx.moveTo(x, -10 - ph * 22); ctx.quadraticCurveTo(x + 8, -18 - ph * 22, x, -26 - ph * 22); ctx.quadraticCurveTo(x - 8, -34 - ph * 22, x, -40 - ph * 22); ctx.stroke();
+        ctx.restore();
+      }
+      break;
+    }
+    case "volcano": {
+      P(-44, 36, -14, -10, 14, -10, 44, 36); P(-14, -10, -6, 0, 2, -8, 14, -10);
+      ctx.strokeStyle = "#FFB84A"; ctx.shadowColor = "#FFB84A";
+      for (let k = 0; k < 4; k++) {
+        const ph = (t * 1.5 + k / 4) % 1, a = -1.9 + k * 0.42, d = 10 + ph * 34;
+        ctx.save(); ctx.globalAlpha *= 1 - ph; circ(Math.cos(a) * d, -14 + Math.sin(a) * d + ph * ph * 16, 3.5, true); ctx.restore();
+      }
+      break;
+    }
+    case "sun": {
+      ctx.shadowBlur = 26; circ(0, 0, 20);
+      ctx.save(); ctx.globalAlpha *= 0.35; circ(0, 0, 20, true); ctx.restore();
+      rays(10, 28, 40, t * 0.6);
+      break;
+    }
+    case "bolt": {
+      const fl = 0.75 + 0.25 * Math.sin(t * 31) * Math.sin(t * 13);
+      ctx.globalAlpha *= fl; ctx.shadowBlur = 24;
+      poly(8, -44, -18, 4, -2, 4, -10, 44, 20, -8, 4, -8);
+      break;
+    }
+    case "core": {
+      circ(0, 0, 38); ctx.save(); ctx.globalAlpha *= 0.5; circ(0, 0, 26); ctx.restore();
+      const pu = 1 + 0.15 * Math.sin(t * 6);
+      ctx.shadowBlur = 30; ctx.fillStyle = "#FFE08A"; circ(0, 0, 11 * pu, true);
+      P(14, -14, 46, -40); circ(46, -40, 3, true);
+      break;
+    }
+    case "nova": {
+      const ph = (t * 0.9) % 1;
+      rays(12, 12, 40, t * 0.25, 0.62);
+      ctx.save(); ctx.globalAlpha *= 1 - ph; circ(0, 0, 14 + ph * 34); ctx.restore();
+      circ(0, 0, 6, true);
+      break;
+    }
+    case "qmark": {
+      const pu = 1 + 0.1 * Math.sin(t * 7); ctx.scale(pu, pu); ctx.lineWidth *= 1.6; ctx.shadowBlur = 24;
+      ctx.beginPath(); ctx.arc(0, -16, 18, Math.PI * 1.05, Math.PI * 0.42); ctx.quadraticCurveTo(0, 6, 0, 16); ctx.stroke();
+      circ(0, 34, 4.5, true);
+      break;
+    }
+    case "star": {
+      ctx.beginPath();
+      for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, r = k % 2 ? 17 : 40; k ? ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r) : ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r); }
+      ctx.closePath(); ctx.stroke();
+      break;
+    }
+    case "collider": {
+      ctx.save(); ctx.scale(1, 0.55);
+      circ(0, 0, 40); ctx.setLineDash([5, 9]); ctx.globalAlpha *= 0.6; circ(0, 0, 31); ctx.restore();
+      const a = t * 5;
+      ctx.fillStyle = "#58F6CD"; ctx.shadowColor = "#58F6CD"; circ(Math.cos(a) * 40, Math.sin(a) * 22, 5, true);
+      ctx.fillStyle = "#FF9A3D"; ctx.shadowColor = "#FF9A3D"; circ(Math.cos(-a) * 40, Math.sin(-a) * 22, 5, true);
+      break;
+    }
+    case "spark": {
+      rays(8, 14, 40 * (1 + Math.sin(t * 6) * 0.08), t * 0.4, 0.65); ctx.shadowBlur = 24; circ(0, 0, 8, true);
+      break;
+    }
+  }
+  ctx.restore();
+}
+
+/* ======================================================================
+   BACKGROUND: gradient, stars, heat glow, embers
+   ====================================================================== */
+const STARS = (() => { const r = rng(7); return Array.from({ length: 180 }, () => ({ x: r() * W, y: r() * H, s: 1 + r() * 2.2, a: 0.04 + r() * 0.04, ph: r() * 7, sp: 0.6 + r() * 1.8 })); })();
+const EMBERS = (() => { const r = rng(11); return Array.from({ length: 70 }, (_, i) => ({ x: r() * W, sp: 90 + r() * 220, ph: r() * 30, s: 2 + r() * 3.5, w: 20 + r() * 50, rank: i / 70 })); })();
+function drawBackground(t) {
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, C.bgTop); g.addColorStop(1, C.bgBot);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = "#FFFFFF";
+  for (const s of STARS) { ctx.globalAlpha = s.a * 1.4 * (0.55 + 0.45 * Math.sin(t * s.sp * 2 + s.ph)); ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, 7); ctx.fill(); }
+  ctx.globalAlpha = 1;
+  const h = heat(t);
+  if (h > 0.01) {
+    const hg = ctx.createLinearGradient(0, H, 0, 700);
+    hg.addColorStop(0, `rgba(255,${Math.round(lerp(70, 130, h))},40,${0.34 * h})`); hg.addColorStop(1, "rgba(255,90,40,0)");
+    ctx.fillStyle = hg; ctx.fillRect(0, 700, W, H - 700);
+    ctx.save(); ctx.fillStyle = "#FFB060"; ctx.shadowColor = "#FF7A30"; ctx.shadowBlur = 12;
+    for (const e of EMBERS) {
+      if (e.rank > h) continue;
+      const life = ((t * e.sp + e.ph * 60) % 1400) / 1400, y = H - 260 - life * 1300;
+      ctx.globalAlpha = 0.5 * Math.sin(life * Math.PI) * clamp((h - e.rank) * 8);
+      ctx.beginPath(); ctx.arc(e.x + Math.sin(t * 1.3 + e.ph) * e.w, y, e.s, 0, 7); ctx.fill();
+    }
+    ctx.restore();
+  }
+}
+
+/* ======================================================================
+   STAGE
+   ====================================================================== */
+function drawGround(t) {
+  const p = easeIO(prog(t, L(2), 0.7));
+  if (p <= 0) return;
+  ctx.save();
+  ctx.strokeStyle = C.ground; ctx.lineWidth = 4; ctx.shadowColor = C.ground; ctx.shadowBlur = 18;
+  ctx.beginPath(); ctx.moveTo(-20, GY); ctx.lineTo(lerp(-20, W + 20, p), GY); ctx.stroke();
+  ctx.restore();
+}
+function drawGrid(t, s) {
+  for (let e = 1; e <= 13; e++) {
+    const v = Math.pow(10, e), h = v * s, a = clamp((h - 50) / 60) * clamp((SH - 10 - h) / 80);
+    if (a <= 0) continue;
+    const y = GY - h;
+    ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = "rgba(255,255,255,0.13)"; ctx.lineWidth = 2; ctx.setLineDash([6, 12]);
+    ctx.beginPath(); ctx.moveTo(60, y); ctx.lineTo(940, y); ctx.stroke(); ctx.restore();
+    text(nice(v), 940, y - 10, { px: 22, color: C.grey, align: "right", alpha: a * 0.8 });
+  }
+}
+function drawBars(t, s) {
+  const dim = lerp(1, 0.3, prog(t, L(11), 0.4)) + 0.7 * prog(t, L(12) + 0.3, 0.5);
+  const topZoomed = prog(t, STEPS[TOP].t + STEPS[TOP].zoomDelay + 0.6, 0.8);
+  for (let i = 0; i < STEPS.length; i++) {
+    const r = STEPS[i];
+    if (t < r.t) continue;
+    const age = fadeBars(i, t);
+    if (age >= 3) continue;
+    const isTop = i === TOP, grow = addStep(r, t), x = CX - age * SLOT, base = GY;
+    const h = r.v * s * grow, top = base - h, w = lerp(92, 56, clamp(age)), hero = 1 - clamp(age);
+    let alpha = lerp(1, 0.5, clamp(age)) * clamp(3 - age) * (age > 2 ? clamp(3 - age) : 1);
+    if (!isTop) alpha *= Math.min(1, dim);
+    // ---- bar
+    ctx.save(); ctx.globalAlpha = alpha;
+    const yTop = Math.max(top, isTop ? -40 : ST - 30);
+    if (h > 0.2) {
+      const g = ctx.createLinearGradient(0, base, 0, yTop), a0 = lerp(0.55, 0.95, hero);
+      g.addColorStop(0, rgba(C.hero, a0));
+      if (top < ST + 60) {
+        const fy = clamp((base - (ST + 90)) / (base - yTop));
+        g.addColorStop(fy, rgba(C.hero, a0));
+        g.addColorStop(Math.min(1, fy + (1 - fy) * 0.35 + 0.001), rgba(C.hero, isTop ? 0.4 : 0));
+        g.addColorStop(1, rgba(C.hero, isTop ? 0.25 : 0));
+      } else g.addColorStop(1, rgba("#FFF3DC", lerp(0.6, 1, hero)));
+      ctx.shadowColor = rgba(C.heroEdge, 0.9); ctx.shadowBlur = lerp(14, 46 * (0.9 + 0.1 * Math.sin(t * 3.2)), hero);
+      ctx.fillStyle = g; ctx.fillRect(x - w / 2, yTop, w, base - yTop);
+      ctx.shadowBlur = 0;
+      const eg = ctx.createLinearGradient(0, base, 0, yTop);
+      eg.addColorStop(0, C.heroEdge); eg.addColorStop(0.7, C.heroEdge); eg.addColorStop(1, top < ST + 60 ? rgba(C.heroEdge, 0) : C.heroEdge);
+      ctx.strokeStyle = eg; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(x - w / 2, base); ctx.lineTo(x - w / 2, yTop);
+      if (top >= ST + 60) ctx.lineTo(x + w / 2, yTop); else ctx.moveTo(x + w / 2, yTop);
+      ctx.lineTo(x + w / 2, base); ctx.stroke();
+      if (hero > 0.5 && h > 80) {              // rising heat streaks keep the hero alive
+        ctx.save(); ctx.beginPath(); ctx.rect(x - w / 2, yTop, w, base - yTop); ctx.clip();
+        ctx.strokeStyle = "rgba(255,255,255,0.55)"; ctx.lineWidth = 3;
+        for (let k = 0; k < 5; k++) {
+          const span = base - yTop + 120, yy = base - ((t * (isTop ? 900 : 260) * (0.7 + k * 0.13) + k * 173) % span), xx = x - w / 2 + 12 + (k * 37 % (w - 24));
+          ctx.globalAlpha = alpha * 0.5 * hero; ctx.beginPath(); ctx.moveTo(xx, yy); ctx.lineTo(xx, yy + 46); ctx.stroke();
+        }
+        ctx.restore();
+      }
+    }
+    ctx.fillStyle = C.hero; ctx.globalAlpha = alpha * 0.9; ctx.fillRect(x - w / 2, base - 2, w, 2);
+    ctx.restore();
+
+    // ---- icon with its own entrance
+    const oldFade = isTop ? 1 : 1 - (age > 0.01 && t >= STEPS[TOP].t ? topZoomed : 0);
+    let size = lerp(112, 62, clamp(age));
+    let ix = x, iy = Math.max(top - lerp(78, 46, clamp(age)), ST + 175);
+    const restY = iy;
+    const [ex, ey, ed, es] = r.enter, ep = prog(t, r.t, ed), e = 1 - easeOut(ep);
+    if (e > 0 && !isTop) {
+      ix += ex * e; iy += ey * e; size *= lerp(1, es, e);
+      const len = Math.hypot(ex, ey);
+      if (len > 1) {
+        const tl = 260 * Math.sin(Math.PI * ep);
+        ctx.save();
+        const tg = ctx.createLinearGradient(ix, iy, ix + ex / len * tl, iy + ey / len * tl);
+        tg.addColorStop(0, rgba(r.tint, 0.8)); tg.addColorStop(1, rgba(r.tint, 0));
+        ctx.strokeStyle = tg; ctx.lineWidth = 5; ctx.lineCap = "round"; ctx.shadowColor = r.tint; ctx.shadowBlur = 16;
+        ctx.beginPath(); ctx.moveTo(ix, iy); ctx.lineTo(ix + ex / len * tl, iy + ey / len * tl); ctx.stroke(); ctx.restore();
+      }
+    }
+    if (r.key === "nova") {                    // shock ring as the star explodes
+      const b = prog(t, r.t, 0.9);
+      if (b > 0 && b < 1) { ctx.save(); ctx.globalAlpha = (1 - b) * 0.8; ctx.strokeStyle = r.tint; ctx.lineWidth = 5; ctx.shadowColor = r.tint; ctx.shadowBlur = 20; ctx.beginPath(); ctx.arc(x, restY, 30 + easeOut(b) * 330, 0, 7); ctx.stroke(); ctx.restore(); }
+    }
+    const ia = alpha * oldFade;
+    if (isTop) {
+      const star = prog(t, L(14), 0.25), gone = prog(t, L(15) - 0.2, 0.2), rev = popLabel(t, L(15));
+      drawIcon("qmark", x, iy, size, "#FFFFFF", ia * clamp(grow * 3) * (1 - star), t);
+      drawIcon("star", x, iy, size * lerp(0.7, 1, easeBack(star)), "#FFD84A", ia * star * (1 - gone), t);
+      if (gone < 1) { ctx.save(); ctx.globalAlpha = 1 - gone; xOut(x, iy, 48, t, L(14) + 0.45); ctx.restore(); }
+      if (rev.a > 0) {
+        const b = prog(t, L(15), 0.8);         // reveal burst
+        if (b < 1) { ctx.save(); ctx.globalAlpha = (1 - b) * 0.9; ctx.strokeStyle = C.mint; ctx.lineWidth = 5; ctx.shadowColor = C.mint; ctx.shadowBlur = 20; ctx.beginPath(); ctx.arc(x, iy, 40 + easeOut(b) * 260, 0, 7); ctx.stroke(); ctx.restore(); }
+        drawIcon("collider", x, iy, size * 1.25 * rev.s, "#FFC83D", ia * rev.a, t);
+      }
+    } else drawIcon(r.key, ix, iy, size, r.tint, ia, t);
+
+    // ---- labels
+    const la = hero * clamp(grow * 2.5) * (isTop ? 1 : Math.min(1, dim + 0.4));
+    if (la > 0) {
+      let name = r.name, na = la;
+      if (isTop) { const sw = prog(t, L(15), 0.25); if (sw > 0) { text(r.name, x, restY - 128, { px: 40, alpha: la * (1 - sw) }); name = "Large Hadron Collider"; na = la * sw; } }
+      text(name, x, restY - 128, { px: 40, alpha: na });
+      const lpx = Math.min(46, 46 * 520 / measure(r.label, 46, 800));
+      text(r.label, x, restY - 76, { px: lpx, w: 800, color: C.mint, alpha: la, glow: 14, glowColor: C.mint });
+    }
+    const oa = clamp(age) * clamp(2.6 - age, 0, 1) * oldFade * (isTop ? 1 : Math.min(1, dim + 0.3));
+    if (oa > 0) {
+      text(r.name, x, base + 44, { px: 22, alpha: oa * 0.85 });
+      text(r.short || r.label, x, base + 76, { px: 24, w: 800, color: C.mint, alpha: oa * 0.9 });
+    }
+  }
+}
+function drawFlash(t) {                        // lightning strike lights the whole frame
+  for (const r of STEPS) if (r.flash) {
+    const p = prog(t, r.t + 0.1, 0.45);
+    if (p > 0 && p < 1) { ctx.save(); ctx.globalAlpha = 0.5 * (1 - p) * (0.6 + 0.4 * Math.sin(p * 40)); ctx.fillStyle = "#E9DCFF"; ctx.fillRect(0, 0, W, H); ctx.restore(); }
+  }
+}
+function drawRecordTag(t) {                    // line 10: "the record?"  line 11: crossed out
+  const p = popLabel(t, L(10) + 0.25), out = 1 - prog(t, L(12) - 0.25, 0.25);
+  if (p.a <= 0 || out <= 0) return;
+  const y = ST + 0;
+  ctx.save(); ctx.globalAlpha = out;
+  text("the record?", CX, y, { px: 50 * p.s, w: 800, color: C.mint, alpha: p.a, glow: 16, glowColor: C.mint });
+  xOut(CX, y - 16, 34, t, L(11) + 0.05);
+  ctx.restore();
+}
+function drawBracket(t) {
+  const r = STEPS[TOP], p = popLabel(t, r.t + r.zoomDelay + r.zoomDur - 0.35);
+  if (p.a <= 0) return;
+  const x0 = 130, x1 = 440, y = GY - 44, xm = (x0 + x1) / 2, half = (x1 - x0) / 2 * p.s;
+  ctx.save(); ctx.globalAlpha = p.a; ctx.strokeStyle = C.mint; ctx.lineWidth = 3; ctx.shadowColor = C.mint; ctx.shadowBlur = 10; ctx.lineJoin = "round";
+  ctx.beginPath(); ctx.moveTo(xm - half, y + 22); ctx.lineTo(xm - half, y); ctx.lineTo(xm + half, y); ctx.lineTo(xm + half, y + 22); ctx.moveTo(xm, y); ctx.lineTo(xm, y - 16); ctx.stroke();
+  ctx.restore();
+  text("everything else", xm, y - 32, { px: 34 * p.s, color: C.mint, alpha: p.a });
+}
+
+/* ======================================================================
+   COLLIDER SCENE (lines 16-17)
+   ====================================================================== */
+const RING = { x: 540, y: 1075, rx: 340, ry: 150 };
+function colliderPhase(t) { const tau = Math.max(0, t - L(16) - 0.6); return 2 * Math.PI * (0.4 * tau + 0.12 * tau * tau); }
+// times at which the two beams meet at the front of the ring (exported for the sound mix)
+const COLLISIONS = (() => { const out = []; let prev = 0; for (let t = L(16); t < L(18) + 0.2; t += 1 / 240) { const k = Math.floor(colliderPhase(t) / (2 * Math.PI)); if (k > prev) { out.push(+t.toFixed(3)); prev = k; } } return out; })();
+function drawCollider(t) {
+  const g = easeIO(prog(t, L(16), 1.3));
+  if (g <= 0) return;
+  const dimF = lerp(1, 0.2, prog(t, L(18), 0.5)), sc = lerp(2.4, 1, g);
+  ctx.save();
+  ctx.translate(RING.x, RING.y); ctx.scale(sc, sc); ctx.globalAlpha = g * dimF;
+  // tunnel: two concentric ellipses + magnet ticks
+  ctx.strokeStyle = "rgba(190,200,255,0.8)"; ctx.lineWidth = 3; ctx.shadowColor = "#8C9BFF"; ctx.shadowBlur = 18;
+  ctx.beginPath(); ctx.ellipse(0, 0, RING.rx, RING.ry, 0, 0, 7); ctx.stroke();
+  ctx.strokeStyle = "rgba(160,150,255,0.4)"; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.ellipse(0, 0, RING.rx - 26, RING.ry - 16, 0, 0, 7); ctx.stroke();
+  for (let k = 0; k < 36; k++) { const a = k * Math.PI / 18; ctx.beginPath(); ctx.moveTo(Math.cos(a) * (RING.rx - 26), Math.sin(a) * (RING.ry - 16)); ctx.lineTo(Math.cos(a) * RING.rx, Math.sin(a) * RING.ry); ctx.stroke(); }
+  // two beams, opposite directions, speeding up
+  const ph = colliderPhase(t);
+  for (const [dir, col] of [[1, "#58F6CD"], [-1, "#FF9A3D"]]) {
+    for (let k = 7; k >= 0; k--) {
+      const a = Math.PI / 2 + dir * (ph - k * 0.07);
+      ctx.globalAlpha = g * dimF * (1 - k / 8); ctx.fillStyle = k ? col : "#FFFFFF"; ctx.shadowColor = col; ctx.shadowBlur = 22;
+      ctx.beginPath(); ctx.arc(Math.cos(a) * (RING.rx - 13), Math.sin(a) * (RING.ry - 8), 9 - k * 0.8, 0, 7); ctx.fill();
+    }
+  }
+  // collision flash at the front of the ring
+  let since = 9; for (const c of COLLISIONS) if (t >= c) since = t - c;
+  const f = 1 - clamp(since / 0.28);
+  if (f > 0) {
+    const fx = 0, fy = RING.ry - 8;
+    ctx.globalAlpha = g * dimF * f; ctx.fillStyle = "#FFFFFF"; ctx.strokeStyle = "#FFE9A8"; ctx.shadowColor = "#FFC83D"; ctx.shadowBlur = 40; ctx.lineWidth = 4; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.arc(fx, fy, 14 + 30 * f, 0, 7); ctx.fill();
+    for (let k = 0; k < 12; k++) { const a = k * Math.PI / 6 + 0.2, r0 = 40 + (1 - f) * 90; ctx.beginPath(); ctx.moveTo(fx + Math.cos(a) * r0, fy + Math.sin(a) * r0); ctx.lineTo(fx + Math.cos(a) * (r0 + 46 * f), fy + Math.sin(a) * (r0 + 46 * f)); ctx.stroke(); }
+  }
+  ctx.restore();
+  const la = popLabel(t, L(16) + 1.0), out = 1 - prog(t, L(18), 0.4);
+  text("Large Hadron Collider", CX, 1345, { px: 52 * la.s, w: 800, alpha: la.a * out, glow: 14 });
+  text("CERN, near Geneva · 2012", CX, 1400, { px: 32, color: C.mint, alpha: la.a * out });
+  // line 17: the farmland above the tunnel
+  const fp = easeIO(prog(t, L(17), 0.8));
+  if (fp > 0) {
+    const gy = 800, a = fp * out;
+    ctx.save(); ctx.globalAlpha = out;
+    ctx.strokeStyle = C.ground; ctx.lineWidth = 4; ctx.shadowColor = C.ground; ctx.shadowBlur = 18; ctx.lineJoin = "round"; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(-20, gy); ctx.lineTo(lerp(-20, W + 20, fp), gy); ctx.stroke();
+    const pop = (start, fn) => { const p = popLabel(t, L(17) + start); if (p.a > 0) { ctx.save(); ctx.globalAlpha = p.a * out; fn(p.s); ctx.restore(); } };
+    ctx.strokeStyle = "#6BF28A"; ctx.shadowColor = "#6BF28A"; ctx.shadowBlur = 12; ctx.lineWidth = 3;
+    const tree = (x, s) => { ctx.beginPath(); ctx.moveTo(x, gy); ctx.lineTo(x, gy - 30 * s); ctx.stroke(); ctx.beginPath(); ctx.arc(x, gy - 52 * s, 24 * s, 0, 7); ctx.stroke(); };
+    pop(0.3, s => tree(250, s)); pop(0.4, s => tree(310, s * 0.75)); pop(0.75, s => tree(860, s * 0.9));
+    pop(0.55, s => {                           // barn
+      ctx.strokeStyle = "#FF7A6A"; ctx.shadowColor = "#FF7A6A"; const x = 640, w = 110 * s, h = 60 * s;
+      ctx.beginPath(); ctx.moveTo(x, gy); ctx.lineTo(x, gy - h); ctx.lineTo(x + w / 2, gy - h - 36 * s); ctx.lineTo(x + w, gy - h); ctx.lineTo(x + w, gy); ctx.stroke();
+      ctx.strokeRect(x + w / 2 - 14 * s, gy - 34 * s, 28 * s, 34 * s);
+    });
+    pop(0.65, s => {                           // a cow, more or less
+      ctx.strokeStyle = "#FFFFFF"; ctx.shadowColor = "#FFFFFF"; const x = 470, y = gy - 34 * s;
+      ctx.beginPath(); ctx.roundRect(x - 30 * s, y - 14 * s, 60 * s, 28 * s, 10 * s); ctx.stroke();
+      ctx.beginPath(); ctx.arc(x + 40 * s, y - 12 * s, 10 * s, 0, 7); ctx.stroke();
+      ctx.beginPath(); for (const dx of [-22, -10, 12, 24]) { ctx.moveTo(x + dx * s, y + 14 * s); ctx.lineTo(x + dx * s, gy); } ctx.stroke();
+    });
+    // depth arrow
+    const dp = easeOut(prog(t, L(17) + 0.9, 0.5));
+    if (dp > 0) {
+      const x = 150, y1 = lerp(gy + 14, RING.y - 96, dp);
+      ctx.strokeStyle = C.mint; ctx.shadowColor = C.mint; ctx.lineWidth = 3; ctx.globalAlpha = out;
+      ctx.beginPath(); ctx.moveTo(x, gy + 14); ctx.lineTo(x, y1); ctx.moveTo(x - 10, gy + 26); ctx.lineTo(x, gy + 14); ctx.lineTo(x + 10, gy + 26); ctx.moveTo(x - 10, y1 - 12); ctx.lineTo(x, y1); ctx.lineTo(x + 10, y1 - 12); ctx.stroke();
+    }
+    ctx.restore();
+    const dl = popLabel(t, L(17) + 1.2);
+    text("~100 m", 172, 880, { px: 40 * dl.s, w: 800, color: C.mint, align: "left", alpha: dl.a * out, glow: 12, glowColor: C.mint });
+    text("underground", 172, 916, { px: 26, align: "left", alpha: dl.a * out });
+  }
+}
+
+/* ======================================================================
+   HUD
+   ====================================================================== */
+const READOUT = (() => {
+  const st = [{ t: -1, name: "Hottest", v: null }];
+  STEPS.forEach(r => st.push({ t: r.t, name: r.name, v: r.v, r }));
+  st.push({ t: L(15), name: "Us", v: STEPS[TOP].v, r: STEPS[TOP], still: true });
+  return st;
+})();
+function drawReadoutState(k, t, alpha) {
+  if (alpha <= 0) return;
+  const s = READOUT[k], y = 402;
+  let num, finalNum;
+  if (s.v == null) num = finalNum = "?";
+  else {
+    let from = V_MIN; for (let j = k - 1; j >= 0; j--) if (READOUT[j].v != null) { from = READOUT[j].v; break; }
+    const val = s.still ? s.v : rollNumber(t, s.t, s.r.rollDur, from, s.v, s.r.rollLog);
+    num = (s.r.prefix || "") + fmt(val) + UNIT; finalNum = s.r.label;
+  }
+  const left = s.name + " = ";
+  let px = 56; const full = measure(left + finalNum, px, 800); if (full > 800) px *= 800 / full;
+  const wl = measure(left, px), wn = measure(finalNum, px, 800), x0 = CX - (wl + wn) / 2;
+  text(left, x0, y, { px, align: "left", alpha });
+  if (s.v == null) { const pu = 1 + 0.12 * Math.sin(t * 7); text("?", x0 + wl + wn / 2, y + (pu - 1) * 18, { px: px * pu, w: 800, color: C.mint, alpha, glow: 18, glowColor: C.mint }); }
+  else text(num, x0 + wl, y, { px, w: 800, color: C.mint, align: "left", alpha, glow: 14, glowColor: C.mint });
+}
+function progressFill(t) {
+  let f = 0;
+  STEPS.forEach((r, i) => { f = lerp(f, r.logPos, easeIO(prog(t, i === TOP ? r.t + 0.3 : r.t, i === TOP ? 2.3 : r.rollDur))); });
+  return f;
+}
+function drawHUD(t) {
+  text(TITLE[0], CX, 236, { px: 62, w: 800, glow: 16 });
+  text(TITLE[1], CX, 308, { px: 62, w: 800, glow: 16 });
+  let k = 0; while (k + 1 < READOUT.length && t >= READOUT[k + 1].t) k++;
+  const xf = prog(t, READOUT[k].t, 0.2);
+  if (k > 0 && xf < 1) drawReadoutState(k - 1, READOUT[k].t, 1 - xf);
+  drawReadoutState(k, t, k === 0 ? 1 : xf);
+  const x0 = 150, x1 = 870, y = 480, f = progressFill(t);
+  ctx.save();
+  ctx.fillStyle = "rgba(255,255,255,0.13)"; ctx.beginPath(); ctx.roundRect(x0, y - 6, x1 - x0, 12, 6); ctx.fill();
+  if (f > 0) { ctx.fillStyle = C.mint; ctx.shadowColor = C.mint; ctx.shadowBlur = 16; ctx.beginPath(); ctx.roundRect(x0, y - 6, Math.max(12, (x1 - x0) * f), 12, 6); ctx.fill(); }
+  ctx.shadowBlur = 0;
+  STEPS.slice(0, TOP).forEach(r => {
+    const reached = prog(t, r.t + 0.5, 0.3);
+    ctx.fillStyle = reached > 0 ? "#FFFFFF" : "rgba(255,255,255,0.35)";
+    ctx.beginPath(); ctx.arc(x0 + (x1 - x0) * r.logPos, y, 5 + 4 * Math.sin(Math.PI * reached), 0, 7); ctx.fill();
+  });
+  ctx.restore();
+  text("10 °C", x0, y + 40, { px: 20, color: C.grey, align: "left", ls: 2 });
+  text("the record", x1, y + 40, { px: 20, color: C.grey, align: "right", ls: 2 });
+  const flick = t < L(2) ? 0.35 + 0.65 * Math.abs(Math.sin(t * 23) * Math.sin(t * 7.3)) : 0.75 + 0.1 * Math.sin(t * 3);
+  const done = prog(t, STEPS[TOP].t + 2.6, 0.7);
+  drawIcon("spark", x1 + 36, y, 46 * (1 + 0.9 * Math.sin(Math.PI * done)), done > 0 ? C.mint : "#FFFFFF", flick, t);
+  // line 13 pop
+  const p = popLabel(t, L(13)), out = 1 - prog(t, L(16), 0.4);
+  if (p.a > 0 && out > 0) {
+    const a = "×366,000", b = " hotter than the Sun's core";
+    let pa = 60, pb = 42; const tot = measure(a, pa, 800) + measure(b, pb); const k2 = Math.min(1, 800 / tot) * p.s; pa *= k2; pb *= k2;
+    const wa = measure(a, pa, 800), wb = measure(b, pb), xs = CX - (wa + wb) / 2;
+    text(a, xs, 592, { px: pa, w: 800, color: C.mint, align: "left", alpha: p.a * out, glow: 16, glowColor: C.mint });
+    text(b, xs + wa, 592, { px: pb, align: "left", alpha: p.a * out });
+  }
+  text(HANDLE, CX, 1500, { px: 30, alpha: 0.3 });
+}
+
+/* ======================================================================
+   FINAL LINE
+   ====================================================================== */
+function drawFinal(t) {
+  const a = prog(t, L(18), 0.3);
+  if (a <= 0) return;
+  const part2 = L(18) + TL.lastLinePart2 - 0.05;
+  const lines = [["The hottest", 0], ["thing in the", 0], ["universe?", 0], ["We built it.", 1]];
+  const px = 128, lh = 146, y0 = 1040 - (lines.length - 1) * lh / 2 + 44, sc = (1 + 0.035 * prog(t, L(18), D - L(18))) * lerp(0.92, 1, easeOut(a));
+  ctx.save(); ctx.translate(CX, 1040); ctx.scale(sc, sc); ctx.translate(-CX, -1040);
+  lines.forEach(([s, part], i) => {
+    const lit = part ? prog(t, part2, 0.25) : 1, c = Math.round(lerp(110, 255, lit));
+    text(s, CX, y0 + i * lh + (part ? 26 : 0), { px, w: 800, color: part && lit >= 1 ? C.mint : `rgb(${c},${c},${Math.min(255, c + 15)})`, alpha: a, glow: lit * 26, glowColor: part ? C.mint : "#FFFFFF" });
+  });
+  ctx.restore();
+}
+
+/* ======================================================================
+   SCENE
+   ====================================================================== */
+function drawHook(t) {             // a heat shimmer line sweeps up the stage in the first second
+  const p = prog(t, 0.2, 0.6);
+  if (p <= 0 || p >= 1) return;
+  const y = lerp(1500, 700, easeOut(p));
+  const g = ctx.createLinearGradient(0, y, 0, y + 300);
+  g.addColorStop(0, `rgba(255,170,90,${0.35 * (1 - p)})`); g.addColorStop(1, "rgba(255,90,40,0)");
+  ctx.fillStyle = g; ctx.fillRect(0, y, W, 300);
+}
+function drawScene(t) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  drawBackground(t);
+  drawHook(t);
+  const s = zoomTo(t), g = easeIO(prog(t, L(16), 1.3));
+  if (g < 1) {
+    ctx.save();
+    const sc = lerp(1, 0.02, g);
+    ctx.translate(RING.x, RING.y); ctx.scale(sc, sc); ctx.translate(-RING.x, -RING.y);
+    drawGrid(t, s); drawGround(t); drawBars(t, s); drawRecordTag(t); drawBracket(t);
+    ctx.restore();
+    if (g > 0) {
+      ctx.save(); ctx.globalAlpha = clamp(g * 1.25);
+      const bg = ctx.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, C.bgTop); bg.addColorStop(1, C.bgBot);
+      ctx.fillStyle = bg; ctx.fillRect(0, ST - 60, W, H); ctx.restore();
+    }
+  }
+  drawCollider(t);
+  drawFlash(t);
+  drawHUD(t);
+  drawFinal(t);
+}
+function render(tReal) {
+  let t = tReal, rw = 0;
+  if (tReal > D - REWIND) { rw = (tReal - (D - REWIND)) / REWIND; t = lerp(D - REWIND, 0.1, easeIO(rw)); }
+  drawScene(t);
+  if (rw > 0) {
+    const k = Math.sin(Math.PI * rw);
+    for (const [sc, a] of [[1 + 0.05 * k, 0.4 * k], [1 + 0.11 * k, 0.25 * k]]) { ctx.save(); ctx.globalAlpha = a; ctx.translate(CX, 960); ctx.scale(sc, sc); ctx.translate(-CX, -960); ctx.drawImage(cv, 0, 0); ctx.restore(); }
+    ctx.save(); ctx.translate(CX, 1000);
+    const r = rng(3); ctx.strokeStyle = "#FFFFFF"; ctx.lineWidth = 3;
+    for (let i = 0; i < 46; i++) { const a = r() * 7, r0 = 200 + r() * 500 - rw * 120, len = 60 + r() * 200; ctx.globalAlpha = 0.16 * k; ctx.beginPath(); ctx.moveTo(Math.cos(a) * r0, Math.sin(a) * r0); ctx.lineTo(Math.cos(a) * (r0 + len), Math.sin(a) * (r0 + len)); ctx.stroke(); }
+    ctx.globalAlpha = k * 0.9; ctx.fillStyle = "#FFFFFF"; ctx.shadowColor = "#FFFFFF"; ctx.shadowBlur = 24;
+    for (const dx of [-62, 6]) { ctx.beginPath(); ctx.moveTo(dx + 56, -42); ctx.lineTo(dx, 0); ctx.lineTo(dx + 56, 42); ctx.closePath(); ctx.fill(); }
+    ctx.restore();
+  }
+  const fi = 1 - clamp((tReal * FPS + 1) / 3);
+  if (fi > 0) { ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.fillStyle = `rgba(0,0,0,${fi * 0.8})`; ctx.fillRect(0, 0, W, H); ctx.restore(); }
+}
+
+window.AUDIO_EVENTS = {
+  plucks: STEPS.slice(0, TOP).map(r => r.t),
+  whooshes: STEPS.slice(1).map((r, i) => ({ t: r.t + r.zoomDelay, dur: r.zoomDur + 0.1, big: i + 1 === TOP })).concat([{ t: L(16), dur: 1.3, big: false }]),
+  rolls: STEPS.map(r => ({ t: r.t, dur: r.rollDur })),
+  cracks: STEPS.filter(r => r.flash).map(r => r.t + 0.08),
+  thuds: [L(11) + 0.05, L(11) + 0.2, L(14) + 0.45, L(14) + 0.6],
+  chimes: [L(15)], pings: COLLISIONS.filter(c => c < L(18)),
+  musicOut: L(11), bassHit: L(12), rewind: D - REWIND, duration: D,
+};
+window.renderFrame = f => render(f / FPS);
+window.ready = document.fonts.load("700 40px Nunito").then(() => document.fonts.load("800 40px Nunito")).then(() => true);
+if (!location.search.includes("render")) {      // click-to-play preview
+  document.body.classList.add("preview");
+  const audio = new Audio("../out/mix.wav"); audio.loop = true; let playing = false;
+  window.ready.then(() => render(1));
+  cv.onclick = () => { playing = !playing; if (playing) { audio.play().catch(() => {}); loop(); } else audio.pause(); };
+  function loop() { if (!playing) return; render(audio.currentTime % D); requestAnimationFrame(loop); }
+}
+</script>
+</body>
+</html>
