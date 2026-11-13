@@ -1,0 +1,769 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>How fast is light, really?</title>
+<style>
+@font-face { font-family: "Nunito"; font-weight: 700; src: url("../fonts/nunito-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Nunito"; font-weight: 800; src: url("../fonts/nunito-latin-800-normal.woff2") format("woff2"); }
+html, body { margin: 0; background: #000; }
+canvas { display: block; }
+body.preview canvas { height: 100vh; width: auto; margin: 0 auto; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script src="timeline.js"></script>
+<script>
+"use strict";
+/* ======================================================================
+   CONFIG — things you are likely to change
+   ====================================================================== */
+const HANDLE = "@myhandle";
+const TITLE = "How fast is light, really?";
+const C = {
+  bgTop: "#140C26", bgBot: "#06050E", text: "#FFFFFF", mint: "#58F6CD",
+  ground: "#D3B682", hero: "#FFDEB4", heroEdge: "#E7B46E", grey: "#8A8A9A",
+};
+const RACERS = [
+  { key: "you",     name: "You",                v: 5,          tint: "#6BF28A" },
+  { key: "bolt",    name: "Usain Bolt",         v: 44,         tint: "#3DDC84" },
+  { key: "cheetah", name: "Cheetah",            v: 100,        tint: "#FFD84A", prefix: "~" },
+  { key: "falcon",  name: "Diving falcon",      v: 390,        tint: "#FF9A3D" },
+  { key: "jet",     name: "Passenger jet",      v: 900,        tint: "#5AA9FF" },
+  { key: "sound",   name: "Sound",              v: 1235,       tint: "#4DE8FF" },
+  { key: "iss",     name: "Space station",      v: 28000,      tint: "#7C9BFF" },
+  { key: "rocket",  name: "Escape Earth",       v: 40270,      tint: "#FF5A5A" },
+  { key: "earth",   name: "Earth",              v: 107000,     tint: "#4FD1A5" },
+  { key: "parker",  name: "Parker Solar Probe", v: 692000,     tint: "#FFC83D" },
+  { key: "light",   name: "Light",              v: 1079252849, tint: "#FFFFFF" },
+];
+const LIGHT = RACERS.length - 1;
+
+/* ======================================================================
+   TIMELINE — every beat is derived from the audio clip durations
+   ====================================================================== */
+const TL = window.TIMELINE;
+const W = 1080, H = 1920, FPS = TL.fps, D = TL.duration;
+const L = n => TL.lines[n - 1].start, E = n => TL.lines[n - 1].end;
+const REWIND = 0.5;
+
+// stage geometry
+const CX = 540, GY = 1340, ST = 600, SH = GY - ST, HERO_H = 0.55 * SH, SLOT = 170;
+
+// per-racer beat times
+RACERS.forEach((r, i) => {
+  r.line = i < LIGHT ? 3 + i : 14;
+  r.t = L(r.line);                         // reveal
+  r.S = HERO_H / r.v;                      // px per km/h when this racer is the hero
+  r.zoomDelay = r.key === "falcon" ? 0.85 : r.key === "light" ? 0.9 : 0.35;
+  r.zoomDur = r.key === "light" ? 2.0 : 1.0;
+  r.rollDur = r.key === "light" ? 2.6 : 0.8;
+  r.label = (r.prefix || "") + fmt(r.v) + " km/h";
+  r.logPos = Math.log10(r.v) / Math.log10(RACERS[LIGHT].v);
+});
+RACERS.forEach((r, i) => {
+  const next = RACERS[i + 1];
+  if (next) r.zoomDur = Math.min(r.zoomDur, next.t - r.t - r.zoomDelay - 0.05);
+});
+
+// The beat list (exported for the audio mixer and for inspection).
+const BEATS = TL.lines.map(l => {
+  const r = RACERS.find(r => r.line === l.n);
+  const b = { start: l.start, end: l.end, line: l.n, readout: null, actions: [] };
+  if (l.n === 1) { b.readout = "Light = ?"; b.actions = ["fadeIn", "sparkFlicker"]; }
+  if (l.n === 2) b.actions = ["drawGround", "startTick"];
+  if (r) { b.readout = `${r.name} = ${r.label}`; b.actions = ["addRacer", "rollNumber", "zoomTo", "fadeBars"]; }
+  if (l.n === 13) { b.readout = "Light = ?"; b.actions = ["freeze", "dimBars", "musicOut"]; }
+  if (l.n === 15) b.actions = ["popLabel:×1,560 faster than Parker"];
+  if (l.n === 16) b.actions = ["sun", "lightDot", "timer:8 min 20 s"];
+  if (l.n === 17) b.actions = ["zoomToGalaxy", "label:~100,000 years"];
+  if (l.n === 18) b.actions = ["finalLine", "hold", "rewind"];
+  return b;
+});
+window.BEATS = BEATS;
+window.AUDIO_EVENTS = {
+  plucks: RACERS.slice(0, LIGHT).map(r => r.t),
+  whooshes: RACERS.slice(1).map(r => r.t + r.zoomDelay).concat([L(17)]),
+  rolls: RACERS.map(r => ({ t: r.t, dur: r.rollDur })),
+  musicOut: L(13), bassHit: L(14), rewind: D - REWIND, duration: D,
+};
+
+/* ======================================================================
+   SMALL HELPERS
+   ====================================================================== */
+function fmt(n) { return Math.round(n).toLocaleString("en-US"); }
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, p) => a + (b - a) * p;
+const prog = (t, start, dur) => clamp((t - start) / dur);
+const easeIO = p => p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+const easeOut = p => 1 - Math.pow(1 - p, 3);
+const easeBack = p => { const c = 1.70158; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); };
+function rng(seed) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+function rgba(hex, a) {
+  const n = parseInt(hex.slice(1), 16);
+  return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`;
+}
+
+const cv = document.getElementById("c"), ctx = cv.getContext("2d");
+function font(px, w = 700) { ctx.font = `${w} ${px}px Nunito, sans-serif`; }
+function text(s, x, y, { px = 48, w = 700, color = C.text, align = "center", alpha = 1, glow = 0, glowColor = "#FFFFFF", ls = 0 } = {}) {
+  if (alpha <= 0.003) return;
+  ctx.save();
+  font(px, w);
+  ctx.textAlign = align; ctx.textBaseline = "alphabetic";
+  if (ls) ctx.letterSpacing = ls + "px";
+  ctx.globalAlpha *= alpha;
+  // dark halo first so text stays readable over bars
+  ctx.shadowColor = "rgba(6,5,14,0.9)"; ctx.shadowBlur = 10;
+  ctx.fillStyle = color; ctx.fillText(s, x, y);
+  if (glow) { ctx.shadowColor = rgba(glowColor, 0.35); ctx.shadowBlur = glow; ctx.fillText(s, x, y); }
+  ctx.restore();
+}
+function measure(s, px, w = 700) { font(px, w); return ctx.measureText(s).width; }
+
+/* ======================================================================
+   REUSABLE ANIMATION HELPERS (all are pure functions of time)
+   ====================================================================== */
+// rollNumber: value shown at time t while rolling from `from` to `to`
+function rollNumber(t, start, dur, from, to, logScale) {
+  const p = easeIO(prog(t, start, dur));
+  if (logScale) return Math.exp(lerp(Math.log(from), Math.log(to), p));
+  return lerp(from, to, p);
+}
+// zoomTo: camera scale (px per km/h). Each racer zooms the camera to its own scale.
+function zoomTo(t) {
+  let ls = Math.log(RACERS[0].S);
+  for (let i = 1; i < RACERS.length; i++) {
+    const r = RACERS[i];
+    ls = lerp(ls, Math.log(r.S), easeIO(prog(t, r.t + r.zoomDelay, r.zoomDur)));
+  }
+  return Math.exp(ls);
+}
+// addRacer: how far a racer's bar has risen (0..1)
+function addRacer(r, t) { return easeOut(prog(t, r.t, r.key === "light" ? 0.45 : 0.35)); }
+// fadeBars: "age" of a bar = how many newer racers have pushed it left (continuous)
+function fadeBars(i, t) {
+  let age = 0;
+  for (let j = i + 1; j < RACERS.length; j++) age += easeIO(prog(t, RACERS[j].t, 0.5));
+  return age;
+}
+// popLabel: scale 0.8 -> 1.0 and fade in over 0.25 s
+function popLabel(t, start) { const p = prog(t, start, 0.25); return { a: p, s: lerp(0.8, 1, easeBack(p)) }; }
+
+// Earth curvature: 0 = flat ground, 1 = full horizon
+function curvature(t) {
+  const a = easeIO(prog(t, L(9), 1.6)), b = easeIO(prog(t, L(11), 1.3));
+  return 0.5 * a + 0.5 * b;
+}
+function groundR(t) {
+  const k = curvature(t);
+  if (k < 0.002) return Infinity;
+  return 1 / lerp(0, 1 / 1500, Math.pow(k, 1.2));
+}
+function drop(x, R) { if (!isFinite(R)) return 0; const dx = x - CX; return R - Math.sqrt(R * R - dx * dx); }
+
+/* ======================================================================
+   ICONS — simple geometric outlines, drawn in a 100x100 box
+   ====================================================================== */
+function drawIcon(name, cx, cy, size, tint, alpha, t) {
+  if (alpha <= 0.003) return;
+  const s = size / 100;
+  ctx.save();
+  ctx.translate(cx, cy); ctx.scale(s, s);
+  ctx.globalAlpha *= alpha;
+  ctx.strokeStyle = tint; ctx.fillStyle = tint;
+  ctx.lineWidth = clamp(2.6 / s, 2.4, 5); ctx.lineCap = "round"; ctx.lineJoin = "round";
+  ctx.shadowColor = tint; ctx.shadowBlur = 14;
+  const P = (...pts) => { ctx.beginPath(); ctx.moveTo(pts[0], pts[1]); for (let i = 2; i < pts.length; i += 2) ctx.lineTo(pts[i], pts[i + 1]); ctx.stroke(); };
+  const poly = (...pts) => { ctx.beginPath(); ctx.moveTo(pts[0], pts[1]); for (let i = 2; i < pts.length; i += 2) ctx.lineTo(pts[i], pts[i + 1]); ctx.closePath(); ctx.stroke(); };
+  const circ = (x, y, r, fill) => { ctx.beginPath(); ctx.arc(x, y, r, 0, 7); fill ? ctx.fill() : ctx.stroke(); };
+  switch (name) {
+    case "you": {
+      const sw = Math.sin(t * 5) * 6;
+      circ(0, -34, 9); P(0, -25, 0, 6);
+      P(0, 6, -11 - sw, 36); P(0, 6, 11 + sw, 36);
+      P(0, -17, -11 + sw, 2); P(0, -17, 11 - sw, 2);
+      break;
+    }
+    case "bolt": {
+      circ(11, -34, 9); P(7, -25, -4, 4);
+      P(-4, 4, 15, 13, 8, 35); P(-4, 4, -20, 12, -33, 27);
+      P(4, -18, 20, -10, 27, -23); P(4, -18, -12, -12, -19, 1);
+      const k = (t * 3) % 1;
+      ctx.globalAlpha *= 0.7;
+      P(-48 + k * 6, -22, -32 + k * 6, -22); P(-50 + k * 8, -6, -36 + k * 8, -6);
+      break;
+    }
+    case "cheetah": {
+      ctx.beginPath(); ctx.ellipse(-2, 0, 29, 11, -0.05, 0, 7); ctx.stroke();
+      circ(34, -12, 9); P(29, -20, 30, -27, 34, -21); P(38, -21, 41, -27, 42, -19);
+      P(-22, 8, -36, 30); P(-14, 10, -7, 31); P(16, 10, 9, 31); P(23, 7, 39, 27);
+      ctx.beginPath(); ctx.moveTo(-30, -3); ctx.quadraticCurveTo(-48, 2, -47, -20); ctx.stroke();
+      circ(-12, -2, 2, true); circ(0, 2, 2, true); circ(10, -3, 2, true);
+      break;
+    }
+    case "falcon": {
+      ctx.rotate(0.6 + Math.sin(t * 9) * 0.02);
+      ctx.beginPath(); ctx.moveTo(0, -30); ctx.quadraticCurveTo(11, -4, 0, 36); ctx.quadraticCurveTo(-11, -4, 0, -30); ctx.stroke();
+      P(5, 4, 34, -26, 7, -10); P(-5, 4, -34, -26, -7, -10);
+      P(0, -30, -7, -42); P(0, -30, 7, -42); P(0, -30, 0, -44);
+      break;
+    }
+    case "jet": {
+      ctx.rotate(-0.28);
+      ctx.beginPath(); ctx.roundRect(-42, -6, 84, 12, 6); ctx.stroke();
+      poly(-2, -6, -18, -36, -8, -36, 16, -6); poly(-2, 6, -18, 36, -8, 36, 16, 6);
+      poly(-40, -6, -46, -21, -38, -21, -30, -6);
+      break;
+    }
+    case "sound": {
+      circ(-32, 0, 6, true);
+      for (let k = 0; k < 3; k++) {
+        const ph = (t * 1.6 + k / 3) % 1, r = 14 + ph * 44;
+        ctx.save(); ctx.globalAlpha *= Math.sin(ph * Math.PI);
+        ctx.beginPath(); ctx.arc(-32, 0, r, -0.85, 0.85); ctx.stroke();
+        ctx.beginPath(); ctx.arc(-32, 0, r, Math.PI - 0.5, Math.PI + 0.5); ctx.stroke();
+        ctx.restore();
+      }
+      break;
+    }
+    case "iss": {
+      ctx.rotate(-0.12);
+      ctx.beginPath(); ctx.roundRect(-10, -8, 20, 16, 4); ctx.stroke();
+      P(-46, 0, -10, 0); P(10, 0, 46, 0);
+      for (const x of [-46, -30, 18, 34]) { ctx.strokeRect(x, -28, 12, 56); P(x, -9, x + 12, -9); P(x, 9, x + 12, 9); }
+      break;
+    }
+    case "rocket": {
+      ctx.rotate(0.18);
+      ctx.beginPath(); ctx.moveTo(0, -44); ctx.quadraticCurveTo(13, -30, 12, -8); ctx.lineTo(12, 18); ctx.lineTo(-12, 18); ctx.lineTo(-12, -8); ctx.quadraticCurveTo(-13, -30, 0, -44); ctx.stroke();
+      circ(0, -12, 5);
+      P(-12, 4, -25, 24, -12, 18); P(12, 4, 25, 24, 12, 18);
+      const f = 38 + Math.sin(t * 40) * 4 + Math.sin(t * 23) * 3;
+      ctx.strokeStyle = "#FFB84A"; ctx.shadowColor = "#FFB84A";
+      P(-7, 21, 0, f, 7, 21);
+      break;
+    }
+    case "earth": {
+      ctx.strokeStyle = "#5AA9FF"; ctx.shadowColor = "#5AA9FF"; circ(0, 0, 32);
+      ctx.strokeStyle = "#5BE38A"; ctx.shadowColor = "#5BE38A";
+      ctx.beginPath(); ctx.moveTo(-18, -14); ctx.quadraticCurveTo(-4, -24, 2, -10); ctx.quadraticCurveTo(-4, 2, -14, -2); ctx.closePath(); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(6, 6); ctx.quadraticCurveTo(20, 2, 18, 16); ctx.quadraticCurveTo(10, 24, 6, 6); ctx.stroke();
+      P(-16, 14, -6, 18);
+      break;
+    }
+    case "parker": {
+      poly(-24, -34, 24, -34, 17, -23, -17, -23);
+      ctx.strokeRect(-10, -23, 20, 30);
+      poly(-12, -12, -40, 0, -37, 10, -12, -1); poly(12, -12, 40, 0, 37, 10, 12, -1);
+      P(0, 7, 0, 30); ctx.beginPath(); ctx.arc(0, 36, 7, Math.PI, 0); ctx.stroke();
+      break;
+    }
+    case "light": {
+      const pu = 1 + Math.sin(t * 6) * 0.08;
+      for (let k = 0; k < 8; k++) {
+        const a = k * Math.PI / 4 + t * 0.4, r1 = 14, r2 = (k % 2 ? 26 : 40) * pu;
+        P(Math.cos(a) * r1, Math.sin(a) * r1, Math.cos(a) * r2, Math.sin(a) * r2);
+      }
+      ctx.shadowBlur = 24; circ(0, 0, 8, true);
+      break;
+    }
+    case "sun": {
+      ctx.shadowBlur = 26; circ(0, 0, 20);
+      ctx.save(); ctx.globalAlpha *= 0.35; circ(0, 0, 20, true); ctx.restore();
+      for (let k = 0; k < 10; k++) { const a = k * Math.PI / 5 + t * 0.6; P(Math.cos(a) * 28, Math.sin(a) * 28, Math.cos(a) * 40, Math.sin(a) * 40); }
+      break;
+    }
+  }
+  ctx.restore();
+}
+
+/* ======================================================================
+   BACKGROUND
+   ====================================================================== */
+const STARS = (() => { const r = rng(7); return Array.from({ length: 260 }, (_, i) => ({ x: r() * W, y: r() * H, s: 1 + r() * 2.2, a: 0.04 + r() * 0.04, ph: r() * 7, sp: 0.6 + r() * 1.8, rank: i / 260 })); })();
+function spaceness(t) { return clamp(0.25 + 0.35 * prog(t, L(9), 1.5) + 0.2 * prog(t, L(11), 1.2) + 0.2 * prog(t, L(17), 1.2)); }
+function drawBackground(t) {
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, C.bgTop); g.addColorStop(1, C.bgBot);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const sp = spaceness(t);
+  ctx.fillStyle = "#FFFFFF";
+  for (const s of STARS) {
+    if (s.rank > sp) continue;
+    const appear = clamp((sp - s.rank) * 12);
+    const tw = 0.55 + 0.45 * Math.sin(t * s.sp * 2 + s.ph);
+    ctx.globalAlpha = s.a * (1 + sp) * tw * appear;
+    ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, 7); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+}
+
+/* ======================================================================
+   STAGE: ground, Earth horizon, grid, bars
+   ====================================================================== */
+function drawGround(t, R) {
+  const p = easeIO(prog(t, L(2), 0.7));
+  if (p <= 0) return;
+  const k = curvature(t);
+  ctx.save();
+  // Earth body under the horizon
+  if (isFinite(R)) {
+    const cy = GY + R;
+    ctx.beginPath(); ctx.arc(CX, cy, R, 0, 7);
+    const g = ctx.createLinearGradient(0, GY, 0, GY + 420);
+    g.addColorStop(0, rgba("#1B4E8C", 0.55 * k)); g.addColorStop(1, rgba("#0B1E3A", 0));
+    ctx.fillStyle = g; ctx.fill();
+    // atmosphere glow
+    ctx.strokeStyle = rgba("#58C8F6", 0.5 * k); ctx.lineWidth = 10; ctx.shadowColor = "#58C8F6"; ctx.shadowBlur = 40 * k;
+    ctx.beginPath(); ctx.arc(CX, cy, R + 4, Math.PI * 1.1, Math.PI * 1.9); ctx.stroke();
+    // continents (outline hints) once Earth itself is the horizon
+    const e = clamp((k - 0.55) / 0.45);
+    if (e > 0) {
+      ctx.save(); ctx.beginPath(); ctx.arc(CX, cy, R - 6, 0, 7); ctx.clip();
+      ctx.strokeStyle = rgba("#5BE38A", 0.55 * e); ctx.lineWidth = 3; ctx.shadowColor = "#5BE38A"; ctx.shadowBlur = 12;
+      const blob = (x, y, w, h) => { ctx.beginPath(); ctx.moveTo(x, y); ctx.bezierCurveTo(x + w * 0.4, y - h, x + w, y - h * 0.3, x + w * 0.9, y + h * 0.5); ctx.bezierCurveTo(x + w * 0.5, y + h * 1.2, x + w * 0.1, y + h * 0.8, x, y); ctx.stroke(); };
+      blob(120, GY + 150, 230, 60); blob(690, GY + 120, 240, 66); blob(420, GY + 250, 180, 50);
+      ctx.restore();
+    }
+  }
+  // the ground line itself
+  ctx.strokeStyle = C.ground; ctx.lineWidth = 4; ctx.shadowColor = C.ground; ctx.shadowBlur = 18;
+  ctx.beginPath();
+  const xEnd = lerp(-20, W + 20, p);
+  for (let x = -20; x <= xEnd; x += 20) { const y = GY + drop(x, R); x === -20 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
+  ctx.stroke();
+  // starting-line tick
+  const tp = popLabel(t, L(2) + 0.35), fade = 1 - prog(t, L(4), 0.4);
+  if (tp.a > 0 && fade > 0) {
+    ctx.globalAlpha = tp.a * fade;
+    ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(CX, GY - 16 * tp.s); ctx.lineTo(CX, GY + 16 * tp.s); ctx.stroke();
+    text("START", CX, GY + 58, { px: 22, color: C.grey, alpha: 1, ls: 5 });
+  }
+  ctx.restore();
+}
+
+function drawGrid(t, s) {
+  for (let e = 0; e <= 9; e++) {
+    const v = Math.pow(10, e), h = v * s;
+    const a = clamp((h - 50) / 60) * clamp((SH - 10 - h) / 80);
+    if (a <= 0) continue;
+    const y = GY - h;
+    ctx.save();
+    ctx.globalAlpha = a;
+    ctx.strokeStyle = "rgba(255,255,255,0.13)"; ctx.lineWidth = 2; ctx.setLineDash([6, 12]);
+    ctx.beginPath(); ctx.moveTo(60, y); ctx.lineTo(940, y); ctx.stroke();
+    ctx.restore();
+    text(fmt(v) + " km/h", 940, y - 10, { px: 22, color: C.grey, align: "right", alpha: a * 0.8 });
+  }
+}
+
+function drawBars(t, s, R) {
+  const dim13 = lerp(1, 0.3, prog(t, L(13), 0.4)) + 0.7 * prog(t, L(14) + 0.3, 0.5);
+  const lightZoomed = prog(t, RACERS[LIGHT].t + RACERS[LIGHT].zoomDelay + 0.6, 0.8);
+  for (let i = 0; i < RACERS.length; i++) {
+    const r = RACERS[i];
+    if (t < r.t) continue;
+    const age = fadeBars(i, t);
+    if (age >= 3) continue;
+    const grow = addRacer(r, t);
+    const x = CX - age * SLOT;
+    const base = GY + drop(x, R);
+    const h = r.v * s * grow;
+    const top = base - h;
+    const w = lerp(92, 56, clamp(age));
+    const hero = 1 - clamp(age);
+    let alpha = lerp(1, 0.5, clamp(age)) * clamp(3 - age) * (age > 2 ? clamp(3 - age) : 1);
+    if (i < LIGHT) alpha *= Math.min(1, dim13);
+    const isLight = i === LIGHT;
+
+    // ---- the bar
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    const clipTop = isLight ? -40 : ST - 30;
+    const yTop = Math.max(top, clipTop);
+    if (h > 0.2) {
+      const g = ctx.createLinearGradient(0, base, 0, yTop);
+      const pulse = 0.9 + 0.1 * Math.sin(t * 3.2);
+      g.addColorStop(0, rgba(C.hero, lerp(0.55, 0.95, hero)));
+      if (top < ST + 60) {            // bar runs off the top: fade it out softly
+        const fy = clamp((base - (ST + 90)) / (base - yTop));
+        g.addColorStop(fy, rgba(C.hero, lerp(0.55, 0.95, hero)));
+        g.addColorStop(Math.min(1, fy + (1 - fy) * 0.35 + 0.001), rgba(C.hero, isLight ? 0.4 : 0.0));
+        g.addColorStop(1, rgba(C.hero, isLight ? 0.25 : 0));
+      } else g.addColorStop(1, rgba("#FFF3DC", lerp(0.6, 1, hero)));
+      ctx.shadowColor = rgba(C.heroEdge, 0.9); ctx.shadowBlur = lerp(14, 46 * pulse, hero);
+      ctx.fillStyle = g;
+      ctx.fillRect(x - w / 2, yTop, w, base - yTop);
+      ctx.shadowBlur = 0;
+      // orange edge
+      const eg = ctx.createLinearGradient(0, base, 0, yTop);
+      eg.addColorStop(0, C.heroEdge); eg.addColorStop(0.7, C.heroEdge);
+      eg.addColorStop(1, top < ST + 60 ? rgba(C.heroEdge, 0) : C.heroEdge);
+      ctx.strokeStyle = eg; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(x - w / 2, base); ctx.lineTo(x - w / 2, yTop);
+      if (top >= ST + 60) ctx.lineTo(x + w / 2, yTop); else ctx.moveTo(x + w / 2, yTop);
+      ctx.lineTo(x + w / 2, base); ctx.stroke();
+      // rising streaks inside the hero bar: keeps it alive while holding
+      if (hero > 0.5 && h > 80) {
+        ctx.save(); ctx.beginPath(); ctx.rect(x - w / 2, yTop, w, base - yTop); ctx.clip();
+        ctx.strokeStyle = "rgba(255,255,255,0.55)"; ctx.lineWidth = 3;
+        const speed = isLight ? 900 : 260;
+        for (let k = 0; k < 5; k++) {
+          const span = base - yTop + 120, yy = base - ((t * speed * (0.7 + k * 0.13) + k * 173) % span);
+          const xx = x - w / 2 + 12 + (k * 37 % (w - 24));
+          ctx.globalAlpha = alpha * 0.5 * hero;
+          ctx.beginPath(); ctx.moveTo(xx, yy); ctx.lineTo(xx, yy + 46); ctx.stroke();
+        }
+        ctx.restore();
+      }
+    }
+    // base dot so slivers keep a visible footprint
+    ctx.fillStyle = C.hero; ctx.globalAlpha = alpha * 0.9;
+    ctx.fillRect(x - w / 2, base - 2, w, 2);
+    ctx.restore();
+
+    // ---- icon + labels
+    const oldFade = isLight ? 1 : 1 - (i < LIGHT && age > 0.01 ? lightZoomed : 0) * (t >= RACERS[LIGHT].t ? 1 : 0);
+    const iconSize = lerp(112, 62, clamp(age));
+    const iy = Math.max(top - lerp(78, 46, clamp(age)), ST + 175);
+    let iconName = r.key, iconTint = r.tint;
+    const iconAlpha = alpha * oldFade * clamp(grow * 3);
+    if (isLight) {
+      const sunP = prog(t, L(16), 0.4);
+      drawIcon("light", x, iy, iconSize, "#FFFFFF", iconAlpha * (1 - sunP), t);
+      drawIcon("sun", x, iy, iconSize * lerp(0.6, 1.15, easeBack(sunP)), "#FFD84A", iconAlpha * sunP, t);
+    } else {
+      if (r.key === "parker") drawShimmer(x, iy, t, alpha * hero);
+      drawIcon(iconName, x, iy, iconSize, iconTint, iconAlpha, t);
+    }
+    // hero label (above the icon)
+    const la = hero * clamp(grow * 2.5) * (i < LIGHT ? Math.min(1, dim13 + 0.4) : 1);
+    if (la > 0) {
+      const nameY = iy - 128, speedY = iy - 76;
+      text(r.name, x, nameY, { px: 40, alpha: la });
+      text(r.label, x, speedY, { px: 46, w: 800, color: C.mint, alpha: la, glow: 14, glowColor: C.mint });
+    }
+    // old label (under the ground line) — only the newest three bars keep one
+    const oa = clamp(age) * clamp(2.6 - age, 0, 1) * oldFade * (i < LIGHT ? Math.min(1, dim13 + 0.3) : 1);
+    if (oa > 0) {
+      text(r.name, x, base + 44, { px: 22, alpha: oa * 0.85 });
+      text(r.label, x, base + 76, { px: 24, w: 800, color: C.mint, alpha: oa * 0.9 });
+    }
+  }
+}
+
+function drawShimmer(x, y, t, alpha) {
+  const env = Math.sin(Math.PI * prog(t, L(12) + 0.5, 2.2));
+  if (env <= 0 || alpha <= 0) return;
+  ctx.save();
+  ctx.strokeStyle = "#FFC83D"; ctx.lineWidth = 3; ctx.shadowColor = "#FFB020"; ctx.shadowBlur = 16; ctx.lineCap = "round";
+  for (let k = 0; k < 7; k++) {
+    const xx = x - 78 + k * 26, ph = t * 9 + k * 1.3;
+    ctx.globalAlpha = alpha * env * (0.35 + 0.3 * Math.sin(ph * 0.7 + k));
+    ctx.beginPath();
+    for (let j = 0; j <= 10; j++) {
+      const yy = y - 80 + j * 8 - ((t * 60 + k * 17) % 24), dx = Math.sin(ph + j * 0.9) * 5;
+      j ? ctx.lineTo(xx + dx, yy) : ctx.moveTo(xx + dx, yy);
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawBracket(t) {
+  const r = RACERS[LIGHT];
+  const p = popLabel(t, r.t + r.zoomDelay + r.zoomDur - 0.35);
+  if (p.a <= 0) return;
+  const x0 = 130, x1 = 440, y = GY - 44, xm = (x0 + x1) / 2;
+  ctx.save();
+  ctx.globalAlpha = p.a;
+  ctx.strokeStyle = C.mint; ctx.lineWidth = 3; ctx.shadowColor = C.mint; ctx.shadowBlur = 10; ctx.lineJoin = "round";
+  const half = (x1 - x0) / 2 * p.s;
+  ctx.beginPath();
+  ctx.moveTo(xm - half, y + 22); ctx.lineTo(xm - half, y); ctx.lineTo(xm + half, y); ctx.lineTo(xm + half, y + 22);
+  ctx.moveTo(xm, y); ctx.lineTo(xm, y - 16);
+  ctx.stroke();
+  ctx.restore();
+  text("everything else", xm, y - 32, { px: 34 * p.s, color: C.mint, alpha: p.a });
+}
+
+function drawSunlight(t, s, R) {
+  // line 16: a dot of light travels down the bar from the Sun to Earth
+  const a = prog(t, L(16), 0.3);
+  if (a <= 0) return;
+  const r = RACERS[LIGHT];
+  const top = GY - r.v * s, dur = E(16) - L(16) - 0.45;
+  const p = prog(t, L(16) + 0.3, dur);
+  const y = lerp(top, GY - 6, p);
+  ctx.save();
+  ctx.globalAlpha = a;
+  ctx.fillStyle = "#FFFFFF"; ctx.shadowColor = "#FFE9A8"; ctx.shadowBlur = 30;
+  for (let k = 5; k >= 0; k--) {      // tail, then the dot itself with a dark rim so it reads on the bar
+    ctx.globalAlpha = a * (1 - k / 6) * 0.8;
+    ctx.fillStyle = k ? "#FF9A3D" : "#FFFFFF";
+    ctx.beginPath(); ctx.arc(CX, Math.max(top, y - k * 16), 15 - k * 2, 0, 7); ctx.fill();
+  }
+  ctx.globalAlpha = a; ctx.strokeStyle = "#7A3B00"; ctx.lineWidth = 4; ctx.shadowBlur = 0;
+  ctx.beginPath(); ctx.arc(CX, y, 16, 0, 7); ctx.stroke();
+  ctx.shadowBlur = 30;
+  // arrival ring on Earth
+  const hit = prog(t, L(16) + 0.3 + dur, 0.7);
+  if (hit > 0 && hit < 1) {
+    ctx.globalAlpha = (1 - hit); ctx.strokeStyle = C.mint; ctx.lineWidth = 4; ctx.shadowColor = C.mint;
+    ctx.beginPath(); ctx.ellipse(CX, GY, 60 + hit * 160, 12 + hit * 30, 0, 0, 7); ctx.stroke();
+  }
+  ctx.restore();
+  const secs = Math.round(500 * p), ty = clamp(y + 18, top + 40, GY - 60);
+  text("Sun to Earth", 630, ty - 62, { px: 28, align: "left", alpha: a * 0.9 });
+  text(`${Math.floor(secs / 60)} min ${secs % 60} s`,
+       630, ty, { px: 56, w: 800, color: C.mint, align: "left", alpha: a, glow: 14, glowColor: C.mint });
+}
+
+/* ======================================================================
+   GALAXY (line 17)
+   ====================================================================== */
+const GAL = { x: 540, y: 1000, R: 370, squash: 0.46 };
+function drawGalaxy(t) {
+  const g = easeIO(prog(t, L(17), 1.5));
+  if (g <= 0) return;
+  const dim = lerp(1, 0.22, prog(t, L(18), 0.5));
+  const sc = lerp(2.6, 1, g) * (1 + 0.03 * prog(t, L(17), D - L(17)));
+  const rot = t * 0.12;
+  ctx.save();
+  ctx.translate(GAL.x, GAL.y); ctx.scale(sc, sc);
+  ctx.globalAlpha = g * dim;
+  // spiral arms as outline dots/strokes
+  ctx.save(); ctx.scale(1, GAL.squash); ctx.rotate(rot);
+  ctx.lineCap = "round";
+  for (let arm = 0; arm < 2; arm++) {
+    for (let pass = 0; pass < 2; pass++) {
+      ctx.beginPath();
+      for (let k = 0; k <= 120; k++) {
+        const th = k / 120 * Math.PI * 3.1, rr = 26 * Math.exp(0.272 * th) * (pass ? 0.86 : 1);
+        const a = th + arm * Math.PI + (pass ? 0.35 : 0);
+        const x = Math.cos(a) * rr, y = Math.sin(a) * rr;
+        k ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.strokeStyle = pass ? "rgba(160,150,255,0.35)" : "rgba(190,200,255,0.75)";
+      ctx.lineWidth = pass ? 2 : 3; ctx.shadowColor = "#8C9BFF"; ctx.shadowBlur = 18;
+      ctx.stroke();
+    }
+  }
+  ctx.strokeStyle = "rgba(255,222,180,0.8)"; ctx.shadowColor = C.heroEdge; ctx.shadowBlur = 30; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.arc(0, 0, 30, 0, 7); ctx.stroke();
+  ctx.strokeStyle = "rgba(190,200,255,0.18)"; ctx.lineWidth = 2; ctx.setLineDash([4, 14]);
+  ctx.beginPath(); ctx.arc(0, 0, GAL.R, 0, 7); ctx.stroke();
+  ctx.restore();
+  // the light bar, now a tiny line across the galaxy
+  const lp = easeOut(prog(t, L(17) + 0.9, 0.8));
+  if (lp > 0) {
+    const x0 = -GAL.R, x1 = lerp(-GAL.R, GAL.R, lp);
+    ctx.strokeStyle = C.hero; ctx.shadowColor = C.heroEdge; ctx.shadowBlur = 16; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(x0, 0); ctx.lineTo(x1, 0);
+    ctx.moveTo(x0, -12); ctx.lineTo(x0, 12);
+    if (lp >= 1) { ctx.moveTo(GAL.R, -12); ctx.lineTo(GAL.R, 12); }
+    ctx.stroke();
+    // a photon crawling along it, painfully slowly
+    const cp = prog(t, L(17) + 1.7, 60);
+    ctx.fillStyle = "#FFFFFF"; ctx.shadowColor = "#FFFFFF"; ctx.shadowBlur = 20 + 10 * Math.sin(t * 7);
+    ctx.beginPath(); ctx.arc(-GAL.R + cp * 2 * GAL.R + 6, 0, 6 + Math.sin(t * 7), 0, 7); ctx.fill();
+  }
+  ctx.restore();
+  const la = popLabel(t, L(17) + 1.3), out = 1 - prog(t, L(18), 0.4);
+  text("~100,000 years", GAL.x, 1300, { px: 76 * la.s, w: 800, color: C.mint, alpha: la.a * out, glow: 18, glowColor: C.mint });
+  text("to cross the Milky Way", GAL.x, 1356, { px: 36, alpha: la.a * out });
+}
+
+/* ======================================================================
+   HUD: title, readout, log progress bar, watermark
+   ====================================================================== */
+const READOUT = (() => {
+  const st = [{ t: -1, name: "Light", v: null }];
+  RACERS.slice(0, LIGHT).forEach(r => st.push({ t: r.t, name: r.name === "Diving falcon" ? "Falcon" : r.name, v: r.v, r }));
+  st.push({ t: L(13), name: "Light", v: null });
+  st.push({ t: L(14), name: "Light", v: RACERS[LIGHT].v, r: RACERS[LIGHT] });
+  return st;
+})();
+function drawReadoutState(k, t, alpha) {
+  if (alpha <= 0) return;
+  const s = READOUT[k], y = 372;
+  let num, finalNum;
+  if (s.v == null) { num = finalNum = "?"; }
+  else {
+    let from = 0;
+    for (let j = k - 1; j >= 0; j--) if (READOUT[j].v != null) { from = READOUT[j].v; break; }
+    const val = rollNumber(t, s.t, s.r.rollDur, Math.max(from, 1), s.v, s.r.key === "light");
+    num = (s.r.prefix || "") + fmt(val) + " km/h"; finalNum = s.r.label;
+  }
+  const left = s.name + " = ";
+  let px = 56;
+  const full = measure(left + finalNum, px, 800);
+  if (full > 800) px *= 800 / full;
+  const wl = measure(left, px), wn = measure(finalNum, px, 800), x0 = CX - (wl + wn) / 2;
+  text(left, x0, y, { px, align: "left", alpha });
+  if (s.v == null) {
+    const pu = 1 + 0.12 * Math.sin(t * 7);
+    text("?", x0 + wl + wn / 2, y + (pu - 1) * 18, { px: px * pu, w: 800, color: C.mint, alpha, glow: 18, glowColor: C.mint });
+  } else text(num, x0 + wl, y, { px, w: 800, color: C.mint, align: "left", alpha, glow: 14, glowColor: C.mint });
+}
+function progressFill(t) {
+  let f = 0;
+  RACERS.forEach((r, i) => {
+    const start = i === LIGHT ? r.t + 0.3 : r.t, dur = i === LIGHT ? 2.3 : 0.8;
+    f = lerp(f, r.logPos, easeIO(prog(t, start, dur)));
+  });
+  return f;
+}
+function drawHUD(t) {
+  // title
+  text(TITLE, CX, 270, { px: 66, w: 800, glow: 16 });
+  // readout
+  let k = 0; while (k + 1 < READOUT.length && t >= READOUT[k + 1].t) k++;
+  const xf = prog(t, READOUT[k].t, 0.2);
+  if (k > 0 && xf < 1) drawReadoutState(k - 1, READOUT[k].t, 1 - xf);
+  drawReadoutState(k, t, k === 0 ? 1 : xf);
+  // log-scale progress bar
+  const x0 = 150, x1 = 870, y = 452, f = progressFill(t);
+  ctx.save();
+  ctx.fillStyle = "rgba(255,255,255,0.13)";
+  ctx.beginPath(); ctx.roundRect(x0, y - 6, x1 - x0, 12, 6); ctx.fill();
+  if (f > 0) {
+    ctx.fillStyle = C.mint; ctx.shadowColor = C.mint; ctx.shadowBlur = 16;
+    ctx.beginPath(); ctx.roundRect(x0, y - 6, Math.max(12, (x1 - x0) * f), 12, 6); ctx.fill();
+  }
+  ctx.shadowBlur = 0;
+  RACERS.slice(0, LIGHT).forEach(r => {
+    const reached = prog(t, r.t + 0.5, 0.3), px = x0 + (x1 - x0) * r.logPos;
+    ctx.fillStyle = reached > 0 ? "#FFFFFF" : "rgba(255,255,255,0.35)";
+    ctx.beginPath(); ctx.arc(px, y, 5 + 4 * Math.sin(Math.PI * reached), 0, 7); ctx.fill();
+  });
+  ctx.restore();
+  text("1 km/h", x0, y + 40, { px: 20, color: C.grey, align: "left", ls: 2 });
+  text("speed of light", x1, y + 40, { px: 20, color: C.grey, align: "right", ls: 2 });
+  // the light icon at the far end: flickers at the start, pulses when reached
+  const flick = t < L(2) ? 0.35 + 0.65 * Math.abs(Math.sin(t * 23) * Math.sin(t * 7.3)) : 0.75 + 0.1 * Math.sin(t * 3);
+  const done = prog(t, RACERS[LIGHT].t + 2.6, 0.7), pulse = 1 + 0.9 * Math.sin(Math.PI * done);
+  drawIcon("light", x1 + 36, y, 46 * pulse, done > 0 ? C.mint : "#FFFFFF", flick, t);
+  // line 15 pop
+  const p = popLabel(t, L(15)), out = 1 - prog(t, L(17), 0.4);
+  if (p.a > 0 && out > 0) {
+    const a = "×1,560", b = " faster than Parker", pa = 62 * p.s, pb = 44 * p.s;
+    const wa = measure(a, pa, 800), wb = measure(b, pb), xs = CX - (wa + wb) / 2;
+    text(a, xs, 560, { px: pa, w: 800, color: C.mint, align: "left", alpha: p.a * out, glow: 16, glowColor: C.mint });
+    text(b, xs + wa, 560, { px: pb, align: "left", alpha: p.a * out });
+  }
+  // watermark
+  text(HANDLE, CX, 1500, { px: 30, alpha: 0.3 });
+}
+
+/* ======================================================================
+   FINAL LINE (line 18)
+   ====================================================================== */
+function drawFinal(t) {
+  const a = prog(t, L(18), 0.3);
+  if (a <= 0) return;
+  const part2 = L(18) + TL.line18Part2 - 0.05;
+  const lines = [["Light isn't", 0], ["slow.", 0], ["The universe", 1], ["is just", 1], ["that big.", 1]];
+  const px = 128, lh = 142, y0 = 1010 - (lines.length - 1) * lh / 2 + 44;
+  const push = 1 + 0.035 * prog(t, L(18), D - L(18));
+  ctx.save();
+  ctx.translate(CX, 1010); ctx.scale(push * lerp(0.92, 1, easeOut(a)), push * lerp(0.92, 1, easeOut(a))); ctx.translate(-CX, -1010);
+  lines.forEach(([s, part], i) => {
+    const lit = part ? prog(t, part2, 0.25) : 1;
+    const col = lit >= 1 ? "#FFFFFF" : `rgb(${Math.round(lerp(110, 255, lit))},${Math.round(lerp(110, 255, lit))},${Math.round(lerp(125, 255, lit))})`;
+    text(s, CX, y0 + i * lh, { px, w: 800, color: col, alpha: a, glow: lit * 26 });
+  });
+  ctx.restore();
+}
+
+/* ======================================================================
+   SCENE
+   ====================================================================== */
+function drawPhoton(t) {            // hook: a streak of light crosses the stage in the first second
+  const p = prog(t, 0.25, 0.45);
+  if (p <= 0 || p >= 1) return;
+  const x = lerp(-200, W + 400, p), y = 1000;
+  const g = ctx.createLinearGradient(x - 420, 0, x, 0);
+  g.addColorStop(0, "rgba(88,246,205,0)"); g.addColorStop(1, "rgba(255,255,255,0.95)");
+  ctx.save(); ctx.strokeStyle = g; ctx.lineWidth = 6; ctx.lineCap = "round"; ctx.shadowColor = C.mint; ctx.shadowBlur = 24;
+  ctx.beginPath(); ctx.moveTo(x - 420, y); ctx.lineTo(x, y); ctx.stroke(); ctx.restore();
+}
+function drawScene(t) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  drawBackground(t);
+  drawPhoton(t);
+  const s = zoomTo(t), R = groundR(t);
+  const g = easeIO(prog(t, L(17), 1.3));
+  if (g < 1) {
+    ctx.save();
+    const sc = lerp(1, 0.02, g);
+    ctx.translate(GAL.x, GAL.y); ctx.scale(sc, sc); ctx.translate(-GAL.x, -GAL.y);
+    ctx.globalAlpha = 1 - clamp(g * 1.25);
+    // fade the stage via an offscreen-free trick: every draw multiplies globalAlpha
+    stageAlpha = 1 - clamp(g * 1.25);
+    drawGrid(t, s);
+    drawGround(t, R);
+    drawBars(t, s, R);
+    drawBracket(t);
+    drawSunlight(t, s, R);
+    ctx.restore();
+    if (g > 0) {                     // cover fade (stage content uses absolute alphas)
+      ctx.save(); ctx.globalAlpha = clamp(g * 1.25);
+      const bg = ctx.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, C.bgTop); bg.addColorStop(1, C.bgBot);
+      ctx.fillStyle = bg; ctx.fillRect(0, ST - 110, W, H); ctx.restore();
+    }
+  }
+  drawGalaxy(t);
+  drawHUD(t);
+  drawFinal(t);
+}
+let stageAlpha = 1;
+
+function render(tReal) {
+  let t = tReal, rw = 0;
+  if (tReal > D - REWIND) {          // loop: fast rewind back to the opening frame
+    rw = (tReal - (D - REWIND)) / REWIND;
+    t = lerp(D - REWIND, 0.1, easeIO(rw));
+  }
+  drawScene(t);
+  if (rw > 0) {
+    const k = Math.sin(Math.PI * rw);
+    // reverse-zoom blur: re-stamp the frame at larger scales
+    for (const [sc, a] of [[1 + 0.05 * k, 0.4 * k], [1 + 0.11 * k, 0.25 * k]]) {
+      ctx.save(); ctx.globalAlpha = a; ctx.translate(CX, 960); ctx.scale(sc, sc); ctx.translate(-CX, -960);
+      ctx.drawImage(cv, 0, 0); ctx.restore();
+    }
+    ctx.save(); ctx.translate(CX, 1000);
+    const r = rng(3);
+    ctx.strokeStyle = "#FFFFFF"; ctx.lineWidth = 3;
+    for (let i = 0; i < 46; i++) {
+      const a = r() * 7, r0 = 200 + r() * 500 - rw * 120, len = 60 + r() * 200;
+      ctx.globalAlpha = 0.16 * k;
+      ctx.beginPath(); ctx.moveTo(Math.cos(a) * r0, Math.sin(a) * r0); ctx.lineTo(Math.cos(a) * (r0 + len), Math.sin(a) * (r0 + len)); ctx.stroke();
+    }
+    // rewind icon (two triangles)
+    ctx.globalAlpha = k * 0.9; ctx.fillStyle = "#FFFFFF"; ctx.shadowColor = "#FFFFFF"; ctx.shadowBlur = 24;
+    for (const dx of [-62, 6]) { ctx.beginPath(); ctx.moveTo(dx + 56, -42); ctx.lineTo(dx, 0); ctx.lineTo(dx + 56, 42); ctx.closePath(); ctx.fill(); }
+    ctx.restore();
+  }
+  // fade in from black within 3 frames
+  const fi = 1 - clamp((tReal * FPS + 1) / 3);
+  if (fi > 0) { ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.fillStyle = `rgba(0,0,0,${fi * 0.8})`; ctx.fillRect(0, 0, W, H); ctx.restore(); }
+}
+window.renderFrame = f => render(f / FPS);
+window.ready = document.fonts.load("700 40px Nunito").then(() => document.fonts.load("800 40px Nunito")).then(() => true);
+
+// Real-time preview when opened directly in a browser (click to play/pause).
+if (!location.search.includes("render")) {
+  document.body.classList.add("preview");
+  const audio = new Audio("../out/mix.wav"); audio.loop = true;
+  let t0 = null, playing = false;
+  window.ready.then(() => render(1));
+  cv.onclick = () => { playing = !playing; if (playing) { audio.play().catch(() => {}); t0 = performance.now() - audio.currentTime * 1000; loop(); } else audio.pause(); };
+  function loop() { if (!playing) return; const t = audio.paused ? ((performance.now() - t0) / 1000) % D : audio.currentTime % D; render(t); requestAnimationFrame(loop); }
+}
+</script>
+</body>
+</html>
