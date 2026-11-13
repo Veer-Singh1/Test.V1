@@ -26,26 +26,30 @@ const C = {
   ground: "#D3B682", hero: "#FFDEB4", heroEdge: "#E7B46E", grey: "#8A8A9A",
 };
 const RACERS = [
-  { key: "you",     name: "You",                v: 5,          tint: "#6BF28A" },
-  { key: "bolt",    name: "Usain Bolt",         v: 44,         tint: "#3DDC84" },
-  { key: "cheetah", name: "Cheetah",            v: 100,        tint: "#FFD84A", prefix: "~" },
-  { key: "falcon",  name: "Diving falcon",      v: 390,        tint: "#FF9A3D" },
-  { key: "jet",     name: "Passenger jet",      v: 900,        tint: "#5AA9FF" },
-  { key: "sound",   name: "Sound",              v: 1235,       tint: "#4DE8FF" },
-  { key: "iss",     name: "Space station",      v: 28000,      tint: "#7C9BFF" },
-  { key: "rocket",  name: "Escape Earth",       v: 40270,      tint: "#FF5A5A" },
-  { key: "earth",   name: "Earth",              v: 107000,     tint: "#4FD1A5" },
-  { key: "parker",  name: "Parker Solar Probe", v: 692000,     tint: "#FFC83D" },
-  { key: "light",   name: "Light",              v: 1079252849, tint: "#FFFFFF" },
+  { key: "you", line: 3, enter: [-460, 0, 0.75],     name: "You",                v: 5,          tint: "#6BF28A" },
+  { key: "bolt", line: 4, enter: [-760, 0, 0.5],    name: "Usain Bolt",         v: 44,         tint: "#3DDC84" },
+  { key: "cheetah", line: 5, enter: [-980, 0, 0.45], name: "Cheetah",            v: 100,        tint: "#FFD84A", prefix: "~" },
+  { key: "falcon", line: 6, enter: [-300, -700, 0.5],  name: "Diving falcon",      v: 390,        tint: "#FF9A3D" },
+  { key: "jet", line: 7, enter: [-820, -300, 0.6],     name: "Passenger jet",      v: 900,        tint: "#5AA9FF" },
+  { key: "sound", line: 8, enter: [0, 0, 0.3],   name: "Sound",              v: 1235,       tint: "#4DE8FF" },
+  { key: "iss", line: 9, enter: [720, 230, 0.8],     name: "Space station",      v: 28000,      tint: "#7C9BFF" },
+  { key: "rocket", line: 10, enter: [0, 420, 0.6],  name: "Escape Earth",       v: 40270,      tint: "#FF5A5A" },
+  { key: "earth", line: 11, enter: [0, 330, 0.7],   name: "Earth",              v: 107000,     tint: "#4FD1A5" },
+  { key: "parker", line: 12, enter: [330, -900, 0.6],  name: "Parker Solar Probe", v: 692000,     tint: "#FFC83D" },
+  { key: "light", line: 14, enter: [0, 0, 0.3],   name: "Light",              v: 1079252849, tint: "#FFFFFF" },
 ];
-const LIGHT = RACERS.length - 1;
 
 /* ======================================================================
    TIMELINE — every beat is derived from the audio clip durations
    ====================================================================== */
 const TL = window.TIMELINE;
 const W = 1080, H = 1920, FPS = TL.fps, D = TL.duration;
-const L = n => TL.lines[n - 1].start, E = n => TL.lines[n - 1].end;
+const LINE = Object.fromEntries(TL.lines.map(l => [l.n, l]));
+const L = n => LINE[n].start, E = n => LINE[n].end;
+// variants may drop script lines: racers whose line is not in the timeline are removed
+for (let i = RACERS.length - 1; i >= 0; i--) if (!LINE[RACERS[i].line]) RACERS.splice(i, 1);
+const LIGHT = RACERS.length - 1;
+const ENTRANCES = !!TL.entrances;      // each racer arrives in its own way (v2)
 const REWIND = 0.5;
 
 // stage geometry
@@ -53,7 +57,6 @@ const CX = 540, GY = 1340, ST = 600, SH = GY - ST, HERO_H = 0.55 * SH, SLOT = 17
 
 // per-racer beat times
 RACERS.forEach((r, i) => {
-  r.line = i < LIGHT ? 3 + i : 14;
   r.t = L(r.line);                         // reveal
   r.S = HERO_H / r.v;                      // px per km/h when this racer is the hero
   r.zoomDelay = r.key === "falcon" ? 0.85 : r.key === "light" ? 0.9 : 0.35;
@@ -427,7 +430,22 @@ function drawBars(t, s, R) {
     // ---- icon + labels
     const oldFade = isLight ? 1 : 1 - (i < LIGHT && age > 0.01 ? lightZoomed : 0) * (t >= RACERS[LIGHT].t ? 1 : 0);
     const iconSize = lerp(112, 62, clamp(age));
-    const iy = Math.max(top - lerp(78, 46, clamp(age)), ST + 175);
+    let iy = Math.max(top - lerp(78, 46, clamp(age)), ST + 175), ix = x;
+    if (ENTRANCES && !isLight) {      // entrance: run in, fly in, orbit in, rise, or fall from the sky
+      const [ex, ey, ed] = r.enter, ep = prog(t, r.t, ed), e = 1 - easeOut(ep);
+      if (e > 0) {
+        const arc = r.key === "iss" ? -Math.sin(Math.PI * ep) * 260 : r.key === "cheetah" ? -Math.abs(Math.sin(ep * Math.PI * 3)) * 40 * e : 0;
+        const px = ix + ex * e, py = iy + ey * e + arc;
+        const len = Math.hypot(ex, ey) || 1, tl = 260 * Math.sin(Math.PI * ep);
+        ctx.save();                    // motion trail in the racer's tint
+        const tg = ctx.createLinearGradient(px, py, px + ex / len * tl, py + ey / len * tl);
+        tg.addColorStop(0, rgba(r.tint, 0.8)); tg.addColorStop(1, rgba(r.tint, 0));
+        ctx.strokeStyle = tg; ctx.lineWidth = 5; ctx.lineCap = "round"; ctx.shadowColor = r.tint; ctx.shadowBlur = 16;
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px + ex / len * tl, py + ey / len * tl); ctx.stroke();
+        ctx.restore();
+        ix = px; iy2 = py;
+      } else iy2 = iy;
+    } else iy2 = iy;
     let iconName = r.key, iconTint = r.tint;
     const iconAlpha = alpha * oldFade * clamp(grow * 3);
     if (isLight) {
@@ -435,8 +453,8 @@ function drawBars(t, s, R) {
       drawIcon("light", x, iy, iconSize, "#FFFFFF", iconAlpha * (1 - sunP), t);
       drawIcon("sun", x, iy, iconSize * lerp(0.6, 1.15, easeBack(sunP)), "#FFD84A", iconAlpha * sunP, t);
     } else {
-      if (r.key === "parker") drawShimmer(x, iy, t, alpha * hero);
-      drawIcon(iconName, x, iy, iconSize, iconTint, iconAlpha, t);
+      if (r.key === "parker") drawShimmer(ix, iy2, t, alpha * hero);
+      drawIcon(iconName, ix, iy2, iconSize, iconTint, ENTRANCES ? alpha * oldFade : iconAlpha, t);
     }
     // hero label (above the icon)
     const la = hero * clamp(grow * 2.5) * (i < LIGHT ? Math.min(1, dim13 + 0.4) : 1);
@@ -719,7 +737,7 @@ function drawScene(t) {
   drawHUD(t);
   drawFinal(t);
 }
-let stageAlpha = 1;
+let stageAlpha = 1, iy2 = 0;
 
 function render(tReal) {
   let t = tReal, rw = 0;

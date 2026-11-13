@@ -19,6 +19,15 @@ FPS = 30
 GAP = 0.25           # normal gap between lines
 GAP_BEFORE = {6: 0.55, 13: 0.6}   # extra beat on the cheetah; pause before "And light?"
 GAP_AFTER = {13: 0.9}
+SKIP = set()         # script lines to leave out
+ENTRANCES = False    # give each racer its own entrance animation
+
+# --variant v2: shorter ladder (no falcon, sound, escape velocity), uneven rhythm
+# (Bolt and cheetah as a quick one-two, then a breath), individual entrances.
+if "v2" in sys.argv:
+    SKIP = {6, 8, 10}
+    GAP_BEFORE = {5: 0.06, 7: 0.5, 9: 0.4, 12: 0.15, 13: 0.6}
+    ENTRANCES = True
 HOLD_END = 3.0       # hold after line 18 (last 0.5 s is the rewind)
 LEAD_IN = 0.1
 # ---------------------------------------------------------------------------
@@ -71,18 +80,22 @@ def main():
         split()
     t = LEAD_IN
     lines = []
+    prev = None
     for n in range(1, 19):
+        if n in SKIP:
+            continue
         d = duration(AUDIO / f"{n:02d}.mp3")
-        if n > 1:
-            t += max(GAP_BEFORE.get(n, GAP), GAP_AFTER.get(n - 1, GAP))
+        if prev:
+            t += GAP_AFTER.get(prev, GAP_BEFORE.get(n, GAP))
+        prev = n
         lines.append({"n": n, "start": round(t, 3), "end": round(t + d, 3), "dur": round(d, 3)})
         t += d
     total = t + HOLD_END
     total = round(total * FPS + 0.5) / FPS
     tl = {
         "fps": FPS, "duration": round(total, 4), "frames": int(round(total * FPS)),
-        "tempo": TEMPO, "lines": lines,
-        "line18Part2": round(second_sentence_offset(AUDIO / "18.mp3", lines[17]["dur"]), 3),
+        "tempo": TEMPO, "lines": lines, "entrances": ENTRANCES,
+        "line18Part2": round(second_sentence_offset(AUDIO / "18.mp3", lines[-1]["dur"]), 3),
     }
     (ROOT / "src" / "timeline.json").write_text(json.dumps(tl, indent=1))
     (ROOT / "src" / "timeline.js").write_text("window.TIMELINE = " + json.dumps(tl) + ";\n")
@@ -91,7 +104,8 @@ def main():
               (ROOT / "speed-comparison-video.md").read_text().splitlines()
               if re.match(r"\| \d\d \|", l)]
     print(f"{'line':>4} {'start':>7} {'end':>7} {'dur':>6}  text")
-    for l, s in zip(lines, script):
+    for l in lines:
+        s = script[l["n"] - 1]
         print(f"{l['n']:>4} {l['start']:>7.2f} {l['end']:>7.2f} {l['dur']:>6.2f}  {s}")
     print(f"total: {total:.2f} s, {tl['frames']} frames, narration tempo x{TEMPO}")
 

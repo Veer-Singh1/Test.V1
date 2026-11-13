@@ -94,7 +94,7 @@ hit += 0.35 * np.sin(2 * np.pi * np.cumsum(freq * 2) / SR) * np.exp(-tt / 0.25)
 hit += 0.25 * band_noise(2.2, 80, 900) * np.exp(-tt / 0.05)
 place(sfx, hit / np.max(np.abs(hit)), EV["bassHit"], db(-2.5))
 # soft arrival ping when sunlight reaches Earth (line 16)
-l16 = TL["lines"][15]
+l16 = next(l for l in TL["lines"] if l["n"] == 16)
 n = int(0.9 * SR); tt = np.arange(n) / SR
 place(sfx, np.sin(2 * np.pi * 1320 * tt) * np.exp(-tt * 7) * np.clip(tt / 0.003, 0, 1), l16["end"] - 0.15, voice_rms * db(-12))
 # rewind: rising sweep in the last half second
