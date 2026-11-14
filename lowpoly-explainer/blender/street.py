@@ -25,7 +25,8 @@ ap.add_argument("--out", required=True, help="PNG path with --frame, else a fold
 ap.add_argument("--frame", type=int, help="render one frame only")
 ap.add_argument("--start", type=int, default=1)
 ap.add_argument("--end", type=int)
-ap.add_argument("--frames", type=int, default=120, help="length of the shot at 30 fps")
+ap.add_argument("--frames", type=int, default=120, help="frames for the truck to pull up, at 30 fps")
+ap.add_argument("--hold", type=int, default=0, help="extra frames after it stops: the driver switches the headlights off")
 ap.add_argument("--scale", type=int, default=100, help="percent of 1080 x 1920")
 ap.add_argument("--samples", type=int, default=48, help="upper limit per pixel; easy pixels stop early")
 ap.add_argument("--threshold", type=float, default=0.03, help="noise level at which a pixel stops sampling")
@@ -667,6 +668,9 @@ def wheel(parent, loc, r=0.42, w=0.25, dual=False):
     return hub
 
 
+SPOTS = []
+
+
 def truck():
     """1949-style stake truck. Built facing +X, then turned to drive towards the camera."""
     root = bpy.data.objects.new("truck", None)
@@ -713,6 +717,7 @@ def truck():
     for sy in (-0.72, 0.72):  # headlamps that actually light the road
         sp = light("SPOT", (2.7, sy, 1.12), 700, "#fff0cc", 0.06, rot=(0, math.radians(-82), 0), spot=70)
         sp.parent = root
+        SPOTS.append(sp)
     return root, wheels
 
 
@@ -855,7 +860,7 @@ cam_d.dof.aperture_blades = 7
 A, Bp, look = Vector((2.55, 0.6, 1.5)), Vector((1.95, 3.5, 1.55)), Vector((-1.8, 15.0, 1.5))
 FOCUS = Vector((-3.3, 13.5, 1.2))  # the men at the door
 D_TRUCK, Y_END, X_TRUCK = 13.5, 18.4, -1.5
-for f in range(0, N + 2):
+for f in range(0, N + args.hold + 2):
     t = (f - 1) / (N - 1)
     p = A.lerp(Bp, t if args.dolly else 0.6)  # locked off unless --dolly
     d = look - p
@@ -872,8 +877,18 @@ for f in range(0, N + 2):
     cam_d.dof.focus_distance = (FOCUS - p).length
     cam_d.dof.keyframe_insert("focus_distance", frame=f)
 
+# Headlights: on while the truck pulls up, then off a little after it stops, with a short fade
+# the way an old filament dims.
+lamp_node = next(n for n in MAT["headlamp"].node_tree.nodes if n.bl_idname == "ShaderNodeBsdfPrincipled").inputs["Emission Strength"]
+for f, k in [(N + 22, 1.0), (N + 26, 0.0)]:
+    lamp_node.default_value = 70 * k
+    lamp_node.keyframe_insert("default_value", frame=f)
+    for sp in SPOTS:
+        sp.data.energy = 700 * k
+        sp.data.keyframe_insert("energy", frame=f)
+
 # -------------------------------------------------------------------- render
-sc.frame_start, sc.frame_end = 1, N
+sc.frame_start, sc.frame_end = 1, N + args.hold
 sc.render.fps = 30
 sc.render.engine = "CYCLES"
 c = sc.cycles
@@ -918,7 +933,7 @@ if args.frame is not None:
     print(f"frame {args.frame}: {time.time() - t0:.1f} s", flush=True)
 else:
     os.makedirs(args.out, exist_ok=True)
-    for f in range(args.start, (args.end or N) + 1):
+    for f in range(args.start, (args.end or N + args.hold) + 1):
         path = os.path.join(args.out, f"{f:04d}.png")
         if os.path.exists(path):
             continue  # lets an interrupted render resume
@@ -926,4 +941,4 @@ else:
         sc.render.filepath = path
         t0 = time.time()
         bpy.ops.render.render(write_still=True)
-        print(f"frame {f}/{N}: {time.time() - t0:.1f} s", flush=True)
+        print(f"frame {f}/{N + args.hold}: {time.time() - t0:.1f} s", flush=True)

@@ -140,11 +140,11 @@ tracer instead of the real-time renderer the videos use.
 ```bash
 pip install bpy pillow                                   # Blender as a Python module; no GPU needed
 python blender/street.py --out still.png --frame 82 --frames 90 --scale 100 --samples 96 --threshold 0.012
-python blender/street.py --out out/street/frames --frames 90 --scale 75 --samples 24
-python blender/assemble.py out/street/frames out/street/street.mp4
+python blender/street.py --out out/street/frames --frames 90 --hold 60 --scale 75 --samples 24
+python blender/assemble.py out/street/frames out/street/street.mp4 --zoom 1.10
 ```
 
-Outputs: `out/street/street-still.jpg` and `out/street/street.mp4` (3 seconds, no audio, no text).
+Outputs: `out/street/street-still.jpg` and `out/street/street.mp4` (5 seconds, no audio, no text). The truck pulls up over 90 frames; `--hold 60` adds two seconds where it waits and the driver switches the headlights off.
 
 What the path tracer adds over the Remotion scenes:
 
