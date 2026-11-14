@@ -144,7 +144,7 @@ python blender/street.py --out out/street/frames --frames 90 --scale 75 --sample
 python blender/assemble.py out/street/frames out/street/street.mp4
 ```
 
-Outputs: `out/street/street-still.png` and `out/street/street.mp4` (3 seconds, no audio, no text).
+Outputs: `out/street/street-still.jpg` and `out/street/street.mp4` (3 seconds, no audio, no text).
 
 What the path tracer adds over the Remotion scenes:
 
