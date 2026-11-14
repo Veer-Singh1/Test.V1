@@ -454,8 +454,11 @@ def counting(sc, state):
             sack(g, (x, y, 0.03), 0.9, rot=k * 1.1)
     else:
         down = [((-2.7, 1.7), 1.2), ((-1.0, 1.6), -0.75), ((0.4, 2.3), 2.38), ((2.6, 2.3), 0.7)]  # side-on to the camera
+        if state == "tied":  # sitting on the floor, roped and gagged, facing the camera
+            for (x, y), f in (((0.25, 2.0), 0.95), ((-0.7, 2.35), 0.8), ((1.0, 2.7), 1.1)):
+                figure(g, (x, y, 0.03), f, coat="coat_worker", hat=None, sit=True, tied=True)
         for k, ((x, y), f) in enumerate(down):
-            if state == "alarm" and k == 0:
+            if state == "tied" or k == 0:
                 continue
             figure(g, (x, y, 0.03), f, coat="coat_worker", hat=None, lying=True, tied=True)
     if state == "tied":
@@ -481,7 +484,7 @@ def d1(sc):  # counting the day's money
 @plate("D2", exposure=0.9)
 def d2(sc):  # tied up and gagged
     counting(sc, "tied")
-    camera(sc, (2.3, 0.4, 1.3), (-0.6, 3.2, 0.55), lens=24, shift_y=-0.06, fstop=2.8, focus=(1.0, 1.5, 0.4))
+    camera(sc, (2.3, 0.4, 1.3), (-0.6, 3.2, 0.7), lens=24, shift_y=-0.04, fstop=2.8, focus=(0.25, 2.0, 0.9))
 
 
 @plate("D3", exposure=0.9)

@@ -558,7 +558,8 @@
       "kind": "badge",
       "value": 8,
       "label": "LIFE SENTENCES",
-      "on_word": "Eight"
+      "on_word": "Eight",
+      "cut": true
      }
     },
     {

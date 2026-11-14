@@ -8,6 +8,7 @@ karaoke captions, kicker titles, gold number badges and name tags. Built from th
 | --- | --- | --- |
 | `stories/antwerp`: the 2003 Antwerp diamond heist | 65 s test | `out/antwerp/antwerp-elevenlabs.mp4` |
 | `stories/brinks`: the 1950 Brink's robbery in Boston | 6.4 min, full format | `out/brinks/brinks-preview.mp4` (stand-in voice) |
+| `stories/fivekeys`: the Brink's robbery as a one-minute short | 62 s, path-traced look | `out/fivekeys/fivekeys.mp4` |
 
 ## Run it
 
@@ -167,6 +168,31 @@ Two choices keep the render time sane on a machine with no GPU:
 - **Frames render at 75% size** and are upscaled to 1080 x 1920 when assembled.
 
 The script targets Blender 5.3 (`bpy` 5.3.0). Its compositor is set to CPU because the default needs a GPU.
+
+### A whole video in the path-traced look: Five Keys
+
+`stories/fivekeys` is a 62-second short made entirely in this look. Animating every shot would
+take days on a CPU, so only the truck clip is animated. Every other shot is one path-traced
+still (a "plate"), and Remotion adds a slow linear zoom or pan, the captions and the overlays.
+
+```bash
+python blender/fivekeys.py --samples 48 --threshold 0.03    # 35 plates into public/fivekeys/plates (about 55 min)
+python blender/fivekeys.py --only D2 --force                # redo one plate
+python pipeline/run.py fivekeys --skip-tts                  # voice -> timings -> timeline
+npm run render -- out/fivekeys/raw.mp4 --props='{"story":"fivekeys"}'
+```
+
+In `script.json` a plate shot is `{"scene": "plate", "plate": "B1", "camera": "push_in"}` and the
+clip is `{"scene": "plate", "clip": "street"}`. Moves: `push_in`, `pull_out`, `pan_left`,
+`pan_right`, `tilt_up`, `tilt_down`. `"keep": true` lets a shot run shorter than one second
+(the five doors), and `"cut": true` on an overlay ends it with its shot.
+
+| File | What it holds |
+| --- | --- |
+| `blender/lib.py` | Shared palette, geometry collector, the character, props, render settings |
+| `blender/street.py` | The street: `build()` takes options for crew, truck, cars, daylight |
+| `blender/fivekeys.py` | One function per plate: corridor and locks, bench, calendar, counting room, cash, pact, cell, interview room, prison |
+| `src/Plate.tsx` | Shows a plate or clip with its 2D move |
 
 ## Differences from the spec
 
