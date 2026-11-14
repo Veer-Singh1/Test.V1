@@ -10,3 +10,6 @@ __pycache__/
 out/*/check-*.jpg
 out/street/frames/
 out/street/render.log
+public/fktest/
+out/fktest/
+out/fivekeys/plates.log

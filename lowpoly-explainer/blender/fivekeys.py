@@ -64,7 +64,7 @@ def a4b(sc):  # the bed of the truck, loaded
     people = [dict(loc=(-0.7, 22.1, 0.06), facing=0.25, mask="mask_b", carry=True),
               dict(loc=(-3.3, 19.6, 0.18), facing=-PI / 2, mask="mask_a")]
     street.build(sc, crew=(), people=people, truck_at=street.Y_END, truck_lights=False, truck_sacks=8)
-    camera(sc, (1.25, 22.6, 1.7), (-1.6, 19.5, 1.4), lens=40, shift_y=0.02, fstop=2.2, focus=(-1.5, 19.6, 1.4))
+    camera(sc, (1.7, 23.6, 2.5), (-1.5, 19.6, 1.15), lens=35, level=False, fstop=2.2, focus=(-1.5, 19.6, 1.3))
 
 
 @plate("A5", haze=0.5)
@@ -73,7 +73,7 @@ def a5(sc):  # the same street, empty
     street.clip_camera(sc)
 
 
-@plate("A6", haze=0.35, exposure=0.2, bloom=0.2)
+@plate("A6", haze=0.3, exposure=0.8, bloom=0.2)
 def a6(sc):  # years pass: the street by day
     walk = [((-3.6, 9.0), 0.1, "coat_brown", "brim", "hat_brown"), ((-3.9, 20.5), PI, "coat_grey", "brim", "hat_grey"),
             ((3.5, 14.0), 0.0, "coat_olive", "cap", "hat_grey"), ((3.9, 31.0), PI, "coat_navy", "brim", "hat_black"),
@@ -96,12 +96,12 @@ def a8(sc):  # shot, and left on the pavement
         g.cyl("hat_brown", 0.37, 0.37, 0.025, 10, (-2.95, 29.3, 0.2), rot=(0.1, 0, 0))
         g.cyl("hat_brown", 0.2, 0.23, 0.17, 8, (-2.95, 29.3, 0.29), rot=(0.1, 0, 0))
     people = [dict(loc=(-3.6, 30.0, 0.18), facing=1.9, coat="coat_okeefe", hat=None, lying=True)]
-    street.build(sc, crew=(), people=people, extras=[hat], extra_lamps=[(-3.05, 28.3, 1)],
+    street.build(sc, crew=(), people=people, extras=[hat], extra_lamps=[(-3.05, 31.8, 1)],
                  sedans=[((-0.9, 41.5, 0.0), PI / 2, "sedan_black", "tail")])
-    camera(sc, (-1.2, 26.3, 0.8), (-3.4, 30.2, 0.4), lens=32, level=False, fstop=2.0, focus=(-3.6, 30.0, 0.4))
+    camera(sc, (-1.2, 26.3, 0.8), (-3.9, 30.0, 0.4), lens=32, level=False, fstop=2.0, focus=(-3.6, 30.0, 0.4))
 
 
-@plate("A9", haze=0.35, exposure=0.2, bloom=0.2)
+@plate("A9", haze=0.3, exposure=0.8, bloom=0.2)
 def a9(sc):  # the arrests
     f = -0.5
     people = [dict(loc=(3.55, 23.4, 0.18), facing=f, coat="coat_brown", hat=None),
@@ -111,7 +111,7 @@ def a9(sc):  # the arrests
               dict(loc=(3.85, 25.6, 0.18), facing=f, coat="coat_agent", hat="brim", hatm="hat_grey"),
               dict(loc=(3.1, 27.3, 0.18), facing=f + 0.2, coat="coat_grey", hat=None)]
     street.build(sc, crew=(), people=people, day=True, sedans=[((1.78, 28.6, 0.0), PI / 2, "sedan_black", "tail_off")])
-    camera(sc, (0.1, 17.6, 1.5), (3.3, 24.2, 1.4), lens=35, shift_y=0.05, fstop=2.8, focus=(3.5, 23.4, 1.4))
+    camera(sc, (0.3, 21.0, 1.5), (3.5, 24.6, 1.4), lens=35, shift_y=0.05, fstop=2.8, focus=(3.5, 23.4, 1.4))  # clear of the utility pole
 
 
 # ------------------------------------------------------- corridor and doors
@@ -213,12 +213,12 @@ def lock_shot(sc, state, torch):
     r, g = random.Random(2), Geo("c")
     corridor(g, r, lamp=0 if torch else 90)
     lk = Vector(door(g, lock=state))
-    if state == "removed":  # the cylinder drawn out by a gloved hand
-        g.cyl("brass", 0.025, 0.025, 0.075, 10, lk + Vector((0.004, -0.02, 0.003)), rot=(PI / 2 + 0.1, 0, 0.12))
-        g.box("black", (0.09, 0.075, 0.1), lk + Vector((0.085, -0.035, -0.005)), rot=(0, 0, 0.3))
-        g.box("black", (0.075, 0.07, 0.028), lk + Vector((0.03, -0.035, 0.04)), rot=(0, 0.1, 0.25))
-        g.box("black", (0.06, 0.06, 0.026), lk + Vector((0.03, -0.035, -0.04)), rot=(0, -0.1, 0.25))
-        g.box("coat_navy", (0.34, 0.12, 0.13), lk + Vector((0.3, -0.12, -0.04)), rot=(0, 0.12, 0.42))
+    if state == "removed":  # the cylinder drawn out by a gloved hand reaching in from the left
+        g.cyl("brass", 0.025, 0.025, 0.075, 10, lk + Vector((0.0, -0.02, 0.0)), rot=(PI / 2 + 0.08, 0, -0.1))
+        g.box("black", (0.09, 0.07, 0.1), lk + Vector((-0.09, -0.02, -0.005)), rot=(0, 0, -0.2))
+        g.box("black", (0.08, 0.065, 0.026), lk + Vector((-0.035, -0.022, 0.04)), rot=(0, -0.1, -0.15))
+        g.box("black", (0.065, 0.06, 0.024), lk + Vector((-0.035, -0.022, -0.04)), rot=(0, 0.1, -0.15))
+        g.box("coat_navy", (0.4, 0.12, 0.13), lk + Vector((-0.32, 0.0, -0.09)), rot=(0, 0.35, -0.12))
     g.finish()
     inside(sc, 0.03 if torch else 0.02, "#141a2a")
     if torch:
@@ -234,12 +234,12 @@ def b2(sc):  # the key in the lock
 
 @plate("B4", exposure=1.5)
 def b4(sc):  # taking a lock out
-    lock_shot(sc, "removed", 30)
+    lock_shot(sc, "removed", 80)
 
 
 @plate("B5", exposure=1.5)
 def b5(sc):  # and putting it back
-    lock_shot(sc, "normal", 12)
+    lock_shot(sc, "normal", 35)
 
 
 @plate("B3", exposure=1.6)
@@ -268,10 +268,10 @@ def key_door(i):
         r, g, spec, last = random.Random(20 + i), Geo("c"), DOORS[i], i == 4
         corridor(g, r, wall=spec["wall"], dado=spec["dado"], opening=last)
         door(g, lock="key", swing=1.2 if last else 0.0, **spec["d"])
-        figure(g, (-0.5 + 0.06 * i, -0.9, 0.03), PI + 0.12, MASKED[i % 4])
+        figure(g, (-0.5 + 0.05 * i, -0.7, 0.03), PI + 0.12, MASKED[i % 4])
         g.finish()
         inside(sc)
-        camera(sc, (0.34 if i % 2 else 0.2, -3.3, 1.42), (0.05, 0.0, 1.15), lens=30, shift_y=0.03, fstop=2.2, focus=(0.3, -0.1, 1.1))
+        camera(sc, (0.4 if i % 2 else 0.22, -4.1, 1.42), (0.05, 0.0, 1.2), lens=32, shift_y=0.03, fstop=2.2, focus=(0.3, -0.1, 1.1))
     return fn
 
 
@@ -280,7 +280,7 @@ for _i in range(5):
 
 
 # ------------------------------------------------------ bench and calendar
-def worktop(g, lamp_at=(-0.62, 0.38), power=30):
+def worktop(g, lamp_at=(-0.62, 0.38), power=45):
     room(g, -2.2, 2.2, -2.6, 0.75, 2.7, "wall_dark", "floorboard")
     for i in range(6):
         g.box("wood_light" if i % 2 else "wood", (2.4, 0.148, 0.05), (0, -0.35 + i * 0.15, 0.755))
@@ -302,10 +302,10 @@ def c1(sc):  # a key being cut to fit the stolen lock
     r, g = random.Random(4), Geo("b")
     Z = worktop(g)
     vx, vy = -0.05, 0.12
-    g.box("iron", (0.16, 0.2, 0.03), (vx, vy, Z + 0.015))
-    g.box("iron", (0.09, 0.14, 0.09), (vx, vy + 0.02, Z + 0.075))
-    g.box("iron", (0.13, 0.022, 0.06), (vx, vy - 0.045, Z + 0.15))
-    g.box("iron", (0.13, 0.022, 0.06), (vx, vy - 0.073, Z + 0.15))
+    g.box("door_blue", (0.16, 0.2, 0.03), (vx, vy, Z + 0.015))
+    g.box("door_blue", (0.09, 0.14, 0.09), (vx, vy + 0.02, Z + 0.075))
+    g.box("galv", (0.13, 0.022, 0.06), (vx, vy - 0.045, Z + 0.15))
+    g.box("galv", (0.13, 0.022, 0.06), (vx, vy - 0.073, Z + 0.15))
     g.cyl("galv", 0.008, 0.008, 0.2, 6, (vx, vy - 0.16, Z + 0.1), rot=(PI / 2, 0, 0))
     g.cyl("galv", 0.006, 0.006, 0.14, 6, (vx, vy - 0.25, Z + 0.1), rot=(0, PI / 2, 0))
     kx, ky, kz = vx, vy - 0.059, Z + 0.2
@@ -443,7 +443,7 @@ def counting(sc, state):
         g.box("galv", (0.5, 0.6, 1.35), (cx, 0.5, 0.675))
         for k in range(3):
             g.box("iron", (0.3, 0.02, 0.03), (cx, 0.19, 0.3 + k * 0.42))
-    clock(g, (X0 + 0.01, 5.0, 2.65), PI / 2, 7, 37 if state == "alarm" else 12)
+    clock(g, (X0 + 0.01, 4.4, 2.5), PI / 2, 7, 37 if state == "alarm" else 12)
     g.cyl("alarm_red" if state == "alarm" else "hydrant", 0.17, 0.17, 0.07, 10, (X0 + 0.05, 3.6, 2.35), rot=(0, PI / 2, 0))
     g.ico("iron", 0.05, 1, (X0 + 0.1, 3.6, 2.35))
     g.box("hydrant", (0.06, 0.16, 0.22), (X0 + 0.04, 3.6, 1.45))
@@ -453,7 +453,7 @@ def counting(sc, state):
         for k, (x, y) in enumerate(((-3.3, 1.9), (2.9, 4.6), (3.3, 4.2))):
             sack(g, (x, y, 0.03), 0.9, rot=k * 1.1)
     else:
-        down = [((-2.7, 1.7), 1.2), ((-0.5, 1.9), -0.5), ((1.0, 1.5), 2.0), ((2.6, 2.3), 0.7)]
+        down = [((-2.7, 1.7), 1.2), ((-1.0, 1.6), -0.75), ((0.4, 2.3), 2.38), ((2.6, 2.3), 0.7)]  # side-on to the camera
         for k, ((x, y), f) in enumerate(down):
             if state == "alarm" and k == 0:
                 continue
@@ -481,17 +481,17 @@ def d1(sc):  # counting the day's money
 @plate("D2", exposure=0.9)
 def d2(sc):  # tied up and gagged
     counting(sc, "tied")
-    camera(sc, (3.0, 0.5, 1.2), (-0.7, 3.6, 0.6), lens=24, shift_y=0.0, fstop=2.8, focus=(1.0, 1.5, 0.4))
+    camera(sc, (2.3, 0.4, 1.3), (-0.6, 3.2, 0.55), lens=24, shift_y=-0.06, fstop=2.8, focus=(1.0, 1.5, 0.4))
 
 
 @plate("D3", exposure=0.9)
 def d3(sc):  # 7:37: the alarm
     counting(sc, "alarm")
-    camera(sc, (-0.5, 1.1, 1.5), (-4.1, 4.3, 1.95), lens=28, shift_y=0.08, fstop=2.8, focus=(-3.7, 3.6, 1.6))
+    camera(sc, (-0.9, 1.6, 1.5), (-4.1, 4.0, 2.0), lens=28, shift_y=0.1, fstop=2.8, focus=(-3.7, 3.6, 1.6))
 
 
 # ------------------------------------------------------------------ the cash
-def cash_table(sc, n=70, sacks=True, robbers=False, power=55):
+def cash_table(sc, n=70, sacks=True, robbers=False, power=55, drop=1.2):
     r, g = random.Random(6), Geo("m")
     room(g, -3, 3, -3, 3, 3.0, "wall_dark", "floorboard")
     for i in range(9):
@@ -513,7 +513,7 @@ def cash_table(sc, n=70, sacks=True, robbers=False, power=55):
     if robbers:
         figure(g, (-0.6, 1.05, 0.02), 0.15, "mask_a", carry=True)
         figure(g, (0.65, 1.15, 0.02), -0.2, "mask_b")
-    pendant(g, 0.0, 0.05, 3.0, 1.2, power=power, r=0.34)
+    pendant(g, 0.0, 0.05, 3.0, drop, power=power, r=0.34)
     g.finish()
     inside(sc)
 
@@ -532,8 +532,8 @@ def e2(sc):  # bag after bag
 
 @plate("E3", exposure=1.0)
 def e3(sc):  # 1.2 million in cash, from above
-    cash_table(sc, sacks=False)
-    camera(sc, (0.0, -0.3, 2.35), (0.0, 0.02, 0.8), lens=40, level=False, fstop=4.0)
+    cash_table(sc, sacks=False, drop=0.4, power=90)
+    camera(sc, (0.0, -0.3, 2.2), (0.0, 0.0, 0.8), lens=40, level=False, fstop=4.0)
 
 
 @plate("E5", exposure=1.1)
@@ -560,7 +560,7 @@ def backroom(sc):
         d = 1.55 + r.uniform(-0.08, 0.12)
         x, y = math.cos(a) * d, math.sin(a) * d
         figure(g, (x, y, 0.02), math.atan2(-x, y), coat=coats[i], hat=hats[i][0], hatm=hats[i][1], scale=r.uniform(0.95, 1.04))
-    pendant(g, 0.0, 0.0, 2.9, 1.0, power=75, r=0.34)
+    pendant(g, 0.0, 0.0, 2.9, 0.95, power=120, r=0.34)
     g.finish()
     inside(sc)
 
@@ -568,13 +568,13 @@ def backroom(sc):
 @plate("F1", exposure=1.2)
 def f1(sc):  # eleven men and a pact
     backroom(sc)
-    camera(sc, (2.3, -2.55, 2.35), (0.0, 0.0, 0.95), lens=26, level=False, fstop=2.8, focus=(0, 0, 0.9))
+    camera(sc, (1.5, -1.8, 2.78), (0.0, 0.05, 0.9), lens=24, level=False, fstop=2.8, focus=(0, 0, 0.9))
 
 
 @plate("F2", exposure=1.2)
 def f2(sc):  # nobody talks
     backroom(sc)
-    camera(sc, (0.5, -1.0, 1.52), (-0.5, 1.4, 1.5), lens=45, shift_y=0.0, fstop=2.0, focus=(-0.5, 1.5, 1.55))
+    camera(sc, (0.05, -0.8, 1.12), (0.0, 1.5, 1.5), lens=35, level=False, fstop=2.0, focus=(0.0, 1.5, 1.55))
 
 
 # ------------------------------------------------- cell, interview, prison
@@ -613,7 +613,7 @@ def g2(sc):  # he tells the FBI everything
     table(g, 0, 0, 1.5, 0.8)
     figure(g, (0.0, 0.72, 0.02), 0.0, coat="coat_okeefe", hat=None, sit=True)
     figure(g, (-0.25, -0.75, 0.02), PI, coat="coat_agent", hat="brim", hatm="hat_grey", sit=True)
-    figure(g, (1.5, 1.5, 0.02), -0.7, coat="coat_agent", hat="brim", hatm="hat_black")
+    figure(g, (-1.35, 1.35, 0.02), 0.6, coat="coat_agent", hat="brim", hatm="hat_black")
     for (x, y) in ((0.0, 0.95), (-0.25, -0.98)):  # chair backs
         g.box("wood_dark", (0.44, 0.05, 0.5), (x, y, 0.75))
     g.box("paper", (0.3, 0.22, 0.012), (0.1, 0.0, 0.787), rot=(0, 0, 0.2))
@@ -625,24 +625,25 @@ def g2(sc):  # he tells the FBI everything
     pendant(g, 0.0, 0.0, 2.8, 1.0, power=95, r=0.36)
     g.finish()
     inside(sc)
-    camera(sc, (1.3, -2.3, 1.6), (-0.1, 0.5, 1.0), lens=32, shift_y=-0.02, fstop=2.2, focus=(0.0, 0.72, 1.15))
+    camera(sc, (1.5, -2.55, 1.65), (-0.15, 0.3, 1.05), lens=28, shift_y=-0.02, fstop=2.2, focus=(0.0, 0.72, 1.15))
 
 
-@plate("G3", exposure=1.1)
+@plate("G3", exposure=0.7)
 def g3(sc):  # eight men, life in prison
     g = Geo("l")
     room(g, -3.0, 3.0, -6.6, 1.2, 3.0, "wall_grey", "slab_b")
     for k in range(7):
         g.box("ink", (6.0, 0.01, 0.012), (0, 1.19, 1.3 + k * 0.1))
     for x in (-1.2, -0.4, 0.4, 1.2):
-        figure(g, (x, 0.15, 0.0), 0.0, coat="coat_prison", hat=None)
-    for x in (-1.6, -0.55, 0.55, 1.6):
-        figure(g, (x, 0.8, 0.0), 0.0, coat="coat_prison", hat=None, scale=1.03)
-    bars(g, -3.0, 3.0, -1.7, 0.0, 3.0, gap=0.16, r=0.018)
+        figure(g, (x, 0.1, 0.0), 0.0, coat="coat_prison", hat=None)
+    g.box("slab_a", (6.0, 0.7, 0.32), (0, 0.85, 0.16))  # the back row stands on a step
+    for x in (-1.6, -0.8, 0.0, 0.8):
+        figure(g, (x + 0.4, 0.85, 0.32), 0.0, coat="coat_prison", hat=None)
+    bars(g, -3.0, 3.0, -1.7, 0.0, 3.0, gap=0.25, r=0.02)
     for x in (-1.0, 1.0):
         g.box("iron", (0.5, 0.2, 0.06), (x, -0.4, 2.96))
         g.box("win_pale", (0.44, 0.16, 0.02), (x, -0.4, 2.92))
-        light("POINT", (x, -0.4, 2.75), 130, "#fff0d8", 0.1)
+        light("POINT", (x, -0.4, 2.75), 40, "#fff0d8", 0.1)
     g.finish()
     inside(sc)
     camera(sc, (0.4, -5.6, 1.5), (0.0, 0.3, 1.3), lens=32, shift_y=0.02, fstop=2.0, focus=(0.0, 0.3, 1.4))

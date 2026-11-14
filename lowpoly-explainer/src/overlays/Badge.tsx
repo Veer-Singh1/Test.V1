@@ -7,11 +7,12 @@ const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 export const Badge = ({overlay}: {overlay: Overlay}) => {
   const frame = useCurrentFrame();
   const target = overlay.value ?? 0;
-  const p = interpolate(frame - overlay.from, [0, 20], [0, 1], {...clamp, easing: Easing.out(Easing.cubic)});
+  const p = overlay.step ? 1 : interpolate(frame - overlay.from, [0, 20], [0, 1], {...clamp, easing: Easing.out(Easing.cubic)});
   const shown = overlay.decimals ? (target * p).toFixed(overlay.decimals) : Math.round(target * p).toLocaleString('en-US');
+  // A stepped run (1, 2, 3 ...) only fades in on its first badge and out on its last.
   const opacity = Math.min(
-    interpolate(frame - overlay.from, [0, 4], [0, 1], clamp),
-    interpolate(frame, [overlay.to - 6, overlay.to], [1, 0], clamp),
+    overlay.step && overlay.step !== 'first' ? 1 : interpolate(frame - overlay.from, [0, 4], [0, 1], clamp),
+    overlay.step && overlay.step !== 'last' ? 1 : interpolate(frame, [overlay.to - 6, overlay.to], [1, 0], clamp),
   );
   return (
     <div style={{opacity}}>

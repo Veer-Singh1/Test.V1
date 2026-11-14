@@ -9,21 +9,20 @@ The user's rule: if a usage limit hits, do not use extra usage. Schedule a conti
 (send_later, about 5 h 15 min ahead) and stop.
 
 ## Done
-- `blender/lib.py` (shared palette, Geo, figure, props, render setup), `blender/street.py`
-  refactored to `build()`, `blender/fivekeys.py` with all plate scenes (A street, B corridor
-  and locks, C bench and calendar, D counting room, E cash, F pact, G cell, interview, prison).
-- B and C plates previewed at low quality. Known fixes: B4 hand hid the lock (move the hand to
-  the left), B5 too dark, B6-B10 figure too close to camera, C1 vice too dark.
+- Blender scenes for every plate (`blender/fivekeys.py`), previewed and fixed.
+- `stories/fivekeys/script.json` (generated; 40 clauses, 38 shots), voice processed to 235 wpm
+  (atempo 1.5), words aligned, `public/fivekeys/timeline.json` built.
+- Remotion shows plates and the truck clip (`src/Plate.tsx`); tested with preview plates.
+- Full-quality plates render with `python blender/fivekeys.py --samples 48 --threshold 0.03`
+  into `public/fivekeys/plates/` (it skips ones already there). 35 are needed:
+  A1 A3 A4 A4b A5 A6 A7 A8 A9 B1-B10 C1-C4 D1-D3 E1 E2 E3 E5 F1 F2 G1 G2 G3.
 
 ## To do, in order
-1. Preview D, E, F, G, A plates (`python blender/fivekeys.py --out /tmp/x --scale 30 --samples 10 --only ...`), fix framing.
-2. Render all plates at full quality: `python blender/fivekeys.py` (about 1 to 2 min each, 35 plates).
-3. `stories/fivekeys/script.json`: sentences as clauses, each with `{"scene": "plate", "plate": "B1", "camera": "push_in"}`;
-   the truck clip is `{"scene": "plate", "clip": "street"}`. Text must match the voice (script is in the chat and in the fact check).
-4. Remotion: plate/clip shots in `src/Explainer.tsx` (image or video with a linear 2D zoom or pan); keep captions and overlays.
-   `pipeline/build_timeline.py`: do not split plate shots; honour `"keep": true` to skip the 1-second merge (key one ... key five).
-5. `python pipeline/run.py fivekeys --skip-tts`, render with Remotion (`GL=swangle`, `CHROME_PATH` = Playwright headless shell),
-   check frames, write `out/fivekeys/fivekeys.mp4`, commit, push, send to the user.
+1. Finish any missing plates (same command; check `ls public/fivekeys/plates`).
+2. Render: `CHROME_PATH=... GL=swangle npx remotion render src/index.ts Explainer out/fivekeys/raw.mp4 --crf 16 --props='{"story":"fivekeys"}'`
+   then add light grain and re-encode to `out/fivekeys/fivekeys.mp4`.
+3. Check frames (`node scripts/contact-sheet.mjs fivekeys`), commit plates and video, push, send to the user,
+   delete this note and cancel the scheduled continuation.
 
 ## If the container was replaced
 `npm install`; `pip install bpy pillow sherpa-onnx soundfile numpy`; download

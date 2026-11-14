@@ -1,0 +1,593 @@
+{
+ "slug": "fivekeys",
+ "title": {
+  "line1": "FIVE",
+  "line2_red": "KEYS"
+ },
+ "voice": {
+  "provider": "elevenlabs",
+  "voice_id": "nPczCjzI2devNBz1zQrb",
+  "name": "user take, eleven_v4",
+  "atempo": 1.3
+ },
+ "beats": [
+  {
+   "type": "hook",
+   "sentences": [
+    {
+     "text": "Did you know the biggest robbery in American history, at the time,",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "E1"
+     }
+    },
+    {
+     "text": "took less than half an hour,",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "A4"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 27,
+      "label": "MINUTES, DOOR TO ALARM",
+      "on_word": "half"
+     }
+    },
+    {
+     "text": "and the men who did it walked through five locked doors",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "B1"
+     }
+    },
+    {
+     "text": "without breaking a single one?",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "B2",
+      "anchor": [
+       0.55,
+       0.45
+      ]
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "NO BROKEN",
+      "red": "LOCKS.",
+      "on_word": "breaking",
+      "line2": "LOCKS."
+     }
+    }
+   ]
+  },
+  {
+   "type": "night",
+   "sentences": [
+    {
+     "text": "January 17th, 1950.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "A1"
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "JANUARY 17,",
+      "red": "1950",
+      "on_word": "January",
+      "line2": "1950"
+     }
+    },
+    {
+     "text": "Boston."
+    },
+    {
+     "text": "Just after seven, a green Ford truck pulls up on Prince Street.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "clip": "street",
+      "anchor": [
+       0.42,
+       0.63
+      ]
+     }
+    },
+    {
+     "text": "The men wear navy pea coats, chauffeur caps"
+    },
+    {
+     "text": "and rubber Halloween masks.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "A3",
+      "keep": true
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "HALLOWEEN",
+      "red": "MASKS.",
+      "on_word": "Halloween",
+      "cut": true,
+      "line2": "MASKS."
+     }
+    }
+   ]
+  },
+  {
+   "type": "secret",
+   "sentences": [
+    {
+     "text": "Months earlier, they slipped into this building at night,",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "B3"
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "MONTHS",
+      "red": "EARLIER",
+      "on_word": "Months",
+      "line2": "EARLIER"
+     }
+    },
+    {
+     "text": "took the locks out of five doors,",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "B4",
+      "anchor": [
+       0.5,
+       0.45
+      ]
+     }
+    },
+    {
+     "text": "had keys cut,",
+     "shot": {
+      "scene": "plate",
+      "camera": "pull_out",
+      "time": "night",
+      "plate": "C1",
+      "keep": true
+     }
+    },
+    {
+     "text": "and put every lock back.",
+     "shot": {
+      "scene": "plate",
+      "camera": "pull_out",
+      "time": "night",
+      "plate": "B5",
+      "anchor": [
+       0.5,
+       0.45
+      ]
+     }
+    },
+    {
+     "text": "Nobody noticed.",
+     "shot": {
+      "scene": "plate",
+      "camera": "pan_right",
+      "time": "night",
+      "plate": "D1",
+      "keep": true
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "NOBODY",
+      "red": "NOTICED.",
+      "on_word": "Nobody",
+      "cut": true,
+      "line2": "NOTICED."
+     }
+    },
+    {
+     "text": "Now: key one.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "B6",
+      "keep": true
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 1,
+      "label": "KEYS",
+      "on_word": "one",
+      "step": "first"
+     }
+    },
+    {
+     "text": "Key two.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "B7",
+      "keep": true
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 2,
+      "label": "KEYS",
+      "on_word": "two",
+      "step": "mid"
+     }
+    },
+    {
+     "text": "Key three.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "B8",
+      "keep": true
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 3,
+      "label": "KEYS",
+      "on_word": "three",
+      "step": "mid"
+     }
+    },
+    {
+     "text": "Key four.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "B9",
+      "keep": true
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 4,
+      "label": "KEYS",
+      "on_word": "four",
+      "step": "mid"
+     }
+    },
+    {
+     "text": "Key five.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "B10",
+      "keep": true
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 5,
+      "label": "KEYS",
+      "on_word": "five",
+      "step": "last",
+      "cut": true
+     }
+    }
+   ]
+  },
+  {
+   "type": "robbery",
+   "sentences": [
+    {
+     "text": "Upstairs, Brink's workers are counting the day's money.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "D1"
+     }
+    },
+    {
+     "text": "Within minutes they're tied up and gagged.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "D2"
+     }
+    },
+    {
+     "text": "The crew fills bag after bag.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "E2"
+     }
+    },
+    {
+     "text": "More than 1.2 million dollars in cash.",
+     "shot": {
+      "scene": "plate",
+      "camera": "pull_out",
+      "time": "night",
+      "plate": "E3"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 1.2,
+      "label": "IN CASH ALONE",
+      "on_word": "1.2",
+      "prefix": "$",
+      "suffix": " MILLION",
+      "decimals": 1
+     }
+    },
+    {
+     "text": "Almost 3 million in all.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "A4b",
+      "keep": true
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 2.7,
+      "label": "TAKEN IN ALL",
+      "on_word": "3",
+      "prefix": "$",
+      "suffix": " MILLION",
+      "decimals": 1
+     }
+    },
+    {
+     "text": "At 7:37, a worker gets free and raises the alarm.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "D3",
+      "anchor": [
+       0.45,
+       0.4
+      ]
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "7:37 P.M.",
+      "red": "7:37",
+      "on_word": "7:37,"
+     }
+    },
+    {
+     "text": "By then, the truck is gone.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "A5",
+      "anchor": [
+       0.42,
+       0.63
+      ]
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "GONE.",
+      "red": "GONE.",
+      "on_word": "gone"
+     }
+    }
+   ]
+  },
+  {
+   "type": "pact",
+   "sentences": [
+    {
+     "text": "Then the crew makes a pact.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "F1"
+     }
+    },
+    {
+     "text": "Nobody spends, nobody talks, for six years.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "F2"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 6,
+      "label": "YEARS OF SILENCE",
+      "on_word": "six"
+     }
+    },
+    {
+     "text": "After that, they can never be charged.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "C2"
+     }
+    },
+    {
+     "text": "It almost works.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "A6",
+      "keep": true
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "ALMOST.",
+      "red": "ALMOST.",
+      "on_word": "almost"
+     }
+    }
+   ]
+  },
+  {
+   "type": "turn",
+   "sentences": [
+    {
+     "text": "One of them, Specs O'Keefe, goes to jail for a different burglary and wants his share.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "G1"
+     },
+     "overlay": {
+      "kind": "nametag",
+      "name": "JOSEPH \"SPECS\" O'KEEFE",
+      "place": "ONE OF THE CREW",
+      "on_word": "O'Keefe,"
+     }
+    },
+    {
+     "text": "Instead, the crew hires a hitman.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "A7"
+     }
+    },
+    {
+     "text": "O'Keefe is shot, and survives.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "A8"
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "HE",
+      "red": "SURVIVES.",
+      "on_word": "survives",
+      "line2": "SURVIVES."
+     }
+    },
+    {
+     "text": "On January 6th, 1956, eleven days before the deadline,",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "C3"
+     }
+    },
+    {
+     "text": "he tells the FBI everything.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "G2"
+     }
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "sentences": [
+    {
+     "text": "Six days later, agents arrest six men.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "A9"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 6,
+      "label": "MEN ARRESTED",
+      "on_word": "six"
+     }
+    },
+    {
+     "text": "Five days to spare.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "C4",
+      "keep": true
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 5,
+      "label": "DAYS TO SPARE",
+      "on_word": "Five"
+     }
+    },
+    {
+     "text": "Eight men get life in prison.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "G3"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 8,
+      "label": "LIFE SENTENCES",
+      "on_word": "Eight"
+     }
+    },
+    {
+     "text": "And the cash?",
+     "shot": {
+      "scene": "plate",
+      "camera": "pull_out",
+      "time": "night",
+      "plate": "E1",
+      "keep": true
+     }
+    },
+    {
+     "text": "Less than 60,000 dollars has ever been found.",
+     "shot": {
+      "scene": "plate",
+      "camera": "push_in",
+      "time": "night",
+      "plate": "E5"
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "LESS THAN",
+      "red": "$60,000",
+      "on_word": "Less",
+      "line2": "$60,000 FOUND."
+     }
+    }
+   ]
+  }
+ ]
+}

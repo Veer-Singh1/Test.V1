@@ -49,6 +49,11 @@ export type Shot = {
   fire?: boolean;
   few?: boolean;
   agents?: number;
+  // Path-traced plates (scene 'plate'): a still or a clip from public/<story>/plates, moved in 2D.
+  plate?: string;
+  clip?: string;
+  anchor?: [number, number];
+  keep?: boolean;
 };
 
 export type CaptionChunk = {from: number; to: number; words: {w: string; from: number}[]};
@@ -59,6 +64,7 @@ export type Overlay = {
   to: number;
   value?: number;
   decimals?: number;
+  step?: 'first' | 'mid' | 'last'; // one of a run of badges that tick up without animating
   prefix?: string;
   suffix?: string;
   label?: string;

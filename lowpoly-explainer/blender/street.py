@@ -606,7 +606,7 @@ def world_day():
     nt.links.new(tc.outputs["Generated"], sep.inputs[0])
     nt.links.new(sep.outputs["Z"], r.inputs[0])
     nt.links.new(r.outputs["Color"], bg.inputs["Color"])
-    bg.inputs["Strength"].default_value = 1.0
+    bg.inputs["Strength"].default_value = 1.6
     w.mist_settings.start, w.mist_settings.depth, w.mist_settings.falloff = 12.0, 150.0, "QUADRATIC"
     return w
 
@@ -668,7 +668,7 @@ def build(sc, crew=CLIP_CREW, people=(), truck_at=None, truck_lights=True, truck
     st.finish()
     B.finish()
     if day:
-        light("SUN", (0, 0, 40), 2.6, "#ffe6c4", radius=0.03, rot=(math.radians(62), 0, math.radians(-150)))
+        light("SUN", (0, 0, 40), 4.0, "#ffe9cc", radius=0.03, rot=(math.radians(53), 0, math.radians(-22)))  # low sun from behind the camera
     if truck_at is None:
         return None, []
     trk, wheels = truck(lights=truck_lights, sacks=truck_sacks)

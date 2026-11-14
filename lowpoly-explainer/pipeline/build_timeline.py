@@ -3,7 +3,8 @@
 Shot rules (from the spec):
   one shot per sentence that carries a "shot"; sentences without one continue the previous shot
   a shot starts on its first word
-  a shot under 1 s merges into the one before it; a shot over 6 s splits in two
+  a shot under 1 s merges into the one before it (unless it says "keep": true, for rapid cuts);
+  a shot over 6 s splits in two (not plates: a still cannot change camera)
 Caption rules:
   chunks of up to 3 words and 16 characters, breaking after punctuation
   a chunk shows from its first word to the next chunk's first word
@@ -39,7 +40,7 @@ def build_shots(script, words, total):
 
     merged = []
     for sh in shots:
-        if merged and sh["end"] - sh["start"] < MIN_SHOT:
+        if merged and sh["end"] - sh["start"] < MIN_SHOT and not sh.get("keep"):
             merged[-1]["end"] = sh["end"]
         else:
             merged.append(sh)
@@ -47,7 +48,7 @@ def build_shots(script, words, total):
     final = []
     for sh in merged:
         length = sh["end"] - sh["start"]
-        if length > MAX_SHOT and sh["scene"] != "title":
+        if length > MAX_SHOT and sh["scene"] not in ("title", "plate"):
             # Cut on the word boundary nearest the midpoint.
             mid = sh["start"] + length / 2
             cut = min((w["s"] for w in words if sh["start"] + 1 < w["s"] < sh["end"] - 1),
@@ -120,6 +121,11 @@ def main():
         "captions": build_captions(words, total),
         "overlays": build_overlays(script, words, total),
     }
+    # An overlay marked "cut": true ends with the shot it starts in.
+    for ov in timeline["overlays"]:
+        if ov.pop("cut", False):
+            shot = next(sh for sh in timeline["shots"] if sh["from"] <= ov["from"] < sh["to"])
+            ov["to"] = min(ov["to"], shot["to"])
     # Overlays never run into the title card, which has its own text.
     for title in (sh for sh in timeline["shots"] if sh["scene"] == "title"):
         for ov in timeline["overlays"]:

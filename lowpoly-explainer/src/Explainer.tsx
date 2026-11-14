@@ -7,11 +7,12 @@ import {Badge} from './overlays/Badge';
 import {Captions} from './overlays/Captions';
 import {Kicker} from './overlays/Kicker';
 import {NameTag} from './overlays/NameTag';
+import {Plate} from './Plate';
 import {TitleCard} from './overlays/TitleCard';
 import {Stage} from './three/Stage';
 import type {Timeline} from './types';
 
-export const Explainer = ({timeline}: {story: string; timeline: Timeline}) => {
+export const Explainer = ({story, timeline}: {story: string; timeline: Timeline}) => {
   const frame = useCurrentFrame();
   const {width, height} = useVideoConfig();
 
@@ -31,7 +32,9 @@ export const Explainer = ({timeline}: {story: string; timeline: Timeline}) => {
 
   return (
     <AbsoluteFill style={{backgroundColor: '#05070d'}}>
-      {ready && shot ? (
+      {shot?.scene === 'plate' ? (
+        <Plate key={shot.from} shot={shot} story={story} />
+      ) : ready && shot ? (
         <ThreeCanvas width={width} height={height} gl={{antialias: true}} camera={{fov: 46, near: 0.1, far: 220}}>
           <Stage key={shot.from} shot={shot} />
         </ThreeCanvas>
