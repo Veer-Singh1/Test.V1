@@ -1,0 +1,28 @@
+{
+  "name": "lowpoly-explainer",
+  "version": "1.0.0",
+  "description": "Low-poly true-crime explainer video pipeline (Remotion + React Three Fiber)",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts Explainer --crf 18",
+    "sheet": "node scripts/contact-sheet.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@fontsource/outfit": "^5.3.0",
+    "@react-three/fiber": "^9.8.2",
+    "@remotion/bundler": "^4.0.543",
+    "@remotion/cli": "^4.0.543",
+    "@remotion/renderer": "^4.0.543",
+    "@remotion/three": "^4.0.543",
+    "@types/react": "^19.3.0",
+    "@types/three": "^0.187.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "^4.0.543",
+    "three": "^0.187.0",
+    "typescript": "^7.0.2"
+  },
+  "private": true
+}

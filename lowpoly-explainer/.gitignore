@@ -1,0 +1,9 @@
+node_modules/
+models
+models/
+out/*/stills/
+out/*/overlay-stills/
+public/*/work/
+public/*/voice_raw.wav
+public/*/heard.json
+__pycache__/
