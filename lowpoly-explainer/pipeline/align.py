@@ -31,23 +31,38 @@ def recognise(wav) -> list[tuple[str, float]]:
                           "-f", "f32le", "-"], check=True, capture_output=True).stdout
     samples = np.frombuffer(pcm, dtype=np.float32)
 
+    sr = 16000
     words: list[tuple[str, float]] = []
-    chunk, sr = 25, 16000  # seconds per pass; the model is trained on short clips
-    for off in range(0, len(samples), chunk * sr):
+    for a, b in windows(samples, sr):
         st = rec.create_stream()
-        st.accept_waveform(sr, samples[off:off + chunk * sr])
+        st.accept_waveform(sr, samples[a:b])
         rec.decode_stream(st)
         cur, cur_t = "", 0.0
         for tok, t in zip(st.result.tokens, st.result.timestamps):
             if tok.startswith(" ") or not cur:
                 if cur.strip():
                     words.append((cur.strip(), cur_t))
-                cur, cur_t = tok, off / sr + t
+                cur, cur_t = tok, a / sr + t
             else:
                 cur += tok
         if cur.strip():
             words.append((cur.strip(), cur_t))
     return words
+
+
+def windows(samples, sr, target=12.0, search=3.0):
+    """Split into windows of about `target` seconds, each cut at the quietest
+    20 ms within `search` seconds of the target point, so no word is cut in half.
+    Long windows make the recogniser skip whole sentences, so keep them short."""
+    hop = sr // 50
+    energy = np.array([np.mean(samples[i:i + hop] ** 2) for i in range(0, len(samples), hop)])
+    cuts, pos = [0], 0
+    while len(samples) - pos > (target + search) * sr:
+        lo, hi = int((pos / sr + target - search) * 50), int((pos / sr + target + search) * 50)
+        pos = (lo + int(np.argmin(energy[lo:hi]))) * hop
+        cuts.append(pos)
+    cuts.append(len(samples))
+    return list(zip(cuts, cuts[1:]))
 
 
 def snap(script_words: list[str], heard: list[tuple[str, float]], total: float) -> list[float]:

@@ -17,6 +17,10 @@ pip install -r pipeline/requirements.txt
 python pipeline/run.py antwerp --provider elevenlabs     # needs ELEVENLABS_API_KEY
 python pipeline/run.py antwerp --provider local          # free stand-in voice
 
+# or use a take made in the ElevenLabs app: convert it, then skip step 3
+ffmpeg -i voices/antwerp_elevenlabs_brian.mp3 -ar 44100 -ac 1 public/antwerp/voice_raw.wav
+python pipeline/run.py antwerp --skip-tts
+
 # render   (step 8)
 npm run render -- out/antwerp/antwerp.mp4 --props='{"story":"antwerp"}'
 

@@ -9,7 +9,7 @@
  "shots": [
   {
    "from": 0,
-   "to": 103,
+   "to": 91,
    "seed": 0,
    "beat": "hook",
    "scene": "street",
@@ -17,8 +17,8 @@
    "time": "dusk"
   },
   {
-   "from": 103,
-   "to": 192,
+   "from": 91,
+   "to": 187,
    "seed": 1,
    "beat": "hook",
    "scene": "vault_door",
@@ -26,7 +26,7 @@
    "time": "night"
   },
   {
-   "from": 192,
+   "from": 187,
    "to": 264,
    "seed": 2,
    "beat": "hook",
@@ -36,7 +36,7 @@
   },
   {
    "from": 264,
-   "to": 329,
+   "to": 335,
    "seed": 3,
    "beat": "hook",
    "scene": "vault_room",
@@ -45,8 +45,8 @@
    "lasers": true
   },
   {
-   "from": 329,
-   "to": 422,
+   "from": 335,
+   "to": 431,
    "seed": 4,
    "beat": "hook",
    "scene": "vault_door",
@@ -55,8 +55,8 @@
    "lasers": true
   },
   {
-   "from": 422,
-   "to": 526,
+   "from": 431,
+   "to": 542,
    "seed": 5,
    "beat": "hook",
    "scene": "roadside",
@@ -65,8 +65,8 @@
    "bag": true
   },
   {
-   "from": 526,
-   "to": 586,
+   "from": 542,
+   "to": 604,
    "seed": 6,
    "beat": "hook",
    "scene": "skyline",
@@ -74,8 +74,8 @@
    "time": "night"
   },
   {
-   "from": 586,
-   "to": 691,
+   "from": 604,
+   "to": 679,
    "seed": 7,
    "beat": "title",
    "scene": "title",
@@ -83,27 +83,36 @@
    "time": "night"
   },
   {
-   "from": 691,
-   "to": 759,
+   "from": 679,
+   "to": 712,
    "seed": 8,
+   "beat": "setup",
+   "scene": "street",
+   "camera": "push_in",
+   "time": "day"
+  },
+  {
+   "from": 712,
+   "to": 774,
+   "seed": 9,
    "beat": "setup",
    "scene": "diamonds",
    "camera": "top_down",
    "time": "day"
   },
   {
-   "from": 759,
-   "to": 853,
-   "seed": 9,
+   "from": 774,
+   "to": 846,
+   "seed": 10,
    "beat": "setup",
    "scene": "office",
    "camera": "push_in",
    "time": "dusk"
   },
   {
-   "from": 853,
-   "to": 918,
-   "seed": 10,
+   "from": 846,
+   "to": 911,
+   "seed": 11,
    "beat": "setup",
    "scene": "lineup",
    "camera": "track_right",
@@ -112,9 +121,9 @@
    "highlight": 2
   },
   {
-   "from": 918,
-   "to": 992,
-   "seed": 11,
+   "from": 911,
+   "to": 985,
+   "seed": 12,
    "beat": "setup",
    "scene": "desk",
    "camera": "top_down",
@@ -122,18 +131,18 @@
    "prop": "blueprint"
   },
   {
-   "from": 992,
-   "to": 1081,
-   "seed": 12,
+   "from": 985,
+   "to": 1067,
+   "seed": 13,
    "beat": "stage",
    "scene": "street",
    "camera": "pull_out",
    "time": "night"
   },
   {
-   "from": 1081,
-   "to": 1115,
-   "seed": 13,
+   "from": 1067,
+   "to": 1103,
+   "seed": 14,
    "beat": "stage",
    "scene": "vault_door",
    "camera": "orbit_low",
@@ -141,9 +150,9 @@
    "crew": 3
   },
   {
-   "from": 1115,
-   "to": 1170,
-   "seed": 14,
+   "from": 1103,
+   "to": 1163,
+   "seed": 15,
    "beat": "stage",
    "scene": "vault_door",
    "camera": "push_in",
@@ -152,9 +161,9 @@
    "crew": 1
   },
   {
-   "from": 1170,
-   "to": 1204,
-   "seed": 15,
+   "from": 1163,
+   "to": 1197,
+   "seed": 16,
    "beat": "stage",
    "scene": "vault_door",
    "camera": "pull_out",
@@ -163,9 +172,9 @@
    "crew": 3
   },
   {
-   "from": 1204,
-   "to": 1273,
-   "seed": 16,
+   "from": 1197,
+   "to": 1262,
+   "seed": 17,
    "beat": "stage",
    "scene": "vault_room",
    "camera": "track_right",
@@ -173,18 +182,18 @@
    "open": true
   },
   {
-   "from": 1273,
-   "to": 1314,
-   "seed": 17,
+   "from": 1262,
+   "to": 1300,
+   "seed": 18,
    "beat": "turn",
    "scene": "skyline",
    "camera": "track_left",
    "time": "dusk"
   },
   {
-   "from": 1314,
-   "to": 1345,
-   "seed": 18,
+   "from": 1300,
+   "to": 1331,
+   "seed": 19,
    "beat": "turn",
    "scene": "roadside",
    "camera": "track_left",
@@ -192,9 +201,9 @@
    "car": true
   },
   {
-   "from": 1345,
-   "to": 1429,
-   "seed": 19,
+   "from": 1331,
+   "to": 1413,
+   "seed": 20,
    "beat": "turn",
    "scene": "roadside",
    "camera": "orbit_low",
@@ -204,9 +213,9 @@
    "crew": 1
   },
   {
-   "from": 1429,
-   "to": 1487,
-   "seed": 20,
+   "from": 1413,
+   "to": 1471,
+   "seed": 21,
    "beat": "turn",
    "scene": "roadside",
    "camera": "push_in",
@@ -215,9 +224,9 @@
    "local": true
   },
   {
-   "from": 1487,
-   "to": 1536,
-   "seed": 21,
+   "from": 1471,
+   "to": 1526,
+   "seed": 22,
    "beat": "turn",
    "scene": "desk",
    "camera": "top_down",
@@ -225,9 +234,9 @@
    "prop": "envelopes"
   },
   {
-   "from": 1536,
-   "to": 1582,
-   "seed": 22,
+   "from": 1526,
+   "to": 1576,
+   "seed": 23,
    "beat": "turn",
    "scene": "desk",
    "camera": "orbit_low",
@@ -235,27 +244,36 @@
    "prop": "sandwich"
   },
   {
-   "from": 1582,
-   "to": 1673,
-   "seed": 23,
+   "from": 1576,
+   "to": 1646,
+   "seed": 24,
    "beat": "turn",
    "scene": "board",
    "camera": "push_in",
    "time": "night"
   },
   {
-   "from": 1673,
-   "to": 1728,
-   "seed": 24,
+   "from": 1646,
+   "to": 1684,
+   "seed": 25,
+   "beat": "aftermath",
+   "scene": "cell",
+   "camera": "push_in",
+   "time": "night"
+  },
+  {
+   "from": 1684,
+   "to": 1735,
+   "seed": 26,
    "beat": "aftermath",
    "scene": "cell",
    "camera": "track_right",
    "time": "night"
   },
   {
-   "from": 1728,
-   "to": 1778,
-   "seed": 25,
+   "from": 1735,
+   "to": 1784,
+   "seed": 27,
    "beat": "aftermath",
    "scene": "lineup",
    "camera": "orbit_low",
@@ -264,9 +282,9 @@
    "prison": true
   },
   {
-   "from": 1778,
-   "to": 1889,
-   "seed": 26,
+   "from": 1784,
+   "to": 1885,
+   "seed": 28,
    "beat": "closer",
    "scene": "desk",
    "camera": "push_in",
@@ -274,9 +292,9 @@
    "prop": "sandwich"
   },
   {
-   "from": 1889,
+   "from": 1885,
    "to": 1937,
-   "seed": 27,
+   "seed": 29,
    "beat": "closer",
    "scene": "vault_room",
    "camera": "pull_out",
@@ -323,7 +341,7 @@
   },
   {
    "from": 22,
-   "to": 41,
+   "to": 38,
    "words": [
     {
      "w": "BIGGEST",
@@ -336,186 +354,186 @@
    ]
   },
   {
-   "from": 41,
-   "to": 55,
+   "from": 38,
+   "to": 50,
    "words": [
     {
      "w": "HEISTS",
-     "from": 41
+     "from": 38
     },
     {
      "w": "IN",
-     "from": 53
+     "from": 48
     }
    ]
   },
   {
-   "from": 55,
-   "to": 67,
+   "from": 50,
+   "to": 60,
    "words": [
     {
      "w": "HISTORY",
-     "from": 55
+     "from": 50
     },
     {
      "w": "WAS",
-     "from": 62
+     "from": 58
     }
    ]
   },
   {
-   "from": 67,
-   "to": 84,
+   "from": 60,
+   "to": 74,
    "words": [
     {
      "w": "SOLVED",
-     "from": 67
+     "from": 60
     },
     {
      "w": "BY",
-     "from": 77
+     "from": 70
     },
     {
      "w": "A",
-     "from": 82
+     "from": 72
     }
    ]
   },
   {
-   "from": 84,
-   "to": 103,
+   "from": 74,
+   "to": 91,
    "words": [
     {
      "w": "SANDWICH",
-     "from": 84
+     "from": 74
     }
    ]
   },
   {
-   "from": 103,
-   "to": 130,
+   "from": 91,
+   "to": 122,
    "words": [
     {
      "w": "IN",
-     "from": 103
+     "from": 91
     },
     {
      "w": "2003",
-     "from": 108
+     "from": 96
     }
    ]
   },
   {
-   "from": 130,
-   "to": 149,
+   "from": 122,
+   "to": 144,
    "words": [
     {
      "w": "THIEVES",
-     "from": 130
+     "from": 122
     },
     {
      "w": "EMPTY",
-     "from": 139
+     "from": 132
     },
     {
      "w": "A",
-     "from": 146
+     "from": 142
     }
    ]
   },
   {
-   "from": 149,
-   "to": 158,
+   "from": 144,
+   "to": 156,
    "words": [
     {
      "w": "VAULT",
-     "from": 149
+     "from": 144
     },
     {
      "w": "IN",
+     "from": 154
+    }
+   ]
+  },
+  {
+   "from": 156,
+   "to": 170,
+   "words": [
+    {
+     "w": "ANTWERP",
      "from": 156
     }
    ]
   },
   {
-   "from": 158,
-   "to": 178,
-   "words": [
-    {
-     "w": "ANTWERP",
-     "from": 158
-    }
-   ]
-  },
-  {
-   "from": 178,
-   "to": 192,
+   "from": 170,
+   "to": 187,
    "words": [
     {
      "w": "BELGIUM",
-     "from": 178
+     "from": 170
     }
    ]
   },
   {
-   "from": 192,
-   "to": 214,
+   "from": 187,
+   "to": 209,
    "words": [
     {
      "w": "MORE",
-     "from": 192
+     "from": 187
     },
     {
      "w": "THAN",
-     "from": 197
+     "from": 192
     },
     {
      "w": "100",
-     "from": 202
+     "from": 194
     }
    ]
   },
   {
-   "from": 214,
-   "to": 233,
+   "from": 209,
+   "to": 226,
    "words": [
     {
      "w": "MILLION",
-     "from": 214
+     "from": 209
     },
     {
      "w": "DOLLARS",
-     "from": 223
+     "from": 217
     }
    ]
   },
   {
-   "from": 233,
-   "to": 254,
+   "from": 226,
+   "to": 247,
    "words": [
     {
      "w": "IN",
-     "from": 233
+     "from": 226
     },
     {
      "w": "DIAMONDS",
-     "from": 238
+     "from": 230
     }
    ]
   },
   {
-   "from": 254,
+   "from": 247,
    "to": 264,
    "words": [
     {
      "w": "GONE",
-     "from": 254
+     "from": 247
     }
    ]
   },
   {
    "from": 264,
-   "to": 283,
+   "to": 286,
    "words": [
     {
      "w": "NO",
@@ -528,454 +546,454 @@
    ]
   },
   {
-   "from": 283,
-   "to": 310,
+   "from": 286,
+   "to": 314,
    "words": [
     {
      "w": "NO",
-     "from": 283
+     "from": 286
     },
     {
      "w": "BROKEN",
-     "from": 288
+     "from": 290
     },
     {
      "w": "DOOR",
-     "from": 298
+     "from": 300
     }
    ]
   },
   {
-   "from": 310,
-   "to": 329,
+   "from": 314,
+   "to": 335,
    "words": [
     {
      "w": "NOBODY",
-     "from": 310
+     "from": 314
     },
     {
      "w": "HURT",
-     "from": 317
+     "from": 324
     }
    ]
   },
   {
-   "from": 329,
-   "to": 346,
+   "from": 335,
+   "to": 358,
    "words": [
     {
      "w": "THE",
-     "from": 329
+     "from": 335
     },
     {
      "w": "VAULT",
-     "from": 331
+     "from": 343
     },
     {
      "w": "HAS",
-     "from": 341
+     "from": 352
     }
    ]
   },
   {
-   "from": 346,
-   "to": 365,
+   "from": 358,
+   "to": 374,
    "words": [
     {
      "w": "10",
-     "from": 346
+     "from": 358
     },
     {
      "w": "LAYERS",
-     "from": 353
+     "from": 362
     },
     {
      "w": "OF",
-     "from": 362
+     "from": 369
     }
    ]
   },
   {
-   "from": 365,
-   "to": 384,
+   "from": 374,
+   "to": 391,
    "words": [
     {
      "w": "SECURITY",
-     "from": 365
+     "from": 374
     }
    ]
   },
   {
-   "from": 384,
-   "to": 398,
+   "from": 391,
+   "to": 407,
    "words": [
     {
      "w": "AND",
-     "from": 384
+     "from": 391
     },
     {
      "w": "EVERY",
-     "from": 389
-    },
-    {
-     "w": "ONE",
-     "from": 394
-    }
-   ]
-  },
-  {
-   "from": 398,
-   "to": 422,
-   "words": [
-    {
-     "w": "OF",
      "from": 398
     },
     {
+     "w": "ONE",
+     "from": 403
+    }
+   ]
+  },
+  {
+   "from": 407,
+   "to": 431,
+   "words": [
+    {
+     "w": "OF",
+     "from": 407
+    },
+    {
      "w": "THEM",
-     "from": 401
+     "from": 410
     },
     {
      "w": "FAILS",
-     "from": 406
+     "from": 415
     }
    ]
   },
   {
-   "from": 422,
-   "to": 439,
+   "from": 431,
+   "to": 448,
    "words": [
     {
      "w": "BUT",
-     "from": 422
+     "from": 431
     },
     {
      "w": "ONE",
-     "from": 427
+     "from": 436
     },
     {
      "w": "SMALL",
-     "from": 432
+     "from": 441
     }
    ]
   },
   {
-   "from": 439,
-   "to": 454,
+   "from": 448,
+   "to": 465,
    "words": [
     {
      "w": "MISTAKE",
-     "from": 439
+     "from": 448
     }
    ]
   },
   {
-   "from": 454,
-   "to": 466,
+   "from": 465,
+   "to": 479,
    "words": [
     {
      "w": "LEFT",
-     "from": 454
+     "from": 465
     },
     {
      "w": "AT",
-     "from": 461
+     "from": 472
     },
     {
      "w": "THE",
-     "from": 463
+     "from": 477
     }
    ]
   },
   {
-   "from": 466,
-   "to": 478,
+   "from": 479,
+   "to": 491,
    "words": [
     {
      "w": "SIDE",
-     "from": 466
+     "from": 479
     },
     {
      "w": "OF",
-     "from": 470
+     "from": 484
     },
     {
      "w": "A",
-     "from": 473
+     "from": 489
     }
    ]
   },
   {
-   "from": 478,
-   "to": 490,
+   "from": 491,
+   "to": 503,
    "words": [
     {
      "w": "ROAD",
-     "from": 478
+     "from": 491
     }
    ]
   },
   {
-   "from": 490,
-   "to": 506,
+   "from": 503,
+   "to": 523,
    "words": [
     {
      "w": "BRINGS",
-     "from": 490
+     "from": 503
     },
     {
      "w": "THE",
-     "from": 499
+     "from": 513
     },
     {
      "w": "WHOLE",
-     "from": 502
+     "from": 515
     }
    ]
   },
   {
-   "from": 506,
-   "to": 526,
+   "from": 523,
+   "to": 542,
    "words": [
     {
      "w": "CREW",
-     "from": 506
+     "from": 523
     },
     {
      "w": "DOWN",
-     "from": 516
+     "from": 532
     }
    ]
   },
   {
-   "from": 526,
-   "to": 533,
+   "from": 542,
+   "to": 549,
    "words": [
     {
      "w": "AND",
-     "from": 526
+     "from": 542
     },
     {
      "w": "THE",
-     "from": 530
+     "from": 547
     }
    ]
   },
   {
-   "from": 533,
-   "to": 550,
+   "from": 549,
+   "to": 568,
    "words": [
     {
      "w": "DIAMONDS",
-     "from": 533
+     "from": 549
     }
    ]
   },
   {
-   "from": 550,
-   "to": 559,
+   "from": 568,
+   "to": 578,
    "words": [
     {
      "w": "KEEP",
-     "from": 550
+     "from": 568
     },
     {
      "w": "THAT",
-     "from": 554
+     "from": 573
     }
    ]
   },
   {
-   "from": 559,
-   "to": 571,
+   "from": 578,
+   "to": 590,
    "words": [
     {
      "w": "QUESTION",
-     "from": 559
+     "from": 578
     },
     {
      "w": "IN",
-     "from": 566
+     "from": 587
     }
    ]
   },
   {
-   "from": 571,
-   "to": 586,
+   "from": 590,
+   "to": 604,
    "words": [
     {
      "w": "MIND",
-     "from": 571
+     "from": 590
     }
    ]
   },
   {
-   "from": 586,
-   "to": 595,
+   "from": 604,
+   "to": 614,
    "words": [
     {
      "w": "THIS",
-     "from": 586
+     "from": 604
     },
     {
      "w": "IS",
-     "from": 588
+     "from": 609
     },
     {
      "w": "THE",
-     "from": 593
+     "from": 611
     }
    ]
   },
   {
-   "from": 595,
-   "to": 610,
+   "from": 614,
+   "to": 631,
    "words": [
     {
      "w": "TRUE",
-     "from": 595
+     "from": 614
     },
     {
      "w": "STORY",
-     "from": 600
+     "from": 621
     },
     {
      "w": "OF",
-     "from": 607
+     "from": 628
     }
    ]
   },
   {
-   "from": 610,
-   "to": 630,
+   "from": 631,
+   "to": 649,
    "words": [
     {
      "w": "LEONARDO",
-     "from": 610
+     "from": 631
     }
    ]
   },
   {
-   "from": 630,
-   "to": 662,
-   "words": [
-    {
-     "w": "NOTARBARTOLO",
-     "from": 630
-    }
-   ]
-  },
-  {
-   "from": 662,
+   "from": 649,
    "to": 679,
    "words": [
     {
-     "w": "ANTWERP",
-     "from": 662
+     "w": "NOTARBARTOLO",
+     "from": 649
     }
    ]
   },
   {
    "from": 679,
-   "to": 691,
+   "to": 695,
    "words": [
     {
-     "w": "BELGIUM",
+     "w": "ANTWERP",
      "from": 679
     }
    ]
   },
   {
-   "from": 691,
-   "to": 701,
+   "from": 695,
+   "to": 712,
+   "words": [
+    {
+     "w": "BELGIUM",
+     "from": 695
+    }
+   ]
+  },
+  {
+   "from": 712,
+   "to": 724,
    "words": [
     {
      "w": "MOST",
-     "from": 691
+     "from": 712
     },
     {
      "w": "OF",
-     "from": 696
+     "from": 719
     },
     {
      "w": "THE",
-     "from": 698
+     "from": 721
     }
    ]
   },
   {
-   "from": 701,
-   "to": 718,
+   "from": 724,
+   "to": 738,
    "words": [
     {
      "w": "WORLD'S",
-     "from": 701
+     "from": 724
     },
     {
      "w": "ROUGH",
-     "from": 708
+     "from": 731
     }
    ]
   },
   {
-   "from": 718,
-   "to": 734,
+   "from": 738,
+   "to": 755,
    "words": [
     {
      "w": "DIAMONDS",
-     "from": 718
+     "from": 738
     },
     {
      "w": "PASS",
-     "from": 730
+     "from": 750
     }
    ]
   },
   {
-   "from": 734,
-   "to": 742,
+   "from": 755,
+   "to": 762,
    "words": [
     {
      "w": "THROUGH",
-     "from": 734
+     "from": 755
     },
     {
      "w": "THIS",
-     "from": 739
+     "from": 760
     }
    ]
   },
   {
-   "from": 742,
-   "to": 759,
+   "from": 762,
+   "to": 774,
    "words": [
     {
      "w": "CITY",
-     "from": 742
+     "from": 762
     }
    ]
   },
   {
-   "from": 759,
-   "to": 796,
+   "from": 774,
+   "to": 800,
    "words": [
     {
      "w": "NOTARBARTOLO",
-     "from": 759
+     "from": 774
     }
    ]
   },
   {
-   "from": 796,
+   "from": 800,
    "to": 815,
    "words": [
     {
      "w": "RENTS",
-     "from": 796
+     "from": 800
     },
     {
      "w": "AN",
-     "from": 803
+     "from": 805
     },
     {
      "w": "OFFICE",
@@ -985,7 +1003,7 @@
   },
   {
    "from": 815,
-   "to": 827,
+   "to": 824,
    "words": [
     {
      "w": "INSIDE",
@@ -993,997 +1011,997 @@
     },
     {
      "w": "THE",
-     "from": 824
+     "from": 822
     }
    ]
   },
   {
-   "from": 827,
-   "to": 853,
+   "from": 824,
+   "to": 846,
    "words": [
     {
      "w": "DIAMOND",
-     "from": 827
+     "from": 824
     },
     {
      "w": "CENTRE",
-     "from": 840
+     "from": 835
     }
    ]
   },
   {
-   "from": 853,
-   "to": 868,
+   "from": 846,
+   "to": 860,
    "words": [
     {
      "w": "HE",
-     "from": 853
+     "from": 846
     },
     {
      "w": "LOOKS",
-     "from": 858
+     "from": 851
     },
     {
      "w": "LIKE",
-     "from": 863
+     "from": 856
     }
    ]
   },
   {
-   "from": 868,
-   "to": 889,
+   "from": 860,
+   "to": 877,
    "words": [
     {
      "w": "ANY",
-     "from": 868
+     "from": 860
     },
     {
      "w": "OTHER",
-     "from": 875
+     "from": 865
     },
     {
      "w": "GEM",
-     "from": 880
+     "from": 868
     }
    ]
   },
   {
-   "from": 889,
-   "to": 904,
+   "from": 877,
+   "to": 892,
    "words": [
     {
      "w": "TRADER",
-     "from": 889
+     "from": 877
     }
    ]
   },
   {
-   "from": 904,
-   "to": 918,
+   "from": 892,
+   "to": 911,
    "words": [
     {
      "w": "HE",
-     "from": 904
+     "from": 892
     },
     {
      "w": "IS",
-     "from": 907
+     "from": 896
     },
     {
      "w": "NOT",
-     "from": 911
+     "from": 901
     }
    ]
   },
   {
-   "from": 918,
-   "to": 937,
+   "from": 911,
+   "to": 925,
    "words": [
     {
      "w": "FOR",
-     "from": 918
+     "from": 911
     },
     {
      "w": "YEARS",
-     "from": 923
+     "from": 916
     }
    ]
   },
   {
-   "from": 937,
-   "to": 954,
+   "from": 925,
+   "to": 942,
    "words": [
     {
      "w": "HE",
-     "from": 937
+     "from": 925
     },
     {
      "w": "STUDIES",
-     "from": 942
+     "from": 930
     },
     {
      "w": "THE",
-     "from": 952
+     "from": 940
+    }
+   ]
+  },
+  {
+   "from": 942,
+   "to": 954,
+   "words": [
+    {
+     "w": "VAULT",
+     "from": 942
     }
    ]
   },
   {
    "from": 954,
-   "to": 966,
-   "words": [
-    {
-     "w": "VAULT",
-     "from": 954
-    }
-   ]
-  },
-  {
-   "from": 966,
-   "to": 980,
+   "to": 968,
    "words": [
     {
      "w": "DEEP",
-     "from": 966
+     "from": 954
     },
     {
      "w": "UNDER",
-     "from": 973
+     "from": 961
     },
     {
      "w": "THE",
-     "from": 978
+     "from": 966
     }
    ]
   },
   {
-   "from": 980,
-   "to": 992,
+   "from": 968,
+   "to": 985,
    "words": [
     {
      "w": "BUILDING",
-     "from": 980
+     "from": 968
     }
    ]
   },
   {
-   "from": 992,
-   "to": 1024,
+   "from": 985,
+   "to": 1016,
    "words": [
     {
      "w": "FEBRUARY",
-     "from": 992
+     "from": 985
     },
     {
      "w": "15TH",
-     "from": 1007
+     "from": 1004
     }
    ]
   },
   {
-   "from": 1024,
-   "to": 1048,
+   "from": 1016,
+   "to": 1040,
    "words": [
     {
      "w": "SATURDAY",
-     "from": 1024
+     "from": 1016
     },
     {
      "w": "NIGHT",
-     "from": 1036
+     "from": 1028
     }
    ]
   },
   {
-   "from": 1048,
-   "to": 1064,
+   "from": 1040,
+   "to": 1055,
    "words": [
     {
      "w": "THE",
-     "from": 1048
+     "from": 1040
     },
     {
      "w": "BUILDING",
-     "from": 1050
+     "from": 1043
     },
     {
      "w": "IS",
-     "from": 1060
+     "from": 1052
     }
    ]
   },
   {
-   "from": 1064,
-   "to": 1081,
+   "from": 1055,
+   "to": 1067,
    "words": [
     {
      "w": "EMPTY",
-     "from": 1064
+     "from": 1055
     }
    ]
   },
   {
-   "from": 1081,
-   "to": 1100,
+   "from": 1067,
+   "to": 1086,
    "words": [
     {
      "w": "THE",
-     "from": 1081
+     "from": 1067
     },
     {
      "w": "CREW",
-     "from": 1084
+     "from": 1069
     },
     {
      "w": "SLIPS",
-     "from": 1091
+     "from": 1079
     }
    ]
   },
   {
-   "from": 1100,
-   "to": 1115,
+   "from": 1086,
+   "to": 1103,
    "words": [
     {
      "w": "INSIDE",
-     "from": 1100
+     "from": 1086
     }
    ]
   },
   {
-   "from": 1115,
-   "to": 1129,
+   "from": 1103,
+   "to": 1118,
    "words": [
     {
      "w": "THEY",
-     "from": 1115
+     "from": 1103
     },
     {
      "w": "BEAT",
-     "from": 1120
+     "from": 1108
     },
     {
      "w": "THE",
-     "from": 1127
+     "from": 1115
     }
    ]
   },
   {
-   "from": 1129,
-   "to": 1144,
+   "from": 1118,
+   "to": 1130,
    "words": [
     {
      "w": "SENSORS",
-     "from": 1129
+     "from": 1118
     }
    ]
   },
   {
-   "from": 1144,
-   "to": 1156,
+   "from": 1130,
+   "to": 1149,
    "words": [
     {
      "w": "THE",
-     "from": 1144
+     "from": 1130
     },
     {
      "w": "MAGNETS",
-     "from": 1146
+     "from": 1132
     },
     {
      "w": "AND",
+     "from": 1144
+    }
+   ]
+  },
+  {
+   "from": 1149,
+   "to": 1163,
+   "words": [
+    {
+     "w": "THE",
+     "from": 1149
+    },
+    {
+     "w": "LOCK",
      "from": 1151
     }
    ]
   },
   {
-   "from": 1156,
-   "to": 1170,
-   "words": [
-    {
-     "w": "THE",
-     "from": 1156
-    },
-    {
-     "w": "LOCK",
-     "from": 1160
-    }
-   ]
-  },
-  {
-   "from": 1170,
-   "to": 1184,
+   "from": 1163,
+   "to": 1175,
    "words": [
     {
      "w": "THEY",
-     "from": 1170
+     "from": 1163
     },
     {
      "w": "OPEN",
-     "from": 1175
+     "from": 1168
     },
     {
      "w": "THE",
-     "from": 1180
+     "from": 1173
     }
    ]
   },
   {
-   "from": 1184,
-   "to": 1204,
+   "from": 1175,
+   "to": 1197,
    "words": [
     {
      "w": "STEEL",
-     "from": 1184
+     "from": 1175
     },
     {
      "w": "DOOR",
-     "from": 1192
+     "from": 1185
     }
    ]
   },
   {
-   "from": 1204,
-   "to": 1220,
+   "from": 1197,
+   "to": 1211,
    "words": [
     {
      "w": "BY",
-     "from": 1204
+     "from": 1197
     },
     {
      "w": "MORNING",
-     "from": 1208
+     "from": 1202
     }
    ]
   },
   {
-   "from": 1220,
-   "to": 1242,
+   "from": 1211,
+   "to": 1233,
    "words": [
     {
      "w": "MORE",
-     "from": 1220
+     "from": 1211
     },
     {
      "w": "THAN",
-     "from": 1225
+     "from": 1216
     },
     {
      "w": "100",
-     "from": 1230
+     "from": 1226
     }
    ]
   },
   {
-   "from": 1242,
-   "to": 1273,
+   "from": 1233,
+   "to": 1262,
    "words": [
     {
      "w": "BOXES",
-     "from": 1242
+     "from": 1233
     },
     {
      "w": "ARE",
-     "from": 1254
+     "from": 1245
     },
     {
      "w": "EMPTY",
-     "from": 1259
+     "from": 1250
     }
    ]
   },
   {
-   "from": 1273,
-   "to": 1285,
+   "from": 1262,
+   "to": 1276,
    "words": [
     {
      "w": "IT",
-     "from": 1273
+     "from": 1262
     },
     {
      "w": "LOOKS",
-     "from": 1278
+     "from": 1267
     },
     {
      "w": "LIKE",
-     "from": 1283
+     "from": 1271
     }
    ]
   },
   {
-   "from": 1285,
-   "to": 1297,
+   "from": 1276,
+   "to": 1288,
    "words": [
     {
      "w": "THE",
-     "from": 1285
+     "from": 1276
     },
     {
      "w": "PERFECT",
-     "from": 1290
+     "from": 1279
     }
    ]
   },
   {
-   "from": 1297,
-   "to": 1314,
+   "from": 1288,
+   "to": 1300,
    "words": [
     {
      "w": "CRIME",
-     "from": 1297
+     "from": 1288
     }
    ]
   },
   {
-   "from": 1314,
-   "to": 1336,
+   "from": 1300,
+   "to": 1319,
    "words": [
     {
      "w": "UNTIL",
-     "from": 1314
+     "from": 1300
     },
     {
      "w": "THE",
-     "from": 1321
+     "from": 1307
     },
     {
      "w": "DRIVE",
-     "from": 1326
+     "from": 1312
     }
    ]
   },
   {
-   "from": 1336,
-   "to": 1345,
+   "from": 1319,
+   "to": 1331,
    "words": [
     {
      "w": "HOME",
-     "from": 1336
+     "from": 1319
     }
    ]
   },
   {
-   "from": 1345,
-   "to": 1355,
+   "from": 1331,
+   "to": 1341,
    "words": [
     {
      "w": "ONE",
-     "from": 1345
+     "from": 1331
     },
     {
      "w": "OF",
-     "from": 1350
+     "from": 1336
     },
     {
      "w": "THE",
-     "from": 1352
+     "from": 1339
     }
    ]
   },
   {
-   "from": 1355,
-   "to": 1374,
+   "from": 1341,
+   "to": 1360,
    "words": [
     {
      "w": "CREW",
-     "from": 1355
+     "from": 1341
     },
     {
      "w": "DUMPS",
-     "from": 1362
+     "from": 1348
     },
     {
      "w": "A",
-     "from": 1372
+     "from": 1358
     }
    ]
   },
   {
-   "from": 1374,
-   "to": 1393,
+   "from": 1360,
+   "to": 1377,
    "words": [
     {
      "w": "BAG",
-     "from": 1374
+     "from": 1360
     },
     {
      "w": "OF",
-     "from": 1381
+     "from": 1367
     },
     {
      "w": "TRASH",
+     "from": 1370
+    }
+   ]
+  },
+  {
+   "from": 1377,
+   "to": 1391,
+   "words": [
+    {
+     "w": "IN",
+     "from": 1377
+    },
+    {
+     "w": "THE",
+     "from": 1382
+    },
+    {
+     "w": "WOODS",
      "from": 1384
     }
    ]
   },
   {
-   "from": 1393,
-   "to": 1408,
-   "words": [
-    {
-     "w": "IN",
-     "from": 1393
-    },
-    {
-     "w": "THE",
-     "from": 1396
-    },
-    {
-     "w": "WOODS",
-     "from": 1398
-    }
-   ]
-  },
-  {
-   "from": 1408,
-   "to": 1429,
+   "from": 1391,
+   "to": 1413,
    "words": [
     {
      "w": "BY",
-     "from": 1408
+     "from": 1391
     },
     {
      "w": "THE",
-     "from": 1412
+     "from": 1394
     },
     {
      "w": "HIGHWAY",
-     "from": 1415
+     "from": 1396
     }
    ]
   },
   {
-   "from": 1429,
-   "to": 1446,
+   "from": 1413,
+   "to": 1432,
    "words": [
     {
      "w": "A",
-     "from": 1429
+     "from": 1413
     },
     {
      "w": "LOCAL",
-     "from": 1432
+     "from": 1418
     },
     {
      "w": "MAN",
-     "from": 1439
+     "from": 1425
     }
    ]
   },
   {
-   "from": 1446,
-   "to": 1465,
+   "from": 1432,
+   "to": 1447,
    "words": [
     {
      "w": "FINDS",
-     "from": 1446
+     "from": 1432
     },
     {
      "w": "IT",
-     "from": 1453
+     "from": 1437
     },
     {
      "w": "AND",
-     "from": 1460
+     "from": 1442
     }
    ]
   },
   {
-   "from": 1465,
-   "to": 1475,
+   "from": 1447,
+   "to": 1454,
    "words": [
     {
      "w": "CALLS",
-     "from": 1465
+     "from": 1447
     },
     {
      "w": "THE",
-     "from": 1470
+     "from": 1451
     }
    ]
   },
   {
-   "from": 1475,
-   "to": 1487,
+   "from": 1454,
+   "to": 1471,
    "words": [
     {
      "w": "POLICE",
-     "from": 1475
+     "from": 1454
     }
    ]
   },
   {
-   "from": 1487,
-   "to": 1496,
+   "from": 1471,
+   "to": 1485,
    "words": [
     {
      "w": "INSIDE",
-     "from": 1487
+     "from": 1471
     }
    ]
   },
   {
-   "from": 1496,
-   "to": 1512,
+   "from": 1485,
+   "to": 1502,
    "words": [
     {
      "w": "ENVELOPES",
-     "from": 1496
+     "from": 1485
     },
     {
      "w": "FROM",
-     "from": 1507
+     "from": 1499
     }
    ]
   },
   {
-   "from": 1512,
-   "to": 1525,
+   "from": 1502,
+   "to": 1515,
    "words": [
     {
      "w": "THE",
-     "from": 1512
+     "from": 1502
     },
     {
      "w": "DIAMOND",
-     "from": 1514
+     "from": 1504
     }
    ]
   },
   {
-   "from": 1525,
-   "to": 1536,
+   "from": 1515,
+   "to": 1526,
    "words": [
     {
      "w": "CENTRE",
-     "from": 1525
+     "from": 1515
     }
    ]
   },
   {
-   "from": 1536,
-   "to": 1555,
+   "from": 1526,
+   "to": 1547,
    "words": [
     {
      "w": "AND",
-     "from": 1536
+     "from": 1526
     },
     {
      "w": "A",
-     "from": 1538
+     "from": 1531
     },
     {
      "w": "HALF-EATEN",
-     "from": 1541
+     "from": 1533
     }
    ]
   },
   {
-   "from": 1555,
-   "to": 1582,
+   "from": 1547,
+   "to": 1576,
    "words": [
     {
      "w": "SALAMI",
-     "from": 1555
+     "from": 1547
     },
     {
      "w": "SANDWICH",
-     "from": 1570
+     "from": 1562
     }
    ]
   },
   {
-   "from": 1582,
-   "to": 1591,
+   "from": 1576,
+   "to": 1603,
    "words": [
     {
      "w": "THE",
-     "from": 1582
+     "from": 1576
     },
     {
      "w": "DNA",
-     "from": 1584
+     "from": 1581
     },
     {
      "w": "ON",
-     "from": 1586
+     "from": 1600
     }
    ]
   },
   {
-   "from": 1591,
-   "to": 1608,
+   "from": 1603,
+   "to": 1618,
    "words": [
     {
      "w": "IT",
-     "from": 1591
+     "from": 1603
     },
     {
      "w": "LEADS",
-     "from": 1596
+     "from": 1607
     },
     {
      "w": "TO",
-     "from": 1601
+     "from": 1612
     }
    ]
   },
   {
-   "from": 1608,
-   "to": 1644,
+   "from": 1618,
+   "to": 1646,
    "words": [
     {
      "w": "NOTARBARTOLO",
-     "from": 1608
+     "from": 1618
     }
    ]
   },
   {
-   "from": 1644,
-   "to": 1658,
+   "from": 1646,
+   "to": 1660,
    "words": [
     {
      "w": "DAYS",
-     "from": 1644
+     "from": 1646
     },
     {
      "w": "LATER",
-     "from": 1651
+     "from": 1653
     }
    ]
   },
   {
-   "from": 1658,
-   "to": 1673,
+   "from": 1660,
+   "to": 1684,
    "words": [
     {
      "w": "HE",
-     "from": 1658
+     "from": 1660
     },
     {
      "w": "IS",
-     "from": 1663
+     "from": 1665
     },
     {
      "w": "ARRESTED",
-     "from": 1665
+     "from": 1667
     }
    ]
   },
   {
-   "from": 1673,
-   "to": 1697,
+   "from": 1684,
+   "to": 1701,
    "words": [
     {
      "w": "HE",
-     "from": 1673
+     "from": 1684
     },
     {
      "w": "IS",
-     "from": 1675
+     "from": 1687
     },
     {
      "w": "SENTENCED",
-     "from": 1680
+     "from": 1689
     }
    ]
   },
   {
-   "from": 1697,
-   "to": 1711,
+   "from": 1701,
+   "to": 1715,
    "words": [
     {
      "w": "TO",
-     "from": 1697
+     "from": 1701
     },
     {
      "w": "10",
-     "from": 1699
+     "from": 1703
     },
     {
      "w": "YEARS",
-     "from": 1706
+     "from": 1711
     }
    ]
   },
   {
-   "from": 1711,
-   "to": 1728,
+   "from": 1715,
+   "to": 1735,
    "words": [
     {
      "w": "IN",
-     "from": 1711
+     "from": 1715
     },
     {
      "w": "PRISON",
-     "from": 1716
+     "from": 1720
     }
    ]
   },
   {
-   "from": 1728,
-   "to": 1740,
+   "from": 1735,
+   "to": 1747,
    "words": [
     {
      "w": "THREE",
-     "from": 1728
+     "from": 1735
     },
     {
      "w": "OF",
-     "from": 1733
+     "from": 1739
     },
     {
      "w": "HIS",
-     "from": 1738
+     "from": 1742
     }
    ]
   },
   {
-   "from": 1740,
-   "to": 1759,
+   "from": 1747,
+   "to": 1763,
    "words": [
     {
      "w": "CREW",
-     "from": 1740
-    },
-    {
-     "w": "GET",
      "from": 1747
     },
     {
+     "w": "GET",
+     "from": 1754
+    },
+    {
      "w": "5",
-     "from": 1755
+     "from": 1760
     }
    ]
   },
   {
-   "from": 1759,
-   "to": 1778,
+   "from": 1763,
+   "to": 1784,
    "words": [
     {
      "w": "YEARS",
-     "from": 1759
+     "from": 1763
     },
     {
      "w": "EACH",
-     "from": 1766
+     "from": 1771
     }
    ]
   },
   {
-   "from": 1778,
-   "to": 1786,
+   "from": 1784,
+   "to": 1793,
    "words": [
     {
      "w": "ONE",
-     "from": 1778
+     "from": 1784
     },
     {
      "w": "OF",
-     "from": 1781
+     "from": 1789
     },
     {
      "w": "THE",
-     "from": 1783
+     "from": 1791
     }
    ]
   },
   {
-   "from": 1786,
-   "to": 1807,
+   "from": 1793,
+   "to": 1810,
    "words": [
     {
      "w": "BIGGEST",
-     "from": 1786
+     "from": 1793
     },
     {
      "w": "DIAMOND",
-     "from": 1795
+     "from": 1801
     }
    ]
   },
   {
-   "from": 1807,
-   "to": 1824,
+   "from": 1810,
+   "to": 1822,
    "words": [
     {
      "w": "HEISTS",
-     "from": 1807
+     "from": 1810
     },
     {
      "w": "IN",
-     "from": 1819
+     "from": 1820
     }
    ]
   },
   {
-   "from": 1824,
-   "to": 1836,
+   "from": 1822,
+   "to": 1834,
    "words": [
     {
      "w": "HISTORY",
-     "from": 1824
+     "from": 1822
     }
    ]
   },
   {
-   "from": 1836,
-   "to": 1862,
+   "from": 1834,
+   "to": 1861,
    "words": [
     {
      "w": "UNDONE",
-     "from": 1836
+     "from": 1834
     },
     {
      "w": "BY",
-     "from": 1848
+     "from": 1846
     },
     {
      "w": "LUNCH",
-     "from": 1853
+     "from": 1851
     }
    ]
   },
   {
-   "from": 1862,
-   "to": 1870,
+   "from": 1861,
+   "to": 1868,
    "words": [
     {
      "w": "AND",
-     "from": 1862
+     "from": 1861
     },
     {
      "w": "THE",
-     "from": 1867
+     "from": 1865
     }
    ]
   },
   {
-   "from": 1870,
-   "to": 1889,
+   "from": 1868,
+   "to": 1885,
    "words": [
     {
      "w": "DIAMONDS",
-     "from": 1870
+     "from": 1868
     }
    ]
   },
   {
-   "from": 1889,
-   "to": 1903,
+   "from": 1885,
+   "to": 1901,
    "words": [
     {
      "w": "THEY",
-     "from": 1889
+     "from": 1885
     },
     {
      "w": "HAVE",
-     "from": 1894
+     "from": 1889
     },
     {
      "w": "NEVER",
-     "from": 1898
+     "from": 1894
     }
    ]
   },
   {
-   "from": 1903,
+   "from": 1901,
    "to": 1937,
    "words": [
     {
      "w": "BEEN",
-     "from": 1903
+     "from": 1901
     },
     {
      "w": "FOUND",
-     "from": 1908
+     "from": 1906
     }
    ]
   }
  ],
  "overlays": [
   {
-   "from": 202,
-   "to": 259,
+   "from": 194,
+   "to": 251,
    "kind": "badge",
    "value": 100,
    "prefix": "$",
@@ -1998,59 +2016,59 @@
    "red": "ALARM."
   },
   {
-   "from": 346,
-   "to": 403,
+   "from": 358,
+   "to": 415,
    "kind": "badge",
    "value": 10,
    "label": "LAYERS OF SECURITY"
   },
   {
-   "from": 439,
-   "to": 496,
+   "from": 448,
+   "to": 505,
    "kind": "kicker",
    "line1": "ONE SMALL",
    "line2": "MISTAKE",
    "red": "MISTAKE"
   },
   {
-   "from": 759,
-   "to": 825,
+   "from": 774,
+   "to": 840,
    "kind": "nametag",
    "name": "LEONARDO NOTARBARTOLO",
    "place": "ANTWERP, BELGIUM"
   },
   {
-   "from": 992,
-   "to": 1049,
+   "from": 985,
+   "to": 1042,
    "kind": "kicker",
    "line1": "SATURDAY",
    "line2": "NIGHT",
    "red": "NIGHT"
   },
   {
-   "from": 1230,
-   "to": 1287,
+   "from": 1226,
+   "to": 1283,
    "kind": "badge",
    "value": 100,
    "suffix": "+",
    "label": "BOXES EMPTIED"
   },
   {
-   "from": 1541,
-   "to": 1598,
+   "from": 1533,
+   "to": 1590,
    "kind": "kicker",
    "line1": "HALF-EATEN.",
    "red": "HALF-EATEN."
   },
   {
-   "from": 1699,
-   "to": 1756,
+   "from": 1703,
+   "to": 1760,
    "kind": "badge",
    "value": 10,
    "label": "YEARS IN PRISON"
   },
   {
-   "from": 1898,
+   "from": 1894,
    "to": 1937,
    "kind": "kicker",
    "line1": "NEVER",
