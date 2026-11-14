@@ -120,6 +120,11 @@ def main():
         "captions": build_captions(words, total),
         "overlays": build_overlays(script, words, total),
     }
+    # Overlays never run into the title card, which has its own text.
+    for title in (sh for sh in timeline["shots"] if sh["scene"] == "title"):
+        for ov in timeline["overlays"]:
+            if ov["from"] < title["from"] < ov["to"]:
+                ov["to"] = title["from"]
     (d / "timeline.json").write_text(json.dumps(timeline, indent=1))
     lens = sorted((s["to"] - s["from"]) / FPS for s in timeline["shots"])
     print(f"{len(timeline['shots'])} shots (median {lens[len(lens) // 2]:.1f} s, "
