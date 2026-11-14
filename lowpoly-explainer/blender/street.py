@@ -1,216 +1,43 @@
 """Low-poly street at blue hour, path traced with Blender Cycles.
 
-An experiment in how realistic the low-poly look can get: the geometry stays
-flat-shaded boxes, prisms and cones, but light is simulated (soft shadows,
+The geometry stays flat-shaded boxes, prisms and cones, but light is simulated (soft shadows,
 bounced light, reflections on a wet road, depth of field, motion blur).
 
-  python blender/street.py --out out/street/frames            # all frames
+  python blender/street.py --out out/street/frames --frames 90 --hold 60 --scale 75 --samples 24
   python blender/street.py --out test.png --frame 60 --scale 50 --samples 32
 
+`build()` is also used by fivekeys.py, which renders stills of this street from other angles.
 Needs the `bpy` package (pip install bpy). No GPU required.
 """
 import argparse
 import math
 import os
 import random
-import sys
 import time
 
-import bpy  # must come first: it makes bmesh and mathutils importable
-import bmesh
-from mathutils import Euler, Matrix, Vector, noise
+from lib import Geo, M, camera, figure, get_mat, light, principled, render, reset, sack, setup_render, srgb
 
-ap = argparse.ArgumentParser()
-ap.add_argument("--out", required=True, help="PNG path with --frame, else a folder for the frames")
-ap.add_argument("--frame", type=int, help="render one frame only")
-ap.add_argument("--start", type=int, default=1)
-ap.add_argument("--end", type=int)
-ap.add_argument("--frames", type=int, default=120, help="frames for the truck to pull up, at 30 fps")
-ap.add_argument("--hold", type=int, default=0, help="extra frames after it stops: the driver switches the headlights off")
-ap.add_argument("--scale", type=int, default=100, help="percent of 1080 x 1920")
-ap.add_argument("--samples", type=int, default=48, help="upper limit per pixel; easy pixels stop early")
-ap.add_argument("--threshold", type=float, default=0.03, help="noise level at which a pixel stops sampling")
-ap.add_argument("--seed", type=int, default=3)
-ap.add_argument("--dolly", action="store_true", help="move the camera in 3D (slower to render cleanly; see README)")
-args = ap.parse_args()
+import bpy
+from mathutils import Matrix, Vector, noise
 
-bpy.ops.wm.read_factory_settings(use_empty=True)  # before anything is created
 rng = random.Random(11)
-N = args.frames
 HALF = 4.65  # facade line, metres from the street centre
 ROAD = 2.75  # kerb line
 WATER = 0.034  # height of the standing water
+DAY = False  # set by build(): lamps and windows off
+
+DAY_SWAP = {"bulb": "bulb_off", "win_warm": "glass_dark", "win_amber": "glass_dark", "win_pale": "glass_dark",
+            "shade": "shade_day", "slit": "iron", "far_win": "far"}
 
 
-# ----------------------------------------------------------------- materials
-def srgb(h, a=1.0):
-    h = h.lstrip("#")
-    f = lambda c: c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
-    return tuple(f(int(h[i:i + 2], 16) / 255) for i in (0, 2, 4)) + (a,)
+def E(m):
+    """Material for something that glows at night."""
+    return DAY_SWAP.get(m, m) if DAY else m
 
 
-MAT = {}
-
-
-def M(name, color="#888888", rough=0.8, metal=0.0, emit=None, strength=0.0, coat=0.0, spec=0.5, vary=0.0):
-    """One Principled material. `vary` adds slow, large-scale value variation (weathering)."""
-    if name in MAT:
-        return name
-    m = bpy.data.materials.new(name)
-    m.use_nodes = True
-    nt = m.node_tree
-    p = next(n for n in nt.nodes if n.bl_idname == "ShaderNodeBsdfPrincipled")
-    col = srgb(color)
-    p.inputs["Base Color"].default_value = col
-    p.inputs["Roughness"].default_value = rough
-    p.inputs["Metallic"].default_value = metal
-    p.inputs["Specular IOR Level"].default_value = spec
-    p.inputs["Coat Weight"].default_value = coat
-    p.inputs["Coat Roughness"].default_value = 0.08
-    if emit:
-        p.inputs["Emission Color"].default_value = srgb(emit)
-        p.inputs["Emission Strength"].default_value = strength
-    if vary:
-        tc = nt.nodes.new("ShaderNodeTexCoord")
-        nz = nt.nodes.new("ShaderNodeTexNoise")
-        nz.inputs["Scale"].default_value = 0.22
-        nz.inputs["Detail"].default_value = 3.0
-        mix = nt.nodes.new("ShaderNodeMix")
-        mix.data_type = "RGBA"
-        mix.inputs[6].default_value = tuple(c * (1 - vary) for c in col[:3]) + (1,)
-        mix.inputs[7].default_value = tuple(min(1, c * (1 + vary)) for c in col[:3]) + (1,)
-        nt.links.new(tc.outputs["Object"], nz.inputs["Vector"])
-        nt.links.new(nz.outputs[0], mix.inputs[0])
-        nt.links.new(mix.outputs[2], p.inputs["Base Color"])
-    MAT[name] = m
-    return name
-
-
-# surfaces
-M("road", "#2a2c30", rough=0.45, spec=0.5)
-M("joint", "#101113", rough=0.7)
-M("sett_a", "#5b5a58", rough=0.42)
-M("sett_b", "#6a6560", rough=0.5)
-M("sett_c", "#4d5257", rough=0.36)
-M("puddle", "#0c0e12", rough=0.015, spec=1.0)
-M("slab_a", "#6f6c66", rough=0.6)
-M("slab_b", "#66635e", rough=0.55)
-M("slab_c", "#77746c", rough=0.62)
-M("kerb", "#807c76", rough=0.5)
-M("iron", "#16181b", rough=0.45, metal=0.6)
-M("galv", "#8e959b", rough=0.32, metal=0.9)
-M("chrome", "#d8dadc", rough=0.12, metal=1.0)
-M("stone", "#a39c8f", rough=0.75, vary=0.08)
-M("wood", "#6a4a30", rough=0.7, vary=0.12)
-M("wood_dark", "#3b2a1e", rough=0.7)
-M("crate", "#9b7a4e", rough=0.75, vary=0.1)
-M("glass_dark", "#05080c", rough=0.03, spec=1.0)
-M("rubber", "#0d0d0e", rough=0.75)
-M("steel_door", "#4b5257", rough=0.4, metal=0.7)
-M("door_green", "#1f3a2c", rough=0.45, coat=0.2)
-M("door_red", "#5a1f1c", rough=0.45, coat=0.2)
-M("frame_cream", "#cfc6ad", rough=0.6)
-M("frame_green", "#22382e", rough=0.55)
-M("canvas_green", "#284534", rough=0.9)
-M("canvas_red", "#6d2a26", rough=0.9)
-M("hydrant", "#9c2a22", rough=0.45, coat=0.3)
-M("lamp_shade", "#1d3329", rough=0.4, coat=0.3)
-# brick and painted walls
-for nm, c in [("brick_red", "#7c3d30"), ("brick_brown", "#6a4636"), ("brick_dark", "#55302a"),
-              ("brick_tan", "#96785a"), ("paint_sage", "#73806c"), ("paint_cream", "#a89c82"),
-              ("brick_grey", "#5f5e62"), ("far", "#2c3040")]:
-    M(nm, c, rough=0.85, vary=0.16)
-# lights you can see
-M("bulb", "#000000", emit="#ffc98a", strength=60)
-M("headlamp", "#000000", emit="#fff0cc", strength=70)
-M("tail", "#300606", emit="#ff2a1a", strength=5)
-M("tail_off", "#5a0c0c", rough=0.15, coat=0.6)
-M("win_warm", "#201408", emit="#ffb561", strength=5.5)
-M("win_amber", "#201006", emit="#ff9a3d", strength=4.0)
-M("win_pale", "#1c1a14", emit="#ffe2b0", strength=4.5)
-M("shade", "#2a2418", emit="#e9c78e", strength=1.6)
-M("slit", "#000000", emit="#ffb561", strength=9)
-M("far_win", "#000000", emit="#ffbf73", strength=3.0)
-# vehicles and people
-M("truck_green", "#2a6b3c", rough=0.35, coat=0.5)
-M("truck_wood", "#7a5a38", rough=0.7, vary=0.1)
-M("sedan", "#3a1216", rough=0.25, coat=0.9)
-M("hub", "#c9c2ad", rough=0.3, metal=0.4)
-M("coat_navy", "#3d4d7c", rough=0.85)
-M("cap", "#2a3454", rough=0.6)
-M("collar", "#0f1118", rough=0.8)
-M("mask_a", "#d9c25a", rough=0.5)
-M("mask_b", "#b9614a", rough=0.5)
-M("mask_c", "#8fae7c", rough=0.5)
-M("black", "#050506", rough=0.6)
-
-
-# ------------------------------------------------------------------ geometry
-class Geo:
-    """Collects primitives into one mesh per material, so the scene stays a handful of objects."""
-
-    def __init__(self, name):
-        self.name, self.bms, self.T = name, {}, Matrix.Identity(4)
-
-    def bm(self, m):
-        if m not in self.bms:
-            self.bms[m] = bmesh.new()
-        return self.bms[m]
-
-    def _mx(self, loc, rot, scale):
-        return self.T @ Matrix.LocRotScale(Vector(loc), Euler(rot), Vector(scale) if scale else None)
-
-    def box(self, m, size, loc, rot=(0, 0, 0)):
-        bmesh.ops.create_cube(self.bm(m), size=1.0, matrix=self._mx(loc, rot, size))
-
-    def cyl(self, m, r1, r2, h, seg, loc, rot=(0, 0, 0), scale=None):
-        bmesh.ops.create_cone(self.bm(m), cap_ends=True, cap_tris=False, segments=seg,
-                              radius1=r1, radius2=r2, depth=h, matrix=self._mx(loc, rot, scale))
-
-    def ico(self, m, r, sub, loc, scale=None, rot=(0, 0, 0)):
-        bmesh.ops.create_icosphere(self.bm(m), subdivisions=sub, radius=r, matrix=self._mx(loc, rot, scale))
-
-    def prism(self, m, pts, width, loc=(0, 0, 0), rot=(0, 0, 0)):
-        """Extrude a profile drawn in the local XZ plane across `width` along Y."""
-        bm, mx = self.bm(m), self._mx(loc, rot, None)
-        a = [bm.verts.new(mx @ Vector((x, -width / 2, z))) for x, z in pts]
-        b = [bm.verts.new(mx @ Vector((x, width / 2, z))) for x, z in pts]
-        bm.faces.new(a)
-        bm.faces.new(b[::-1])
-        for i in range(len(pts)):
-            j = (i + 1) % len(pts)
-            bm.faces.new([a[j], a[i], b[i], b[j]])
-
-    def finish(self, parent=None):
-        objs = {}
-        for m, bm in self.bms.items():
-            bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
-            me = bpy.data.meshes.new(f"{self.name}.{m}")
-            bm.to_mesh(me)
-            bm.free()
-            ob = bpy.data.objects.new(f"{self.name}.{m}", me)
-            ob.data.materials.append(MAT[m])
-            bpy.context.scene.collection.objects.link(ob)
-            ob.parent = parent
-            objs[m] = ob
-        return objs
-
-
-def light(kind, loc, energy, color="#ffd2a0", radius=0.1, rot=None, spot=None, size=None):
-    d = bpy.data.lights.new(kind.lower(), kind)
-    d.energy, d.color = energy, srgb(color)[:3]
-    if kind == "AREA":
-        d.size = size or 1.0
-    else:
-        d.shadow_soft_size = radius
-    if spot:
-        d.spot_size, d.spot_blend = math.radians(spot), 0.6
-    ob = bpy.data.objects.new(kind.lower(), d)
-    ob.location = loc
-    if rot:
-        ob.rotation_euler = rot
-    bpy.context.scene.collection.objects.link(ob)
-    return ob
+def L(*a, **k):
+    """A lamp's light: nothing by day."""
+    return None if DAY else light(*a, **k)
 
 
 # ----------------------------------------------------------------- buildings
@@ -238,10 +65,10 @@ def window(g, x, z, w, h, frame, lit):
     g.box(frame, (w, 0.07, 0.07), (x, 0.12, z + h - 0.035))
     g.box(frame, (w - 0.14, 0.05, 0.05), (x, 0.12, z + h * 0.5))  # sash meeting rail
     if lit:
-        g.box(lit, (w - 0.14, 0.02, h - 0.14), (x, 0.17, z + h / 2))
+        g.box(E(lit), (w - 0.14, 0.02, h - 0.14), (x, 0.17, z + h / 2))
         k = rng.choice([0.0, 0.3, 0.45, 0.6, 1.0])  # how far the blind is pulled down
         if k:
-            g.box("shade", (w - 0.14, 0.015, (h - 0.14) * k), (x, 0.15, z + h - 0.07 - (h - 0.14) * k / 2))
+            g.box(E("shade"), (w - 0.14, 0.015, (h - 0.14) * k), (x, 0.15, z + h - 0.07 - (h - 0.14) * k / 2))
     else:
         g.box("glass_dark", (w - 0.14, 0.02, h - 0.14), (x, 0.16, z + h / 2))
 
@@ -400,9 +227,9 @@ def shop_interior(g, a, b, gh):
     for lx in (a + (b - a) * 0.3, a + (b - a) * 0.7):
         g.cyl("iron", 0.012, 0.012, 0.7, 4, (lx, 1.9, gh - 0.7))
         g.cyl("lamp_shade", 0.3, 0.06, 0.16, 8, (lx, 1.9, gh - 1.1))
-        g.ico("bulb", 0.07, 1, (lx, 1.9, gh - 1.2))
+        g.ico(E("bulb"), 0.07, 1, (lx, 1.9, gh - 1.2))
         p = g.T @ Vector((lx, 1.9, gh - 1.32))
-        light("POINT", p, 85, "#ffc98a", 0.07)
+        L("POINT", p, 85, "#ffc98a", 0.07)
 
 
 def g_garage(g, it, frame):
@@ -410,13 +237,13 @@ def g_garage(g, it, frame):
     g.box("steel_door", (w, 0.06, 3.3 - gap), (x, 0.22, gap + (3.3 - gap) / 2))
     for i in range(11):
         g.box("steel_door", (w, 0.035, 0.05), (x, 0.185, gap + 0.14 + i * 0.27))
-    g.box("slit", (w - 0.1, 0.04, gap), (x, 0.6, gap / 2))  # light under the door
+    g.box(E("slit"), (w - 0.1, 0.04, gap), (x, 0.6, gap / 2))  # light under the door
     g.box("iron", (w + 0.7, 0.16, 0.34), (x, -0.03, 3.3 + 0.17))  # steel lintel
     for sx in (-1, 1):
         g.cyl("iron", 0.11, 0.11, 0.95, 8, (x + sx * (w / 2 + 0.25), -0.35, 0.62))
         g.ico("iron", 0.11, 1, (x + sx * (w / 2 + 0.25), -0.35, 1.1))
     p = g.T @ Vector((x, -0.3, 0.12))
-    light("AREA", p, 28, "#ffb561", size=w * 0.8, rot=(math.radians(100), 0, g.T.to_euler().z))
+    L("AREA", p, 28, "#ffb561", size=w * 0.8, rot=(math.radians(100), 0, g.T.to_euler().z))
 
 
 def g_door(g, it, frame):
@@ -425,21 +252,21 @@ def g_door(g, it, frame):
     g.box("frame_green", (w + 0.16, 0.12, 0.1), (x, 0.08, 2.4))
     for sx in (-1, 1):
         g.box("frame_green", (0.1, 0.12, 2.35), (x + sx * (w / 2 + 0.03), 0.08, 1.17))
-    g.box("win_pale", (0.3, 0.02, 0.4), (x, 0.165, 1.65))  # small wired-glass pane
+    g.box(E("win_pale"), (0.3, 0.02, 0.4), (x, 0.165, 1.65))  # small wired-glass pane
     g.cyl("chrome", 0.03, 0.03, 0.07, 6, (x + w / 2 - 0.2, 0.14, 1.05), rot=(math.pi / 2, 0, 0))
     g.box("stone", (w + 0.5, 0.5, 0.16), (x, -0.25, 0.08))  # step
     # gooseneck lamp over the door
     g.cyl("iron", 0.02, 0.02, 0.55, 6, (x, -0.26, 3.12), rot=(math.pi / 2, 0, 0))
     g.cyl("iron", 0.02, 0.02, 0.22, 6, (x, -0.52, 3.02))
     g.cyl("lamp_shade", 0.24, 0.05, 0.14, 8, (x, -0.52, 2.86))
-    g.ico("bulb", 0.055, 1, (x, -0.52, 2.78))
-    light("POINT", g.T @ Vector((x, -0.52, 2.68)), 70, "#ffc27a", 0.05)
+    g.ico(E("bulb"), 0.055, 1, (x, -0.52, 2.78))
+    L("POINT", g.T @ Vector((x, -0.52, 2.68)), 70, "#ffc27a", 0.05)
 
 
 def g_win(g, it, frame):
     x, w = it["x"], it["w"]
     g.box("stone", (w + 0.2, 0.22, 0.09), (x, -0.03, 1.455))
-    g.box("win_amber" if it.get("lit") else "glass_dark", (w, 0.02, 1.4), (x, 0.2, 2.2))
+    g.box(E("win_amber") if it.get("lit") else "glass_dark", (w, 0.02, 1.4), (x, 0.2, 2.2))
     for i in range(int(w / 0.16)):
         g.cyl("iron", 0.014, 0.014, 1.4, 5, (x - w / 2 + 0.08 + i * 0.16, 0.08, 2.2))
     for dz in (1.75, 2.65):
@@ -450,7 +277,7 @@ def g_stoop(g, it, frame):
     x, w = it["x"], it["w"]
     col = it.get("door", "door_red")
     g.box(col, (w - 0.1, 0.06, 2.0), (x, 0.2, 1.9))
-    g.box("win_warm" if it.get("lit") else "glass_dark", (w - 0.16, 0.02, 0.26), (x, 0.2, 3.04))  # transom
+    g.box(E("win_warm") if it.get("lit") else "glass_dark", (w - 0.16, 0.02, 0.26), (x, 0.2, 3.04))  # transom
     g.box(frame, (w + 0.2, 0.14, 0.12), (x, 0.06, 3.24))
     for sx in (-1, 1):
         g.box(frame, (0.12, 0.14, 2.3), (x + sx * (w / 2 + 0.04), 0.06, 2.05))
@@ -561,25 +388,8 @@ def street_lamp(g, x, y, side, power=260):
     hx = x + side * 1.0
     g.cyl("iron", 0.03, 0.03, 0.2, 6, (hx, y, 5.08))
     g.cyl("lamp_shade", 0.36, 0.07, 0.17, 8, (hx, y, 4.9))
-    g.ico("bulb", 0.085, 1, (hx, y, 4.8))
-    light("POINT", (hx, y, 4.68), power, "#ffc98a", 0.085)
-
-
-def figure(g, loc, facing, mask, lean=0.0):
-    g.T = Matrix.Translation(Vector(loc)) @ Matrix.Rotation(facing, 4, "Z") @ Matrix.Rotation(lean, 4, "X")
-    g.cyl("coat_navy", 0.36, 0.2, 1.22, 6, (0, 0, 0.66))
-    g.cyl("collar", 0.2, 0.26, 0.1, 6, (0, 0, 1.3))
-    for sx in (-1, 1):  # arms hang inside the coat line, hands in dark gloves
-        g.box("coat_navy", (0.12, 0.13, 0.62), (sx * 0.27, 0.0, 0.97), rot=(0, sx * math.radians(-9), 0))
-        g.box("black", (0.11, 0.12, 0.12), (sx * 0.325, 0.0, 0.62))
-        g.box("black", (0.13, 0.3, 0.09), (sx * 0.12, -0.06, 0.045))  # shoes
-    g.ico(mask, 0.24, 1, (0, 0, 1.57))
-    for sx in (-0.09, 0.09):
-        g.box("black", (0.075, 0.06, 0.045), (sx, -0.2, 1.62))
-    g.box("black", (0.12, 0.06, 0.026), (0, -0.19, 1.48))
-    g.cyl("cap", 0.25, 0.28, 0.11, 8, (0, 0, 1.78))
-    g.box("cap", (0.3, 0.2, 0.025), (0, -0.27, 1.73))
-    g.T = Matrix.Identity(4)
+    g.ico(E("bulb"), 0.085, 1, (hx, y, 4.8))
+    L("POINT", (hx, y, 4.68), power, "#ffc98a", 0.085)
 
 
 def props(g):
@@ -623,15 +433,15 @@ def backdrop(g):
         w, h = rng.uniform(8, 16), rng.uniform(14, 42)
         g.box("far", (w, 10, h), (x, y, h / 2))
         for _ in range(int(h * w / 22)):
-            g.box("far_win", (0.7, 0.05, 1.0), (x + rng.uniform(-w / 2 + 0.6, w / 2 - 0.6), y - 5.05, rng.uniform(3, h - 1.5)))
+            g.box(E("far_win"), (0.7, 0.05, 1.0), (x + rng.uniform(-w / 2 + 0.6, w / 2 - 0.6), y - 5.05, rng.uniform(3, h - 1.5)))
     sx, sy = -9.5, 118.0  # steeple
     g.box("far", (7, 7, 26), (sx, sy, 13))
     g.box("far", (5.2, 5.2, 7), (sx, sy, 29.5))
     g.cyl("far", 2.6, 2.3, 5, 8, (sx, sy, 35.5))
     g.cyl("far", 2.5, 0.05, 15, 8, (sx, sy, 45.5))
-    g.box("far_win", (0.9, 0.05, 2.2), (sx, sy - 2.62, 29.5))
+    g.box(E("far_win"), (0.9, 0.05, 2.2), (sx, sy - 2.62, 29.5))
     M("cloud", "#3c4670", rough=1.0)
-    cm = MAT["cloud"].node_tree
+    cm = get_mat("cloud").node_tree
     p = next(n for n in cm.nodes if n.bl_idname == "ShaderNodeBsdfPrincipled")
     geo, sep, ramp = cm.nodes.new("ShaderNodeNewGeometry"), cm.nodes.new("ShaderNodeSeparateXYZ"), cm.nodes.new("ShaderNodeValToRGB")
     mr = cm.nodes.new("ShaderNodeMapRange")
@@ -671,7 +481,7 @@ def wheel(parent, loc, r=0.42, w=0.25, dual=False):
 SPOTS = []
 
 
-def truck():
+def truck(lights=True, sacks=0):
     """1949-style stake truck. Built facing +X, then turned to drive towards the camera."""
     root = bpy.data.objects.new("truck", None)
     bpy.context.scene.collection.objects.link(root)
@@ -690,11 +500,11 @@ def truck():
         g.box(P, (0.5, 0.46, 0.07), (2.47, sy * 0.78, 0.86), rot=(0, math.radians(38), 0))
         g.box(P, (0.55, 0.46, 0.07), (1.42, sy * 0.78, 0.84), rot=(0, math.radians(-40), 0))
         g.cyl(P, 0.14, 0.11, 0.22, 10, (2.52, sy * 0.72, 1.12), rot=(0, math.pi / 2, 0))  # headlamp shell
-        g.cyl("headlamp", 0.105, 0.105, 0.02, 10, (2.64, sy * 0.72, 1.12), rot=(0, math.pi / 2, 0))
+        g.cyl("headlamp" if lights else "headlamp_off", 0.105, 0.105, 0.02, 10, (2.64, sy * 0.72, 1.12), rot=(0, math.pi / 2, 0))
         g.cyl("chrome", 0.125, 0.125, 0.02, 10, (2.63, sy * 0.72, 1.12), rot=(0, math.pi / 2, 0))
         g.box("black", (1.25, 0.24, 0.05), (0.6, sy * 0.98, 0.5))  # running board
         g.box("glass_dark", (0.5, 0.02, 0.36), (0.72, sy * 0.935, 1.74))  # side window
-        g.box("tail", (0.03, 0.1, 0.1), (-2.87, sy * 0.8, 0.86))
+        g.box("tail" if lights else "tail_off", (0.03, 0.1, 0.1), (-2.87, sy * 0.8, 0.86))
     g.box(P, (1.3, 1.86, 0.78), (0.5, 0, 1.14))  # cab, lower
     g.prism(P, [(-0.1, 1.52), (-0.1, 2.08), (0.86, 2.08), (1.1, 1.52)], 1.84)  # cab, upper
     g.box(P, (1.06, 1.9, 0.06), (0.36, 0, 2.1))  # roof lip
@@ -712,38 +522,40 @@ def truck():
     for z in (1.28, 1.56, 1.84):
         g.box("truck_wood", (0.03, 1.98, 0.15), (-2.86, 0, z))
         g.box("truck_wood", (0.03, 1.98, 0.15), (0.42, 0, z))
+    for i in range(sacks):  # money bags on the bed
+        sack(g, (-2.45 + (i // 2) * 0.72, 0.42 if i % 2 else -0.42, 1.04), 0.95, rot=i * 1.3)
     g.finish(root)
     wheels = [wheel(root, (1.95, sy * 0.86, 0.42)) for sy in (-1, 1)] + [wheel(root, (-1.75, sy * 0.78, 0.42), dual=True) for sy in (-1, 1)]
-    for sy in (-0.72, 0.72):  # headlamps that actually light the road
+    for sy in ((-0.72, 0.72) if lights else ()):  # headlamps that actually light the road
         sp = light("SPOT", (2.7, sy, 1.12), 700, "#fff0cc", 0.06, rot=(0, math.radians(-82), 0), spot=70)
         sp.parent = root
         SPOTS.append(sp)
     return root, wheels
 
 
-def sedan(g, loc, facing):
+def sedan(g, loc, facing, m="sedan", tail="tail_off"):
     """A parked 1940s fastback: one profile for the body, one for the cabin."""
     g.T = Matrix.Translation(Vector(loc)) @ Matrix.Rotation(facing, 4, "Z")
-    g.prism("sedan", [(-2.35, 0.42), (-2.4, 0.8), (-2.15, 0.98), (-0.9, 1.04), (0.75, 1.04), (1.6, 0.98), (2.3, 0.86), (2.4, 0.66), (2.35, 0.42)], 1.72)
-    g.prism("sedan", [(-1.95, 1.0), (-1.2, 1.44), (-0.5, 1.56), (0.2, 1.56), (0.78, 1.02)], 1.5)
+    g.prism(m, [(-2.35, 0.42), (-2.4, 0.8), (-2.15, 0.98), (-0.9, 1.04), (0.75, 1.04), (1.6, 0.98), (2.3, 0.86), (2.4, 0.66), (2.35, 0.42)], 1.72)
+    g.prism(m, [(-1.95, 1.0), (-1.2, 1.44), (-0.5, 1.56), (0.2, 1.56), (0.78, 1.02)], 1.5)
     g.prism("glass_dark", [(-1.2, 1.1), (-1.0, 1.4), (-0.48, 1.49), (0.16, 1.49), (0.52, 1.1)], 1.52)
     g.box("glass_dark", (0.03, 1.2, 0.42), (0.52, 0, 1.3), rot=(0, math.radians(-47), 0))
     g.box("glass_dark", (0.03, 1.0, 0.3), (-1.48, 0, 1.3), rot=(0, math.radians(60), 0))
     for sx in (-1.5, 1.45):
         for sy in (-1, 1):
-            g.box("sedan", (1.0, 0.2, 0.3), (sx, sy * 0.84, 0.82))
+            g.box(m, (1.0, 0.2, 0.3), (sx, sy * 0.84, 0.82))
             g.cyl("rubber", 0.36, 0.36, 0.2, 12, (sx, sy * 0.8, 0.36), rot=(math.pi / 2, 0, 0))
             g.cyl("chrome", 0.17, 0.15, 0.22, 10, (sx, sy * 0.8, 0.36), rot=(math.pi / 2, 0, 0))
     g.box("chrome", (0.1, 1.8, 0.13), (-2.46, 0, 0.5))
     g.box("chrome", (0.1, 1.8, 0.13), (2.46, 0, 0.5))
     for sy in (-0.62, 0.62):
-        g.box("tail_off", (0.03, 0.12, 0.08), (-2.41, sy, 0.84))
+        g.box(tail, (0.03, 0.12, 0.08), (-2.41, sy, 0.84))
     g.box("chrome", (0.02, 0.36, 0.2), (-2.42, 0, 0.72))  # blank plate
     g.T = Matrix.Identity(4)
 
 
 # --------------------------------------------------------------------- world
-def world():
+def world_dusk():
     w = bpy.data.worlds.new("dusk")
     w.use_nodes = True
     nt = w.node_tree
@@ -782,163 +594,159 @@ def world():
     return w
 
 
-def compositor(sc):
-    """Depth haze from the mist pass, then bloom on the bright lamps."""
-    g = bpy.data.node_groups.new("grade", "CompositorNodeTree")
-    sc.compositing_node_group = g
-    g.interface.new_socket(name="Image", in_out="OUTPUT", socket_type="NodeSocketColor")
-    rl, out = g.nodes.new("CompositorNodeRLayers"), g.nodes.new("NodeGroupOutput")
-    haze, glare = g.nodes.new("ShaderNodeMix"), g.nodes.new("CompositorNodeGlare")
-    amt = g.nodes.new("ShaderNodeMath")
-    amt.operation = "MULTIPLY"
-    amt.inputs[1].default_value = 0.5
-    haze.data_type = "RGBA"
-    haze.inputs[7].default_value = srgb("#59608f")[:3] + (1,)
-    g.links.new(rl.outputs["Mist"], amt.inputs[0])
-    g.links.new(amt.outputs[0], haze.inputs[0])
-    g.links.new(rl.outputs["Image"], haze.inputs[6])
-    glare.inputs["Type"].default_value = "Bloom"
-    glare.inputs["Threshold"].default_value = 1.6
-    glare.inputs["Strength"].default_value = 0.5
-    glare.inputs["Size"].default_value = 0.45
-    glare.inputs["Saturation"].default_value = 1.0
-    g.links.new(haze.outputs[2], glare.inputs["Image"])
-    g.links.new(glare.outputs["Image"], out.inputs[0])
+def world_day():
+    """Flat winter daylight."""
+    w = bpy.data.worlds.new("day")
+    w.use_nodes = True
+    nt = w.node_tree
+    bg = next(n for n in nt.nodes if n.bl_idname == "ShaderNodeBackground")
+    tc, sep, r = nt.nodes.new("ShaderNodeTexCoord"), nt.nodes.new("ShaderNodeSeparateXYZ"), nt.nodes.new("ShaderNodeValToRGB")
+    r.color_ramp.elements[0].color, r.color_ramp.elements[1].color = srgb("#d3dbe0"), srgb("#7f9cc0")
+    r.color_ramp.elements[1].position = 0.6
+    nt.links.new(tc.outputs["Generated"], sep.inputs[0])
+    nt.links.new(sep.outputs["Z"], r.inputs[0])
+    nt.links.new(r.outputs["Color"], bg.inputs["Color"])
+    bg.inputs["Strength"].default_value = 1.0
+    w.mist_settings.start, w.mist_settings.depth, w.mist_settings.falloff = 12.0, 150.0, "QUADRATIC"
+    return w
 
 
 # --------------------------------------------------------------------- build
-t0 = time.time()
-sc = bpy.context.scene
-sc.world = world()
-
-st = Geo("street")
-ground(st)
-props(st)
-backdrop(st)
-for x, y, side in [(-3.05, 14.5, 1), (3.05, 27.0, -1), (-3.05, 41.0, 1), (3.05, 55.0, -1), (-3.05, 68.0, 1), (3.05, -4.0, -1)]:
-    street_lamp(st, x, y, side)
-sedan(st, (1.78, 27.5, 0.0), math.pi / 2)
-# the crew by the depot door, turned towards the arriving truck (local -Y is "forward")
-for loc, face, mask in [((-3.9, 12.0, 0.18), 2.7, "mask_a"), ((-3.3, 13.4, 0.18), 3.0, "mask_b"), ((-4.0, 15.4, 0.18), -2.6, "mask_c")]:
-    figure(st, loc, face, mask)
-
-B = Geo("buildings")
-depot = [{"kind": "win", "x": 3.0, "w": 1.3, "lit": True}, {"kind": "win", "x": 6.2, "w": 1.3}, {"kind": "door", "x": 9.6, "w": 1.15},
-         {"kind": "garage", "x": 15.4, "w": 4.4}]
-# left side of the street (side -1): local x runs away from the camera
-building(B, (-HALF, -30, 0), -1, 34, 4, "brick_brown", plain=True)
-building(B, (-HALF, 4, 0), -1, 20, 4, "brick_red", depot, frame="frame_green", lit_p=0.22, gh=4.0, escape=(11.5, 15.0))
-building(B, (-HALF, 24, 0), -1, 14, 5, "paint_cream", [{"kind": "stoop", "x": 3.0, "w": 1.2, "lit": True}, {"kind": "shop", "x": 8.6, "w": 3.2, "awning": "canvas_red"},
-                                                         {"kind": "shopdoor", "x": 11.6, "w": 1.1}], lit_p=0.4)
-building(B, (-HALF, 38, 0), -1, 16, 4, "brick_dark", [{"kind": "stoop", "x": 3.5, "w": 1.2}, {"kind": "stoop", "x": 11.5, "w": 1.2, "lit": True}], lit_p=0.4, escape=(5.5, 9.3))
-building(B, (-HALF, 54, 0), -1, 16, 6, "brick_grey", [{"kind": "shop", "x": 5.0, "w": 3.4}, {"kind": "stoop", "x": 11.5, "w": 1.2}], lit_p=0.45)
-# right side (side +1): local x runs towards the camera
-building(B, (HALF, 4, 0), 1, 34, 5, "brick_tan", plain=True)
-building(B, (HALF, 20, 0), 1, 16, 4, "brick_brown", [{"kind": "stoop", "x": 3.2, "w": 1.2, "lit": True, "door": "door_green"}, {"kind": "stoop", "x": 11.6, "w": 1.2}],
-         lit_p=0.38, escape=(5.4, 9.2))
-building(B, (HALF, 36, 0), 1, 16, 5, "paint_sage", [{"kind": "shopdoor", "x": 3.3, "w": 1.1, "lit": True}, {"kind": "shop", "x": 6.3, "w": 3.6, "lit": True, "awning": "canvas_green"},
-                                                    {"kind": "stoop", "x": 12.4, "w": 1.2}], lit_p=0.42)
-building(B, (HALF, 52, 0), 1, 16, 4, "brick_red", [{"kind": "stoop", "x": 4.0, "w": 1.2, "lit": True}, {"kind": "shop", "x": 10.6, "w": 3.2, "awning": "canvas_red"}], lit_p=0.4, escape=(2.5, 6.3))
-building(B, (HALF, 70, 0), 1, 18, 5, "brick_tan", [{"kind": "stoop", "x": 5.0, "w": 1.2}, {"kind": "shop", "x": 12.0, "w": 3.2}], lit_p=0.45)
-# across the far end of the street
-building(B, (-20, 79, 0), 0, 40, 5, "brick_brown", [{"kind": "shop", "x": 8.0 + i * 6.2, "w": 3.4, "awning": "canvas_green" if i % 2 else None} for i in range(5)], lit_p=0.5, depth=10)
-objs = {**st.finish(), **B.finish()}
-objs["bulb"].visible_shadow = False  # the bulbs sit around their own point lights
-
-trk, wheels = truck()
-
-# ----------------------------------------------------------------- animation
-cam_d = bpy.data.cameras.new("cam")
-cam = bpy.data.objects.new("cam", cam_d)
-sc.collection.objects.link(cam)
-sc.camera = cam
-cam_d.lens, cam_d.sensor_width = 28.0, 36.0
-cam_d.shift_y = 0.15  # keeps verticals straight while putting the horizon low
-cam_d.dof.use_dof = True
-cam_d.dof.aperture_fstop = 1.4
-cam_d.dof.aperture_blades = 7
-A, Bp, look = Vector((2.55, 0.6, 1.5)), Vector((1.95, 3.5, 1.55)), Vector((-1.8, 15.0, 1.5))
+CLIP_CREW = [((-3.9, 12.0, 0.18), 2.7, "mask_a"), ((-3.3, 13.4, 0.18), 3.0, "mask_b"), ((-4.0, 15.4, 0.18), -2.6, "mask_c")]
+LAMPS = [(-3.05, 14.5, 1), (3.05, 27.0, -1), (-3.05, 41.0, 1), (3.05, 55.0, -1), (-3.05, 68.0, 1), (3.05, -4.0, -1)]
+PARKED = [((1.78, 27.5, 0.0), math.pi / 2, "sedan", "tail_off")]
+D_TRUCK, Y_END, X_TRUCK = 13.5, 18.4, -1.5  # how far the truck rolls, and where it stops
+CAM_A, CAM_B, CAM_LOOK = Vector((2.55, 0.6, 1.5)), Vector((1.95, 3.5, 1.55)), Vector((-1.8, 15.0, 1.5))
 FOCUS = Vector((-3.3, 13.5, 1.2))  # the men at the door
-D_TRUCK, Y_END, X_TRUCK = 13.5, 18.4, -1.5
-for f in range(0, N + args.hold + 2):
-    t = (f - 1) / (N - 1)
-    p = A.lerp(Bp, t if args.dolly else 0.6)  # locked off unless --dolly
-    d = look - p
-    cam.location = p
-    cam.rotation_euler = (math.pi / 2, 0.0, math.atan2(-d.x, d.y))  # level: the lens shift does the tilting
-    cam.keyframe_insert("location", frame=f)
-    cam.keyframe_insert("rotation_euler", frame=f)
-    s = D_TRUCK * (1 - (1 - min(max(t, 0), 1)) ** 2)  # ease out: the truck is pulling up
-    trk.location = (X_TRUCK, Y_END + D_TRUCK - s, 0.0)
-    trk.keyframe_insert("location", frame=f)
-    for wobj in wheels:
-        wobj.rotation_euler = (0, s / 0.42, 0)
-        wobj.keyframe_insert("rotation_euler", frame=f)
-    cam_d.dof.focus_distance = (FOCUS - p).length
-    cam_d.dof.keyframe_insert("focus_distance", frame=f)
 
-# Headlights: on while the truck pulls up, then off a little after it stops, with a short fade
-# the way an old filament dims.
-lamp_node = next(n for n in MAT["headlamp"].node_tree.nodes if n.bl_idname == "ShaderNodeBsdfPrincipled").inputs["Emission Strength"]
-for f, k in [(N + 22, 1.0), (N + 26, 0.0)]:
-    lamp_node.default_value = 70 * k
-    lamp_node.keyframe_insert("default_value", frame=f)
-    for sp in SPOTS:
-        sp.data.energy = 700 * k
-        sp.data.keyframe_insert("energy", frame=f)
 
-# -------------------------------------------------------------------- render
-sc.frame_start, sc.frame_end = 1, N + args.hold
-sc.render.fps = 30
-sc.render.engine = "CYCLES"
-c = sc.cycles
-c.device = "CPU"
-c.samples = args.samples
-c.use_adaptive_sampling, c.adaptive_threshold, c.adaptive_min_samples = True, args.threshold, 8
-c.use_denoising, c.denoiser = True, "OPENIMAGEDENOISE"
-c.denoising_input_passes, c.denoising_prefilter = "RGB_ALBEDO_NORMAL", "FAST"
-c.max_bounces, c.diffuse_bounces, c.glossy_bounces, c.transmission_bounces = 5, 2, 3, 1
-c.sample_clamp_indirect, c.blur_glossy = 6.0, 0.6
-c.caustics_reflective = c.caustics_refractive = False
-c.seed, c.use_animated_seed = args.seed, False
-sc.render.use_motion_blur, sc.render.motion_blur_shutter = True, 0.5
-sc.render.use_persistent_data = True
-sc.render.resolution_x, sc.render.resolution_y, sc.render.resolution_percentage = 1080, 1920, args.scale
-sc.view_layers[0].use_pass_mist = True
-sc.view_settings.view_transform = "AgX"
-for lk in ("AgX - Medium High Contrast", "Medium High Contrast", "AgX - Base Contrast"):
-    try:
-        sc.view_settings.look = lk
-        break
-    except TypeError:
-        pass
-sc.view_settings.exposure = 1.1
-compositor(sc)
-sc.render.compositor_device = "CPU"  # the default needs a GPU
-sc.render.compositor_precision = "FULL"
-try:
-    sc.render.image_settings.media_type = "IMAGE"
-except Exception:
-    pass
-sc.render.image_settings.file_format = "PNG"
-sc.render.image_settings.color_mode = "RGB"
-tris = sum(len(o.data.polygons) for o in bpy.data.objects if o.type == "MESH")
-print(f"built scene in {time.time() - t0:.1f} s: {tris} faces, {len(bpy.data.lights)} lights, look {sc.view_settings.look}", flush=True)
+def build(sc, crew=CLIP_CREW, people=(), truck_at=None, truck_lights=True, truck_sacks=0, sedans=PARKED,
+          extra_lamps=(), day=False, extras=()):
+    """Build the street. The random stream is reseeded, so every build gives the same street.
+    people: keyword dicts for lib.figure. extras: functions that add props to the Geo.
+    Returns (truck, wheels), or (None, []) when truck_at is None."""
+    global DAY
+    DAY = day
+    rng.seed(11)
+    SPOTS.clear()
+    sc.world = world_day() if day else world_dusk()
+    st = Geo("street")
+    ground(st)
+    props(st)
+    backdrop(st)
+    for x, y, side in list(LAMPS) + list(extra_lamps):
+        street_lamp(st, x, y, side)
+    for loc, facing, m, tail in sedans:
+        sedan(st, loc, facing, m, tail)
+    for loc, face, mask in crew:  # by the depot door, turned towards the truck (local -Y is "forward")
+        figure(st, loc, face, mask)
+    for kw in people:
+        figure(st, **kw)
+    for fn in extras:
+        fn(st)
 
-if args.frame is not None:
-    sc.frame_set(args.frame)
-    sc.render.filepath = args.out
+    B = Geo("buildings")
+    depot = [{"kind": "win", "x": 3.0, "w": 1.3, "lit": True}, {"kind": "win", "x": 6.2, "w": 1.3}, {"kind": "door", "x": 9.6, "w": 1.15},
+             {"kind": "garage", "x": 15.4, "w": 4.4}]
+    # left side of the street (side -1): local x runs away from the camera
+    building(B, (-HALF, -30, 0), -1, 34, 4, "brick_brown", plain=True)
+    building(B, (-HALF, 4, 0), -1, 20, 4, "brick_red", depot, frame="frame_green", lit_p=0.22, gh=4.0, escape=(11.5, 15.0))
+    building(B, (-HALF, 24, 0), -1, 14, 5, "paint_cream", [{"kind": "stoop", "x": 3.0, "w": 1.2, "lit": True}, {"kind": "shop", "x": 8.6, "w": 3.2, "awning": "canvas_red"},
+                                                             {"kind": "shopdoor", "x": 11.6, "w": 1.1}], lit_p=0.4)
+    building(B, (-HALF, 38, 0), -1, 16, 4, "brick_dark", [{"kind": "stoop", "x": 3.5, "w": 1.2}, {"kind": "stoop", "x": 11.5, "w": 1.2, "lit": True}], lit_p=0.4, escape=(5.5, 9.3))
+    building(B, (-HALF, 54, 0), -1, 16, 6, "brick_grey", [{"kind": "shop", "x": 5.0, "w": 3.4}, {"kind": "stoop", "x": 11.5, "w": 1.2}], lit_p=0.45)
+    # right side (side +1): local x runs towards the camera
+    building(B, (HALF, 4, 0), 1, 34, 5, "brick_tan", plain=True)
+    building(B, (HALF, 20, 0), 1, 16, 4, "brick_brown", [{"kind": "stoop", "x": 3.2, "w": 1.2, "lit": True, "door": "door_green"}, {"kind": "stoop", "x": 11.6, "w": 1.2}],
+             lit_p=0.38, escape=(5.4, 9.2))
+    building(B, (HALF, 36, 0), 1, 16, 5, "paint_sage", [{"kind": "shopdoor", "x": 3.3, "w": 1.1, "lit": True}, {"kind": "shop", "x": 6.3, "w": 3.6, "lit": True, "awning": "canvas_green"},
+                                                        {"kind": "stoop", "x": 12.4, "w": 1.2}], lit_p=0.42)
+    building(B, (HALF, 52, 0), 1, 16, 4, "brick_red", [{"kind": "stoop", "x": 4.0, "w": 1.2, "lit": True}, {"kind": "shop", "x": 10.6, "w": 3.2, "awning": "canvas_red"}], lit_p=0.4, escape=(2.5, 6.3))
+    building(B, (HALF, 70, 0), 1, 18, 5, "brick_tan", [{"kind": "stoop", "x": 5.0, "w": 1.2}, {"kind": "shop", "x": 12.0, "w": 3.2}], lit_p=0.45)
+    # across the far end of the street
+    building(B, (-20, 79, 0), 0, 40, 5, "brick_brown", [{"kind": "shop", "x": 8.0 + i * 6.2, "w": 3.4, "awning": "canvas_green" if i % 2 else None} for i in range(5)], lit_p=0.5, depth=10)
+    st.finish()
+    B.finish()
+    if day:
+        light("SUN", (0, 0, 40), 2.6, "#ffe6c4", radius=0.03, rot=(math.radians(62), 0, math.radians(-150)))
+    if truck_at is None:
+        return None, []
+    trk, wheels = truck(lights=truck_lights, sacks=truck_sacks)
+    trk.location = (X_TRUCK, truck_at, 0.0)
+    return trk, wheels
+
+
+def clip_camera(sc):
+    """The locked-off camera of the truck clip."""
+    return camera(sc, CAM_A.lerp(CAM_B, 0.6), CAM_LOOK, lens=28.0, shift_y=0.15, fstop=1.4, focus=FOCUS)
+
+
+def animate(sc, trk, wheels, N, hold, dolly):
+    """The truck pulls up over N frames, then the driver switches the headlights off."""
+    cam = clip_camera(sc)
+    for f in range(0, N + hold + 2):
+        t = (f - 1) / (N - 1)
+        p = CAM_A.lerp(CAM_B, t if dolly else 0.6)  # locked off unless --dolly
+        d = CAM_LOOK - p
+        cam.location = p
+        cam.rotation_euler = (math.pi / 2, 0.0, math.atan2(-d.x, d.y))  # level: the lens shift does the tilting
+        cam.keyframe_insert("location", frame=f)
+        cam.keyframe_insert("rotation_euler", frame=f)
+        s = D_TRUCK * (1 - (1 - min(max(t, 0), 1)) ** 2)  # ease out
+        trk.location = (X_TRUCK, Y_END + D_TRUCK - s, 0.0)
+        trk.keyframe_insert("location", frame=f)
+        for wobj in wheels:
+            wobj.rotation_euler = (0, s / 0.42, 0)
+            wobj.keyframe_insert("rotation_euler", frame=f)
+        cam.data.dof.focus_distance = (FOCUS - p).length
+        cam.data.dof.keyframe_insert("focus_distance", frame=f)
+    # Headlights off a little after it stops, with a short fade the way an old filament dims.
+    lamp_node = principled(get_mat("headlamp")).inputs["Emission Strength"]
+    for f, k in [(N + 22, 1.0), (N + 26, 0.0)]:
+        lamp_node.default_value = 70 * k
+        lamp_node.keyframe_insert("default_value", frame=f)
+        for sp in SPOTS:
+            sp.data.energy = 700 * k
+            sp.data.keyframe_insert("energy", frame=f)
+    sc.frame_start, sc.frame_end = 1, N + hold
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--out", required=True, help="PNG path with --frame, else a folder for the frames")
+    ap.add_argument("--frame", type=int, help="render one frame only")
+    ap.add_argument("--start", type=int, default=1)
+    ap.add_argument("--end", type=int)
+    ap.add_argument("--frames", type=int, default=120, help="frames for the truck to pull up, at 30 fps")
+    ap.add_argument("--hold", type=int, default=0, help="extra frames after it stops: the driver switches the headlights off")
+    ap.add_argument("--scale", type=int, default=100, help="percent of 1080 x 1920")
+    ap.add_argument("--samples", type=int, default=48, help="upper limit per pixel; easy pixels stop early")
+    ap.add_argument("--threshold", type=float, default=0.03, help="noise level at which a pixel stops sampling")
+    ap.add_argument("--seed", type=int, default=3)
+    ap.add_argument("--dolly", action="store_true", help="move the camera in 3D (slower to render cleanly; see README)")
+    args = ap.parse_args()
+
     t0 = time.time()
-    bpy.ops.render.render(write_still=True)
-    print(f"frame {args.frame}: {time.time() - t0:.1f} s", flush=True)
-else:
+    sc = reset()
+    trk, wheels = build(sc, truck_at=Y_END + D_TRUCK)
+    animate(sc, trk, wheels, args.frames, args.hold, args.dolly)
+    setup_render(sc, args.scale, args.samples, args.threshold, args.seed, motion_blur=True)
+    last = args.frames + args.hold
+    print(f"built scene in {time.time() - t0:.1f} s", flush=True)
+    if args.frame is not None:
+        t0 = time.time()
+        render(sc, args.out, args.frame)
+        print(f"frame {args.frame}: {time.time() - t0:.1f} s", flush=True)
+        return
     os.makedirs(args.out, exist_ok=True)
-    for f in range(args.start, (args.end or N + args.hold) + 1):
+    for f in range(args.start, (args.end or last) + 1):
         path = os.path.join(args.out, f"{f:04d}.png")
         if os.path.exists(path):
             continue  # lets an interrupted render resume
-        sc.frame_set(f)
-        sc.render.filepath = path
         t0 = time.time()
-        bpy.ops.render.render(write_still=True)
-        print(f"frame {f}/{N + args.hold}: {time.time() - t0:.1f} s", flush=True)
+        render(sc, path, f)
+        print(f"frame {f}/{last}: {time.time() - t0:.1f} s", flush=True)
+
+
+if __name__ == "__main__":
+    main()
