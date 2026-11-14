@@ -131,6 +131,43 @@ To add a scene, write a component in `src/three/scenes/`, add it to `SCENES` wit
 and distance, and use its key in `script.json`. Shared pieces (boxes, lamps, signs, the character)
 are in `src/three/parts.tsx`.
 
+## Path-traced look test (Blender)
+
+`blender/street.py` is an experiment in how realistic the low-poly look can get. The geometry is
+still flat-shaded boxes, prisms and cones, but the light is simulated with Blender's Cycles path
+tracer instead of the real-time renderer the videos use.
+
+```bash
+pip install bpy pillow                                   # Blender as a Python module; no GPU needed
+python blender/street.py --out still.png --frame 82 --frames 90 --scale 100 --samples 96 --threshold 0.012
+python blender/street.py --out out/street/frames --frames 90 --scale 75 --samples 24
+python blender/assemble.py out/street/frames out/street/street.mp4
+```
+
+Outputs: `out/street/street-still.png` and `out/street/street.mp4` (3 seconds, no audio, no text).
+
+What the path tracer adds over the Remotion scenes:
+
+| Effect | Remotion + three.js scenes | This test |
+| --- | --- | --- |
+| Shadows | None | Soft, from every lamp |
+| Bounced light | None (flat ambient) | Simulated: warm lamp light spills onto walls and road |
+| Reflections | None | Wet setts and standing water mirror lamps, windows and headlights |
+| Glow around lamps | Painted-on halo sprite | Bloom computed from the real brightness |
+| Depth of field | None | Real lens blur at f/1.4, focused on the men at the door |
+| Haze with distance | Linear fog | Depth haze from the render's mist pass |
+| Render time per frame | about 0.3 s | about 40 s at 810 x 1440 on 4 CPU cores |
+
+Two choices keep the render time sane on a machine with no GPU:
+
+- **The camera is locked off in 3D** and the slow push-in is added afterwards as a zoom. With a
+  fixed noise seed, every pixel the truck does not affect is then identical from frame to frame,
+  so 24 samples per pixel is enough and nothing shimmers. `--dolly` moves the camera for real,
+  but needs roughly three times the samples to look as clean.
+- **Frames render at 75% size** and are upscaled to 1080 x 1920 when assembled.
+
+The script targets Blender 5.3 (`bpy` 5.3.0). Its compositor is set to CPU because the default needs a GPU.
+
 ## Differences from the spec
 
 - **Bloom and vignette** are done without a post-processing pass: lamps carry an additive halo and the vignette is a CSS gradient. Same look, much faster to render.

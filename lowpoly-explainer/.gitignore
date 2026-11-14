@@ -8,3 +8,5 @@ public/*/voice_raw.wav
 public/*/heard.json
 __pycache__/
 out/*/check-*.jpg
+out/street/frames/
+out/street/render.log
