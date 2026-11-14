@@ -8,7 +8,7 @@ export const Badge = ({overlay}: {overlay: Overlay}) => {
   const frame = useCurrentFrame();
   const target = overlay.value ?? 0;
   const p = interpolate(frame - overlay.from, [0, 20], [0, 1], {...clamp, easing: Easing.out(Easing.cubic)});
-  const value = Math.round(target * p);
+  const shown = overlay.decimals ? (target * p).toFixed(overlay.decimals) : Math.round(target * p).toLocaleString('en-US');
   const opacity = Math.min(
     interpolate(frame - overlay.from, [0, 4], [0, 1], clamp),
     interpolate(frame, [overlay.to - 6, overlay.to], [1, 0], clamp),
@@ -31,7 +31,7 @@ export const Badge = ({overlay}: {overlay: Overlay}) => {
           }}
         >
           {overlay.prefix ?? ''}
-          {value.toLocaleString('en-US')}
+          {shown}
           {overlay.suffix ?? ''}
         </span>
       </div>

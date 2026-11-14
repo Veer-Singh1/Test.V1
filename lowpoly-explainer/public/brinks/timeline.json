@@ -1,0 +1,11876 @@
+{
+ "fps": 30,
+ "durationInFrames": 11572,
+ "audio": "brinks/voice.wav",
+ "title": {
+  "line1": "THE CRIME OF",
+  "line2_red": "THE CENTURY"
+ },
+ "shots": [
+  {
+   "from": 0,
+   "to": 156,
+   "seed": 0,
+   "beat": "hook",
+   "scene": "street",
+   "camera": "track_right",
+   "time": "night",
+   "truck": "getaway",
+   "crew": 3,
+   "masks": true,
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 156,
+   "to": 281,
+   "seed": 1,
+   "beat": "hook",
+   "scene": "door_lock",
+   "camera": "push_in",
+   "time": "night",
+   "open": true,
+   "key": true,
+   "crew": 2,
+   "masks": true
+  },
+  {
+   "from": 281,
+   "to": 322,
+   "seed": 2,
+   "beat": "hook",
+   "scene": "door_lock",
+   "camera": "orbit_low",
+   "time": "night",
+   "key": true,
+   "label": "2"
+  },
+  {
+   "from": 322,
+   "to": 365,
+   "seed": 3,
+   "beat": "hook",
+   "scene": "counting_room",
+   "camera": "orbit_low",
+   "time": "night",
+   "robbers": 3,
+   "masks": true,
+   "workers": 4
+  },
+  {
+   "from": 365,
+   "to": 423,
+   "seed": 4,
+   "beat": "hook",
+   "scene": "street",
+   "camera": "track_left",
+   "time": "night",
+   "truck": "getaway",
+   "drive": "out",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 423,
+   "to": 469,
+   "seed": 5,
+   "beat": "hook",
+   "scene": "cash",
+   "camera": "orbit_low",
+   "time": "night",
+   "sacks": true
+  },
+  {
+   "from": 469,
+   "to": 531,
+   "seed": 6,
+   "beat": "hook",
+   "scene": "board",
+   "camera": "push_in",
+   "time": "night"
+  },
+  {
+   "from": 531,
+   "to": 646,
+   "seed": 7,
+   "beat": "hook",
+   "scene": "desk",
+   "camera": "top_down",
+   "time": "night",
+   "prop": "calendar",
+   "text": "17",
+   "sub": "JANUARY 1956"
+  },
+  {
+   "from": 646,
+   "to": 699,
+   "seed": 8,
+   "beat": "hook",
+   "scene": "interrogation",
+   "camera": "track_right",
+   "time": "night"
+  },
+  {
+   "from": 699,
+   "to": 781,
+   "seed": 9,
+   "beat": "hook",
+   "scene": "neighborhood",
+   "camera": "track_left",
+   "time": "night",
+   "car": true,
+   "figure": "okeefe"
+  },
+  {
+   "from": 781,
+   "to": 824,
+   "seed": 10,
+   "beat": "hook",
+   "scene": "counting_room",
+   "camera": "pull_out",
+   "time": "night",
+   "empty": true,
+   "workers": 0
+  },
+  {
+   "from": 824,
+   "to": 884,
+   "seed": 11,
+   "beat": "title",
+   "scene": "title",
+   "camera": "push_in",
+   "time": "night",
+   "drift": "cash"
+  },
+  {
+   "from": 884,
+   "to": 922,
+   "seed": 12,
+   "beat": "setup",
+   "scene": "skyline",
+   "camera": "push_in",
+   "time": "dusk"
+  },
+  {
+   "from": 922,
+   "to": 1011,
+   "seed": 13,
+   "beat": "setup",
+   "scene": "street",
+   "camera": "push_in",
+   "time": "day",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 1011,
+   "to": 1116,
+   "seed": 14,
+   "beat": "setup",
+   "scene": "street",
+   "camera": "track_right",
+   "time": "day",
+   "truck": "armored",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 1116,
+   "to": 1214,
+   "seed": 15,
+   "beat": "setup",
+   "scene": "street",
+   "camera": "push_in",
+   "time": "day",
+   "truck": "armored",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false,
+   "variant": 1
+  },
+  {
+   "from": 1214,
+   "to": 1351,
+   "seed": 16,
+   "beat": "setup",
+   "scene": "street",
+   "camera": "orbit_low",
+   "time": "dusk",
+   "truck": "armored",
+   "drive": "in",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 1351,
+   "to": 1461,
+   "seed": 17,
+   "beat": "setup",
+   "scene": "counting_room",
+   "camera": "push_in",
+   "time": "dusk",
+   "workers": 4
+  },
+  {
+   "from": 1461,
+   "to": 1622,
+   "seed": 18,
+   "beat": "setup",
+   "scene": "office",
+   "camera": "push_in",
+   "time": "dusk",
+   "gems": false
+  },
+  {
+   "from": 1622,
+   "to": 1658,
+   "seed": 19,
+   "beat": "setup",
+   "scene": "desk",
+   "camera": "top_down",
+   "time": "dusk",
+   "prop": "blueprint",
+   "label": "BRINK'S",
+   "sub": "PRINCE STREET"
+  },
+  {
+   "from": 1658,
+   "to": 1690,
+   "seed": 20,
+   "beat": "setup",
+   "scene": "street",
+   "camera": "track_left",
+   "time": "dusk",
+   "truck": "armored",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 1690,
+   "to": 1784,
+   "seed": 21,
+   "beat": "setup",
+   "scene": "office",
+   "camera": "pull_out",
+   "time": "dusk",
+   "gems": false
+  },
+  {
+   "from": 1784,
+   "to": 1870,
+   "seed": 22,
+   "beat": "setup",
+   "scene": "lineup",
+   "camera": "push_in",
+   "time": "day",
+   "count": 1,
+   "coat": "pino"
+  },
+  {
+   "from": 1870,
+   "to": 1918,
+   "seed": 23,
+   "beat": "setup",
+   "scene": "lineup",
+   "camera": "track_right",
+   "time": "day",
+   "cast": "crew",
+   "zoom": 1.35
+  },
+  {
+   "from": 1918,
+   "to": 1966,
+   "seed": 24,
+   "beat": "setup",
+   "scene": "lineup",
+   "camera": "orbit_low",
+   "time": "day",
+   "count": 1,
+   "coat": "#5d6b78",
+   "hat": "brim"
+  },
+  {
+   "from": 1966,
+   "to": 2057,
+   "seed": 25,
+   "beat": "setup",
+   "scene": "lineup",
+   "camera": "pull_out",
+   "time": "day",
+   "cast": "crew",
+   "zoom": 1.35
+  },
+  {
+   "from": 2057,
+   "to": 2186,
+   "seed": 26,
+   "beat": "setup",
+   "scene": "lineup",
+   "camera": "push_in",
+   "time": "day",
+   "count": 1,
+   "coat": "okeefe"
+  },
+  {
+   "from": 2186,
+   "to": 2227,
+   "seed": 27,
+   "beat": "stage",
+   "scene": "street",
+   "camera": "push_in",
+   "time": "night",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 2227,
+   "to": 2357,
+   "seed": 28,
+   "beat": "stage",
+   "scene": "street",
+   "camera": "track_left",
+   "time": "dusk",
+   "crew": 2,
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 2357,
+   "to": 2402,
+   "seed": 29,
+   "beat": "stage",
+   "scene": "street",
+   "camera": "push_in",
+   "time": "dusk",
+   "truck": "armored",
+   "drive": "in",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 2402,
+   "to": 2478,
+   "seed": 30,
+   "beat": "stage",
+   "scene": "counting_room",
+   "camera": "orbit_low",
+   "time": "night",
+   "workers": 0
+  },
+  {
+   "from": 2478,
+   "to": 2545,
+   "seed": 31,
+   "beat": "stage",
+   "scene": "skyline",
+   "camera": "track_left",
+   "time": "night"
+  },
+  {
+   "from": 2545,
+   "to": 2646,
+   "seed": 32,
+   "beat": "stage",
+   "scene": "stairs",
+   "camera": "push_in",
+   "time": "night",
+   "crew": 2
+  },
+  {
+   "from": 2646,
+   "to": 2692,
+   "seed": 33,
+   "beat": "stage",
+   "scene": "counting_room",
+   "camera": "track_right",
+   "time": "night",
+   "workers": 0,
+   "robbers": 1
+  },
+  {
+   "from": 2692,
+   "to": 2840,
+   "seed": 34,
+   "beat": "stage",
+   "scene": "stairs",
+   "camera": "orbit_low",
+   "time": "night",
+   "crew": 1
+  },
+  {
+   "from": 2840,
+   "to": 2909,
+   "seed": 35,
+   "beat": "stage",
+   "scene": "door_lock",
+   "camera": "track_right",
+   "time": "night",
+   "label": "1"
+  },
+  {
+   "from": 2909,
+   "to": 3008,
+   "seed": 36,
+   "beat": "stage",
+   "scene": "door_lock",
+   "camera": "pull_out",
+   "time": "night",
+   "label": "5"
+  },
+  {
+   "from": 3008,
+   "to": 3044,
+   "seed": 37,
+   "beat": "stage",
+   "scene": "desk",
+   "camera": "top_down",
+   "time": "night",
+   "prop": "keys"
+  },
+  {
+   "from": 3044,
+   "to": 3142,
+   "seed": 38,
+   "beat": "stage",
+   "scene": "door_lock",
+   "camera": "track_right",
+   "time": "night",
+   "label": "1",
+   "crew": 1
+  },
+  {
+   "from": 3142,
+   "to": 3178,
+   "seed": 39,
+   "beat": "stage",
+   "scene": "door_lock",
+   "camera": "push_in",
+   "time": "night",
+   "label": "1",
+   "remove": true
+  },
+  {
+   "from": 3178,
+   "to": 3292,
+   "seed": 40,
+   "beat": "stage",
+   "scene": "desk",
+   "camera": "orbit_low",
+   "time": "night",
+   "prop": "cylinder"
+  },
+  {
+   "from": 3292,
+   "to": 3344,
+   "seed": 41,
+   "beat": "stage",
+   "scene": "desk",
+   "camera": "push_in",
+   "time": "dusk",
+   "prop": "cylinder"
+  },
+  {
+   "from": 3344,
+   "to": 3436,
+   "seed": 42,
+   "beat": "stage",
+   "scene": "door_lock",
+   "camera": "pull_out",
+   "time": "night",
+   "label": "1"
+  },
+  {
+   "from": 3436,
+   "to": 3488,
+   "seed": 43,
+   "beat": "stage",
+   "scene": "counting_room",
+   "camera": "track_left",
+   "time": "day",
+   "workers": 4
+  },
+  {
+   "from": 3488,
+   "to": 3532,
+   "seed": 44,
+   "beat": "stage",
+   "scene": "door_lock",
+   "camera": "push_in",
+   "time": "night",
+   "label": "2",
+   "remove": true
+  },
+  {
+   "from": 3532,
+   "to": 3592,
+   "seed": 45,
+   "beat": "stage",
+   "scene": "desk",
+   "camera": "push_in",
+   "time": "night",
+   "prop": "cylinder"
+  },
+  {
+   "from": 3592,
+   "to": 3703,
+   "seed": 46,
+   "beat": "stage",
+   "scene": "desk",
+   "camera": "top_down",
+   "time": "night",
+   "prop": "keys"
+  },
+  {
+   "from": 3703,
+   "to": 3790,
+   "seed": 47,
+   "beat": "stage",
+   "scene": "stairs",
+   "camera": "track_right",
+   "time": "night",
+   "crew": 2
+  },
+  {
+   "from": 3790,
+   "to": 3830,
+   "seed": 48,
+   "beat": "stage",
+   "scene": "skyline",
+   "camera": "push_in",
+   "time": "night"
+  },
+  {
+   "from": 3830,
+   "to": 3984,
+   "seed": 49,
+   "beat": "stage",
+   "scene": "desk",
+   "camera": "orbit_low",
+   "time": "dusk",
+   "prop": "keys"
+  },
+  {
+   "from": 3984,
+   "to": 4019,
+   "seed": 50,
+   "beat": "stage",
+   "scene": "street",
+   "camera": "push_in",
+   "time": "night",
+   "truck": "getaway",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 4019,
+   "to": 4124,
+   "seed": 51,
+   "beat": "stage",
+   "scene": "street",
+   "camera": "track_left",
+   "time": "night",
+   "truck": "getaway",
+   "drive": "out",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 4124,
+   "to": 4240,
+   "seed": 52,
+   "beat": "stage",
+   "scene": "street",
+   "camera": "orbit_low",
+   "time": "dusk",
+   "truck": "getaway",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 4240,
+   "to": 4278,
+   "seed": 53,
+   "beat": "stage",
+   "scene": "desk",
+   "camera": "top_down",
+   "time": "night",
+   "prop": "masks"
+  },
+  {
+   "from": 4278,
+   "to": 4328,
+   "seed": 54,
+   "beat": "stage",
+   "scene": "lineup",
+   "camera": "push_in",
+   "time": "night",
+   "count": 3,
+   "outfit": true
+  },
+  {
+   "from": 4328,
+   "to": 4424,
+   "seed": 55,
+   "beat": "stage",
+   "scene": "stairs",
+   "camera": "push_in",
+   "time": "night",
+   "crew": 2
+  },
+  {
+   "from": 4424,
+   "to": 4520,
+   "seed": 56,
+   "beat": "stage",
+   "scene": "desk",
+   "camera": "orbit_low",
+   "time": "night",
+   "prop": "masks"
+  },
+  {
+   "from": 4520,
+   "to": 4628,
+   "seed": 57,
+   "beat": "stage",
+   "scene": "lineup",
+   "camera": "orbit_low",
+   "time": "night",
+   "count": 3,
+   "masks": true
+  },
+  {
+   "from": 4628,
+   "to": 4661,
+   "seed": 58,
+   "beat": "stage",
+   "scene": "lineup",
+   "camera": "track_right",
+   "time": "night",
+   "count": 5,
+   "masks": true
+  },
+  {
+   "from": 4661,
+   "to": 4718,
+   "seed": 59,
+   "beat": "stage",
+   "scene": "street",
+   "camera": "push_in",
+   "time": "night",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 4718,
+   "to": 4778,
+   "seed": 60,
+   "beat": "stage",
+   "scene": "skyline",
+   "camera": "track_right",
+   "time": "night"
+  },
+  {
+   "from": 4778,
+   "to": 4834,
+   "seed": 61,
+   "beat": "stage",
+   "scene": "street",
+   "camera": "track_left",
+   "time": "night",
+   "truck": "getaway",
+   "drive": "in",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 4834,
+   "to": 4870,
+   "seed": 62,
+   "beat": "stage",
+   "scene": "street",
+   "camera": "orbit_low",
+   "time": "night",
+   "truck": "getaway",
+   "crew": 4,
+   "masks": true,
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 4870,
+   "to": 4918,
+   "seed": 63,
+   "beat": "stage",
+   "scene": "street",
+   "camera": "track_right",
+   "time": "night",
+   "crew": 1,
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 4918,
+   "to": 4968,
+   "seed": 64,
+   "beat": "stage",
+   "scene": "door_lock",
+   "camera": "push_in",
+   "time": "night",
+   "label": "1",
+   "key": true,
+   "open": true,
+   "crew": 1,
+   "masks": true
+  },
+  {
+   "from": 4968,
+   "to": 4999,
+   "seed": 65,
+   "beat": "stage",
+   "scene": "door_lock",
+   "camera": "track_right",
+   "time": "night",
+   "label": "3",
+   "key": true,
+   "open": true
+  },
+  {
+   "from": 4999,
+   "to": 5035,
+   "seed": 66,
+   "beat": "stage",
+   "scene": "door_lock",
+   "camera": "orbit_low",
+   "time": "night",
+   "label": "5",
+   "key": true,
+   "open": true,
+   "crew": 2,
+   "masks": true
+  },
+  {
+   "from": 5035,
+   "to": 5126,
+   "seed": 67,
+   "beat": "stage",
+   "scene": "stairs",
+   "camera": "push_in",
+   "time": "night",
+   "crew": 3,
+   "masks": true
+  },
+  {
+   "from": 5126,
+   "to": 5244,
+   "seed": 68,
+   "beat": "stage",
+   "scene": "counting_room",
+   "camera": "push_in",
+   "time": "night",
+   "workers": 4
+  },
+  {
+   "from": 5244,
+   "to": 5306,
+   "seed": 69,
+   "beat": "stage",
+   "scene": "counting_room",
+   "camera": "orbit_low",
+   "time": "night",
+   "workers": 4,
+   "robbers": 3,
+   "masks": true
+  },
+  {
+   "from": 5306,
+   "to": 5453,
+   "seed": 70,
+   "beat": "stage",
+   "scene": "counting_room",
+   "camera": "track_right",
+   "time": "night",
+   "workers": 4,
+   "tied": true,
+   "robbers": 3,
+   "masks": true
+  },
+  {
+   "from": 5453,
+   "to": 5491,
+   "seed": 71,
+   "beat": "stage",
+   "scene": "cash",
+   "camera": "push_in",
+   "time": "night",
+   "sacks": true
+  },
+  {
+   "from": 5491,
+   "to": 5534,
+   "seed": 72,
+   "beat": "stage",
+   "scene": "cash",
+   "camera": "orbit_low",
+   "time": "night",
+   "sacks": true
+  },
+  {
+   "from": 5534,
+   "to": 5594,
+   "seed": 73,
+   "beat": "stage",
+   "scene": "cash",
+   "camera": "top_down",
+   "time": "night"
+  },
+  {
+   "from": 5594,
+   "to": 5714,
+   "seed": 74,
+   "beat": "stage",
+   "scene": "cash",
+   "camera": "orbit_low",
+   "time": "night"
+  },
+  {
+   "from": 5714,
+   "to": 5774,
+   "seed": 75,
+   "beat": "stage",
+   "scene": "counting_room",
+   "camera": "track_left",
+   "time": "night",
+   "empty": true,
+   "workers": 4,
+   "tied": true,
+   "robbers": 2,
+   "masks": true,
+   "sacks": true
+  },
+  {
+   "from": 5774,
+   "to": 5848,
+   "seed": 76,
+   "beat": "stage",
+   "scene": "cash",
+   "camera": "pull_out",
+   "time": "night",
+   "sacks": true
+  },
+  {
+   "from": 5848,
+   "to": 5918,
+   "seed": 77,
+   "beat": "stage",
+   "scene": "stairs",
+   "camera": "pull_out",
+   "time": "night",
+   "crew": 3,
+   "masks": true,
+   "sacks": true
+  },
+  {
+   "from": 5918,
+   "to": 6023,
+   "seed": 78,
+   "beat": "stage",
+   "scene": "counting_room",
+   "camera": "push_in",
+   "time": "night",
+   "workers": 4,
+   "tied": true,
+   "empty": true
+  },
+  {
+   "from": 6023,
+   "to": 6062,
+   "seed": 79,
+   "beat": "stage",
+   "scene": "street",
+   "camera": "pull_out",
+   "time": "night",
+   "sign": "BRINK'S",
+   "brick": true,
+   "gem": false
+  },
+  {
+   "from": 6062,
+   "to": 6167,
+   "seed": 80,
+   "beat": "stage",
+   "scene": "skyline",
+   "camera": "pull_out",
+   "time": "night"
+  },
+  {
+   "from": 6167,
+   "to": 6241,
+   "seed": 81,
+   "beat": "stage",
+   "scene": "desk",
+   "camera": "top_down",
+   "time": "day",
+   "prop": "newspaper",
+   "text": "MASKED GANG ROBS BRINK'S",
+   "sub": "MILLIONS TAKEN IN BOSTON"
+  },
+  {
+   "from": 6241,
+   "to": 6294,
+   "seed": 82,
+   "beat": "stage",
+   "scene": "desk",
+   "camera": "orbit_low",
+   "time": "day",
+   "prop": "newspaper",
+   "text": "MASKED GANG ROBS BRINK'S",
+   "sub": "MILLIONS TAKEN IN BOSTON"
+  },
+  {
+   "from": 6294,
+   "to": 6404,
+   "seed": 83,
+   "beat": "stage",
+   "scene": "cash",
+   "camera": "orbit_low",
+   "time": "dusk"
+  },
+  {
+   "from": 6404,
+   "to": 6491,
+   "seed": 84,
+   "beat": "stage",
+   "scene": "lineup",
+   "camera": "track_left",
+   "time": "dusk",
+   "cast": "crew",
+   "zoom": 1.35
+  },
+  {
+   "from": 6491,
+   "to": 6544,
+   "seed": 85,
+   "beat": "stage",
+   "scene": "desk",
+   "camera": "push_in",
+   "time": "night",
+   "prop": "calendar",
+   "text": "17",
+   "sub": "JANUARY 1956"
+  },
+  {
+   "from": 6544,
+   "to": 6707,
+   "seed": 86,
+   "beat": "stage",
+   "scene": "courtroom",
+   "camera": "track_right",
+   "time": "day"
+  },
+  {
+   "from": 6707,
+   "to": 6743,
+   "seed": 87,
+   "beat": "stage",
+   "scene": "junkyard",
+   "camera": "push_in",
+   "time": "night",
+   "fire": true
+  },
+  {
+   "from": 6743,
+   "to": 6844,
+   "seed": 88,
+   "beat": "stage",
+   "scene": "junkyard",
+   "camera": "orbit_low",
+   "time": "night",
+   "fire": true
+  },
+  {
+   "from": 6844,
+   "to": 6942,
+   "seed": 89,
+   "beat": "stage",
+   "scene": "junkyard",
+   "camera": "track_right",
+   "time": "day"
+  },
+  {
+   "from": 6942,
+   "to": 6980,
+   "seed": 90,
+   "beat": "stage",
+   "scene": "junkyard",
+   "camera": "pull_out",
+   "time": "day",
+   "agents": 2
+  },
+  {
+   "from": 6980,
+   "to": 7018,
+   "seed": 91,
+   "beat": "stage",
+   "scene": "board",
+   "camera": "push_in",
+   "time": "night"
+  },
+  {
+   "from": 7018,
+   "to": 7078,
+   "seed": 92,
+   "beat": "stage",
+   "scene": "office",
+   "camera": "push_in",
+   "time": "day",
+   "gems": false,
+   "coat": "agent",
+   "hat": "brim",
+   "files": true
+  },
+  {
+   "from": 7078,
+   "to": 7162,
+   "seed": 93,
+   "beat": "stage",
+   "scene": "desk",
+   "camera": "top_down",
+   "time": "day",
+   "prop": "newspaper",
+   "text": "$100,000 REWARD",
+   "sub": "FOR THE BRINK'S ROBBERS"
+  },
+  {
+   "from": 7162,
+   "to": 7252,
+   "seed": 94,
+   "beat": "stage",
+   "scene": "counting_room",
+   "camera": "orbit_low",
+   "time": "day",
+   "empty": true,
+   "workers": 0
+  },
+  {
+   "from": 7252,
+   "to": 7311,
+   "seed": 95,
+   "beat": "stage",
+   "scene": "desk",
+   "camera": "top_down",
+   "time": "day",
+   "prop": "clues"
+  },
+  {
+   "from": 7311,
+   "to": 7355,
+   "seed": 96,
+   "beat": "stage",
+   "scene": "interrogation",
+   "camera": "track_left",
+   "time": "day",
+   "coat": "worker"
+  },
+  {
+   "from": 7355,
+   "to": 7406,
+   "seed": 97,
+   "beat": "stage",
+   "scene": "board",
+   "camera": "orbit_low",
+   "time": "night"
+  },
+  {
+   "from": 7406,
+   "to": 7461,
+   "seed": 98,
+   "beat": "stage",
+   "scene": "lineup",
+   "camera": "push_in",
+   "time": "day",
+   "count": 1,
+   "coat": "pino"
+  },
+  {
+   "from": 7461,
+   "to": 7502,
+   "seed": 99,
+   "beat": "stage",
+   "scene": "board",
+   "camera": "pull_out",
+   "time": "night"
+  },
+  {
+   "from": 7502,
+   "to": 7545,
+   "seed": 100,
+   "beat": "stage",
+   "scene": "lineup",
+   "camera": "track_right",
+   "time": "dusk",
+   "cast": "crew",
+   "zoom": 1.35
+  },
+  {
+   "from": 7545,
+   "to": 7588,
+   "seed": 101,
+   "beat": "stage",
+   "scene": "skyline",
+   "camera": "track_left",
+   "time": "dusk"
+  },
+  {
+   "from": 7588,
+   "to": 7685,
+   "seed": 102,
+   "beat": "stage",
+   "scene": "lineup",
+   "camera": "push_in",
+   "time": "night",
+   "count": 1,
+   "coat": "okeefe"
+  },
+  {
+   "from": 7685,
+   "to": 7858,
+   "seed": 103,
+   "beat": "stage",
+   "scene": "roadside",
+   "camera": "push_in",
+   "time": "night",
+   "car": true,
+   "crew": 1
+  },
+  {
+   "from": 7858,
+   "to": 7933,
+   "seed": 104,
+   "beat": "stage",
+   "scene": "roadside",
+   "camera": "orbit_low",
+   "time": "night",
+   "car": true,
+   "crew": 1
+  },
+  {
+   "from": 7933,
+   "to": 8002,
+   "seed": 105,
+   "beat": "stage",
+   "scene": "cell",
+   "camera": "push_in",
+   "time": "night",
+   "coat": "okeefe"
+  },
+  {
+   "from": 8002,
+   "to": 8041,
+   "seed": 106,
+   "beat": "stage",
+   "scene": "cell",
+   "camera": "track_right",
+   "time": "night",
+   "coat": "okeefe"
+  },
+  {
+   "from": 8041,
+   "to": 8084,
+   "seed": 107,
+   "beat": "stage",
+   "scene": "office",
+   "camera": "push_in",
+   "time": "dusk",
+   "gems": false
+  },
+  {
+   "from": 8084,
+   "to": 8122,
+   "seed": 108,
+   "beat": "stage",
+   "scene": "cash",
+   "camera": "push_in",
+   "time": "dusk",
+   "few": true
+  },
+  {
+   "from": 8122,
+   "to": 8254,
+   "seed": 109,
+   "beat": "stage",
+   "scene": "cell",
+   "camera": "orbit_low",
+   "time": "night",
+   "coat": "okeefe"
+  },
+  {
+   "from": 8254,
+   "to": 8314,
+   "seed": 110,
+   "beat": "stage",
+   "scene": "skyline",
+   "camera": "track_right",
+   "time": "dusk"
+  },
+  {
+   "from": 8314,
+   "to": 8353,
+   "seed": 111,
+   "beat": "stage",
+   "scene": "office",
+   "camera": "pull_out",
+   "time": "night",
+   "gems": false
+  },
+  {
+   "from": 8353,
+   "to": 8420,
+   "seed": 112,
+   "beat": "stage",
+   "scene": "board",
+   "camera": "push_in",
+   "time": "night"
+  },
+  {
+   "from": 8420,
+   "to": 8488,
+   "seed": 113,
+   "beat": "stage",
+   "scene": "office",
+   "camera": "orbit_low",
+   "time": "night",
+   "gems": false
+  },
+  {
+   "from": 8488,
+   "to": 8576,
+   "seed": 114,
+   "beat": "stage",
+   "scene": "lineup",
+   "camera": "push_in",
+   "time": "night",
+   "count": 1,
+   "coat": "hitman",
+   "hat": "brim"
+  },
+  {
+   "from": 8576,
+   "to": 8656,
+   "seed": 115,
+   "beat": "stage",
+   "scene": "lineup",
+   "camera": "orbit_low",
+   "time": "night",
+   "count": 1,
+   "coat": "hitman",
+   "hat": "brim"
+  },
+  {
+   "from": 8656,
+   "to": 8768,
+   "seed": 116,
+   "beat": "stage",
+   "scene": "neighborhood",
+   "camera": "track_right",
+   "time": "night",
+   "car": true,
+   "flash": true,
+   "figure": "okeefe"
+  },
+  {
+   "from": 8768,
+   "to": 8893,
+   "seed": 117,
+   "beat": "stage",
+   "scene": "neighborhood",
+   "camera": "orbit_low",
+   "time": "night",
+   "lying": true,
+   "figure": "okeefe"
+  },
+  {
+   "from": 8893,
+   "to": 8939,
+   "seed": 118,
+   "beat": "stage",
+   "scene": "cell",
+   "camera": "push_in",
+   "time": "night",
+   "coat": "hitman"
+  },
+  {
+   "from": 8939,
+   "to": 9080,
+   "seed": 119,
+   "beat": "stage",
+   "scene": "cell",
+   "camera": "pull_out",
+   "time": "day",
+   "empty": true
+  },
+  {
+   "from": 9080,
+   "to": 9166,
+   "seed": 120,
+   "beat": "stage",
+   "scene": "skyline",
+   "camera": "push_in",
+   "time": "night"
+  },
+  {
+   "from": 9166,
+   "to": 9207,
+   "seed": 121,
+   "beat": "stage",
+   "scene": "interrogation",
+   "camera": "push_in",
+   "time": "night"
+  },
+  {
+   "from": 9207,
+   "to": 9257,
+   "seed": 122,
+   "beat": "stage",
+   "scene": "interrogation",
+   "camera": "track_right",
+   "time": "night",
+   "agents": 2
+  },
+  {
+   "from": 9257,
+   "to": 9370,
+   "seed": 123,
+   "beat": "stage",
+   "scene": "interrogation",
+   "camera": "orbit_low",
+   "time": "night",
+   "agents": 2
+  },
+  {
+   "from": 9370,
+   "to": 9412,
+   "seed": 124,
+   "beat": "turn",
+   "scene": "skyline",
+   "camera": "track_right",
+   "time": "night"
+  },
+  {
+   "from": 9412,
+   "to": 9546,
+   "seed": 125,
+   "beat": "turn",
+   "scene": "desk",
+   "camera": "push_in",
+   "time": "night",
+   "prop": "calendar",
+   "text": "17",
+   "sub": "JANUARY 1956"
+  },
+  {
+   "from": 9546,
+   "to": 9680,
+   "seed": 126,
+   "beat": "turn",
+   "scene": "desk",
+   "camera": "track_right",
+   "time": "night",
+   "prop": "calendar",
+   "text": "17",
+   "sub": "JANUARY 1956",
+   "variant": 1
+  },
+  {
+   "from": 9680,
+   "to": 9796,
+   "seed": 127,
+   "beat": "turn",
+   "scene": "interrogation",
+   "camera": "push_in",
+   "time": "night",
+   "agents": 2
+  },
+  {
+   "from": 9796,
+   "to": 9920,
+   "seed": 128,
+   "beat": "turn",
+   "scene": "interrogation",
+   "camera": "track_left",
+   "time": "night"
+  },
+  {
+   "from": 9920,
+   "to": 9954,
+   "seed": 129,
+   "beat": "turn",
+   "scene": "board",
+   "camera": "push_in",
+   "time": "night"
+  },
+  {
+   "from": 9954,
+   "to": 9988,
+   "seed": 130,
+   "beat": "turn",
+   "scene": "desk",
+   "camera": "top_down",
+   "time": "night",
+   "prop": "keys"
+  },
+  {
+   "from": 9988,
+   "to": 10055,
+   "seed": 131,
+   "beat": "turn",
+   "scene": "neighborhood",
+   "camera": "track_left",
+   "time": "day",
+   "agents": 3,
+   "car": true
+  },
+  {
+   "from": 10055,
+   "to": 10105,
+   "seed": 132,
+   "beat": "turn",
+   "scene": "lineup",
+   "camera": "push_in",
+   "time": "night",
+   "count": 6,
+   "outfit": true
+  },
+  {
+   "from": 10105,
+   "to": 10165,
+   "seed": 133,
+   "beat": "turn",
+   "scene": "desk",
+   "camera": "push_in",
+   "time": "day",
+   "prop": "calendar",
+   "text": "12",
+   "sub": "JANUARY 1956"
+  },
+  {
+   "from": 10165,
+   "to": 10280,
+   "seed": 134,
+   "beat": "turn",
+   "scene": "board",
+   "camera": "pull_out",
+   "time": "night"
+  },
+  {
+   "from": 10280,
+   "to": 10364,
+   "seed": 135,
+   "beat": "turn",
+   "scene": "neighborhood",
+   "camera": "orbit_low",
+   "time": "night",
+   "lying": true,
+   "figure": "okeefe"
+  },
+  {
+   "from": 10364,
+   "to": 10481,
+   "seed": 136,
+   "beat": "aftermath",
+   "scene": "courtroom",
+   "camera": "push_in",
+   "time": "day",
+   "count": 8
+  },
+  {
+   "from": 10481,
+   "to": 10531,
+   "seed": 137,
+   "beat": "aftermath",
+   "scene": "lineup",
+   "camera": "track_right",
+   "time": "night",
+   "count": 8,
+   "prison": true,
+   "zoom": 1.2
+  },
+  {
+   "from": 10531,
+   "to": 10615,
+   "seed": 138,
+   "beat": "aftermath",
+   "scene": "cell",
+   "camera": "pull_out",
+   "time": "night",
+   "empty": true
+  },
+  {
+   "from": 10615,
+   "to": 10684,
+   "seed": 139,
+   "beat": "aftermath",
+   "scene": "cell",
+   "camera": "push_in",
+   "time": "night",
+   "coat": "okeefe"
+  },
+  {
+   "from": 10684,
+   "to": 10792,
+   "seed": 140,
+   "beat": "aftermath",
+   "scene": "desk",
+   "camera": "top_down",
+   "time": "day",
+   "prop": "book",
+   "text": "THE MEN|WHO ROBBED|BRINK'S"
+  },
+  {
+   "from": 10792,
+   "to": 10840,
+   "seed": 141,
+   "beat": "aftermath",
+   "scene": "cell",
+   "camera": "track_right",
+   "time": "night"
+  },
+  {
+   "from": 10840,
+   "to": 10938,
+   "seed": 142,
+   "beat": "aftermath",
+   "scene": "board",
+   "camera": "pull_out",
+   "time": "day"
+  },
+  {
+   "from": 10938,
+   "to": 11063,
+   "seed": 143,
+   "beat": "aftermath",
+   "scene": "cell",
+   "camera": "push_in",
+   "time": "night",
+   "coat": "hitman"
+  },
+  {
+   "from": 11063,
+   "to": 11170,
+   "seed": 144,
+   "beat": "aftermath",
+   "scene": "lineup",
+   "camera": "pull_out",
+   "time": "day",
+   "count": 4,
+   "prison": true
+  },
+  {
+   "from": 11170,
+   "to": 11230,
+   "seed": 145,
+   "beat": "aftermath",
+   "scene": "skyline",
+   "camera": "pull_out",
+   "time": "dusk"
+  },
+  {
+   "from": 11230,
+   "to": 11285,
+   "seed": 146,
+   "beat": "closer",
+   "scene": "lineup",
+   "camera": "push_in",
+   "time": "night",
+   "count": 11,
+   "masks": true,
+   "zoom": 1.35
+  },
+  {
+   "from": 11285,
+   "to": 11369,
+   "seed": 147,
+   "beat": "closer",
+   "scene": "desk",
+   "camera": "orbit_low",
+   "time": "night",
+   "prop": "calendar",
+   "text": "12",
+   "sub": "JANUARY 1956"
+  },
+  {
+   "from": 11369,
+   "to": 11434,
+   "seed": 148,
+   "beat": "closer",
+   "scene": "cash",
+   "camera": "pull_out",
+   "time": "night",
+   "sacks": true
+  },
+  {
+   "from": 11434,
+   "to": 11521,
+   "seed": 149,
+   "beat": "closer",
+   "scene": "cash",
+   "camera": "push_in",
+   "time": "night",
+   "few": true
+  },
+  {
+   "from": 11521,
+   "to": 11572,
+   "seed": 150,
+   "beat": "closer",
+   "scene": "counting_room",
+   "camera": "pull_out",
+   "time": "night",
+   "empty": true,
+   "workers": 0
+  }
+ ],
+ "captions": [
+  {
+   "from": 0,
+   "to": 19,
+   "words": [
+    {
+     "w": "DID",
+     "from": 0
+    },
+    {
+     "w": "YOU",
+     "from": 7
+    },
+    {
+     "w": "KNOW",
+     "from": 12
+    }
+   ]
+  },
+  {
+   "from": 19,
+   "to": 31,
+   "words": [
+    {
+     "w": "THE",
+     "from": 19
+    },
+    {
+     "w": "BIGGEST",
+     "from": 24
+    }
+   ]
+  },
+  {
+   "from": 31,
+   "to": 50,
+   "words": [
+    {
+     "w": "ROBBERY",
+     "from": 31
+    },
+    {
+     "w": "IN",
+     "from": 46
+    }
+   ]
+  },
+  {
+   "from": 50,
+   "to": 62,
+   "words": [
+    {
+     "w": "AMERICAN",
+     "from": 50
+    }
+   ]
+  },
+  {
+   "from": 62,
+   "to": 77,
+   "words": [
+    {
+     "w": "HISTORY",
+     "from": 62
+    }
+   ]
+  },
+  {
+   "from": 77,
+   "to": 94,
+   "words": [
+    {
+     "w": "AT",
+     "from": 77
+    },
+    {
+     "w": "THE",
+     "from": 82
+    },
+    {
+     "w": "TIME",
+     "from": 84
+    }
+   ]
+  },
+  {
+   "from": 94,
+   "to": 110,
+   "words": [
+    {
+     "w": "WAS",
+     "from": 94
+    },
+    {
+     "w": "PULLED",
+     "from": 98
+    },
+    {
+     "w": "OFF",
+     "from": 106
+    }
+   ]
+  },
+  {
+   "from": 110,
+   "to": 125,
+   "words": [
+    {
+     "w": "BY",
+     "from": 110
+    },
+    {
+     "w": "MEN",
+     "from": 115
+    },
+    {
+     "w": "IN",
+     "from": 120
+    }
+   ]
+  },
+  {
+   "from": 125,
+   "to": 156,
+   "words": [
+    {
+     "w": "HALLOWEEN",
+     "from": 125
+    },
+    {
+     "w": "MASKS",
+     "from": 139
+    }
+   ]
+  },
+  {
+   "from": 156,
+   "to": 182,
+   "words": [
+    {
+     "w": "IN",
+     "from": 156
+    },
+    {
+     "w": "1950",
+     "from": 161
+    }
+   ]
+  },
+  {
+   "from": 182,
+   "to": 202,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 182
+    },
+    {
+     "w": "WALK",
+     "from": 187
+    },
+    {
+     "w": "RIGHT",
+     "from": 197
+    }
+   ]
+  },
+  {
+   "from": 202,
+   "to": 209,
+   "words": [
+    {
+     "w": "INTO",
+     "from": 202
+    },
+    {
+     "w": "THE",
+     "from": 206
+    }
+   ]
+  },
+  {
+   "from": 209,
+   "to": 226,
+   "words": [
+    {
+     "w": "BUILDING",
+     "from": 209
+    },
+    {
+     "w": "OF",
+     "from": 218
+    },
+    {
+     "w": "THE",
+     "from": 223
+    }
+   ]
+  },
+  {
+   "from": 226,
+   "to": 242,
+   "words": [
+    {
+     "w": "COMPANY",
+     "from": 226
+    },
+    {
+     "w": "THAT",
+     "from": 238
+    }
+   ]
+  },
+  {
+   "from": 242,
+   "to": 269,
+   "words": [
+    {
+     "w": "GUARDS",
+     "from": 242
+    },
+    {
+     "w": "BOSTON'S",
+     "from": 252
+    }
+   ]
+  },
+  {
+   "from": 269,
+   "to": 281,
+   "words": [
+    {
+     "w": "MONEY",
+     "from": 269
+    }
+   ]
+  },
+  {
+   "from": 281,
+   "to": 298,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 281
+    },
+    {
+     "w": "DON'T",
+     "from": 286
+    },
+    {
+     "w": "BREAK",
+     "from": 291
+    }
+   ]
+  },
+  {
+   "from": 298,
+   "to": 322,
+   "words": [
+    {
+     "w": "A",
+     "from": 298
+    },
+    {
+     "w": "SINGLE",
+     "from": 301
+    },
+    {
+     "w": "LOCK",
+     "from": 310
+    }
+   ]
+  },
+  {
+   "from": 322,
+   "to": 341,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 322
+    },
+    {
+     "w": "DON'T",
+     "from": 327
+    },
+    {
+     "w": "FIRE",
+     "from": 332
+    }
+   ]
+  },
+  {
+   "from": 341,
+   "to": 365,
+   "words": [
+    {
+     "w": "A",
+     "from": 341
+    },
+    {
+     "w": "SINGLE",
+     "from": 344
+    },
+    {
+     "w": "SHOT",
+     "from": 353
+    }
+   ]
+  },
+  {
+   "from": 365,
+   "to": 380,
+   "words": [
+    {
+     "w": "AND",
+     "from": 365
+    },
+    {
+     "w": "IN",
+     "from": 370
+    },
+    {
+     "w": "LESS",
+     "from": 373
+    }
+   ]
+  },
+  {
+   "from": 380,
+   "to": 394,
+   "words": [
+    {
+     "w": "THAN",
+     "from": 380
+    },
+    {
+     "w": "HALF",
+     "from": 385
+    },
+    {
+     "w": "AN",
+     "from": 392
+    }
+   ]
+  },
+  {
+   "from": 394,
+   "to": 406,
+   "words": [
+    {
+     "w": "HOUR",
+     "from": 394
+    }
+   ]
+  },
+  {
+   "from": 406,
+   "to": 423,
+   "words": [
+    {
+     "w": "THEY'RE",
+     "from": 406
+    },
+    {
+     "w": "GONE",
+     "from": 413
+    }
+   ]
+  },
+  {
+   "from": 423,
+   "to": 445,
+   "words": [
+    {
+     "w": "WITH",
+     "from": 423
+    },
+    {
+     "w": "ALMOST",
+     "from": 428
+    },
+    {
+     "w": "3",
+     "from": 437
+    }
+   ]
+  },
+  {
+   "from": 445,
+   "to": 469,
+   "words": [
+    {
+     "w": "MILLION",
+     "from": 445
+    },
+    {
+     "w": "DOLLARS",
+     "from": 456
+    }
+   ]
+  },
+  {
+   "from": 469,
+   "to": 490,
+   "words": [
+    {
+     "w": "FOR",
+     "from": 469
+    },
+    {
+     "w": "SIX",
+     "from": 473
+    },
+    {
+     "w": "YEARS",
+     "from": 481
+    }
+   ]
+  },
+  {
+   "from": 490,
+   "to": 514,
+   "words": [
+    {
+     "w": "THE",
+     "from": 490
+    },
+    {
+     "w": "FBI",
+     "from": 495
+    },
+    {
+     "w": "CAN'T",
+     "from": 507
+    }
+   ]
+  },
+  {
+   "from": 514,
+   "to": 531,
+   "words": [
+    {
+     "w": "TOUCH",
+     "from": 514
+    },
+    {
+     "w": "THEM",
+     "from": 521
+    }
+   ]
+  },
+  {
+   "from": 531,
+   "to": 541,
+   "words": [
+    {
+     "w": "THEN",
+     "from": 531
+    }
+   ]
+  },
+  {
+   "from": 541,
+   "to": 565,
+   "words": [
+    {
+     "w": "JUST",
+     "from": 541
+    },
+    {
+     "w": "FIVE",
+     "from": 548
+    },
+    {
+     "w": "DAYS",
+     "from": 555
+    }
+   ]
+  },
+  {
+   "from": 565,
+   "to": 581,
+   "words": [
+    {
+     "w": "BEFORE",
+     "from": 565
+    },
+    {
+     "w": "THEY'D",
+     "from": 572
+    },
+    {
+     "w": "BE",
+     "from": 579
+    }
+   ]
+  },
+  {
+   "from": 581,
+   "to": 603,
+   "words": [
+    {
+     "w": "FREE",
+     "from": 581
+    },
+    {
+     "w": "FOREVER",
+     "from": 589
+    }
+   ]
+  },
+  {
+   "from": 603,
+   "to": 622,
+   "words": [
+    {
+     "w": "THE",
+     "from": 603
+    },
+    {
+     "w": "WHOLE",
+     "from": 608
+    },
+    {
+     "w": "PLAN",
+     "from": 615
+    }
+   ]
+  },
+  {
+   "from": 622,
+   "to": 646,
+   "words": [
+    {
+     "w": "FALLS",
+     "from": 622
+    },
+    {
+     "w": "APART",
+     "from": 632
+    }
+   ]
+  },
+  {
+   "from": 646,
+   "to": 658,
+   "words": [
+    {
+     "w": "AND",
+     "from": 646
+    },
+    {
+     "w": "IT",
+     "from": 649
+    },
+    {
+     "w": "ISN'T",
+     "from": 651
+    }
+   ]
+  },
+  {
+   "from": 658,
+   "to": 675,
+   "words": [
+    {
+     "w": "A",
+     "from": 658
+    },
+    {
+     "w": "CLUE",
+     "from": 661
+    },
+    {
+     "w": "THAT",
+     "from": 670
+    }
+   ]
+  },
+  {
+   "from": 675,
+   "to": 687,
+   "words": [
+    {
+     "w": "BRINGS",
+     "from": 675
+    },
+    {
+     "w": "THEM",
+     "from": 682
+    }
+   ]
+  },
+  {
+   "from": 687,
+   "to": 699,
+   "words": [
+    {
+     "w": "DOWN",
+     "from": 687
+    }
+   ]
+  },
+  {
+   "from": 699,
+   "to": 713,
+   "words": [
+    {
+     "w": "IT'S",
+     "from": 699
+    },
+    {
+     "w": "SOMETHING",
+     "from": 709
+    }
+   ]
+  },
+  {
+   "from": 713,
+   "to": 735,
+   "words": [
+    {
+     "w": "THE",
+     "from": 713
+    },
+    {
+     "w": "CREW",
+     "from": 718
+    },
+    {
+     "w": "DOES",
+     "from": 730
+    }
+   ]
+  },
+  {
+   "from": 735,
+   "to": 747,
+   "words": [
+    {
+     "w": "TO",
+     "from": 735
+    },
+    {
+     "w": "ONE",
+     "from": 740
+    },
+    {
+     "w": "OF",
+     "from": 745
+    }
+   ]
+  },
+  {
+   "from": 747,
+   "to": 761,
+   "words": [
+    {
+     "w": "THEIR",
+     "from": 747
+    },
+    {
+     "w": "OWN",
+     "from": 752
+    }
+   ]
+  },
+  {
+   "from": 761,
+   "to": 781,
+   "words": [
+    {
+     "w": "AND",
+     "from": 761
+    },
+    {
+     "w": "THE",
+     "from": 766
+    },
+    {
+     "w": "MONEY",
+     "from": 769
+    }
+   ]
+  },
+  {
+   "from": 781,
+   "to": 795,
+   "words": [
+    {
+     "w": "ALMOST",
+     "from": 781
+    },
+    {
+     "w": "ALL",
+     "from": 788
+    },
+    {
+     "w": "OF",
+     "from": 793
+    }
+   ]
+  },
+  {
+   "from": 795,
+   "to": 809,
+   "words": [
+    {
+     "w": "IT",
+     "from": 795
+    },
+    {
+     "w": "IS",
+     "from": 800
+    },
+    {
+     "w": "STILL",
+     "from": 805
+    }
+   ]
+  },
+  {
+   "from": 809,
+   "to": 824,
+   "words": [
+    {
+     "w": "MISSING",
+     "from": 809
+    }
+   ]
+  },
+  {
+   "from": 824,
+   "to": 836,
+   "words": [
+    {
+     "w": "THIS",
+     "from": 824
+    },
+    {
+     "w": "IS",
+     "from": 829
+    },
+    {
+     "w": "THE",
+     "from": 831
+    }
+   ]
+  },
+  {
+   "from": 836,
+   "to": 853,
+   "words": [
+    {
+     "w": "TRUE",
+     "from": 836
+    },
+    {
+     "w": "STORY",
+     "from": 843
+    },
+    {
+     "w": "OF",
+     "from": 850
+    }
+   ]
+  },
+  {
+   "from": 853,
+   "to": 884,
+   "words": [
+    {
+     "w": "THE",
+     "from": 853
+    },
+    {
+     "w": "BRINK'S",
+     "from": 857
+    },
+    {
+     "w": "JOB",
+     "from": 872
+    }
+   ]
+  },
+  {
+   "from": 884,
+   "to": 896,
+   "words": [
+    {
+     "w": "BOSTON",
+     "from": 884
+    }
+   ]
+  },
+  {
+   "from": 896,
+   "to": 922,
+   "words": [
+    {
+     "w": "1948",
+     "from": 896
+    }
+   ]
+  },
+  {
+   "from": 922,
+   "to": 937,
+   "words": [
+    {
+     "w": "IN",
+     "from": 922
+    },
+    {
+     "w": "THE",
+     "from": 927
+    },
+    {
+     "w": "NORTH",
+     "from": 929
+    }
+   ]
+  },
+  {
+   "from": 937,
+   "to": 944,
+   "words": [
+    {
+     "w": "END",
+     "from": 937
+    }
+   ]
+  },
+  {
+   "from": 944,
+   "to": 961,
+   "words": [
+    {
+     "w": "ON",
+     "from": 944
+    },
+    {
+     "w": "PRINCE",
+     "from": 949
+    }
+   ]
+  },
+  {
+   "from": 961,
+   "to": 970,
+   "words": [
+    {
+     "w": "STREET",
+     "from": 961
+    }
+   ]
+  },
+  {
+   "from": 970,
+   "to": 989,
+   "words": [
+    {
+     "w": "STANDS",
+     "from": 970
+    },
+    {
+     "w": "A",
+     "from": 977
+    },
+    {
+     "w": "PLAIN",
+     "from": 982
+    }
+   ]
+  },
+  {
+   "from": 989,
+   "to": 1011,
+   "words": [
+    {
+     "w": "BRICK",
+     "from": 989
+    },
+    {
+     "w": "BUILDING",
+     "from": 997
+    }
+   ]
+  },
+  {
+   "from": 1011,
+   "to": 1028,
+   "words": [
+    {
+     "w": "IT",
+     "from": 1011
+    },
+    {
+     "w": "BELONGS",
+     "from": 1016
+    },
+    {
+     "w": "TO",
+     "from": 1023
+    }
+   ]
+  },
+  {
+   "from": 1028,
+   "to": 1042,
+   "words": [
+    {
+     "w": "BRINK'S",
+     "from": 1028
+    }
+   ]
+  },
+  {
+   "from": 1042,
+   "to": 1057,
+   "words": [
+    {
+     "w": "THE",
+     "from": 1042
+    },
+    {
+     "w": "ARMORED",
+     "from": 1047
+    }
+   ]
+  },
+  {
+   "from": 1057,
+   "to": 1078,
+   "words": [
+    {
+     "w": "TRUCK",
+     "from": 1057
+    },
+    {
+     "w": "COMPANY",
+     "from": 1064
+    }
+   ]
+  },
+  {
+   "from": 1078,
+   "to": 1099,
+   "words": [
+    {
+     "w": "ITS",
+     "from": 1078
+    },
+    {
+     "w": "WHOLE",
+     "from": 1085
+    },
+    {
+     "w": "JOB",
+     "from": 1092
+    }
+   ]
+  },
+  {
+   "from": 1099,
+   "to": 1123,
+   "words": [
+    {
+     "w": "IS",
+     "from": 1099
+    },
+    {
+     "w": "KEEPING",
+     "from": 1106
+    },
+    {
+     "w": "OTHER",
+     "from": 1116
+    }
+   ]
+  },
+  {
+   "from": 1123,
+   "to": 1142,
+   "words": [
+    {
+     "w": "PEOPLE'S",
+     "from": 1123
+    },
+    {
+     "w": "MONEY",
+     "from": 1133
+    }
+   ]
+  },
+  {
+   "from": 1142,
+   "to": 1152,
+   "words": [
+    {
+     "w": "SAFE",
+     "from": 1142
+    }
+   ]
+  },
+  {
+   "from": 1152,
+   "to": 1174,
+   "words": [
+    {
+     "w": "BRINK'S",
+     "from": 1152
+    },
+    {
+     "w": "IS",
+     "from": 1166
+    },
+    {
+     "w": "ABOUT",
+     "from": 1169
+    }
+   ]
+  },
+  {
+   "from": 1174,
+   "to": 1188,
+   "words": [
+    {
+     "w": "TO",
+     "from": 1174
+    },
+    {
+     "w": "LEARN",
+     "from": 1176
+    },
+    {
+     "w": "HOW",
+     "from": 1183
+    }
+   ]
+  },
+  {
+   "from": 1188,
+   "to": 1205,
+   "words": [
+    {
+     "w": "HARD",
+     "from": 1188
+    },
+    {
+     "w": "THAT",
+     "from": 1195
+    },
+    {
+     "w": "CAN",
+     "from": 1200
+    }
+   ]
+  },
+  {
+   "from": 1205,
+   "to": 1214,
+   "words": [
+    {
+     "w": "BE",
+     "from": 1205
+    }
+   ]
+  },
+  {
+   "from": 1214,
+   "to": 1231,
+   "words": [
+    {
+     "w": "EVERY",
+     "from": 1214
+    },
+    {
+     "w": "EVENING",
+     "from": 1222
+    }
+   ]
+  },
+  {
+   "from": 1231,
+   "to": 1255,
+   "words": [
+    {
+     "w": "ITS",
+     "from": 1231
+    },
+    {
+     "w": "TRUCKS",
+     "from": 1238
+    },
+    {
+     "w": "ROLL",
+     "from": 1248
+    }
+   ]
+  },
+  {
+   "from": 1255,
+   "to": 1272,
+   "words": [
+    {
+     "w": "BACK",
+     "from": 1255
+    },
+    {
+     "w": "IN",
+     "from": 1260
+    }
+   ]
+  },
+  {
+   "from": 1272,
+   "to": 1289,
+   "words": [
+    {
+     "w": "FULL",
+     "from": 1272
+    },
+    {
+     "w": "OF",
+     "from": 1277
+    },
+    {
+     "w": "MONEY",
+     "from": 1279
+    }
+   ]
+  },
+  {
+   "from": 1289,
+   "to": 1308,
+   "words": [
+    {
+     "w": "FROM",
+     "from": 1289
+    },
+    {
+     "w": "BANKS",
+     "from": 1294
+    },
+    {
+     "w": "AND",
+     "from": 1303
+    }
+   ]
+  },
+  {
+   "from": 1308,
+   "to": 1325,
+   "words": [
+    {
+     "w": "BUSINESSES",
+     "from": 1308
+    }
+   ]
+  },
+  {
+   "from": 1325,
+   "to": 1351,
+   "words": [
+    {
+     "w": "ACROSS",
+     "from": 1325
+    },
+    {
+     "w": "THE",
+     "from": 1334
+    },
+    {
+     "w": "CITY",
+     "from": 1337
+    }
+   ]
+  },
+  {
+   "from": 1351,
+   "to": 1370,
+   "words": [
+    {
+     "w": "THE",
+     "from": 1351
+    },
+    {
+     "w": "MONEY",
+     "from": 1355
+    },
+    {
+     "w": "GOES",
+     "from": 1365
+    }
+   ]
+  },
+  {
+   "from": 1370,
+   "to": 1387,
+   "words": [
+    {
+     "w": "UPSTAIRS",
+     "from": 1370
+    }
+   ]
+  },
+  {
+   "from": 1387,
+   "to": 1406,
+   "words": [
+    {
+     "w": "INTO",
+     "from": 1387
+    },
+    {
+     "w": "A",
+     "from": 1394
+    },
+    {
+     "w": "COUNTING",
+     "from": 1396
+    }
+   ]
+  },
+  {
+   "from": 1406,
+   "to": 1418,
+   "words": [
+    {
+     "w": "ROOM",
+     "from": 1406
+    }
+   ]
+  },
+  {
+   "from": 1418,
+   "to": 1437,
+   "words": [
+    {
+     "w": "TO",
+     "from": 1418
+    },
+    {
+     "w": "BE",
+     "from": 1420
+    },
+    {
+     "w": "SORTED",
+     "from": 1425
+    }
+   ]
+  },
+  {
+   "from": 1437,
+   "to": 1461,
+   "words": [
+    {
+     "w": "AND",
+     "from": 1437
+    },
+    {
+     "w": "LOCKED",
+     "from": 1442
+    },
+    {
+     "w": "AWAY",
+     "from": 1451
+    }
+   ]
+  },
+  {
+   "from": 1461,
+   "to": 1487,
+   "words": [
+    {
+     "w": "TONY",
+     "from": 1461
+    },
+    {
+     "w": "PINO",
+     "from": 1471
+    },
+    {
+     "w": "IS",
+     "from": 1485
+    }
+   ]
+  },
+  {
+   "from": 1487,
+   "to": 1507,
+   "words": [
+    {
+     "w": "A",
+     "from": 1487
+    },
+    {
+     "w": "CAREER",
+     "from": 1490
+    },
+    {
+     "w": "THIEF",
+     "from": 1497
+    }
+   ]
+  },
+  {
+   "from": 1507,
+   "to": 1516,
+   "words": [
+    {
+     "w": "WITH",
+     "from": 1507
+    },
+    {
+     "w": "A",
+     "from": 1509
+    },
+    {
+     "w": "BIG",
+     "from": 1511
+    }
+   ]
+  },
+  {
+   "from": 1516,
+   "to": 1531,
+   "words": [
+    {
+     "w": "IDEA",
+     "from": 1516
+    }
+   ]
+  },
+  {
+   "from": 1531,
+   "to": 1547,
+   "words": [
+    {
+     "w": "HE",
+     "from": 1531
+    },
+    {
+     "w": "HAS",
+     "from": 1535
+    },
+    {
+     "w": "DONE",
+     "from": 1540
+    }
+   ]
+  },
+  {
+   "from": 1547,
+   "to": 1569,
+   "words": [
+    {
+     "w": "TIME",
+     "from": 1547
+    },
+    {
+     "w": "BEFORE",
+     "from": 1557
+    }
+   ]
+  },
+  {
+   "from": 1569,
+   "to": 1586,
+   "words": [
+    {
+     "w": "AND",
+     "from": 1569
+    },
+    {
+     "w": "HE",
+     "from": 1574
+    },
+    {
+     "w": "ISN'T",
+     "from": 1579
+    }
+   ]
+  },
+  {
+   "from": 1586,
+   "to": 1605,
+   "words": [
+    {
+     "w": "AFRAID",
+     "from": 1586
+    },
+    {
+     "w": "TO",
+     "from": 1595
+    },
+    {
+     "w": "DO",
+     "from": 1600
+    }
+   ]
+  },
+  {
+   "from": 1605,
+   "to": 1622,
+   "words": [
+    {
+     "w": "IT",
+     "from": 1605
+    },
+    {
+     "w": "AGAIN",
+     "from": 1610
+    }
+   ]
+  },
+  {
+   "from": 1622,
+   "to": 1641,
+   "words": [
+    {
+     "w": "HE",
+     "from": 1622
+    },
+    {
+     "w": "KNOWS",
+     "from": 1627
+    },
+    {
+     "w": "THIS",
+     "from": 1634
+    }
+   ]
+  },
+  {
+   "from": 1641,
+   "to": 1658,
+   "words": [
+    {
+     "w": "BUILDING",
+     "from": 1641
+    }
+   ]
+  },
+  {
+   "from": 1658,
+   "to": 1672,
+   "words": [
+    {
+     "w": "HE",
+     "from": 1658
+    },
+    {
+     "w": "KNOWS",
+     "from": 1660
+    },
+    {
+     "w": "THOSE",
+     "from": 1667
+    }
+   ]
+  },
+  {
+   "from": 1672,
+   "to": 1690,
+   "words": [
+    {
+     "w": "TRUCKS",
+     "from": 1672
+    }
+   ]
+  },
+  {
+   "from": 1690,
+   "to": 1705,
+   "words": [
+    {
+     "w": "AND",
+     "from": 1690
+    },
+    {
+     "w": "HE",
+     "from": 1695
+    },
+    {
+     "w": "STARTS",
+     "from": 1700
+    }
+   ]
+  },
+  {
+   "from": 1705,
+   "to": 1721,
+   "words": [
+    {
+     "w": "TO",
+     "from": 1705
+    },
+    {
+     "w": "WONDER",
+     "from": 1707
+    },
+    {
+     "w": "WHAT",
+     "from": 1717
+    }
+   ]
+  },
+  {
+   "from": 1721,
+   "to": 1731,
+   "words": [
+    {
+     "w": "IT",
+     "from": 1721
+    },
+    {
+     "w": "WOULD",
+     "from": 1724
+    },
+    {
+     "w": "TAKE",
+     "from": 1729
+    }
+   ]
+  },
+  {
+   "from": 1731,
+   "to": 1750,
+   "words": [
+    {
+     "w": "TO",
+     "from": 1731
+    },
+    {
+     "w": "WALK",
+     "from": 1736
+    },
+    {
+     "w": "RIGHT",
+     "from": 1743
+    }
+   ]
+  },
+  {
+   "from": 1750,
+   "to": 1767,
+   "words": [
+    {
+     "w": "IN",
+     "from": 1750
+    },
+    {
+     "w": "AND",
+     "from": 1757
+    },
+    {
+     "w": "TAKE",
+     "from": 1762
+    }
+   ]
+  },
+  {
+   "from": 1767,
+   "to": 1784,
+   "words": [
+    {
+     "w": "THAT",
+     "from": 1767
+    },
+    {
+     "w": "MONEY",
+     "from": 1772
+    }
+   ]
+  },
+  {
+   "from": 1784,
+   "to": 1798,
+   "words": [
+    {
+     "w": "HE",
+     "from": 1784
+    },
+    {
+     "w": "CAN'T",
+     "from": 1789
+    },
+    {
+     "w": "DO",
+     "from": 1796
+    }
+   ]
+  },
+  {
+   "from": 1798,
+   "to": 1817,
+   "words": [
+    {
+     "w": "IT",
+     "from": 1798
+    },
+    {
+     "w": "ALONE",
+     "from": 1803
+    }
+   ]
+  },
+  {
+   "from": 1817,
+   "to": 1825,
+   "words": [
+    {
+     "w": "SO",
+     "from": 1817
+    }
+   ]
+  },
+  {
+   "from": 1825,
+   "to": 1841,
+   "words": [
+    {
+     "w": "PIECE",
+     "from": 1825
+    },
+    {
+     "w": "BY",
+     "from": 1832
+    },
+    {
+     "w": "PIECE",
+     "from": 1834
+    }
+   ]
+  },
+  {
+   "from": 1841,
+   "to": 1858,
+   "words": [
+    {
+     "w": "HE",
+     "from": 1841
+    },
+    {
+     "w": "BUILDS",
+     "from": 1846
+    },
+    {
+     "w": "A",
+     "from": 1856
+    }
+   ]
+  },
+  {
+   "from": 1858,
+   "to": 1870,
+   "words": [
+    {
+     "w": "CREW",
+     "from": 1858
+    }
+   ]
+  },
+  {
+   "from": 1870,
+   "to": 1887,
+   "words": [
+    {
+     "w": "BY",
+     "from": 1870
+    },
+    {
+     "w": "THE",
+     "from": 1875
+    },
+    {
+     "w": "END",
+     "from": 1877
+    }
+   ]
+  },
+  {
+   "from": 1887,
+   "to": 1906,
+   "words": [
+    {
+     "w": "THERE",
+     "from": 1887
+    },
+    {
+     "w": "ARE",
+     "from": 1892
+    },
+    {
+     "w": "11",
+     "from": 1897
+    }
+   ]
+  },
+  {
+   "from": 1906,
+   "to": 1918,
+   "words": [
+    {
+     "w": "OF",
+     "from": 1906
+    },
+    {
+     "w": "THEM",
+     "from": 1909
+    }
+   ]
+  },
+  {
+   "from": 1918,
+   "to": 1928,
+   "words": [
+    {
+     "w": "THERE'S",
+     "from": 1918
+    },
+    {
+     "w": "HIS",
+     "from": 1925
+    }
+   ]
+  },
+  {
+   "from": 1928,
+   "to": 1940,
+   "words": [
+    {
+     "w": "PARTNER",
+     "from": 1928
+    }
+   ]
+  },
+  {
+   "from": 1940,
+   "to": 1966,
+   "words": [
+    {
+     "w": "JOE",
+     "from": 1940
+    },
+    {
+     "w": "MCGINNIS",
+     "from": 1947
+    }
+   ]
+  },
+  {
+   "from": 1966,
+   "to": 1976,
+   "words": [
+    {
+     "w": "THERE'S",
+     "from": 1966
+    },
+    {
+     "w": "A",
+     "from": 1971
+    }
+   ]
+  },
+  {
+   "from": 1976,
+   "to": 1985,
+   "words": [
+    {
+     "w": "DRIVER",
+     "from": 1976
+    }
+   ]
+  },
+  {
+   "from": 1985,
+   "to": 2009,
+   "words": [
+    {
+     "w": "A",
+     "from": 1985
+    },
+    {
+     "w": "LOOKOUT",
+     "from": 1990
+    }
+   ]
+  },
+  {
+   "from": 2009,
+   "to": 2021,
+   "words": [
+    {
+     "w": "AND",
+     "from": 2009
+    },
+    {
+     "w": "A",
+     "from": 2014
+    },
+    {
+     "w": "TEAM",
+     "from": 2016
+    }
+   ]
+  },
+  {
+   "from": 2021,
+   "to": 2033,
+   "words": [
+    {
+     "w": "OF",
+     "from": 2021
+    },
+    {
+     "w": "MEN",
+     "from": 2023
+    },
+    {
+     "w": "WHO",
+     "from": 2030
+    }
+   ]
+  },
+  {
+   "from": 2033,
+   "to": 2057,
+   "words": [
+    {
+     "w": "WILL",
+     "from": 2033
+    },
+    {
+     "w": "GO",
+     "from": 2038
+    },
+    {
+     "w": "INSIDE",
+     "from": 2042
+    }
+   ]
+  },
+  {
+   "from": 2057,
+   "to": 2069,
+   "words": [
+    {
+     "w": "AND",
+     "from": 2057
+    },
+    {
+     "w": "THERE'S",
+     "from": 2062
+    },
+    {
+     "w": "A",
+     "from": 2066
+    }
+   ]
+  },
+  {
+   "from": 2069,
+   "to": 2088,
+   "words": [
+    {
+     "w": "BURGLAR",
+     "from": 2069
+    },
+    {
+     "w": "NAMED",
+     "from": 2081
+    }
+   ]
+  },
+  {
+   "from": 2088,
+   "to": 2119,
+   "words": [
+    {
+     "w": "JOSEPH",
+     "from": 2088
+    },
+    {
+     "w": "O'KEEFE",
+     "from": 2100
+    }
+   ]
+  },
+  {
+   "from": 2119,
+   "to": 2134,
+   "words": [
+    {
+     "w": "EVERYONE",
+     "from": 2119
+    },
+    {
+     "w": "CALLS",
+     "from": 2129
+    }
+   ]
+  },
+  {
+   "from": 2134,
+   "to": 2158,
+   "words": [
+    {
+     "w": "HIM",
+     "from": 2134
+    },
+    {
+     "w": "SPECS",
+     "from": 2138
+    }
+   ]
+  },
+  {
+   "from": 2158,
+   "to": 2172,
+   "words": [
+    {
+     "w": "REMEMBER",
+     "from": 2158
+    },
+    {
+     "w": "THAT",
+     "from": 2167
+    }
+   ]
+  },
+  {
+   "from": 2172,
+   "to": 2186,
+   "words": [
+    {
+     "w": "NAME",
+     "from": 2172
+    }
+   ]
+  },
+  {
+   "from": 2186,
+   "to": 2203,
+   "words": [
+    {
+     "w": "STEP",
+     "from": 2186
+    },
+    {
+     "w": "ONE",
+     "from": 2195
+    }
+   ]
+  },
+  {
+   "from": 2203,
+   "to": 2215,
+   "words": [
+    {
+     "w": "LEARN",
+     "from": 2203
+    },
+    {
+     "w": "THE",
+     "from": 2210
+    }
+   ]
+  },
+  {
+   "from": 2215,
+   "to": 2227,
+   "words": [
+    {
+     "w": "BUILDING",
+     "from": 2215
+    }
+   ]
+  },
+  {
+   "from": 2227,
+   "to": 2251,
+   "words": [
+    {
+     "w": "THE",
+     "from": 2227
+    },
+    {
+     "w": "CREW",
+     "from": 2232
+    },
+    {
+     "w": "WATCHES",
+     "from": 2242
+    }
+   ]
+  },
+  {
+   "from": 2251,
+   "to": 2270,
+   "words": [
+    {
+     "w": "IT",
+     "from": 2251
+    },
+    {
+     "w": "FOR",
+     "from": 2256
+    },
+    {
+     "w": "MONTHS",
+     "from": 2258
+    }
+   ]
+  },
+  {
+   "from": 2270,
+   "to": 2294,
+   "words": [
+    {
+     "w": "PINO",
+     "from": 2270
+    },
+    {
+     "w": "WANTS",
+     "from": 2287
+    },
+    {
+     "w": "TO",
+     "from": 2292
+    }
+   ]
+  },
+  {
+   "from": 2294,
+   "to": 2316,
+   "words": [
+    {
+     "w": "KNOW",
+     "from": 2294
+    },
+    {
+     "w": "THIS",
+     "from": 2299
+    },
+    {
+     "w": "PLACE",
+     "from": 2304
+    }
+   ]
+  },
+  {
+   "from": 2316,
+   "to": 2330,
+   "words": [
+    {
+     "w": "BETTER",
+     "from": 2316
+    },
+    {
+     "w": "THAN",
+     "from": 2323
+    },
+    {
+     "w": "THE",
+     "from": 2328
+    }
+   ]
+  },
+  {
+   "from": 2330,
+   "to": 2347,
+   "words": [
+    {
+     "w": "PEOPLE",
+     "from": 2330
+    },
+    {
+     "w": "WHO",
+     "from": 2338
+    },
+    {
+     "w": "WORK",
+     "from": 2342
+    }
+   ]
+  },
+  {
+   "from": 2347,
+   "to": 2357,
+   "words": [
+    {
+     "w": "THERE",
+     "from": 2347
+    }
+   ]
+  },
+  {
+   "from": 2357,
+   "to": 2374,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 2357
+    },
+    {
+     "w": "LEARN",
+     "from": 2362
+    },
+    {
+     "w": "WHEN",
+     "from": 2369
+    }
+   ]
+  },
+  {
+   "from": 2374,
+   "to": 2393,
+   "words": [
+    {
+     "w": "THE",
+     "from": 2374
+    },
+    {
+     "w": "TRUCKS",
+     "from": 2376
+    },
+    {
+     "w": "COME",
+     "from": 2388
+    }
+   ]
+  },
+  {
+   "from": 2393,
+   "to": 2402,
+   "words": [
+    {
+     "w": "HOME",
+     "from": 2393
+    }
+   ]
+  },
+  {
+   "from": 2402,
+   "to": 2419,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 2402
+    },
+    {
+     "w": "LEARN",
+     "from": 2407
+    },
+    {
+     "w": "WHICH",
+     "from": 2414
+    }
+   ]
+  },
+  {
+   "from": 2419,
+   "to": 2447,
+   "words": [
+    {
+     "w": "ROOMS",
+     "from": 2419
+    },
+    {
+     "w": "ARE",
+     "from": 2426
+    },
+    {
+     "w": "BUSY",
+     "from": 2431
+    }
+   ]
+  },
+  {
+   "from": 2447,
+   "to": 2461,
+   "words": [
+    {
+     "w": "AND",
+     "from": 2447
+    },
+    {
+     "w": "WHICH",
+     "from": 2452
+    },
+    {
+     "w": "ARE",
+     "from": 2456
+    }
+   ]
+  },
+  {
+   "from": 2461,
+   "to": 2478,
+   "words": [
+    {
+     "w": "EMPTY",
+     "from": 2461
+    }
+   ]
+  },
+  {
+   "from": 2478,
+   "to": 2492,
+   "words": [
+    {
+     "w": "THIS",
+     "from": 2478
+    },
+    {
+     "w": "ISN'T",
+     "from": 2480
+    },
+    {
+     "w": "A",
+     "from": 2488
+    }
+   ]
+  },
+  {
+   "from": 2492,
+   "to": 2521,
+   "words": [
+    {
+     "w": "SMASH",
+     "from": 2492
+    },
+    {
+     "w": "AND",
+     "from": 2502
+    },
+    {
+     "w": "GRAB",
+     "from": 2507
+    }
+   ]
+  },
+  {
+   "from": 2521,
+   "to": 2536,
+   "words": [
+    {
+     "w": "IT'S",
+     "from": 2521
+    },
+    {
+     "w": "PATIENT",
+     "from": 2526
+    }
+   ]
+  },
+  {
+   "from": 2536,
+   "to": 2545,
+   "words": [
+    {
+     "w": "WORK",
+     "from": 2536
+    }
+   ]
+  },
+  {
+   "from": 2545,
+   "to": 2560,
+   "words": [
+    {
+     "w": "AND",
+     "from": 2545
+    },
+    {
+     "w": "LATE",
+     "from": 2550
+    },
+    {
+     "w": "AT",
+     "from": 2557
+    }
+   ]
+  },
+  {
+   "from": 2560,
+   "to": 2572,
+   "words": [
+    {
+     "w": "NIGHT",
+     "from": 2560
+    }
+   ]
+  },
+  {
+   "from": 2572,
+   "to": 2579,
+   "words": [
+    {
+     "w": "WHEN",
+     "from": 2572
+    },
+    {
+     "w": "THE",
+     "from": 2574
+    }
+   ]
+  },
+  {
+   "from": 2579,
+   "to": 2591,
+   "words": [
+    {
+     "w": "BUILDING",
+     "from": 2579
+    },
+    {
+     "w": "IS",
+     "from": 2586
+    }
+   ]
+  },
+  {
+   "from": 2591,
+   "to": 2605,
+   "words": [
+    {
+     "w": "QUIET",
+     "from": 2591
+    }
+   ]
+  },
+  {
+   "from": 2605,
+   "to": 2617,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 2605
+    },
+    {
+     "w": "START",
+     "from": 2610
+    }
+   ]
+  },
+  {
+   "from": 2617,
+   "to": 2646,
+   "words": [
+    {
+     "w": "SLIPPING",
+     "from": 2617
+    },
+    {
+     "w": "INSIDE",
+     "from": 2629
+    }
+   ]
+  },
+  {
+   "from": 2646,
+   "to": 2658,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 2646
+    },
+    {
+     "w": "TAKE",
+     "from": 2651
+    }
+   ]
+  },
+  {
+   "from": 2658,
+   "to": 2670,
+   "words": [
+    {
+     "w": "NOTHING",
+     "from": 2658
+    }
+   ]
+  },
+  {
+   "from": 2670,
+   "to": 2692,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 2670
+    },
+    {
+     "w": "JUST",
+     "from": 2675
+    },
+    {
+     "w": "LOOK",
+     "from": 2680
+    }
+   ]
+  },
+  {
+   "from": 2692,
+   "to": 2713,
+   "words": [
+    {
+     "w": "EVERY",
+     "from": 2692
+    },
+    {
+     "w": "VISIT",
+     "from": 2699
+    },
+    {
+     "w": "IS",
+     "from": 2708
+    }
+   ]
+  },
+  {
+   "from": 2713,
+   "to": 2732,
+   "words": [
+    {
+     "w": "A",
+     "from": 2713
+    },
+    {
+     "w": "RISK",
+     "from": 2718
+    }
+   ]
+  },
+  {
+   "from": 2732,
+   "to": 2754,
+   "words": [
+    {
+     "w": "ONE",
+     "from": 2732
+    },
+    {
+     "w": "WRONG",
+     "from": 2740
+    },
+    {
+     "w": "NIGHT",
+     "from": 2747
+    }
+   ]
+  },
+  {
+   "from": 2754,
+   "to": 2768,
+   "words": [
+    {
+     "w": "AND",
+     "from": 2754
+    },
+    {
+     "w": "THE",
+     "from": 2759
+    },
+    {
+     "w": "WHOLE",
+     "from": 2761
+    }
+   ]
+  },
+  {
+   "from": 2768,
+   "to": 2792,
+   "words": [
+    {
+     "w": "PLAN",
+     "from": 2768
+    },
+    {
+     "w": "IS",
+     "from": 2776
+    },
+    {
+     "w": "OVER",
+     "from": 2780
+    }
+   ]
+  },
+  {
+   "from": 2792,
+   "to": 2821,
+   "words": [
+    {
+     "w": "BUT",
+     "from": 2792
+    },
+    {
+     "w": "NOBODY",
+     "from": 2801
+    },
+    {
+     "w": "EVER",
+     "from": 2813
+    }
+   ]
+  },
+  {
+   "from": 2821,
+   "to": 2840,
+   "words": [
+    {
+     "w": "CATCHES",
+     "from": 2821
+    },
+    {
+     "w": "THEM",
+     "from": 2830
+    }
+   ]
+  },
+  {
+   "from": 2840,
+   "to": 2857,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 2840
+    },
+    {
+     "w": "COUNT",
+     "from": 2847
+    },
+    {
+     "w": "THE",
+     "from": 2852
+    }
+   ]
+  },
+  {
+   "from": 2857,
+   "to": 2873,
+   "words": [
+    {
+     "w": "DOORS",
+     "from": 2857
+    },
+    {
+     "w": "BETWEEN",
+     "from": 2866
+    }
+   ]
+  },
+  {
+   "from": 2873,
+   "to": 2893,
+   "words": [
+    {
+     "w": "THE",
+     "from": 2873
+    },
+    {
+     "w": "STREET",
+     "from": 2878
+    },
+    {
+     "w": "AND",
+     "from": 2888
+    }
+   ]
+  },
+  {
+   "from": 2893,
+   "to": 2909,
+   "words": [
+    {
+     "w": "THE",
+     "from": 2893
+    },
+    {
+     "w": "MONEY",
+     "from": 2895
+    }
+   ]
+  },
+  {
+   "from": 2909,
+   "to": 2929,
+   "words": [
+    {
+     "w": "THERE",
+     "from": 2909
+    },
+    {
+     "w": "ARE",
+     "from": 2914
+    },
+    {
+     "w": "FIVE",
+     "from": 2919
+    }
+   ]
+  },
+  {
+   "from": 2929,
+   "to": 2943,
+   "words": [
+    {
+     "w": "AND",
+     "from": 2929
+    },
+    {
+     "w": "EVERY",
+     "from": 2933
+    },
+    {
+     "w": "ONE",
+     "from": 2938
+    }
+   ]
+  },
+  {
+   "from": 2943,
+   "to": 2955,
+   "words": [
+    {
+     "w": "OF",
+     "from": 2943
+    },
+    {
+     "w": "THEM",
+     "from": 2945
+    },
+    {
+     "w": "IS",
+     "from": 2950
+    }
+   ]
+  },
+  {
+   "from": 2955,
+   "to": 2969,
+   "words": [
+    {
+     "w": "LOCKED",
+     "from": 2955
+    }
+   ]
+  },
+  {
+   "from": 2969,
+   "to": 2986,
+   "words": [
+    {
+     "w": "SO",
+     "from": 2969
+    },
+    {
+     "w": "THAT'S",
+     "from": 2974
+    },
+    {
+     "w": "THE",
+     "from": 2981
+    }
+   ]
+  },
+  {
+   "from": 2986,
+   "to": 3008,
+   "words": [
+    {
+     "w": "NEXT",
+     "from": 2986
+    },
+    {
+     "w": "PROBLEM",
+     "from": 2993
+    }
+   ]
+  },
+  {
+   "from": 3008,
+   "to": 3025,
+   "words": [
+    {
+     "w": "STEP",
+     "from": 3008
+    },
+    {
+     "w": "TWO",
+     "from": 3016
+    }
+   ]
+  },
+  {
+   "from": 3025,
+   "to": 3044,
+   "words": [
+    {
+     "w": "THE",
+     "from": 3025
+    },
+    {
+     "w": "KEYS",
+     "from": 3029
+    }
+   ]
+  },
+  {
+   "from": 3044,
+   "to": 3058,
+   "words": [
+    {
+     "w": "ONE",
+     "from": 3044
+    },
+    {
+     "w": "NIGHT",
+     "from": 3049
+    }
+   ]
+  },
+  {
+   "from": 3058,
+   "to": 3068,
+   "words": [
+    {
+     "w": "ONE",
+     "from": 3058
+    },
+    {
+     "w": "OF",
+     "from": 3061
+    },
+    {
+     "w": "THE",
+     "from": 3063
+    }
+   ]
+  },
+  {
+   "from": 3068,
+   "to": 3087,
+   "words": [
+    {
+     "w": "CREW",
+     "from": 3068
+    },
+    {
+     "w": "STOPS",
+     "from": 3075
+    },
+    {
+     "w": "AT",
+     "from": 3082
+    }
+   ]
+  },
+  {
+   "from": 3087,
+   "to": 3109,
+   "words": [
+    {
+     "w": "THE",
+     "from": 3087
+    },
+    {
+     "w": "FIRST",
+     "from": 3089
+    },
+    {
+     "w": "DOOR",
+     "from": 3097
+    }
+   ]
+  },
+  {
+   "from": 3109,
+   "to": 3125,
+   "words": [
+    {
+     "w": "HE",
+     "from": 3109
+    },
+    {
+     "w": "DOESN'T",
+     "from": 3111
+    },
+    {
+     "w": "PICK",
+     "from": 3118
+    }
+   ]
+  },
+  {
+   "from": 3125,
+   "to": 3142,
+   "words": [
+    {
+     "w": "THE",
+     "from": 3125
+    },
+    {
+     "w": "LOCK",
+     "from": 3130
+    }
+   ]
+  },
+  {
+   "from": 3142,
+   "to": 3157,
+   "words": [
+    {
+     "w": "HE",
+     "from": 3142
+    },
+    {
+     "w": "TAKES",
+     "from": 3147
+    },
+    {
+     "w": "THE",
+     "from": 3152
+    }
+   ]
+  },
+  {
+   "from": 3157,
+   "to": 3178,
+   "words": [
+    {
+     "w": "WHOLE",
+     "from": 3157
+    },
+    {
+     "w": "LOCK",
+     "from": 3164
+    },
+    {
+     "w": "OUT",
+     "from": 3171
+    }
+   ]
+  },
+  {
+   "from": 3178,
+   "to": 3200,
+   "words": [
+    {
+     "w": "HE",
+     "from": 3178
+    },
+    {
+     "w": "UNSCREWS",
+     "from": 3183
+    },
+    {
+     "w": "THE",
+     "from": 3197
+    }
+   ]
+  },
+  {
+   "from": 3200,
+   "to": 3224,
+   "words": [
+    {
+     "w": "BRASS",
+     "from": 3200
+    },
+    {
+     "w": "CYLINDER",
+     "from": 3207
+    }
+   ]
+  },
+  {
+   "from": 3224,
+   "to": 3239,
+   "words": [
+    {
+     "w": "THE",
+     "from": 3224
+    },
+    {
+     "w": "PART",
+     "from": 3232
+    },
+    {
+     "w": "WHERE",
+     "from": 3236
+    }
+   ]
+  },
+  {
+   "from": 3239,
+   "to": 3263,
+   "words": [
+    {
+     "w": "THE",
+     "from": 3239
+    },
+    {
+     "w": "KEY",
+     "from": 3244
+    },
+    {
+     "w": "GOES",
+     "from": 3251
+    }
+   ]
+  },
+  {
+   "from": 3263,
+   "to": 3282,
+   "words": [
+    {
+     "w": "AND",
+     "from": 3263
+    },
+    {
+     "w": "CARRIES",
+     "from": 3270
+    },
+    {
+     "w": "IT",
+     "from": 3280
+    }
+   ]
+  },
+  {
+   "from": 3282,
+   "to": 3292,
+   "words": [
+    {
+     "w": "AWAY",
+     "from": 3282
+    }
+   ]
+  },
+  {
+   "from": 3292,
+   "to": 3311,
+   "words": [
+    {
+     "w": "A",
+     "from": 3292
+    },
+    {
+     "w": "KEY",
+     "from": 3295
+    },
+    {
+     "w": "MAKER",
+     "from": 3301
+    }
+   ]
+  },
+  {
+   "from": 3311,
+   "to": 3328,
+   "words": [
+    {
+     "w": "CUTS",
+     "from": 3311
+    },
+    {
+     "w": "A",
+     "from": 3318
+    },
+    {
+     "w": "KEY",
+     "from": 3320
+    }
+   ]
+  },
+  {
+   "from": 3328,
+   "to": 3344,
+   "words": [
+    {
+     "w": "TO",
+     "from": 3328
+    },
+    {
+     "w": "FIT",
+     "from": 3330
+    },
+    {
+     "w": "IT",
+     "from": 3335
+    }
+   ]
+  },
+  {
+   "from": 3344,
+   "to": 3361,
+   "words": [
+    {
+     "w": "THEN",
+     "from": 3344
+    },
+    {
+     "w": "THE",
+     "from": 3349
+    },
+    {
+     "w": "LOCK",
+     "from": 3354
+    }
+   ]
+  },
+  {
+   "from": 3361,
+   "to": 3378,
+   "words": [
+    {
+     "w": "GOES",
+     "from": 3361
+    },
+    {
+     "w": "BACK",
+     "from": 3368
+    },
+    {
+     "w": "INTO",
+     "from": 3373
+    }
+   ]
+  },
+  {
+   "from": 3378,
+   "to": 3395,
+   "words": [
+    {
+     "w": "THE",
+     "from": 3378
+    },
+    {
+     "w": "DOOR",
+     "from": 3383
+    }
+   ]
+  },
+  {
+   "from": 3395,
+   "to": 3409,
+   "words": [
+    {
+     "w": "AS",
+     "from": 3395
+    },
+    {
+     "w": "IF",
+     "from": 3400
+    },
+    {
+     "w": "IT",
+     "from": 3404
+    }
+   ]
+  },
+  {
+   "from": 3409,
+   "to": 3436,
+   "words": [
+    {
+     "w": "WAS",
+     "from": 3409
+    },
+    {
+     "w": "NEVER",
+     "from": 3414
+    },
+    {
+     "w": "GONE",
+     "from": 3421
+    }
+   ]
+  },
+  {
+   "from": 3436,
+   "to": 3450,
+   "words": [
+    {
+     "w": "NOBODY",
+     "from": 3436
+    },
+    {
+     "w": "AT",
+     "from": 3445
+    }
+   ]
+  },
+  {
+   "from": 3450,
+   "to": 3474,
+   "words": [
+    {
+     "w": "BRINK'S",
+     "from": 3450
+    },
+    {
+     "w": "NOTICES",
+     "from": 3462
+    }
+   ]
+  },
+  {
+   "from": 3474,
+   "to": 3488,
+   "words": [
+    {
+     "w": "A",
+     "from": 3474
+    },
+    {
+     "w": "THING",
+     "from": 3479
+    }
+   ]
+  },
+  {
+   "from": 3488,
+   "to": 3503,
+   "words": [
+    {
+     "w": "SO",
+     "from": 3488
+    },
+    {
+     "w": "THEY",
+     "from": 3493
+    },
+    {
+     "w": "DO",
+     "from": 3498
+    }
+   ]
+  },
+  {
+   "from": 3503,
+   "to": 3520,
+   "words": [
+    {
+     "w": "IT",
+     "from": 3503
+    },
+    {
+     "w": "AGAIN",
+     "from": 3508
+    }
+   ]
+  },
+  {
+   "from": 3520,
+   "to": 3532,
+   "words": [
+    {
+     "w": "AND",
+     "from": 3520
+    },
+    {
+     "w": "AGAIN",
+     "from": 3524
+    }
+   ]
+  },
+  {
+   "from": 3532,
+   "to": 3551,
+   "words": [
+    {
+     "w": "IT'S",
+     "from": 3532
+    },
+    {
+     "w": "SLOW",
+     "from": 3539
+    }
+   ]
+  },
+  {
+   "from": 3551,
+   "to": 3570,
+   "words": [
+    {
+     "w": "IT'S",
+     "from": 3551
+    },
+    {
+     "w": "RISKY",
+     "from": 3558
+    }
+   ]
+  },
+  {
+   "from": 3570,
+   "to": 3592,
+   "words": [
+    {
+     "w": "AND",
+     "from": 3570
+    },
+    {
+     "w": "IT",
+     "from": 3575
+    },
+    {
+     "w": "WORKS",
+     "from": 3577
+    }
+   ]
+  },
+  {
+   "from": 3592,
+   "to": 3611,
+   "words": [
+    {
+     "w": "ONE",
+     "from": 3592
+    },
+    {
+     "w": "LOCK",
+     "from": 3596
+    },
+    {
+     "w": "AT",
+     "from": 3606
+    }
+   ]
+  },
+  {
+   "from": 3611,
+   "to": 3624,
+   "words": [
+    {
+     "w": "A",
+     "from": 3611
+    },
+    {
+     "w": "TIME",
+     "from": 3613
+    }
+   ]
+  },
+  {
+   "from": 3624,
+   "to": 3641,
+   "words": [
+    {
+     "w": "OVER",
+     "from": 3624
+    },
+    {
+     "w": "SEVERAL",
+     "from": 3634
+    }
+   ]
+  },
+  {
+   "from": 3641,
+   "to": 3650,
+   "words": [
+    {
+     "w": "MONTHS",
+     "from": 3641
+    }
+   ]
+  },
+  {
+   "from": 3650,
+   "to": 3662,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 3650
+    },
+    {
+     "w": "GET",
+     "from": 3655
+    },
+    {
+     "w": "A",
+     "from": 3658
+    }
+   ]
+  },
+  {
+   "from": 3662,
+   "to": 3679,
+   "words": [
+    {
+     "w": "KEY",
+     "from": 3662
+    },
+    {
+     "w": "FOR",
+     "from": 3667
+    },
+    {
+     "w": "ALL",
+     "from": 3672
+    }
+   ]
+  },
+  {
+   "from": 3679,
+   "to": 3703,
+   "words": [
+    {
+     "w": "FIVE",
+     "from": 3679
+    },
+    {
+     "w": "DOORS",
+     "from": 3686
+    }
+   ]
+  },
+  {
+   "from": 3703,
+   "to": 3718,
+   "words": [
+    {
+     "w": "NOW",
+     "from": 3703
+    },
+    {
+     "w": "THEY",
+     "from": 3710
+    },
+    {
+     "w": "CAN",
+     "from": 3715
+    }
+   ]
+  },
+  {
+   "from": 3718,
+   "to": 3732,
+   "words": [
+    {
+     "w": "WALK",
+     "from": 3718
+    },
+    {
+     "w": "FROM",
+     "from": 3725
+    },
+    {
+     "w": "THE",
+     "from": 3730
+    }
+   ]
+  },
+  {
+   "from": 3732,
+   "to": 3746,
+   "words": [
+    {
+     "w": "STREET",
+     "from": 3732
+    },
+    {
+     "w": "TO",
+     "from": 3739
+    },
+    {
+     "w": "THE",
+     "from": 3744
+    }
+   ]
+  },
+  {
+   "from": 3746,
+   "to": 3766,
+   "words": [
+    {
+     "w": "MONEY",
+     "from": 3746
+    },
+    {
+     "w": "WITHOUT",
+     "from": 3758
+    }
+   ]
+  },
+  {
+   "from": 3766,
+   "to": 3775,
+   "words": [
+    {
+     "w": "BREAKING",
+     "from": 3766
+    }
+   ]
+  },
+  {
+   "from": 3775,
+   "to": 3790,
+   "words": [
+    {
+     "w": "ANYTHING",
+     "from": 3775
+    }
+   ]
+  },
+  {
+   "from": 3790,
+   "to": 3809,
+   "words": [
+    {
+     "w": "THINK",
+     "from": 3790
+    },
+    {
+     "w": "ABOUT",
+     "from": 3797
+    },
+    {
+     "w": "THAT",
+     "from": 3804
+    }
+   ]
+  },
+  {
+   "from": 3809,
+   "to": 3830,
+   "words": [
+    {
+     "w": "FOR",
+     "from": 3809
+    },
+    {
+     "w": "A",
+     "from": 3814
+    },
+    {
+     "w": "SECOND",
+     "from": 3816
+    }
+   ]
+  },
+  {
+   "from": 3830,
+   "to": 3845,
+   "words": [
+    {
+     "w": "WITHOUT",
+     "from": 3830
+    },
+    {
+     "w": "KNOWING",
+     "from": 3838
+    }
+   ]
+  },
+  {
+   "from": 3845,
+   "to": 3852,
+   "words": [
+    {
+     "w": "IT",
+     "from": 3845
+    }
+   ]
+  },
+  {
+   "from": 3852,
+   "to": 3869,
+   "words": [
+    {
+     "w": "THE",
+     "from": 3852
+    },
+    {
+     "w": "COMPANY",
+     "from": 3857
+    },
+    {
+     "w": "THAT",
+     "from": 3864
+    }
+   ]
+  },
+  {
+   "from": 3869,
+   "to": 3893,
+   "words": [
+    {
+     "w": "GUARDS",
+     "from": 3869
+    },
+    {
+     "w": "BOSTON'S",
+     "from": 3878
+    }
+   ]
+  },
+  {
+   "from": 3893,
+   "to": 3914,
+   "words": [
+    {
+     "w": "MONEY",
+     "from": 3893
+    },
+    {
+     "w": "HAS",
+     "from": 3902
+    },
+    {
+     "w": "GIVEN",
+     "from": 3907
+    }
+   ]
+  },
+  {
+   "from": 3914,
+   "to": 3931,
+   "words": [
+    {
+     "w": "ITS",
+     "from": 3914
+    },
+    {
+     "w": "KEYS",
+     "from": 3919
+    },
+    {
+     "w": "TO",
+     "from": 3926
+    }
+   ]
+  },
+  {
+   "from": 3931,
+   "to": 3946,
+   "words": [
+    {
+     "w": "THE",
+     "from": 3931
+    },
+    {
+     "w": "MEN",
+     "from": 3934
+    },
+    {
+     "w": "WHO",
+     "from": 3941
+    }
+   ]
+  },
+  {
+   "from": 3946,
+   "to": 3970,
+   "words": [
+    {
+     "w": "PLAN",
+     "from": 3946
+    },
+    {
+     "w": "TO",
+     "from": 3953
+    },
+    {
+     "w": "ROB",
+     "from": 3955
+    }
+   ]
+  },
+  {
+   "from": 3970,
+   "to": 3984,
+   "words": [
+    {
+     "w": "IT",
+     "from": 3970
+    }
+   ]
+  },
+  {
+   "from": 3984,
+   "to": 3998,
+   "words": [
+    {
+     "w": "STEP",
+     "from": 3984
+    },
+    {
+     "w": "THREE",
+     "from": 3990
+    }
+   ]
+  },
+  {
+   "from": 3998,
+   "to": 4019,
+   "words": [
+    {
+     "w": "THE",
+     "from": 3998
+    },
+    {
+     "w": "GETAWAY",
+     "from": 4001
+    }
+   ]
+  },
+  {
+   "from": 4019,
+   "to": 4038,
+   "words": [
+    {
+     "w": "IN",
+     "from": 4019
+    },
+    {
+     "w": "NOVEMBER",
+     "from": 4026
+    }
+   ]
+  },
+  {
+   "from": 4038,
+   "to": 4064,
+   "words": [
+    {
+     "w": "1949",
+     "from": 4038
+    }
+   ]
+  },
+  {
+   "from": 4064,
+   "to": 4088,
+   "words": [
+    {
+     "w": "THE",
+     "from": 4064
+    },
+    {
+     "w": "CREW",
+     "from": 4069
+    },
+    {
+     "w": "STEALS",
+     "from": 4079
+    }
+   ]
+  },
+  {
+   "from": 4088,
+   "to": 4100,
+   "words": [
+    {
+     "w": "A",
+     "from": 4088
+    },
+    {
+     "w": "TRUCK",
+     "from": 4091
+    },
+    {
+     "w": "FROM",
+     "from": 4098
+    }
+   ]
+  },
+  {
+   "from": 4100,
+   "to": 4124,
+   "words": [
+    {
+     "w": "A",
+     "from": 4100
+    },
+    {
+     "w": "FORD",
+     "from": 4105
+    },
+    {
+     "w": "DEALER",
+     "from": 4112
+    }
+   ]
+  },
+  {
+   "from": 4124,
+   "to": 4151,
+   "words": [
+    {
+     "w": "A",
+     "from": 4124
+    },
+    {
+     "w": "GREEN",
+     "from": 4127
+    },
+    {
+     "w": "FORD",
+     "from": 4136
+    }
+   ]
+  },
+  {
+   "from": 4151,
+   "to": 4165,
+   "words": [
+    {
+     "w": "WITH",
+     "from": 4151
+    },
+    {
+     "w": "AN",
+     "from": 4156
+    },
+    {
+     "w": "OPEN",
+     "from": 4158
+    }
+   ]
+  },
+  {
+   "from": 4165,
+   "to": 4184,
+   "words": [
+    {
+     "w": "BACK",
+     "from": 4165
+    },
+    {
+     "w": "AND",
+     "from": 4170
+    },
+    {
+     "w": "WOODEN",
+     "from": 4175
+    }
+   ]
+  },
+  {
+   "from": 4184,
+   "to": 4199,
+   "words": [
+    {
+     "w": "SIDES",
+     "from": 4184
+    }
+   ]
+  },
+  {
+   "from": 4199,
+   "to": 4218,
+   "words": [
+    {
+     "w": "THAT",
+     "from": 4199
+    },
+    {
+     "w": "TRUCK",
+     "from": 4204
+    },
+    {
+     "w": "WILL",
+     "from": 4213
+    }
+   ]
+  },
+  {
+   "from": 4218,
+   "to": 4240,
+   "words": [
+    {
+     "w": "MATTER",
+     "from": 4218
+    },
+    {
+     "w": "LATER",
+     "from": 4228
+    }
+   ]
+  },
+  {
+   "from": 4240,
+   "to": 4254,
+   "words": [
+    {
+     "w": "THEN",
+     "from": 4240
+    },
+    {
+     "w": "THEY",
+     "from": 4244
+    },
+    {
+     "w": "PICK",
+     "from": 4247
+    }
+   ]
+  },
+  {
+   "from": 4254,
+   "to": 4278,
+   "words": [
+    {
+     "w": "THEIR",
+     "from": 4254
+    },
+    {
+     "w": "OUTFITS",
+     "from": 4259
+    }
+   ]
+  },
+  {
+   "from": 4278,
+   "to": 4302,
+   "words": [
+    {
+     "w": "NAVY",
+     "from": 4278
+    },
+    {
+     "w": "PEA",
+     "from": 4286
+    },
+    {
+     "w": "COATS",
+     "from": 4292
+    }
+   ]
+  },
+  {
+   "from": 4302,
+   "to": 4328,
+   "words": [
+    {
+     "w": "CHAUFFEUR",
+     "from": 4302
+    },
+    {
+     "w": "CAPS",
+     "from": 4316
+    }
+   ]
+  },
+  {
+   "from": 4328,
+   "to": 4338,
+   "words": [
+    {
+     "w": "GLOVES",
+     "from": 4328
+    }
+   ]
+  },
+  {
+   "from": 4338,
+   "to": 4360,
+   "words": [
+    {
+     "w": "AND",
+     "from": 4338
+    },
+    {
+     "w": "SOFT",
+     "from": 4343
+    },
+    {
+     "w": "RUBBER",
+     "from": 4352
+    }
+   ]
+  },
+  {
+   "from": 4360,
+   "to": 4374,
+   "words": [
+    {
+     "w": "SHOES",
+     "from": 4360
+    }
+   ]
+  },
+  {
+   "from": 4374,
+   "to": 4384,
+   "words": [
+    {
+     "w": "SO",
+     "from": 4374
+    },
+    {
+     "w": "THEIR",
+     "from": 4379
+    }
+   ]
+  },
+  {
+   "from": 4384,
+   "to": 4403,
+   "words": [
+    {
+     "w": "FOOTSTEPS",
+     "from": 4384
+    },
+    {
+     "w": "MAKE",
+     "from": 4398
+    }
+   ]
+  },
+  {
+   "from": 4403,
+   "to": 4424,
+   "words": [
+    {
+     "w": "NO",
+     "from": 4403
+    },
+    {
+     "w": "SOUND",
+     "from": 4408
+    }
+   ]
+  },
+  {
+   "from": 4424,
+   "to": 4438,
+   "words": [
+    {
+     "w": "AND",
+     "from": 4424
+    },
+    {
+     "w": "RUBBER",
+     "from": 4431
+    }
+   ]
+  },
+  {
+   "from": 4438,
+   "to": 4467,
+   "words": [
+    {
+     "w": "HALLOWEEN",
+     "from": 4438
+    },
+    {
+     "w": "MASKS",
+     "from": 4453
+    }
+   ]
+  },
+  {
+   "from": 4467,
+   "to": 4481,
+   "words": [
+    {
+     "w": "SO",
+     "from": 4467
+    },
+    {
+     "w": "NO",
+     "from": 4472
+    },
+    {
+     "w": "ONE",
+     "from": 4477
+    }
+   ]
+  },
+  {
+   "from": 4481,
+   "to": 4498,
+   "words": [
+    {
+     "w": "WILL",
+     "from": 4481
+    },
+    {
+     "w": "EVER",
+     "from": 4486
+    },
+    {
+     "w": "SEE",
+     "from": 4493
+    }
+   ]
+  },
+  {
+   "from": 4498,
+   "to": 4520,
+   "words": [
+    {
+     "w": "THEIR",
+     "from": 4498
+    },
+    {
+     "w": "FACES",
+     "from": 4503
+    }
+   ]
+  },
+  {
+   "from": 4520,
+   "to": 4539,
+   "words": [
+    {
+     "w": "IF",
+     "from": 4520
+    },
+    {
+     "w": "ANYONE",
+     "from": 4525
+    },
+    {
+     "w": "SEES",
+     "from": 4534
+    }
+   ]
+  },
+  {
+   "from": 4539,
+   "to": 4549,
+   "words": [
+    {
+     "w": "THEM",
+     "from": 4539
+    }
+   ]
+  },
+  {
+   "from": 4549,
+   "to": 4558,
+   "words": [
+    {
+     "w": "ALL",
+     "from": 4549
+    },
+    {
+     "w": "THEY'LL",
+     "from": 4553
+    }
+   ]
+  },
+  {
+   "from": 4558,
+   "to": 4577,
+   "words": [
+    {
+     "w": "REMEMBER",
+     "from": 4558
+    },
+    {
+     "w": "IS",
+     "from": 4568
+    },
+    {
+     "w": "A",
+     "from": 4573
+    }
+   ]
+  },
+  {
+   "from": 4577,
+   "to": 4585,
+   "words": [
+    {
+     "w": "COAT",
+     "from": 4577
+    }
+   ]
+  },
+  {
+   "from": 4585,
+   "to": 4601,
+   "words": [
+    {
+     "w": "A",
+     "from": 4585
+    },
+    {
+     "w": "CAP",
+     "from": 4587
+    },
+    {
+     "w": "AND",
+     "from": 4597
+    }
+   ]
+  },
+  {
+   "from": 4601,
+   "to": 4628,
+   "words": [
+    {
+     "w": "A",
+     "from": 4601
+    },
+    {
+     "w": "RUBBER",
+     "from": 4604
+    },
+    {
+     "w": "FACE",
+     "from": 4613
+    }
+   ]
+  },
+  {
+   "from": 4628,
+   "to": 4645,
+   "words": [
+    {
+     "w": "EVERYTHING",
+     "from": 4628
+    },
+    {
+     "w": "IS",
+     "from": 4640
+    }
+   ]
+  },
+  {
+   "from": 4645,
+   "to": 4661,
+   "words": [
+    {
+     "w": "READY",
+     "from": 4645
+    }
+   ]
+  },
+  {
+   "from": 4661,
+   "to": 4695,
+   "words": [
+    {
+     "w": "JANUARY",
+     "from": 4661
+    },
+    {
+     "w": "17TH",
+     "from": 4681
+    }
+   ]
+  },
+  {
+   "from": 4695,
+   "to": 4718,
+   "words": [
+    {
+     "w": "1950",
+     "from": 4695
+    }
+   ]
+  },
+  {
+   "from": 4718,
+   "to": 4738,
+   "words": [
+    {
+     "w": "IT'S",
+     "from": 4718
+    },
+    {
+     "w": "A",
+     "from": 4726
+    },
+    {
+     "w": "WINTER",
+     "from": 4730
+    }
+   ]
+  },
+  {
+   "from": 4738,
+   "to": 4750,
+   "words": [
+    {
+     "w": "EVENING",
+     "from": 4738
+    }
+   ]
+  },
+  {
+   "from": 4750,
+   "to": 4778,
+   "words": [
+    {
+     "w": "JUST",
+     "from": 4750
+    },
+    {
+     "w": "AFTER",
+     "from": 4757
+    },
+    {
+     "w": "7",
+     "from": 4762
+    }
+   ]
+  },
+  {
+   "from": 4778,
+   "to": 4800,
+   "words": [
+    {
+     "w": "THE",
+     "from": 4778
+    },
+    {
+     "w": "GREEN",
+     "from": 4781
+    },
+    {
+     "w": "TRUCK",
+     "from": 4790
+    }
+   ]
+  },
+  {
+   "from": 4800,
+   "to": 4817,
+   "words": [
+    {
+     "w": "PULLS",
+     "from": 4800
+    },
+    {
+     "w": "UP",
+     "from": 4807
+    },
+    {
+     "w": "NEAR",
+     "from": 4812
+    }
+   ]
+  },
+  {
+   "from": 4817,
+   "to": 4834,
+   "words": [
+    {
+     "w": "THE",
+     "from": 4817
+    },
+    {
+     "w": "BUILDING",
+     "from": 4819
+    }
+   ]
+  },
+  {
+   "from": 4834,
+   "to": 4855,
+   "words": [
+    {
+     "w": "THE",
+     "from": 4834
+    },
+    {
+     "w": "MASKED",
+     "from": 4838
+    },
+    {
+     "w": "MEN",
+     "from": 4848
+    }
+   ]
+  },
+  {
+   "from": 4855,
+   "to": 4870,
+   "words": [
+    {
+     "w": "CLIMB",
+     "from": 4855
+    },
+    {
+     "w": "OUT",
+     "from": 4862
+    }
+   ]
+  },
+  {
+   "from": 4870,
+   "to": 4891,
+   "words": [
+    {
+     "w": "A",
+     "from": 4870
+    },
+    {
+     "w": "LOOKOUT",
+     "from": 4872
+    },
+    {
+     "w": "KEEPS",
+     "from": 4884
+    }
+   ]
+  },
+  {
+   "from": 4891,
+   "to": 4903,
+   "words": [
+    {
+     "w": "WATCH",
+     "from": 4891
+    },
+    {
+     "w": "ON",
+     "from": 4897
+    },
+    {
+     "w": "THE",
+     "from": 4901
+    }
+   ]
+  },
+  {
+   "from": 4903,
+   "to": 4918,
+   "words": [
+    {
+     "w": "STREET",
+     "from": 4903
+    }
+   ]
+  },
+  {
+   "from": 4918,
+   "to": 4932,
+   "words": [
+    {
+     "w": "KEY",
+     "from": 4918
+    },
+    {
+     "w": "ONE",
+     "from": 4924
+    }
+   ]
+  },
+  {
+   "from": 4932,
+   "to": 4946,
+   "words": [
+    {
+     "w": "AND",
+     "from": 4932
+    },
+    {
+     "w": "THE",
+     "from": 4937
+    },
+    {
+     "w": "FIRST",
+     "from": 4939
+    }
+   ]
+  },
+  {
+   "from": 4946,
+   "to": 4968,
+   "words": [
+    {
+     "w": "DOOR",
+     "from": 4946
+    },
+    {
+     "w": "OPENS",
+     "from": 4954
+    }
+   ]
+  },
+  {
+   "from": 4968,
+   "to": 4982,
+   "words": [
+    {
+     "w": "KEY",
+     "from": 4968
+    },
+    {
+     "w": "TWO",
+     "from": 4974
+    }
+   ]
+  },
+  {
+   "from": 4982,
+   "to": 4999,
+   "words": [
+    {
+     "w": "KEY",
+     "from": 4982
+    },
+    {
+     "w": "THREE",
+     "from": 4989
+    }
+   ]
+  },
+  {
+   "from": 4999,
+   "to": 5016,
+   "words": [
+    {
+     "w": "KEY",
+     "from": 4999
+    },
+    {
+     "w": "FOUR",
+     "from": 5006
+    }
+   ]
+  },
+  {
+   "from": 5016,
+   "to": 5035,
+   "words": [
+    {
+     "w": "KEY",
+     "from": 5016
+    },
+    {
+     "w": "FIVE",
+     "from": 5024
+    }
+   ]
+  },
+  {
+   "from": 5035,
+   "to": 5059,
+   "words": [
+    {
+     "w": "NO",
+     "from": 5035
+    },
+    {
+     "w": "ALARM",
+     "from": 5042
+    },
+    {
+     "w": "GOES",
+     "from": 5052
+    }
+   ]
+  },
+  {
+   "from": 5059,
+   "to": 5069,
+   "words": [
+    {
+     "w": "OFF",
+     "from": 5059
+    }
+   ]
+  },
+  {
+   "from": 5069,
+   "to": 5083,
+   "words": [
+    {
+     "w": "THEY'VE",
+     "from": 5069
+    },
+    {
+     "w": "WALKED",
+     "from": 5076
+    }
+   ]
+  },
+  {
+   "from": 5083,
+   "to": 5095,
+   "words": [
+    {
+     "w": "THIS",
+     "from": 5083
+    },
+    {
+     "w": "ROUTE",
+     "from": 5088
+    }
+   ]
+  },
+  {
+   "from": 5095,
+   "to": 5110,
+   "words": [
+    {
+     "w": "BEFORE",
+     "from": 5095
+    }
+   ]
+  },
+  {
+   "from": 5110,
+   "to": 5126,
+   "words": [
+    {
+     "w": "IN",
+     "from": 5110
+    },
+    {
+     "w": "THE",
+     "from": 5114
+    },
+    {
+     "w": "DARK",
+     "from": 5117
+    }
+   ]
+  },
+  {
+   "from": 5126,
+   "to": 5148,
+   "words": [
+    {
+     "w": "UPSTAIRS",
+     "from": 5126
+    }
+   ]
+  },
+  {
+   "from": 5148,
+   "to": 5165,
+   "words": [
+    {
+     "w": "IN",
+     "from": 5148
+    },
+    {
+     "w": "THE",
+     "from": 5153
+    },
+    {
+     "w": "COUNTING",
+     "from": 5158
+    }
+   ]
+  },
+  {
+   "from": 5165,
+   "to": 5172,
+   "words": [
+    {
+     "w": "ROOM",
+     "from": 5165
+    }
+   ]
+  },
+  {
+   "from": 5172,
+   "to": 5194,
+   "words": [
+    {
+     "w": "A",
+     "from": 5172
+    },
+    {
+     "w": "FEW",
+     "from": 5174
+    },
+    {
+     "w": "BRINK'S",
+     "from": 5179
+    }
+   ]
+  },
+  {
+   "from": 5194,
+   "to": 5206,
+   "words": [
+    {
+     "w": "WORKERS",
+     "from": 5194
+    },
+    {
+     "w": "ARE",
+     "from": 5203
+    }
+   ]
+  },
+  {
+   "from": 5206,
+   "to": 5215,
+   "words": [
+    {
+     "w": "PUTTING",
+     "from": 5206
+    },
+    {
+     "w": "THE",
+     "from": 5210
+    }
+   ]
+  },
+  {
+   "from": 5215,
+   "to": 5232,
+   "words": [
+    {
+     "w": "DAY'S",
+     "from": 5215
+    },
+    {
+     "w": "MONEY",
+     "from": 5222
+    }
+   ]
+  },
+  {
+   "from": 5232,
+   "to": 5244,
+   "words": [
+    {
+     "w": "AWAY",
+     "from": 5232
+    }
+   ]
+  },
+  {
+   "from": 5244,
+   "to": 5256,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 5244
+    },
+    {
+     "w": "LOOK",
+     "from": 5249
+    },
+    {
+     "w": "UP",
+     "from": 5251
+    }
+   ]
+  },
+  {
+   "from": 5256,
+   "to": 5270,
+   "words": [
+    {
+     "w": "AND",
+     "from": 5256
+    },
+    {
+     "w": "THEY",
+     "from": 5261
+    },
+    {
+     "w": "SEE",
+     "from": 5266
+    }
+   ]
+  },
+  {
+   "from": 5270,
+   "to": 5287,
+   "words": [
+    {
+     "w": "MASKS",
+     "from": 5270
+    }
+   ]
+  },
+  {
+   "from": 5287,
+   "to": 5306,
+   "words": [
+    {
+     "w": "AND",
+     "from": 5287
+    },
+    {
+     "w": "GUNS",
+     "from": 5292
+    }
+   ]
+  },
+  {
+   "from": 5306,
+   "to": 5326,
+   "words": [
+    {
+     "w": "THE",
+     "from": 5306
+    },
+    {
+     "w": "WORKERS",
+     "from": 5311
+    },
+    {
+     "w": "ARE",
+     "from": 5321
+    }
+   ]
+  },
+  {
+   "from": 5326,
+   "to": 5342,
+   "words": [
+    {
+     "w": "TIED",
+     "from": 5326
+    },
+    {
+     "w": "UP",
+     "from": 5333
+    }
+   ]
+  },
+  {
+   "from": 5342,
+   "to": 5359,
+   "words": [
+    {
+     "w": "HAND",
+     "from": 5342
+    },
+    {
+     "w": "AND",
+     "from": 5347
+    },
+    {
+     "w": "FOOT",
+     "from": 5352
+    }
+   ]
+  },
+  {
+   "from": 5359,
+   "to": 5374,
+   "words": [
+    {
+     "w": "AND",
+     "from": 5359
+    },
+    {
+     "w": "THEIR",
+     "from": 5364
+    },
+    {
+     "w": "MOUTHS",
+     "from": 5366
+    }
+   ]
+  },
+  {
+   "from": 5374,
+   "to": 5398,
+   "words": [
+    {
+     "w": "ARE",
+     "from": 5374
+    },
+    {
+     "w": "TAPED",
+     "from": 5378
+    },
+    {
+     "w": "SHUT",
+     "from": 5388
+    }
+   ]
+  },
+  {
+   "from": 5398,
+   "to": 5417,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 5398
+    },
+    {
+     "w": "CAN'T",
+     "from": 5400
+    },
+    {
+     "w": "MOVE",
+     "from": 5407
+    }
+   ]
+  },
+  {
+   "from": 5417,
+   "to": 5434,
+   "words": [
+    {
+     "w": "AND",
+     "from": 5417
+    },
+    {
+     "w": "THEY",
+     "from": 5422
+    },
+    {
+     "w": "CAN'T",
+     "from": 5426
+    }
+   ]
+  },
+  {
+   "from": 5434,
+   "to": 5453,
+   "words": [
+    {
+     "w": "CALL",
+     "from": 5434
+    },
+    {
+     "w": "FOR",
+     "from": 5438
+    },
+    {
+     "w": "HELP",
+     "from": 5443
+    }
+   ]
+  },
+  {
+   "from": 5453,
+   "to": 5472,
+   "words": [
+    {
+     "w": "THEN",
+     "from": 5453
+    },
+    {
+     "w": "THE",
+     "from": 5460
+    },
+    {
+     "w": "CREW",
+     "from": 5462
+    }
+   ]
+  },
+  {
+   "from": 5472,
+   "to": 5491,
+   "words": [
+    {
+     "w": "GETS",
+     "from": 5472
+    },
+    {
+     "w": "TO",
+     "from": 5477
+    },
+    {
+     "w": "WORK",
+     "from": 5479
+    }
+   ]
+  },
+  {
+   "from": 5491,
+   "to": 5513,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 5491
+    },
+    {
+     "w": "FILL",
+     "from": 5496
+    },
+    {
+     "w": "BAG",
+     "from": 5503
+    }
+   ]
+  },
+  {
+   "from": 5513,
+   "to": 5534,
+   "words": [
+    {
+     "w": "AFTER",
+     "from": 5513
+    },
+    {
+     "w": "BAG",
+     "from": 5520
+    }
+   ]
+  },
+  {
+   "from": 5534,
+   "to": 5544,
+   "words": [
+    {
+     "w": "CASH",
+     "from": 5534
+    }
+   ]
+  },
+  {
+   "from": 5544,
+   "to": 5554,
+   "words": [
+    {
+     "w": "CHECKS",
+     "from": 5544
+    }
+   ]
+  },
+  {
+   "from": 5554,
+   "to": 5582,
+   "words": [
+    {
+     "w": "MONEY",
+     "from": 5554
+    },
+    {
+     "w": "ORDERS",
+     "from": 5563
+    }
+   ]
+  },
+  {
+   "from": 5582,
+   "to": 5594,
+   "words": [
+    {
+     "w": "BONDS",
+     "from": 5582
+    }
+   ]
+  },
+  {
+   "from": 5594,
+   "to": 5606,
+   "words": [
+    {
+     "w": "THERE'S",
+     "from": 5594
+    },
+    {
+     "w": "EVEN",
+     "from": 5601
+    }
+   ]
+  },
+  {
+   "from": 5606,
+   "to": 5623,
+   "words": [
+    {
+     "w": "MORE",
+     "from": 5606
+    },
+    {
+     "w": "MONEY",
+     "from": 5611
+    },
+    {
+     "w": "IN",
+     "from": 5618
+    }
+   ]
+  },
+  {
+   "from": 5623,
+   "to": 5637,
+   "words": [
+    {
+     "w": "COINS",
+     "from": 5623
+    }
+   ]
+  },
+  {
+   "from": 5637,
+   "to": 5651,
+   "words": [
+    {
+     "w": "BUT",
+     "from": 5637
+    },
+    {
+     "w": "IT'S",
+     "from": 5642
+    },
+    {
+     "w": "TOO",
+     "from": 5647
+    }
+   ]
+  },
+  {
+   "from": 5651,
+   "to": 5678,
+   "words": [
+    {
+     "w": "HEAVY",
+     "from": 5651
+    },
+    {
+     "w": "TO",
+     "from": 5661
+    },
+    {
+     "w": "CARRY",
+     "from": 5666
+    }
+   ]
+  },
+  {
+   "from": 5678,
+   "to": 5695,
+   "words": [
+    {
+     "w": "SO",
+     "from": 5678
+    },
+    {
+     "w": "THEY",
+     "from": 5683
+    },
+    {
+     "w": "LEAVE",
+     "from": 5687
+    }
+   ]
+  },
+  {
+   "from": 5695,
+   "to": 5714,
+   "words": [
+    {
+     "w": "IT",
+     "from": 5695
+    },
+    {
+     "w": "BEHIND",
+     "from": 5699
+    }
+   ]
+  },
+  {
+   "from": 5714,
+   "to": 5728,
+   "words": [
+    {
+     "w": "IN",
+     "from": 5714
+    },
+    {
+     "w": "A",
+     "from": 5719
+    },
+    {
+     "w": "FEW",
+     "from": 5723
+    }
+   ]
+  },
+  {
+   "from": 5728,
+   "to": 5738,
+   "words": [
+    {
+     "w": "MINUTES",
+     "from": 5728
+    }
+   ]
+  },
+  {
+   "from": 5738,
+   "to": 5759,
+   "words": [
+    {
+     "w": "THE",
+     "from": 5738
+    },
+    {
+     "w": "TABLES",
+     "from": 5743
+    },
+    {
+     "w": "ARE",
+     "from": 5755
+    }
+   ]
+  },
+  {
+   "from": 5759,
+   "to": 5774,
+   "words": [
+    {
+     "w": "BARE",
+     "from": 5759
+    }
+   ]
+  },
+  {
+   "from": 5774,
+   "to": 5803,
+   "words": [
+    {
+     "w": "MORE",
+     "from": 5774
+    },
+    {
+     "w": "THAN",
+     "from": 5779
+    },
+    {
+     "w": "1.2",
+     "from": 5783
+    }
+   ]
+  },
+  {
+   "from": 5803,
+   "to": 5822,
+   "words": [
+    {
+     "w": "MILLION",
+     "from": 5803
+    },
+    {
+     "w": "DOLLARS",
+     "from": 5812
+    }
+   ]
+  },
+  {
+   "from": 5822,
+   "to": 5848,
+   "words": [
+    {
+     "w": "IN",
+     "from": 5822
+    },
+    {
+     "w": "CASH",
+     "from": 5827
+    },
+    {
+     "w": "ALONE",
+     "from": 5836
+    }
+   ]
+  },
+  {
+   "from": 5848,
+   "to": 5865,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 5848
+    },
+    {
+     "w": "CARRY",
+     "from": 5853
+    },
+    {
+     "w": "IT",
+     "from": 5860
+    }
+   ]
+  },
+  {
+   "from": 5865,
+   "to": 5879,
+   "words": [
+    {
+     "w": "ALL",
+     "from": 5865
+    },
+    {
+     "w": "DOWN",
+     "from": 5870
+    },
+    {
+     "w": "THE",
+     "from": 5875
+    }
+   ]
+  },
+  {
+   "from": 5879,
+   "to": 5899,
+   "words": [
+    {
+     "w": "STAIRS",
+     "from": 5879
+    },
+    {
+     "w": "AND",
+     "from": 5889
+    },
+    {
+     "w": "OUT",
+     "from": 5894
+    }
+   ]
+  },
+  {
+   "from": 5899,
+   "to": 5918,
+   "words": [
+    {
+     "w": "TO",
+     "from": 5899
+    },
+    {
+     "w": "THE",
+     "from": 5901
+    },
+    {
+     "w": "TRUCK",
+     "from": 5903
+    }
+   ]
+  },
+  {
+   "from": 5918,
+   "to": 5949,
+   "words": [
+    {
+     "w": "AT",
+     "from": 5918
+    },
+    {
+     "w": "7:37",
+     "from": 5925
+    }
+   ]
+  },
+  {
+   "from": 5949,
+   "to": 5959,
+   "words": [
+    {
+     "w": "ONE",
+     "from": 5949
+    },
+    {
+     "w": "OF",
+     "from": 5954
+    },
+    {
+     "w": "THE",
+     "from": 5956
+    }
+   ]
+  },
+  {
+   "from": 5959,
+   "to": 5975,
+   "words": [
+    {
+     "w": "WORKERS",
+     "from": 5959
+    },
+    {
+     "w": "GETS",
+     "from": 5971
+    }
+   ]
+  },
+  {
+   "from": 5975,
+   "to": 6004,
+   "words": [
+    {
+     "w": "FREE",
+     "from": 5975
+    },
+    {
+     "w": "AND",
+     "from": 5985
+    },
+    {
+     "w": "RAISES",
+     "from": 5992
+    }
+   ]
+  },
+  {
+   "from": 6004,
+   "to": 6023,
+   "words": [
+    {
+     "w": "THE",
+     "from": 6004
+    },
+    {
+     "w": "ALARM",
+     "from": 6007
+    }
+   ]
+  },
+  {
+   "from": 6023,
+   "to": 6033,
+   "words": [
+    {
+     "w": "BY",
+     "from": 6023
+    },
+    {
+     "w": "THEN",
+     "from": 6028
+    }
+   ]
+  },
+  {
+   "from": 6033,
+   "to": 6050,
+   "words": [
+    {
+     "w": "THE",
+     "from": 6033
+    },
+    {
+     "w": "TRUCK",
+     "from": 6038
+    },
+    {
+     "w": "IS",
+     "from": 6045
+    }
+   ]
+  },
+  {
+   "from": 6050,
+   "to": 6062,
+   "words": [
+    {
+     "w": "GONE",
+     "from": 6050
+    }
+   ]
+  },
+  {
+   "from": 6062,
+   "to": 6076,
+   "words": [
+    {
+     "w": "FROM",
+     "from": 6062
+    },
+    {
+     "w": "THE",
+     "from": 6067
+    },
+    {
+     "w": "FIRST",
+     "from": 6069
+    }
+   ]
+  },
+  {
+   "from": 6076,
+   "to": 6091,
+   "words": [
+    {
+     "w": "DOOR",
+     "from": 6076
+    },
+    {
+     "w": "TO",
+     "from": 6083
+    },
+    {
+     "w": "THE",
+     "from": 6088
+    }
+   ]
+  },
+  {
+   "from": 6091,
+   "to": 6112,
+   "words": [
+    {
+     "w": "LAST",
+     "from": 6091
+    },
+    {
+     "w": "BAG",
+     "from": 6098
+    }
+   ]
+  },
+  {
+   "from": 6112,
+   "to": 6131,
+   "words": [
+    {
+     "w": "IT'S",
+     "from": 6112
+    },
+    {
+     "w": "ALL",
+     "from": 6119
+    },
+    {
+     "w": "OVER",
+     "from": 6124
+    }
+   ]
+  },
+  {
+   "from": 6131,
+   "to": 6146,
+   "words": [
+    {
+     "w": "IN",
+     "from": 6131
+    },
+    {
+     "w": "LESS",
+     "from": 6136
+    },
+    {
+     "w": "THAN",
+     "from": 6141
+    }
+   ]
+  },
+  {
+   "from": 6146,
+   "to": 6167,
+   "words": [
+    {
+     "w": "HALF",
+     "from": 6146
+    },
+    {
+     "w": "AN",
+     "from": 6153
+    },
+    {
+     "w": "HOUR",
+     "from": 6155
+    }
+   ]
+  },
+  {
+   "from": 6167,
+   "to": 6182,
+   "words": [
+    {
+     "w": "BY",
+     "from": 6167
+    },
+    {
+     "w": "MORNING",
+     "from": 6172
+    }
+   ]
+  },
+  {
+   "from": 6182,
+   "to": 6206,
+   "words": [
+    {
+     "w": "IT'S",
+     "from": 6182
+    },
+    {
+     "w": "FRONT-PAGE",
+     "from": 6189
+    }
+   ]
+  },
+  {
+   "from": 6206,
+   "to": 6225,
+   "words": [
+    {
+     "w": "NEWS",
+     "from": 6206
+    },
+    {
+     "w": "ACROSS",
+     "from": 6215
+    },
+    {
+     "w": "THE",
+     "from": 6223
+    }
+   ]
+  },
+  {
+   "from": 6225,
+   "to": 6241,
+   "words": [
+    {
+     "w": "COUNTRY",
+     "from": 6225
+    }
+   ]
+  },
+  {
+   "from": 6241,
+   "to": 6260,
+   "words": [
+    {
+     "w": "PEOPLE",
+     "from": 6241
+    },
+    {
+     "w": "CALL",
+     "from": 6251
+    },
+    {
+     "w": "IT",
+     "from": 6256
+    }
+   ]
+  },
+  {
+   "from": 6260,
+   "to": 6275,
+   "words": [
+    {
+     "w": "THE",
+     "from": 6260
+    },
+    {
+     "w": "CRIME",
+     "from": 6263
+    },
+    {
+     "w": "OF",
+     "from": 6272
+    }
+   ]
+  },
+  {
+   "from": 6275,
+   "to": 6294,
+   "words": [
+    {
+     "w": "THE",
+     "from": 6275
+    },
+    {
+     "w": "CENTURY",
+     "from": 6280
+    }
+   ]
+  },
+  {
+   "from": 6294,
+   "to": 6318,
+   "words": [
+    {
+     "w": "THE",
+     "from": 6294
+    },
+    {
+     "w": "CREW",
+     "from": 6299
+    },
+    {
+     "w": "SPLITS",
+     "from": 6308
+    }
+   ]
+  },
+  {
+   "from": 6318,
+   "to": 6337,
+   "words": [
+    {
+     "w": "UP",
+     "from": 6318
+    },
+    {
+     "w": "THE",
+     "from": 6320
+    },
+    {
+     "w": "CASH",
+     "from": 6325
+    }
+   ]
+  },
+  {
+   "from": 6337,
+   "to": 6359,
+   "words": [
+    {
+     "w": "EACH",
+     "from": 6337
+    },
+    {
+     "w": "MAN",
+     "from": 6344
+    },
+    {
+     "w": "TAKES",
+     "from": 6352
+    }
+   ]
+  },
+  {
+   "from": 6359,
+   "to": 6376,
+   "words": [
+    {
+     "w": "HIS",
+     "from": 6359
+    },
+    {
+     "w": "SHARE",
+     "from": 6364
+    }
+   ]
+  },
+  {
+   "from": 6376,
+   "to": 6388,
+   "words": [
+    {
+     "w": "AND",
+     "from": 6376
+    },
+    {
+     "w": "THEN",
+     "from": 6380
+    },
+    {
+     "w": "THEY",
+     "from": 6385
+    }
+   ]
+  },
+  {
+   "from": 6388,
+   "to": 6404,
+   "words": [
+    {
+     "w": "WAIT",
+     "from": 6388
+    }
+   ]
+  },
+  {
+   "from": 6404,
+   "to": 6419,
+   "words": [
+    {
+     "w": "THEN",
+     "from": 6404
+    },
+    {
+     "w": "THEY",
+     "from": 6409
+    },
+    {
+     "w": "MAKE",
+     "from": 6414
+    }
+   ]
+  },
+  {
+   "from": 6419,
+   "to": 6436,
+   "words": [
+    {
+     "w": "A",
+     "from": 6419
+    },
+    {
+     "w": "DEAL",
+     "from": 6421
+    }
+   ]
+  },
+  {
+   "from": 6436,
+   "to": 6455,
+   "words": [
+    {
+     "w": "NOBODY",
+     "from": 6436
+    },
+    {
+     "w": "SPENDS",
+     "from": 6445
+    }
+   ]
+  },
+  {
+   "from": 6455,
+   "to": 6467,
+   "words": [
+    {
+     "w": "BIG",
+     "from": 6455
+    }
+   ]
+  },
+  {
+   "from": 6467,
+   "to": 6491,
+   "words": [
+    {
+     "w": "NOBODY",
+     "from": 6467
+    },
+    {
+     "w": "TALKS",
+     "from": 6476
+    }
+   ]
+  },
+  {
+   "from": 6491,
+   "to": 6510,
+   "words": [
+    {
+     "w": "NOT",
+     "from": 6491
+    },
+    {
+     "w": "FOR",
+     "from": 6496
+    },
+    {
+     "w": "SIX",
+     "from": 6503
+    }
+   ]
+  },
+  {
+   "from": 6510,
+   "to": 6522,
+   "words": [
+    {
+     "w": "YEARS",
+     "from": 6510
+    }
+   ]
+  },
+  {
+   "from": 6522,
+   "to": 6544,
+   "words": [
+    {
+     "w": "WHY",
+     "from": 6522
+    },
+    {
+     "w": "SIX",
+     "from": 6529
+    }
+   ]
+  },
+  {
+   "from": 6544,
+   "to": 6553,
+   "words": [
+    {
+     "w": "BECAUSE",
+     "from": 6544
+    },
+    {
+     "w": "IN",
+     "from": 6548
+    }
+   ]
+  },
+  {
+   "from": 6553,
+   "to": 6580,
+   "words": [
+    {
+     "w": "MASSACHUSETTS",
+     "from": 6553
+    }
+   ]
+  },
+  {
+   "from": 6580,
+   "to": 6599,
+   "words": [
+    {
+     "w": "ONCE",
+     "from": 6580
+    },
+    {
+     "w": "SIX",
+     "from": 6587
+    },
+    {
+     "w": "YEARS",
+     "from": 6594
+    }
+   ]
+  },
+  {
+   "from": 6599,
+   "to": 6618,
+   "words": [
+    {
+     "w": "HAVE",
+     "from": 6599
+    },
+    {
+     "w": "PASSED",
+     "from": 6604
+    }
+   ]
+  },
+  {
+   "from": 6618,
+   "to": 6637,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 6618
+    },
+    {
+     "w": "CAN",
+     "from": 6625
+    },
+    {
+     "w": "NEVER",
+     "from": 6630
+    }
+   ]
+  },
+  {
+   "from": 6637,
+   "to": 6656,
+   "words": [
+    {
+     "w": "BE",
+     "from": 6637
+    },
+    {
+     "w": "CHARGED",
+     "from": 6642
+    },
+    {
+     "w": "FOR",
+     "from": 6652
+    }
+   ]
+  },
+  {
+   "from": 6656,
+   "to": 6678,
+   "words": [
+    {
+     "w": "THIS",
+     "from": 6656
+    },
+    {
+     "w": "ROBBERY",
+     "from": 6661
+    }
+   ]
+  },
+  {
+   "from": 6678,
+   "to": 6692,
+   "words": [
+    {
+     "w": "REMEMBER",
+     "from": 6678
+    },
+    {
+     "w": "THAT",
+     "from": 6688
+    }
+   ]
+  },
+  {
+   "from": 6692,
+   "to": 6707,
+   "words": [
+    {
+     "w": "NUMBER",
+     "from": 6692
+    }
+   ]
+  },
+  {
+   "from": 6707,
+   "to": 6719,
+   "words": [
+    {
+     "w": "THEN",
+     "from": 6707
+    },
+    {
+     "w": "THEY",
+     "from": 6712
+    },
+    {
+     "w": "GET",
+     "from": 6714
+    }
+   ]
+  },
+  {
+   "from": 6719,
+   "to": 6728,
+   "words": [
+    {
+     "w": "RID",
+     "from": 6719
+    },
+    {
+     "w": "OF",
+     "from": 6724
+    },
+    {
+     "w": "THE",
+     "from": 6726
+    }
+   ]
+  },
+  {
+   "from": 6728,
+   "to": 6743,
+   "words": [
+    {
+     "w": "TRUCK",
+     "from": 6728
+    }
+   ]
+  },
+  {
+   "from": 6743,
+   "to": 6755,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 6743
+    },
+    {
+     "w": "CUT",
+     "from": 6745
+    },
+    {
+     "w": "IT",
+     "from": 6752
+    }
+   ]
+  },
+  {
+   "from": 6755,
+   "to": 6774,
+   "words": [
+    {
+     "w": "INTO",
+     "from": 6755
+    },
+    {
+     "w": "PIECES",
+     "from": 6760
+    },
+    {
+     "w": "WITH",
+     "from": 6769
+    }
+   ]
+  },
+  {
+   "from": 6774,
+   "to": 6793,
+   "words": [
+    {
+     "w": "A",
+     "from": 6774
+    },
+    {
+     "w": "TORCH",
+     "from": 6776
+    }
+   ]
+  },
+  {
+   "from": 6793,
+   "to": 6808,
+   "words": [
+    {
+     "w": "SMASH",
+     "from": 6793
+    },
+    {
+     "w": "THE",
+     "from": 6805
+    }
+   ]
+  },
+  {
+   "from": 6808,
+   "to": 6820,
+   "words": [
+    {
+     "w": "ENGINE",
+     "from": 6808
+    }
+   ]
+  },
+  {
+   "from": 6820,
+   "to": 6834,
+   "words": [
+    {
+     "w": "AND",
+     "from": 6820
+    },
+    {
+     "w": "THROW",
+     "from": 6824
+    },
+    {
+     "w": "IT",
+     "from": 6829
+    }
+   ]
+  },
+  {
+   "from": 6834,
+   "to": 6844,
+   "words": [
+    {
+     "w": "AWAY",
+     "from": 6834
+    }
+   ]
+  },
+  {
+   "from": 6844,
+   "to": 6860,
+   "words": [
+    {
+     "w": "IN",
+     "from": 6844
+    },
+    {
+     "w": "MARCH",
+     "from": 6848
+    }
+   ]
+  },
+  {
+   "from": 6860,
+   "to": 6875,
+   "words": [
+    {
+     "w": "PIECES",
+     "from": 6860
+    },
+    {
+     "w": "OF",
+     "from": 6868
+    },
+    {
+     "w": "IT",
+     "from": 6870
+    }
+   ]
+  },
+  {
+   "from": 6875,
+   "to": 6887,
+   "words": [
+    {
+     "w": "TURN",
+     "from": 6875
+    },
+    {
+     "w": "UP",
+     "from": 6882
+    },
+    {
+     "w": "AT",
+     "from": 6884
+    }
+   ]
+  },
+  {
+   "from": 6887,
+   "to": 6901,
+   "words": [
+    {
+     "w": "A",
+     "from": 6887
+    },
+    {
+     "w": "DUMP",
+     "from": 6889
+    },
+    {
+     "w": "IN",
+     "from": 6899
+    }
+   ]
+  },
+  {
+   "from": 6901,
+   "to": 6918,
+   "words": [
+    {
+     "w": "STOUGHTON",
+     "from": 6901
+    }
+   ]
+  },
+  {
+   "from": 6918,
+   "to": 6942,
+   "words": [
+    {
+     "w": "SOUTH",
+     "from": 6918
+    },
+    {
+     "w": "OF",
+     "from": 6925
+    },
+    {
+     "w": "BOSTON",
+     "from": 6928
+    }
+   ]
+  },
+  {
+   "from": 6942,
+   "to": 6961,
+   "words": [
+    {
+     "w": "THE",
+     "from": 6942
+    },
+    {
+     "w": "FBI",
+     "from": 6944
+    },
+    {
+     "w": "NOW",
+     "from": 6959
+    }
+   ]
+  },
+  {
+   "from": 6961,
+   "to": 6980,
+   "words": [
+    {
+     "w": "HAS",
+     "from": 6961
+    },
+    {
+     "w": "A",
+     "from": 6966
+    },
+    {
+     "w": "TRUCK",
+     "from": 6968
+    }
+   ]
+  },
+  {
+   "from": 6980,
+   "to": 6995,
+   "words": [
+    {
+     "w": "WHAT",
+     "from": 6980
+    },
+    {
+     "w": "IT",
+     "from": 6985
+    },
+    {
+     "w": "DOESN'T",
+     "from": 6988
+    }
+   ]
+  },
+  {
+   "from": 6995,
+   "to": 7007,
+   "words": [
+    {
+     "w": "HAVE",
+     "from": 6995
+    },
+    {
+     "w": "IS",
+     "from": 7000
+    },
+    {
+     "w": "A",
+     "from": 7004
+    }
+   ]
+  },
+  {
+   "from": 7007,
+   "to": 7018,
+   "words": [
+    {
+     "w": "NAME",
+     "from": 7007
+    }
+   ]
+  },
+  {
+   "from": 7018,
+   "to": 7052,
+   "words": [
+    {
+     "w": "THE",
+     "from": 7018
+    },
+    {
+     "w": "FBI",
+     "from": 7023
+    },
+    {
+     "w": "THROWS",
+     "from": 7040
+    }
+   ]
+  },
+  {
+   "from": 7052,
+   "to": 7061,
+   "words": [
+    {
+     "w": "EVERYTHING",
+     "from": 7052
+    },
+    {
+     "w": "AT",
+     "from": 7059
+    }
+   ]
+  },
+  {
+   "from": 7061,
+   "to": 7078,
+   "words": [
+    {
+     "w": "THE",
+     "from": 7061
+    },
+    {
+     "w": "CASE",
+     "from": 7064
+    }
+   ]
+  },
+  {
+   "from": 7078,
+   "to": 7105,
+   "words": [
+    {
+     "w": "BRINK'S",
+     "from": 7078
+    },
+    {
+     "w": "OFFERS",
+     "from": 7093
+    },
+    {
+     "w": "A",
+     "from": 7100
+    }
+   ]
+  },
+  {
+   "from": 7105,
+   "to": 7119,
+   "words": [
+    {
+     "w": "REWARD",
+     "from": 7105
+    },
+    {
+     "w": "OF",
+     "from": 7114
+    }
+   ]
+  },
+  {
+   "from": 7119,
+   "to": 7162,
+   "words": [
+    {
+     "w": "100,000",
+     "from": 7119
+    },
+    {
+     "w": "DOLLARS",
+     "from": 7139
+    }
+   ]
+  },
+  {
+   "from": 7162,
+   "to": 7181,
+   "words": [
+    {
+     "w": "BUT",
+     "from": 7162
+    },
+    {
+     "w": "THE",
+     "from": 7167
+    },
+    {
+     "w": "CLUES",
+     "from": 7169
+    }
+   ]
+  },
+  {
+   "from": 7181,
+   "to": 7201,
+   "words": [
+    {
+     "w": "ARE",
+     "from": 7181
+    },
+    {
+     "w": "THIN",
+     "from": 7186
+    }
+   ]
+  },
+  {
+   "from": 7201,
+   "to": 7220,
+   "words": [
+    {
+     "w": "THE",
+     "from": 7201
+    },
+    {
+     "w": "CREW",
+     "from": 7203
+    },
+    {
+     "w": "LEFT",
+     "from": 7213
+    }
+   ]
+  },
+  {
+   "from": 7220,
+   "to": 7237,
+   "words": [
+    {
+     "w": "ALMOST",
+     "from": 7220
+    },
+    {
+     "w": "NOTHING",
+     "from": 7229
+    }
+   ]
+  },
+  {
+   "from": 7237,
+   "to": 7252,
+   "words": [
+    {
+     "w": "BEHIND",
+     "from": 7237
+    }
+   ]
+  },
+  {
+   "from": 7252,
+   "to": 7270,
+   "words": [
+    {
+     "w": "A",
+     "from": 7252
+    },
+    {
+     "w": "CHAUFFEUR'S",
+     "from": 7256
+    }
+   ]
+  },
+  {
+   "from": 7270,
+   "to": 7277,
+   "words": [
+    {
+     "w": "CAP",
+     "from": 7270
+    }
+   ]
+  },
+  {
+   "from": 7277,
+   "to": 7294,
+   "words": [
+    {
+     "w": "SOME",
+     "from": 7277
+    },
+    {
+     "w": "ROPE",
+     "from": 7282
+    }
+   ]
+  },
+  {
+   "from": 7294,
+   "to": 7311,
+   "words": [
+    {
+     "w": "SOME",
+     "from": 7294
+    },
+    {
+     "w": "TAPE",
+     "from": 7299
+    }
+   ]
+  },
+  {
+   "from": 7311,
+   "to": 7330,
+   "words": [
+    {
+     "w": "AGENTS",
+     "from": 7311
+    },
+    {
+     "w": "TALK",
+     "from": 7323
+    },
+    {
+     "w": "TO",
+     "from": 7328
+    }
+   ]
+  },
+  {
+   "from": 7330,
+   "to": 7342,
+   "words": [
+    {
+     "w": "HUNDREDS",
+     "from": 7330
+    },
+    {
+     "w": "OF",
+     "from": 7340
+    }
+   ]
+  },
+  {
+   "from": 7342,
+   "to": 7355,
+   "words": [
+    {
+     "w": "PEOPLE",
+     "from": 7342
+    }
+   ]
+  },
+  {
+   "from": 7355,
+   "to": 7370,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 7355
+    },
+    {
+     "w": "CHASE",
+     "from": 7363
+    }
+   ]
+  },
+  {
+   "from": 7370,
+   "to": 7391,
+   "words": [
+    {
+     "w": "HUNDREDS",
+     "from": 7370
+    },
+    {
+     "w": "OF",
+     "from": 7379
+    },
+    {
+     "w": "DEAD",
+     "from": 7382
+    }
+   ]
+  },
+  {
+   "from": 7391,
+   "to": 7406,
+   "words": [
+    {
+     "w": "ENDS",
+     "from": 7391
+    }
+   ]
+  },
+  {
+   "from": 7406,
+   "to": 7415,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 7406
+    },
+    {
+     "w": "HAVE",
+     "from": 7408
+    },
+    {
+     "w": "THEIR",
+     "from": 7413
+    }
+   ]
+  },
+  {
+   "from": 7415,
+   "to": 7432,
+   "words": [
+    {
+     "w": "SUSPECTS",
+     "from": 7415
+    }
+   ]
+  },
+  {
+   "from": 7432,
+   "to": 7461,
+   "words": [
+    {
+     "w": "PINO",
+     "from": 7432
+    },
+    {
+     "w": "AMONG",
+     "from": 7447
+    },
+    {
+     "w": "THEM",
+     "from": 7454
+    }
+   ]
+  },
+  {
+   "from": 7461,
+   "to": 7478,
+   "words": [
+    {
+     "w": "BUT",
+     "from": 7461
+    },
+    {
+     "w": "SUSPICION",
+     "from": 7466
+    }
+   ]
+  },
+  {
+   "from": 7478,
+   "to": 7502,
+   "words": [
+    {
+     "w": "ISN'T",
+     "from": 7478
+    },
+    {
+     "w": "PROOF",
+     "from": 7487
+    }
+   ]
+  },
+  {
+   "from": 7502,
+   "to": 7516,
+   "words": [
+    {
+     "w": "AND",
+     "from": 7502
+    },
+    {
+     "w": "THE",
+     "from": 7504
+    },
+    {
+     "w": "CREW",
+     "from": 7507
+    }
+   ]
+  },
+  {
+   "from": 7516,
+   "to": 7528,
+   "words": [
+    {
+     "w": "KEEPS",
+     "from": 7516
+    },
+    {
+     "w": "ITS",
+     "from": 7523
+    }
+   ]
+  },
+  {
+   "from": 7528,
+   "to": 7545,
+   "words": [
+    {
+     "w": "PROMISE",
+     "from": 7528
+    }
+   ]
+  },
+  {
+   "from": 7545,
+   "to": 7569,
+   "words": [
+    {
+     "w": "MONTHS",
+     "from": 7545
+    },
+    {
+     "w": "GO",
+     "from": 7555
+    },
+    {
+     "w": "BY",
+     "from": 7559
+    }
+   ]
+  },
+  {
+   "from": 7569,
+   "to": 7588,
+   "words": [
+    {
+     "w": "THEN",
+     "from": 7569
+    },
+    {
+     "w": "YEARS",
+     "from": 7576
+    }
+   ]
+  },
+  {
+   "from": 7588,
+   "to": 7607,
+   "words": [
+    {
+     "w": "BUT",
+     "from": 7588
+    },
+    {
+     "w": "THE",
+     "from": 7593
+    },
+    {
+     "w": "CREW",
+     "from": 7595
+    }
+   ]
+  },
+  {
+   "from": 7607,
+   "to": 7622,
+   "words": [
+    {
+     "w": "HAS",
+     "from": 7607
+    },
+    {
+     "w": "A",
+     "from": 7610
+    },
+    {
+     "w": "WEAK",
+     "from": 7615
+    }
+   ]
+  },
+  {
+   "from": 7622,
+   "to": 7634,
+   "words": [
+    {
+     "w": "SPOT",
+     "from": 7622
+    }
+   ]
+  },
+  {
+   "from": 7634,
+   "to": 7653,
+   "words": [
+    {
+     "w": "REMEMBER",
+     "from": 7634
+    },
+    {
+     "w": "SPECS",
+     "from": 7643
+    }
+   ]
+  },
+  {
+   "from": 7653,
+   "to": 7667,
+   "words": [
+    {
+     "w": "O'KEEFE",
+     "from": 7653
+    }
+   ]
+  },
+  {
+   "from": 7667,
+   "to": 7685,
+   "words": [
+    {
+     "w": "THE",
+     "from": 7667
+    },
+    {
+     "w": "BURGLAR",
+     "from": 7670
+    }
+   ]
+  },
+  {
+   "from": 7685,
+   "to": 7721,
+   "words": [
+    {
+     "w": "IN",
+     "from": 7685
+    },
+    {
+     "w": "JUNE",
+     "from": 7692
+    },
+    {
+     "w": "1950",
+     "from": 7699
+    }
+   ]
+  },
+  {
+   "from": 7721,
+   "to": 7742,
+   "words": [
+    {
+     "w": "JUST",
+     "from": 7721
+    },
+    {
+     "w": "FIVE",
+     "from": 7728
+    },
+    {
+     "w": "MONTHS",
+     "from": 7735
+    }
+   ]
+  },
+  {
+   "from": 7742,
+   "to": 7752,
+   "words": [
+    {
+     "w": "AFTER",
+     "from": 7742
+    },
+    {
+     "w": "THE",
+     "from": 7750
+    }
+   ]
+  },
+  {
+   "from": 7752,
+   "to": 7771,
+   "words": [
+    {
+     "w": "ROBBERY",
+     "from": 7752
+    }
+   ]
+  },
+  {
+   "from": 7771,
+   "to": 7790,
+   "words": [
+    {
+     "w": "O'KEEFE",
+     "from": 7771
+    },
+    {
+     "w": "AND",
+     "from": 7788
+    }
+   ]
+  },
+  {
+   "from": 7790,
+   "to": 7805,
+   "words": [
+    {
+     "w": "ANOTHER",
+     "from": 7790
+    },
+    {
+     "w": "CREW",
+     "from": 7795
+    }
+   ]
+  },
+  {
+   "from": 7805,
+   "to": 7819,
+   "words": [
+    {
+     "w": "MEMBER",
+     "from": 7805
+    },
+    {
+     "w": "ARE",
+     "from": 7814
+    }
+   ]
+  },
+  {
+   "from": 7819,
+   "to": 7834,
+   "words": [
+    {
+     "w": "ARRESTED",
+     "from": 7819
+    },
+    {
+     "w": "IN",
+     "from": 7829
+    }
+   ]
+  },
+  {
+   "from": 7834,
+   "to": 7858,
+   "words": [
+    {
+     "w": "PENNSYLVANIA",
+     "from": 7834
+    }
+   ]
+  },
+  {
+   "from": 7858,
+   "to": 7870,
+   "words": [
+    {
+     "w": "NOT",
+     "from": 7858
+    },
+    {
+     "w": "FOR",
+     "from": 7862
+    },
+    {
+     "w": "THE",
+     "from": 7865
+    }
+   ]
+  },
+  {
+   "from": 7870,
+   "to": 7896,
+   "words": [
+    {
+     "w": "BRINK'S",
+     "from": 7870
+    },
+    {
+     "w": "JOB",
+     "from": 7884
+    }
+   ]
+  },
+  {
+   "from": 7896,
+   "to": 7913,
+   "words": [
+    {
+     "w": "FOR",
+     "from": 7896
+    },
+    {
+     "w": "A",
+     "from": 7903
+    },
+    {
+     "w": "DIFFERENT",
+     "from": 7908
+    }
+   ]
+  },
+  {
+   "from": 7913,
+   "to": 7933,
+   "words": [
+    {
+     "w": "BURGLARY",
+     "from": 7913
+    }
+   ]
+  },
+  {
+   "from": 7933,
+   "to": 7954,
+   "words": [
+    {
+     "w": "O'KEEFE",
+     "from": 7933
+    },
+    {
+     "w": "GETS",
+     "from": 7949
+    }
+   ]
+  },
+  {
+   "from": 7954,
+   "to": 7970,
+   "words": [
+    {
+     "w": "THREE",
+     "from": 7954
+    },
+    {
+     "w": "YEARS",
+     "from": 7958
+    },
+    {
+     "w": "IN",
+     "from": 7966
+    }
+   ]
+  },
+  {
+   "from": 7970,
+   "to": 7990,
+   "words": [
+    {
+     "w": "A",
+     "from": 7970
+    },
+    {
+     "w": "PENNSYLVANIA",
+     "from": 7973
+    }
+   ]
+  },
+  {
+   "from": 7990,
+   "to": 8002,
+   "words": [
+    {
+     "w": "JAIL",
+     "from": 7990
+    }
+   ]
+  },
+  {
+   "from": 8002,
+   "to": 8018,
+   "words": [
+    {
+     "w": "HE",
+     "from": 8002
+    },
+    {
+     "w": "NEEDS",
+     "from": 8006
+    },
+    {
+     "w": "MONEY",
+     "from": 8011
+    }
+   ]
+  },
+  {
+   "from": 8018,
+   "to": 8041,
+   "words": [
+    {
+     "w": "FOR",
+     "from": 8018
+    },
+    {
+     "w": "LAWYERS",
+     "from": 8023
+    }
+   ]
+  },
+  {
+   "from": 8041,
+   "to": 8057,
+   "words": [
+    {
+     "w": "HE",
+     "from": 8041
+    },
+    {
+     "w": "ASKS",
+     "from": 8048
+    },
+    {
+     "w": "THE",
+     "from": 8055
+    }
+   ]
+  },
+  {
+   "from": 8057,
+   "to": 8072,
+   "words": [
+    {
+     "w": "OTHERS",
+     "from": 8057
+    },
+    {
+     "w": "FOR",
+     "from": 8065
+    },
+    {
+     "w": "HIS",
+     "from": 8069
+    }
+   ]
+  },
+  {
+   "from": 8072,
+   "to": 8084,
+   "words": [
+    {
+     "w": "SHARE",
+     "from": 8072
+    }
+   ]
+  },
+  {
+   "from": 8084,
+   "to": 8103,
+   "words": [
+    {
+     "w": "WHAT",
+     "from": 8084
+    },
+    {
+     "w": "COMES",
+     "from": 8091
+    },
+    {
+     "w": "BACK",
+     "from": 8096
+    }
+   ]
+  },
+  {
+   "from": 8103,
+   "to": 8122,
+   "words": [
+    {
+     "w": "ISN'T",
+     "from": 8103
+    },
+    {
+     "w": "ENOUGH",
+     "from": 8110
+    }
+   ]
+  },
+  {
+   "from": 8122,
+   "to": 8134,
+   "words": [
+    {
+     "w": "HE",
+     "from": 8122
+    },
+    {
+     "w": "FEELS",
+     "from": 8127
+    }
+   ]
+  },
+  {
+   "from": 8134,
+   "to": 8146,
+   "words": [
+    {
+     "w": "CHEATED",
+     "from": 8134
+    }
+   ]
+  },
+  {
+   "from": 8146,
+   "to": 8165,
+   "words": [
+    {
+     "w": "IN",
+     "from": 8146
+    },
+    {
+     "w": "JAIL",
+     "from": 8151
+    }
+   ]
+  },
+  {
+   "from": 8165,
+   "to": 8180,
+   "words": [
+    {
+     "w": "THERE'S",
+     "from": 8165
+    },
+    {
+     "w": "A",
+     "from": 8173
+    },
+    {
+     "w": "LOT",
+     "from": 8175
+    }
+   ]
+  },
+  {
+   "from": 8180,
+   "to": 8194,
+   "words": [
+    {
+     "w": "OF",
+     "from": 8180
+    },
+    {
+     "w": "TIME",
+     "from": 8182
+    },
+    {
+     "w": "TO",
+     "from": 8189
+    }
+   ]
+  },
+  {
+   "from": 8194,
+   "to": 8204,
+   "words": [
+    {
+     "w": "THINK",
+     "from": 8194
+    }
+   ]
+  },
+  {
+   "from": 8204,
+   "to": 8228,
+   "words": [
+    {
+     "w": "AND",
+     "from": 8204
+    },
+    {
+     "w": "O'KEEFE",
+     "from": 8209
+    }
+   ]
+  },
+  {
+   "from": 8228,
+   "to": 8242,
+   "words": [
+    {
+     "w": "THINKS",
+     "from": 8228
+    },
+    {
+     "w": "ABOUT",
+     "from": 8233
+    },
+    {
+     "w": "HIS",
+     "from": 8237
+    }
+   ]
+  },
+  {
+   "from": 8242,
+   "to": 8254,
+   "words": [
+    {
+     "w": "MONEY",
+     "from": 8242
+    }
+   ]
+  },
+  {
+   "from": 8254,
+   "to": 8271,
+   "words": [
+    {
+     "w": "OVER",
+     "from": 8254
+    },
+    {
+     "w": "THE",
+     "from": 8261
+    },
+    {
+     "w": "NEXT",
+     "from": 8264
+    }
+   ]
+  },
+  {
+   "from": 8271,
+   "to": 8290,
+   "words": [
+    {
+     "w": "FEW",
+     "from": 8271
+    },
+    {
+     "w": "YEARS",
+     "from": 8276
+    }
+   ]
+  },
+  {
+   "from": 8290,
+   "to": 8314,
+   "words": [
+    {
+     "w": "HE",
+     "from": 8290
+    },
+    {
+     "w": "KEEPS",
+     "from": 8295
+    },
+    {
+     "w": "ASKING",
+     "from": 8302
+    }
+   ]
+  },
+  {
+   "from": 8314,
+   "to": 8331,
+   "words": [
+    {
+     "w": "AND",
+     "from": 8314
+    },
+    {
+     "w": "THE",
+     "from": 8319
+    },
+    {
+     "w": "OTHERS",
+     "from": 8321
+    }
+   ]
+  },
+  {
+   "from": 8331,
+   "to": 8353,
+   "words": [
+    {
+     "w": "START",
+     "from": 8331
+    },
+    {
+     "w": "TO",
+     "from": 8336
+    },
+    {
+     "w": "WORRY",
+     "from": 8338
+    }
+   ]
+  },
+  {
+   "from": 8353,
+   "to": 8368,
+   "words": [
+    {
+     "w": "A",
+     "from": 8353
+    },
+    {
+     "w": "MAN",
+     "from": 8360
+    },
+    {
+     "w": "WHO",
+     "from": 8365
+    }
+   ]
+  },
+  {
+   "from": 8368,
+   "to": 8392,
+   "words": [
+    {
+     "w": "FEELS",
+     "from": 8368
+    },
+    {
+     "w": "CHEATED",
+     "from": 8375
+    },
+    {
+     "w": "IS",
+     "from": 8387
+    }
+   ]
+  },
+  {
+   "from": 8392,
+   "to": 8404,
+   "words": [
+    {
+     "w": "A",
+     "from": 8392
+    },
+    {
+     "w": "MAN",
+     "from": 8394
+    },
+    {
+     "w": "WHO",
+     "from": 8399
+    }
+   ]
+  },
+  {
+   "from": 8404,
+   "to": 8420,
+   "words": [
+    {
+     "w": "MIGHT",
+     "from": 8404
+    },
+    {
+     "w": "TALK",
+     "from": 8408
+    }
+   ]
+  },
+  {
+   "from": 8420,
+   "to": 8440,
+   "words": [
+    {
+     "w": "SO",
+     "from": 8420
+    },
+    {
+     "w": "THEY",
+     "from": 8425
+    },
+    {
+     "w": "DECIDE",
+     "from": 8430
+    }
+   ]
+  },
+  {
+   "from": 8440,
+   "to": 8459,
+   "words": [
+    {
+     "w": "TO",
+     "from": 8440
+    },
+    {
+     "w": "SOLVE",
+     "from": 8442
+    },
+    {
+     "w": "THE",
+     "from": 8454
+    }
+   ]
+  },
+  {
+   "from": 8459,
+   "to": 8476,
+   "words": [
+    {
+     "w": "PROBLEM",
+     "from": 8459
+    },
+    {
+     "w": "ANOTHER",
+     "from": 8468
+    }
+   ]
+  },
+  {
+   "from": 8476,
+   "to": 8488,
+   "words": [
+    {
+     "w": "WAY",
+     "from": 8476
+    }
+   ]
+  },
+  {
+   "from": 8488,
+   "to": 8504,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 8488
+    },
+    {
+     "w": "HIRE",
+     "from": 8492
+    },
+    {
+     "w": "A",
+     "from": 8500
+    }
+   ]
+  },
+  {
+   "from": 8504,
+   "to": 8524,
+   "words": [
+    {
+     "w": "HITMAN",
+     "from": 8504
+    }
+   ]
+  },
+  {
+   "from": 8524,
+   "to": 8533,
+   "words": [
+    {
+     "w": "HE'S",
+     "from": 8524
+    },
+    {
+     "w": "A",
+     "from": 8528
+    }
+   ]
+  },
+  {
+   "from": 8533,
+   "to": 8545,
+   "words": [
+    {
+     "w": "PROFESSIONAL",
+     "from": 8533
+    }
+   ]
+  },
+  {
+   "from": 8545,
+   "to": 8564,
+   "words": [
+    {
+     "w": "KILLER",
+     "from": 8545
+    },
+    {
+     "w": "FROM",
+     "from": 8555
+    },
+    {
+     "w": "NEW",
+     "from": 8560
+    }
+   ]
+  },
+  {
+   "from": 8564,
+   "to": 8576,
+   "words": [
+    {
+     "w": "YORK",
+     "from": 8564
+    }
+   ]
+  },
+  {
+   "from": 8576,
+   "to": 8591,
+   "words": [
+    {
+     "w": "HIS",
+     "from": 8576
+    },
+    {
+     "w": "NAME",
+     "from": 8581
+    },
+    {
+     "w": "IS",
+     "from": 8588
+    }
+   ]
+  },
+  {
+   "from": 8591,
+   "to": 8620,
+   "words": [
+    {
+     "w": "ELMER",
+     "from": 8591
+    },
+    {
+     "w": "BURKE",
+     "from": 8605
+    }
+   ]
+  },
+  {
+   "from": 8620,
+   "to": 8634,
+   "words": [
+    {
+     "w": "AND",
+     "from": 8620
+    },
+    {
+     "w": "PEOPLE",
+     "from": 8624
+    },
+    {
+     "w": "CALL",
+     "from": 8629
+    }
+   ]
+  },
+  {
+   "from": 8634,
+   "to": 8656,
+   "words": [
+    {
+     "w": "HIM",
+     "from": 8634
+    },
+    {
+     "w": "TRIGGER",
+     "from": 8639
+    }
+   ]
+  },
+  {
+   "from": 8656,
+   "to": 8687,
+   "words": [
+    {
+     "w": "IN",
+     "from": 8656
+    },
+    {
+     "w": "1954",
+     "from": 8663
+    }
+   ]
+  },
+  {
+   "from": 8687,
+   "to": 8707,
+   "words": [
+    {
+     "w": "BURKE",
+     "from": 8687
+    },
+    {
+     "w": "FINDS",
+     "from": 8696
+    }
+   ]
+  },
+  {
+   "from": 8707,
+   "to": 8723,
+   "words": [
+    {
+     "w": "O'KEEFE",
+     "from": 8707
+    },
+    {
+     "w": "AND",
+     "from": 8720
+    }
+   ]
+  },
+  {
+   "from": 8723,
+   "to": 8744,
+   "words": [
+    {
+     "w": "OPENS",
+     "from": 8723
+    },
+    {
+     "w": "FIRE",
+     "from": 8732
+    },
+    {
+     "w": "WITH",
+     "from": 8740
+    }
+   ]
+  },
+  {
+   "from": 8744,
+   "to": 8768,
+   "words": [
+    {
+     "w": "A",
+     "from": 8744
+    },
+    {
+     "w": "MACHINE",
+     "from": 8747
+    },
+    {
+     "w": "GUN",
+     "from": 8759
+    }
+   ]
+  },
+  {
+   "from": 8768,
+   "to": 8790,
+   "words": [
+    {
+     "w": "O'KEEFE",
+     "from": 8768
+    },
+    {
+     "w": "IS",
+     "from": 8783
+    },
+    {
+     "w": "HIT",
+     "from": 8785
+    }
+   ]
+  },
+  {
+   "from": 8790,
+   "to": 8804,
+   "words": [
+    {
+     "w": "IN",
+     "from": 8790
+    },
+    {
+     "w": "THE",
+     "from": 8792
+    },
+    {
+     "w": "CHEST",
+     "from": 8797
+    }
+   ]
+  },
+  {
+   "from": 8804,
+   "to": 8826,
+   "words": [
+    {
+     "w": "AND",
+     "from": 8804
+    },
+    {
+     "w": "THE",
+     "from": 8809
+    },
+    {
+     "w": "WRIST",
+     "from": 8812
+    }
+   ]
+  },
+  {
+   "from": 8826,
+   "to": 8845,
+   "words": [
+    {
+     "w": "BURKE",
+     "from": 8826
+    },
+    {
+     "w": "THINKS",
+     "from": 8836
+    },
+    {
+     "w": "HE",
+     "from": 8843
+    }
+   ]
+  },
+  {
+   "from": 8845,
+   "to": 8857,
+   "words": [
+    {
+     "w": "HAS",
+     "from": 8845
+    },
+    {
+     "w": "DONE",
+     "from": 8850
+    },
+    {
+     "w": "THE",
+     "from": 8855
+    }
+   ]
+  },
+  {
+   "from": 8857,
+   "to": 8872,
+   "words": [
+    {
+     "w": "JOB",
+     "from": 8857
+    }
+   ]
+  },
+  {
+   "from": 8872,
+   "to": 8893,
+   "words": [
+    {
+     "w": "HE",
+     "from": 8872
+    },
+    {
+     "w": "SURVIVES",
+     "from": 8876
+    }
+   ]
+  },
+  {
+   "from": 8893,
+   "to": 8908,
+   "words": [
+    {
+     "w": "BURKE",
+     "from": 8893
+    },
+    {
+     "w": "IS",
+     "from": 8903
+    }
+   ]
+  },
+  {
+   "from": 8908,
+   "to": 8927,
+   "words": [
+    {
+     "w": "ARRESTED",
+     "from": 8908
+    },
+    {
+     "w": "DAYS",
+     "from": 8920
+    }
+   ]
+  },
+  {
+   "from": 8927,
+   "to": 8939,
+   "words": [
+    {
+     "w": "LATER",
+     "from": 8927
+    }
+   ]
+  },
+  {
+   "from": 8939,
+   "to": 8956,
+   "words": [
+    {
+     "w": "THAT",
+     "from": 8939
+    },
+    {
+     "w": "SUMMER",
+     "from": 8944
+    }
+   ]
+  },
+  {
+   "from": 8956,
+   "to": 8975,
+   "words": [
+    {
+     "w": "GUNMEN",
+     "from": 8956
+    },
+    {
+     "w": "BREAK",
+     "from": 8968
+    },
+    {
+     "w": "HIM",
+     "from": 8972
+    }
+   ]
+  },
+  {
+   "from": 8975,
+   "to": 8984,
+   "words": [
+    {
+     "w": "OUT",
+     "from": 8975
+    },
+    {
+     "w": "OF",
+     "from": 8977
+    },
+    {
+     "w": "A",
+     "from": 8980
+    }
+   ]
+  },
+  {
+   "from": 8984,
+   "to": 9008,
+   "words": [
+    {
+     "w": "BOSTON",
+     "from": 8984
+    },
+    {
+     "w": "JAIL",
+     "from": 8996
+    },
+    {
+     "w": "IN",
+     "from": 9006
+    }
+   ]
+  },
+  {
+   "from": 9008,
+   "to": 9032,
+   "words": [
+    {
+     "w": "BROAD",
+     "from": 9008
+    },
+    {
+     "w": "DAYLIGHT",
+     "from": 9016
+    }
+   ]
+  },
+  {
+   "from": 9032,
+   "to": 9049,
+   "words": [
+    {
+     "w": "HE'S",
+     "from": 9032
+    },
+    {
+     "w": "CAUGHT",
+     "from": 9039
+    }
+   ]
+  },
+  {
+   "from": 9049,
+   "to": 9065,
+   "words": [
+    {
+     "w": "AGAIN",
+     "from": 9049
+    },
+    {
+     "w": "A",
+     "from": 9056
+    },
+    {
+     "w": "YEAR",
+     "from": 9061
+    }
+   ]
+  },
+  {
+   "from": 9065,
+   "to": 9080,
+   "words": [
+    {
+     "w": "LATER",
+     "from": 9065
+    }
+   ]
+  },
+  {
+   "from": 9080,
+   "to": 9104,
+   "words": [
+    {
+     "w": "NOW",
+     "from": 9080
+    },
+    {
+     "w": "O'KEEFE",
+     "from": 9085
+    }
+   ]
+  },
+  {
+   "from": 9104,
+   "to": 9123,
+   "words": [
+    {
+     "w": "KNOWS",
+     "from": 9104
+    },
+    {
+     "w": "EXACTLY",
+     "from": 9111
+    }
+   ]
+  },
+  {
+   "from": 9123,
+   "to": 9140,
+   "words": [
+    {
+     "w": "WHAT",
+     "from": 9123
+    },
+    {
+     "w": "HIS",
+     "from": 9128
+    },
+    {
+     "w": "OLD",
+     "from": 9133
+    }
+   ]
+  },
+  {
+   "from": 9140,
+   "to": 9157,
+   "words": [
+    {
+     "w": "FRIENDS",
+     "from": 9140
+    },
+    {
+     "w": "THINK",
+     "from": 9149
+    },
+    {
+     "w": "OF",
+     "from": 9154
+    }
+   ]
+  },
+  {
+   "from": 9157,
+   "to": 9166,
+   "words": [
+    {
+     "w": "HIM",
+     "from": 9157
+    }
+   ]
+  },
+  {
+   "from": 9166,
+   "to": 9185,
+   "words": [
+    {
+     "w": "AND",
+     "from": 9166
+    },
+    {
+     "w": "THE",
+     "from": 9169
+    },
+    {
+     "w": "FBI",
+     "from": 9171
+    }
+   ]
+  },
+  {
+   "from": 9185,
+   "to": 9207,
+   "words": [
+    {
+     "w": "KNOWS",
+     "from": 9185
+    },
+    {
+     "w": "IT",
+     "from": 9193
+    },
+    {
+     "w": "TOO",
+     "from": 9197
+    }
+   ]
+  },
+  {
+   "from": 9207,
+   "to": 9226,
+   "words": [
+    {
+     "w": "AGENTS",
+     "from": 9207
+    },
+    {
+     "w": "KEEP",
+     "from": 9221
+    }
+   ]
+  },
+  {
+   "from": 9226,
+   "to": 9243,
+   "words": [
+    {
+     "w": "COMING",
+     "from": 9226
+    },
+    {
+     "w": "BACK",
+     "from": 9233
+    },
+    {
+     "w": "TO",
+     "from": 9238
+    }
+   ]
+  },
+  {
+   "from": 9243,
+   "to": 9257,
+   "words": [
+    {
+     "w": "SEE",
+     "from": 9243
+    },
+    {
+     "w": "HIM",
+     "from": 9248
+    }
+   ]
+  },
+  {
+   "from": 9257,
+   "to": 9274,
+   "words": [
+    {
+     "w": "THEY",
+     "from": 9257
+    },
+    {
+     "w": "ASK",
+     "from": 9262
+    },
+    {
+     "w": "HIM",
+     "from": 9269
+    }
+   ]
+  },
+  {
+   "from": 9274,
+   "to": 9286,
+   "words": [
+    {
+     "w": "THE",
+     "from": 9274
+    },
+    {
+     "w": "SAME",
+     "from": 9279
+    }
+   ]
+  },
+  {
+   "from": 9286,
+   "to": 9303,
+   "words": [
+    {
+     "w": "QUESTION",
+     "from": 9286
+    }
+   ]
+  },
+  {
+   "from": 9303,
+   "to": 9325,
+   "words": [
+    {
+     "w": "AGAIN",
+     "from": 9303
+    },
+    {
+     "w": "AND",
+     "from": 9310
+    },
+    {
+     "w": "AGAIN",
+     "from": 9315
+    }
+   ]
+  },
+  {
+   "from": 9325,
+   "to": 9346,
+   "words": [
+    {
+     "w": "AND",
+     "from": 9325
+    },
+    {
+     "w": "THIS",
+     "from": 9329
+    },
+    {
+     "w": "TIME",
+     "from": 9334
+    }
+   ]
+  },
+  {
+   "from": 9346,
+   "to": 9370,
+   "words": [
+    {
+     "w": "HE'S",
+     "from": 9346
+    },
+    {
+     "w": "LISTENING",
+     "from": 9353
+    }
+   ]
+  },
+  {
+   "from": 9370,
+   "to": 9385,
+   "words": [
+    {
+     "w": "IT",
+     "from": 9370
+    },
+    {
+     "w": "LOOKS",
+     "from": 9375
+    },
+    {
+     "w": "LIKE",
+     "from": 9380
+    }
+   ]
+  },
+  {
+   "from": 9385,
+   "to": 9397,
+   "words": [
+    {
+     "w": "THE",
+     "from": 9385
+    },
+    {
+     "w": "PERFECT",
+     "from": 9387
+    }
+   ]
+  },
+  {
+   "from": 9397,
+   "to": 9412,
+   "words": [
+    {
+     "w": "CRIME",
+     "from": 9397
+    }
+   ]
+  },
+  {
+   "from": 9412,
+   "to": 9431,
+   "words": [
+    {
+     "w": "SIX",
+     "from": 9412
+    },
+    {
+     "w": "YEARS",
+     "from": 9421
+    },
+    {
+     "w": "OF",
+     "from": 9426
+    }
+   ]
+  },
+  {
+   "from": 9431,
+   "to": 9445,
+   "words": [
+    {
+     "w": "SILENCE",
+     "from": 9431
+    }
+   ]
+  },
+  {
+   "from": 9445,
+   "to": 9460,
+   "words": [
+    {
+     "w": "AND",
+     "from": 9445
+    },
+    {
+     "w": "THE",
+     "from": 9448
+    },
+    {
+     "w": "CLOCK",
+     "from": 9452
+    }
+   ]
+  },
+  {
+   "from": 9460,
+   "to": 9486,
+   "words": [
+    {
+     "w": "IS",
+     "from": 9460
+    },
+    {
+     "w": "ALMOST",
+     "from": 9464
+    },
+    {
+     "w": "OUT",
+     "from": 9474
+    }
+   ]
+  },
+  {
+   "from": 9486,
+   "to": 9500,
+   "words": [
+    {
+     "w": "REMEMBER",
+     "from": 9486
+    },
+    {
+     "w": "THAT",
+     "from": 9496
+    }
+   ]
+  },
+  {
+   "from": 9500,
+   "to": 9510,
+   "words": [
+    {
+     "w": "NUMBER",
+     "from": 9500
+    }
+   ]
+  },
+  {
+   "from": 9510,
+   "to": 9539,
+   "words": [
+    {
+     "w": "FOR",
+     "from": 9510
+    },
+    {
+     "w": "THE",
+     "from": 9515
+    },
+    {
+     "w": "FBI",
+     "from": 9517
+    }
+   ]
+  },
+  {
+   "from": 9539,
+   "to": 9558,
+   "words": [
+    {
+     "w": "IT'S",
+     "from": 9539
+    },
+    {
+     "w": "NOW",
+     "from": 9546
+    },
+    {
+     "w": "A",
+     "from": 9553
+    }
+   ]
+  },
+  {
+   "from": 9558,
+   "to": 9577,
+   "words": [
+    {
+     "w": "RACE",
+     "from": 9558
+    },
+    {
+     "w": "AGAINST",
+     "from": 9568
+    },
+    {
+     "w": "THE",
+     "from": 9575
+    }
+   ]
+  },
+  {
+   "from": 9577,
+   "to": 9596,
+   "words": [
+    {
+     "w": "CALENDAR",
+     "from": 9577
+    }
+   ]
+  },
+  {
+   "from": 9596,
+   "to": 9616,
+   "words": [
+    {
+     "w": "THE",
+     "from": 9596
+    },
+    {
+     "w": "DEADLINE",
+     "from": 9599
+    },
+    {
+     "w": "IS",
+     "from": 9611
+    }
+   ]
+  },
+  {
+   "from": 9616,
+   "to": 9652,
+   "words": [
+    {
+     "w": "JANUARY",
+     "from": 9616
+    },
+    {
+     "w": "17TH",
+     "from": 9630
+    }
+   ]
+  },
+  {
+   "from": 9652,
+   "to": 9680,
+   "words": [
+    {
+     "w": "1956",
+     "from": 9652
+    }
+   ]
+  },
+  {
+   "from": 9680,
+   "to": 9716,
+   "words": [
+    {
+     "w": "ON",
+     "from": 9680
+    },
+    {
+     "w": "JANUARY",
+     "from": 9685
+    },
+    {
+     "w": "6TH",
+     "from": 9700
+    }
+   ]
+  },
+  {
+   "from": 9716,
+   "to": 9740,
+   "words": [
+    {
+     "w": "11",
+     "from": 9716
+    },
+    {
+     "w": "DAYS",
+     "from": 9726
+    },
+    {
+     "w": "BEFORE",
+     "from": 9733
+    }
+   ]
+  },
+  {
+   "from": 9740,
+   "to": 9760,
+   "words": [
+    {
+     "w": "IT",
+     "from": 9740
+    },
+    {
+     "w": "RUNS",
+     "from": 9743
+    },
+    {
+     "w": "OUT",
+     "from": 9750
+    }
+   ]
+  },
+  {
+   "from": 9760,
+   "to": 9784,
+   "words": [
+    {
+     "w": "SPECS",
+     "from": 9760
+    },
+    {
+     "w": "O'KEEFE",
+     "from": 9769
+    }
+   ]
+  },
+  {
+   "from": 9784,
+   "to": 9796,
+   "words": [
+    {
+     "w": "CRACKS",
+     "from": 9784
+    }
+   ]
+  },
+  {
+   "from": 9796,
+   "to": 9805,
+   "words": [
+    {
+     "w": "HE",
+     "from": 9796
+    },
+    {
+     "w": "TELLS",
+     "from": 9798
+    },
+    {
+     "w": "THE",
+     "from": 9803
+    }
+   ]
+  },
+  {
+   "from": 9805,
+   "to": 9839,
+   "words": [
+    {
+     "w": "FBI",
+     "from": 9805
+    },
+    {
+     "w": "EVERYTHING",
+     "from": 9824
+    }
+   ]
+  },
+  {
+   "from": 9839,
+   "to": 9858,
+   "words": [
+    {
+     "w": "WHO",
+     "from": 9839
+    },
+    {
+     "w": "PLANNED",
+     "from": 9844
+    },
+    {
+     "w": "IT",
+     "from": 9851
+    }
+   ]
+  },
+  {
+   "from": 9858,
+   "to": 9884,
+   "words": [
+    {
+     "w": "WHO",
+     "from": 9858
+    },
+    {
+     "w": "WENT",
+     "from": 9863
+    },
+    {
+     "w": "INSIDE",
+     "from": 9868
+    }
+   ]
+  },
+  {
+   "from": 9884,
+   "to": 9904,
+   "words": [
+    {
+     "w": "AND",
+     "from": 9884
+    },
+    {
+     "w": "WHO",
+     "from": 9889
+    },
+    {
+     "w": "DROVE",
+     "from": 9894
+    }
+   ]
+  },
+  {
+   "from": 9904,
+   "to": 9920,
+   "words": [
+    {
+     "w": "THE",
+     "from": 9904
+    },
+    {
+     "w": "TRUCK",
+     "from": 9906
+    }
+   ]
+  },
+  {
+   "from": 9920,
+   "to": 9937,
+   "words": [
+    {
+     "w": "THE",
+     "from": 9920
+    },
+    {
+     "w": "NAMES",
+     "from": 9925
+    }
+   ]
+  },
+  {
+   "from": 9937,
+   "to": 9954,
+   "words": [
+    {
+     "w": "THE",
+     "from": 9937
+    },
+    {
+     "w": "DOORS",
+     "from": 9940
+    }
+   ]
+  },
+  {
+   "from": 9954,
+   "to": 9971,
+   "words": [
+    {
+     "w": "THE",
+     "from": 9954
+    },
+    {
+     "w": "KEYS",
+     "from": 9959
+    }
+   ]
+  },
+  {
+   "from": 9971,
+   "to": 9988,
+   "words": [
+    {
+     "w": "THE",
+     "from": 9971
+    },
+    {
+     "w": "TRUCK",
+     "from": 9976
+    }
+   ]
+  },
+  {
+   "from": 9988,
+   "to": 10019,
+   "words": [
+    {
+     "w": "ON",
+     "from": 9988
+    },
+    {
+     "w": "JANUARY",
+     "from": 9992
+    },
+    {
+     "w": "12TH",
+     "from": 10004
+    }
+   ]
+  },
+  {
+   "from": 10019,
+   "to": 10038,
+   "words": [
+    {
+     "w": "AGENTS",
+     "from": 10019
+    },
+    {
+     "w": "ARREST",
+     "from": 10028
+    }
+   ]
+  },
+  {
+   "from": 10038,
+   "to": 10055,
+   "words": [
+    {
+     "w": "SIX",
+     "from": 10038
+    },
+    {
+     "w": "MEN",
+     "from": 10043
+    }
+   ]
+  },
+  {
+   "from": 10055,
+   "to": 10069,
+   "words": [
+    {
+     "w": "PINO",
+     "from": 10055
+    },
+    {
+     "w": "AND",
+     "from": 10067
+    }
+   ]
+  },
+  {
+   "from": 10069,
+   "to": 10091,
+   "words": [
+    {
+     "w": "MCGINNIS",
+     "from": 10069
+    },
+    {
+     "w": "ARE",
+     "from": 10086
+    }
+   ]
+  },
+  {
+   "from": 10091,
+   "to": 10105,
+   "words": [
+    {
+     "w": "AMONG",
+     "from": 10091
+    },
+    {
+     "w": "THEM",
+     "from": 10096
+    }
+   ]
+  },
+  {
+   "from": 10105,
+   "to": 10126,
+   "words": [
+    {
+     "w": "IT'S",
+     "from": 10105
+    },
+    {
+     "w": "JUST",
+     "from": 10114
+    },
+    {
+     "w": "FIVE",
+     "from": 10119
+    }
+   ]
+  },
+  {
+   "from": 10126,
+   "to": 10148,
+   "words": [
+    {
+     "w": "DAYS",
+     "from": 10126
+    },
+    {
+     "w": "BEFORE",
+     "from": 10136
+    },
+    {
+     "w": "THE",
+     "from": 10143
+    }
+   ]
+  },
+  {
+   "from": 10148,
+   "to": 10165,
+   "words": [
+    {
+     "w": "DEADLINE",
+     "from": 10148
+    }
+   ]
+  },
+  {
+   "from": 10165,
+   "to": 10179,
+   "words": [
+    {
+     "w": "IT",
+     "from": 10165
+    },
+    {
+     "w": "WAS",
+     "from": 10169
+    },
+    {
+     "w": "NEVER",
+     "from": 10172
+    }
+   ]
+  },
+  {
+   "from": 10179,
+   "to": 10196,
+   "words": [
+    {
+     "w": "A",
+     "from": 10179
+    },
+    {
+     "w": "CLUE",
+     "from": 10184
+    },
+    {
+     "w": "THAT",
+     "from": 10191
+    }
+   ]
+  },
+  {
+   "from": 10196,
+   "to": 10208,
+   "words": [
+    {
+     "w": "BROUGHT",
+     "from": 10196
+    },
+    {
+     "w": "THEM",
+     "from": 10203
+    }
+   ]
+  },
+  {
+   "from": 10208,
+   "to": 10220,
+   "words": [
+    {
+     "w": "DOWN",
+     "from": 10208
+    }
+   ]
+  },
+  {
+   "from": 10220,
+   "to": 10239,
+   "words": [
+    {
+     "w": "NOT",
+     "from": 10220
+    },
+    {
+     "w": "THE",
+     "from": 10225
+    },
+    {
+     "w": "CAP",
+     "from": 10227
+    }
+   ]
+  },
+  {
+   "from": 10239,
+   "to": 10261,
+   "words": [
+    {
+     "w": "NOT",
+     "from": 10239
+    },
+    {
+     "w": "THE",
+     "from": 10244
+    },
+    {
+     "w": "ROPE",
+     "from": 10246
+    }
+   ]
+  },
+  {
+   "from": 10261,
+   "to": 10280,
+   "words": [
+    {
+     "w": "NOT",
+     "from": 10261
+    },
+    {
+     "w": "THE",
+     "from": 10265
+    },
+    {
+     "w": "TRUCK",
+     "from": 10268
+    }
+   ]
+  },
+  {
+   "from": 10280,
+   "to": 10297,
+   "words": [
+    {
+     "w": "THE",
+     "from": 10280
+    },
+    {
+     "w": "CREW",
+     "from": 10285
+    },
+    {
+     "w": "TRIED",
+     "from": 10292
+    }
+   ]
+  },
+  {
+   "from": 10297,
+   "to": 10309,
+   "words": [
+    {
+     "w": "TO",
+     "from": 10297
+    },
+    {
+     "w": "KILL",
+     "from": 10299
+    },
+    {
+     "w": "ONE",
+     "from": 10306
+    }
+   ]
+  },
+  {
+   "from": 10309,
+   "to": 10328,
+   "words": [
+    {
+     "w": "OF",
+     "from": 10309
+    },
+    {
+     "w": "ITS",
+     "from": 10313
+    },
+    {
+     "w": "OWN",
+     "from": 10318
+    }
+   ]
+  },
+  {
+   "from": 10328,
+   "to": 10342,
+   "words": [
+    {
+     "w": "AND",
+     "from": 10328
+    },
+    {
+     "w": "HE",
+     "from": 10333
+    },
+    {
+     "w": "TURNED",
+     "from": 10335
+    }
+   ]
+  },
+  {
+   "from": 10342,
+   "to": 10364,
+   "words": [
+    {
+     "w": "THEM",
+     "from": 10342
+    },
+    {
+     "w": "ALL",
+     "from": 10349
+    },
+    {
+     "w": "IN",
+     "from": 10354
+    }
+   ]
+  },
+  {
+   "from": 10364,
+   "to": 10414,
+   "words": [
+    {
+     "w": "IN",
+     "from": 10364
+    },
+    {
+     "w": "OCTOBER",
+     "from": 10371
+    },
+    {
+     "w": "1956",
+     "from": 10385
+    }
+   ]
+  },
+  {
+   "from": 10414,
+   "to": 10441,
+   "words": [
+    {
+     "w": "A",
+     "from": 10414
+    },
+    {
+     "w": "BOSTON",
+     "from": 10419
+    },
+    {
+     "w": "JURY",
+     "from": 10431
+    }
+   ]
+  },
+  {
+   "from": 10441,
+   "to": 10455,
+   "words": [
+    {
+     "w": "FOUND",
+     "from": 10441
+    },
+    {
+     "w": "EIGHT",
+     "from": 10448
+    },
+    {
+     "w": "OF",
+     "from": 10453
+    }
+   ]
+  },
+  {
+   "from": 10455,
+   "to": 10481,
+   "words": [
+    {
+     "w": "THE",
+     "from": 10455
+    },
+    {
+     "w": "MEN",
+     "from": 10457
+    },
+    {
+     "w": "GUILTY",
+     "from": 10465
+    }
+   ]
+  },
+  {
+   "from": 10481,
+   "to": 10493,
+   "words": [
+    {
+     "w": "EVERY",
+     "from": 10481
+    },
+    {
+     "w": "ONE",
+     "from": 10486
+    },
+    {
+     "w": "OF",
+     "from": 10491
+    }
+   ]
+  },
+  {
+   "from": 10493,
+   "to": 10513,
+   "words": [
+    {
+     "w": "THEM",
+     "from": 10493
+    },
+    {
+     "w": "GOT",
+     "from": 10498
+    },
+    {
+     "w": "LIFE",
+     "from": 10505
+    }
+   ]
+  },
+  {
+   "from": 10513,
+   "to": 10531,
+   "words": [
+    {
+     "w": "IN",
+     "from": 10513
+    },
+    {
+     "w": "PRISON",
+     "from": 10517
+    }
+   ]
+  },
+  {
+   "from": 10531,
+   "to": 10550,
+   "words": [
+    {
+     "w": "ONE",
+     "from": 10531
+    },
+    {
+     "w": "MEMBER",
+     "from": 10538
+    },
+    {
+     "w": "OF",
+     "from": 10545
+    }
+   ]
+  },
+  {
+   "from": 10550,
+   "to": 10571,
+   "words": [
+    {
+     "w": "THE",
+     "from": 10550
+    },
+    {
+     "w": "CREW",
+     "from": 10552
+    },
+    {
+     "w": "DIED",
+     "from": 10564
+    }
+   ]
+  },
+  {
+   "from": 10571,
+   "to": 10593,
+   "words": [
+    {
+     "w": "BEFORE",
+     "from": 10571
+    },
+    {
+     "w": "THE",
+     "from": 10579
+    },
+    {
+     "w": "TRIAL",
+     "from": 10581
+    }
+   ]
+  },
+  {
+   "from": 10593,
+   "to": 10615,
+   "words": [
+    {
+     "w": "EVEN",
+     "from": 10593
+    },
+    {
+     "w": "STARTED",
+     "from": 10600
+    }
+   ]
+  },
+  {
+   "from": 10615,
+   "to": 10629,
+   "words": [
+    {
+     "w": "O'KEEFE",
+     "from": 10615
+    }
+   ]
+  },
+  {
+   "from": 10629,
+   "to": 10641,
+   "words": [
+    {
+     "w": "THE",
+     "from": 10629
+    },
+    {
+     "w": "MAN",
+     "from": 10631
+    },
+    {
+     "w": "WHO",
+     "from": 10636
+    }
+   ]
+  },
+  {
+   "from": 10641,
+   "to": 10653,
+   "words": [
+    {
+     "w": "TALKED",
+     "from": 10641
+    }
+   ]
+  },
+  {
+   "from": 10653,
+   "to": 10672,
+   "words": [
+    {
+     "w": "GOT",
+     "from": 10653
+    },
+    {
+     "w": "JUST",
+     "from": 10658
+    },
+    {
+     "w": "FOUR",
+     "from": 10665
+    }
+   ]
+  },
+  {
+   "from": 10672,
+   "to": 10684,
+   "words": [
+    {
+     "w": "YEARS",
+     "from": 10672
+    }
+   ]
+  },
+  {
+   "from": 10684,
+   "to": 10701,
+   "words": [
+    {
+     "w": "HE",
+     "from": 10684
+    },
+    {
+     "w": "WAS",
+     "from": 10689
+    },
+    {
+     "w": "OUT",
+     "from": 10694
+    }
+   ]
+  },
+  {
+   "from": 10701,
+   "to": 10730,
+   "words": [
+    {
+     "w": "BY",
+     "from": 10701
+    },
+    {
+     "w": "1960",
+     "from": 10706
+    }
+   ]
+  },
+  {
+   "from": 10730,
+   "to": 10744,
+   "words": [
+    {
+     "w": "AND",
+     "from": 10730
+    },
+    {
+     "w": "HE",
+     "from": 10735
+    },
+    {
+     "w": "EVEN",
+     "from": 10739
+    }
+   ]
+  },
+  {
+   "from": 10744,
+   "to": 10763,
+   "words": [
+    {
+     "w": "HELPED",
+     "from": 10744
+    },
+    {
+     "w": "WRITE",
+     "from": 10754
+    },
+    {
+     "w": "A",
+     "from": 10761
+    }
+   ]
+  },
+  {
+   "from": 10763,
+   "to": 10778,
+   "words": [
+    {
+     "w": "BOOK",
+     "from": 10763
+    },
+    {
+     "w": "ABOUT",
+     "from": 10768
+    },
+    {
+     "w": "THE",
+     "from": 10773
+    }
+   ]
+  },
+  {
+   "from": 10778,
+   "to": 10792,
+   "words": [
+    {
+     "w": "ROBBERY",
+     "from": 10778
+    }
+   ]
+  },
+  {
+   "from": 10792,
+   "to": 10816,
+   "words": [
+    {
+     "w": "JOE",
+     "from": 10792
+    },
+    {
+     "w": "MCGINNIS",
+     "from": 10799
+    }
+   ]
+  },
+  {
+   "from": 10816,
+   "to": 10840,
+   "words": [
+    {
+     "w": "DIED",
+     "from": 10816
+    },
+    {
+     "w": "IN",
+     "from": 10823
+    },
+    {
+     "w": "PRISON",
+     "from": 10826
+    }
+   ]
+  },
+  {
+   "from": 10840,
+   "to": 10864,
+   "words": [
+    {
+     "w": "THE",
+     "from": 10840
+    },
+    {
+     "w": "BRINK'S",
+     "from": 10842
+    },
+    {
+     "w": "JOB",
+     "from": 10856
+    }
+   ]
+  },
+  {
+   "from": 10864,
+   "to": 10878,
+   "words": [
+    {
+     "w": "BECAME",
+     "from": 10864
+    },
+    {
+     "w": "ONE",
+     "from": 10871
+    },
+    {
+     "w": "OF",
+     "from": 10876
+    }
+   ]
+  },
+  {
+   "from": 10878,
+   "to": 10897,
+   "words": [
+    {
+     "w": "THE",
+     "from": 10878
+    },
+    {
+     "w": "MOST",
+     "from": 10883
+    },
+    {
+     "w": "FAMOUS",
+     "from": 10888
+    }
+   ]
+  },
+  {
+   "from": 10897,
+   "to": 10928,
+   "words": [
+    {
+     "w": "CASES",
+     "from": 10897
+    },
+    {
+     "w": "IN",
+     "from": 10909
+    },
+    {
+     "w": "FBI",
+     "from": 10914
+    }
+   ]
+  },
+  {
+   "from": 10928,
+   "to": 10938,
+   "words": [
+    {
+     "w": "HISTORY",
+     "from": 10928
+    }
+   ]
+  },
+  {
+   "from": 10938,
+   "to": 10964,
+   "words": [
+    {
+     "w": "TRIGGER",
+     "from": 10938
+    },
+    {
+     "w": "BURKE",
+     "from": 10950
+    }
+   ]
+  },
+  {
+   "from": 10964,
+   "to": 10986,
+   "words": [
+    {
+     "w": "WAS",
+     "from": 10964
+    },
+    {
+     "w": "EXECUTED",
+     "from": 10967
+    },
+    {
+     "w": "IN",
+     "from": 10981
+    }
+   ]
+  },
+  {
+   "from": 10986,
+   "to": 11003,
+   "words": [
+    {
+     "w": "NEW",
+     "from": 10986
+    },
+    {
+     "w": "YORK",
+     "from": 10991
+    },
+    {
+     "w": "IN",
+     "from": 10998
+    }
+   ]
+  },
+  {
+   "from": 11003,
+   "to": 11029,
+   "words": [
+    {
+     "w": "1958",
+     "from": 11003
+    }
+   ]
+  },
+  {
+   "from": 11029,
+   "to": 11046,
+   "words": [
+    {
+     "w": "FOR",
+     "from": 11029
+    },
+    {
+     "w": "A",
+     "from": 11034
+    },
+    {
+     "w": "DIFFERENT",
+     "from": 11039
+    }
+   ]
+  },
+  {
+   "from": 11046,
+   "to": 11063,
+   "words": [
+    {
+     "w": "MURDER",
+     "from": 11046
+    }
+   ]
+  },
+  {
+   "from": 11063,
+   "to": 11077,
+   "words": [
+    {
+     "w": "OVER",
+     "from": 11063
+    },
+    {
+     "w": "THE",
+     "from": 11070
+    },
+    {
+     "w": "NEXT",
+     "from": 11072
+    }
+   ]
+  },
+  {
+   "from": 11077,
+   "to": 11101,
+   "words": [
+    {
+     "w": "15",
+     "from": 11077
+    },
+    {
+     "w": "YEARS",
+     "from": 11089
+    }
+   ]
+  },
+  {
+   "from": 11101,
+   "to": 11118,
+   "words": [
+    {
+     "w": "THE",
+     "from": 11101
+    },
+    {
+     "w": "REST",
+     "from": 11106
+    },
+    {
+     "w": "WERE",
+     "from": 11113
+    }
+   ]
+  },
+  {
+   "from": 11118,
+   "to": 11132,
+   "words": [
+    {
+     "w": "LET",
+     "from": 11118
+    },
+    {
+     "w": "OUT",
+     "from": 11125
+    },
+    {
+     "w": "ON",
+     "from": 11128
+    }
+   ]
+  },
+  {
+   "from": 11132,
+   "to": 11149,
+   "words": [
+    {
+     "w": "PAROLE",
+     "from": 11132
+    }
+   ]
+  },
+  {
+   "from": 11149,
+   "to": 11170,
+   "words": [
+    {
+     "w": "ONE",
+     "from": 11149
+    },
+    {
+     "w": "BY",
+     "from": 11158
+    },
+    {
+     "w": "ONE",
+     "from": 11163
+    }
+   ]
+  },
+  {
+   "from": 11170,
+   "to": 11197,
+   "words": [
+    {
+     "w": "SPECS",
+     "from": 11170
+    },
+    {
+     "w": "O'KEEFE",
+     "from": 11180
+    }
+   ]
+  },
+  {
+   "from": 11197,
+   "to": 11211,
+   "words": [
+    {
+     "w": "LIVED",
+     "from": 11197
+    },
+    {
+     "w": "UNTIL",
+     "from": 11204
+    }
+   ]
+  },
+  {
+   "from": 11211,
+   "to": 11230,
+   "words": [
+    {
+     "w": "1976",
+     "from": 11211
+    }
+   ]
+  },
+  {
+   "from": 11230,
+   "to": 11260,
+   "words": [
+    {
+     "w": "ELEVEN",
+     "from": 11230
+    },
+    {
+     "w": "MEN",
+     "from": 11252
+    }
+   ]
+  },
+  {
+   "from": 11260,
+   "to": 11285,
+   "words": [
+    {
+     "w": "FIVE",
+     "from": 11260
+    },
+    {
+     "w": "KEYS",
+     "from": 11269
+    }
+   ]
+  },
+  {
+   "from": 11285,
+   "to": 11305,
+   "words": [
+    {
+     "w": "LESS",
+     "from": 11285
+    },
+    {
+     "w": "THAN",
+     "from": 11293
+    },
+    {
+     "w": "HALF",
+     "from": 11297
+    }
+   ]
+  },
+  {
+   "from": 11305,
+   "to": 11319,
+   "words": [
+    {
+     "w": "AN",
+     "from": 11305
+    },
+    {
+     "w": "HOUR",
+     "from": 11309
+    }
+   ]
+  },
+  {
+   "from": 11319,
+   "to": 11341,
+   "words": [
+    {
+     "w": "AND",
+     "from": 11319
+    },
+    {
+     "w": "SIX",
+     "from": 11326
+    },
+    {
+     "w": "YEARS",
+     "from": 11333
+    }
+   ]
+  },
+  {
+   "from": 11341,
+   "to": 11369,
+   "words": [
+    {
+     "w": "MINUS",
+     "from": 11341
+    },
+    {
+     "w": "FIVE",
+     "from": 11350
+    },
+    {
+     "w": "DAYS",
+     "from": 11357
+    }
+   ]
+  },
+  {
+   "from": 11369,
+   "to": 11393,
+   "words": [
+    {
+     "w": "AND",
+     "from": 11369
+    },
+    {
+     "w": "THE",
+     "from": 11372
+    },
+    {
+     "w": "1.2",
+     "from": 11377
+    }
+   ]
+  },
+  {
+   "from": 11393,
+   "to": 11413,
+   "words": [
+    {
+     "w": "MILLION",
+     "from": 11393
+    },
+    {
+     "w": "DOLLARS",
+     "from": 11403
+    }
+   ]
+  },
+  {
+   "from": 11413,
+   "to": 11434,
+   "words": [
+    {
+     "w": "IN",
+     "from": 11413
+    },
+    {
+     "w": "CASH",
+     "from": 11417
+    }
+   ]
+  },
+  {
+   "from": 11434,
+   "to": 11463,
+   "words": [
+    {
+     "w": "LESS",
+     "from": 11434
+    },
+    {
+     "w": "THAN",
+     "from": 11441
+    },
+    {
+     "w": "60,000",
+     "from": 11446
+    }
+   ]
+  },
+  {
+   "from": 11463,
+   "to": 11492,
+   "words": [
+    {
+     "w": "DOLLARS",
+     "from": 11463
+    },
+    {
+     "w": "OF",
+     "from": 11482
+    },
+    {
+     "w": "IT",
+     "from": 11485
+    }
+   ]
+  },
+  {
+   "from": 11492,
+   "to": 11511,
+   "words": [
+    {
+     "w": "HAS",
+     "from": 11492
+    },
+    {
+     "w": "EVER",
+     "from": 11497
+    },
+    {
+     "w": "TURNED",
+     "from": 11504
+    }
+   ]
+  },
+  {
+   "from": 11511,
+   "to": 11521,
+   "words": [
+    {
+     "w": "UP",
+     "from": 11511
+    }
+   ]
+  },
+  {
+   "from": 11521,
+   "to": 11537,
+   "words": [
+    {
+     "w": "THE",
+     "from": 11521
+    },
+    {
+     "w": "REST",
+     "from": 11525
+    },
+    {
+     "w": "IS",
+     "from": 11533
+    }
+   ]
+  },
+  {
+   "from": 11537,
+   "to": 11572,
+   "words": [
+    {
+     "w": "STILL",
+     "from": 11537
+    },
+    {
+     "w": "MISSING",
+     "from": 11542
+    }
+   ]
+  }
+ ],
+ "overlays": [
+  {
+   "from": 291,
+   "to": 348,
+   "kind": "kicker",
+   "line1": "NO BROKEN",
+   "red": "LOCKS.",
+   "line2": "LOCKS."
+  },
+  {
+   "from": 437,
+   "to": 494,
+   "kind": "badge",
+   "value": 2.7,
+   "label": "STOLEN",
+   "prefix": "$",
+   "suffix": " MILLION",
+   "decimals": 1
+  },
+  {
+   "from": 809,
+   "to": 866,
+   "kind": "kicker",
+   "line1": "STILL",
+   "red": "MISSING.",
+   "line2": "MISSING."
+  },
+  {
+   "from": 884,
+   "to": 941,
+   "kind": "kicker",
+   "line1": "BOSTON,",
+   "red": "1948",
+   "line2": "1948"
+  },
+  {
+   "from": 1471,
+   "to": 1537,
+   "kind": "nametag",
+   "name": "TONY PINO",
+   "place": "THE PLANNER"
+  },
+  {
+   "from": 1897,
+   "to": 1947,
+   "kind": "badge",
+   "value": 11,
+   "label": "MEN IN THE CREW"
+  },
+  {
+   "from": 1947,
+   "to": 2013,
+   "kind": "nametag",
+   "name": "JOE McGINNIS",
+   "place": "THE PARTNER"
+  },
+  {
+   "from": 2100,
+   "to": 2158,
+   "kind": "nametag",
+   "name": "JOSEPH \"SPECS\" O'KEEFE",
+   "place": "THE BURGLAR"
+  },
+  {
+   "from": 2158,
+   "to": 2186,
+   "kind": "kicker",
+   "line1": "REMEMBER",
+   "red": "NAME.",
+   "line2": "THAT NAME."
+  },
+  {
+   "from": 2186,
+   "to": 2243,
+   "kind": "kicker",
+   "line1": "STEP ONE:",
+   "red": "ONE:",
+   "line2": "THE BUILDING"
+  },
+  {
+   "from": 2658,
+   "to": 2715,
+   "kind": "kicker",
+   "line1": "THEY TAKE",
+   "red": "NOTHING.",
+   "line2": "NOTHING."
+  },
+  {
+   "from": 2919,
+   "to": 2976,
+   "kind": "badge",
+   "value": 5,
+   "label": "LOCKED DOORS"
+  },
+  {
+   "from": 3008,
+   "to": 3065,
+   "kind": "kicker",
+   "line1": "STEP TWO:",
+   "red": "TWO:",
+   "line2": "THE KEYS"
+  },
+  {
+   "from": 3462,
+   "to": 3519,
+   "kind": "kicker",
+   "line1": "NOT A",
+   "red": "THING.",
+   "line2": "THING."
+  },
+  {
+   "from": 3679,
+   "to": 3736,
+   "kind": "badge",
+   "value": 5,
+   "label": "KEYS MADE"
+  },
+  {
+   "from": 3919,
+   "to": 3976,
+   "kind": "kicker",
+   "line1": "THEY HAVE",
+   "red": "KEYS.",
+   "line2": "THE KEYS."
+  },
+  {
+   "from": 3984,
+   "to": 4041,
+   "kind": "kicker",
+   "line1": "STEP THREE:",
+   "red": "THREE:",
+   "line2": "THE GETAWAY"
+  },
+  {
+   "from": 4204,
+   "to": 4261,
+   "kind": "kicker",
+   "line1": "WATCH THAT",
+   "red": "TRUCK.",
+   "line2": "TRUCK."
+  },
+  {
+   "from": 4438,
+   "to": 4495,
+   "kind": "kicker",
+   "line1": "HALLOWEEN",
+   "red": "MASKS.",
+   "line2": "MASKS."
+  },
+  {
+   "from": 4661,
+   "to": 4718,
+   "kind": "kicker",
+   "line1": "JANUARY 17,",
+   "red": "1950",
+   "line2": "1950"
+  },
+  {
+   "from": 5042,
+   "to": 5099,
+   "kind": "kicker",
+   "line1": "NO",
+   "red": "ALARM.",
+   "line2": "ALARM."
+  },
+  {
+   "from": 5783,
+   "to": 5840,
+   "kind": "badge",
+   "value": 1.2,
+   "label": "IN CASH ALONE",
+   "prefix": "$",
+   "suffix": " MILLION",
+   "decimals": 1
+  },
+  {
+   "from": 6146,
+   "to": 6203,
+   "kind": "badge",
+   "value": 27,
+   "label": "MINUTES, DOOR TO ALARM"
+  },
+  {
+   "from": 6476,
+   "to": 6503,
+   "kind": "kicker",
+   "line1": "NOBODY",
+   "red": "TALKS.",
+   "line2": "TALKS."
+  },
+  {
+   "from": 6503,
+   "to": 6560,
+   "kind": "badge",
+   "value": 6,
+   "label": "YEARS OF SILENCE"
+  },
+  {
+   "from": 6678,
+   "to": 6735,
+   "kind": "kicker",
+   "line1": "REMEMBER",
+   "red": "NUMBER.",
+   "line2": "THAT NUMBER."
+  },
+  {
+   "from": 7119,
+   "to": 7176,
+   "kind": "badge",
+   "value": 100000,
+   "label": "REWARD",
+   "prefix": "$"
+  },
+  {
+   "from": 7270,
+   "to": 7327,
+   "kind": "badge",
+   "value": 3,
+   "label": "CLUES LEFT BEHIND"
+  },
+  {
+   "from": 7370,
+   "to": 7427,
+   "kind": "kicker",
+   "line1": "HUNDREDS OF",
+   "red": "DEAD",
+   "line2": "DEAD ENDS."
+  },
+  {
+   "from": 7954,
+   "to": 8011,
+   "kind": "badge",
+   "value": 3,
+   "label": "YEARS IN JAIL"
+  },
+  {
+   "from": 8605,
+   "to": 8671,
+   "kind": "nametag",
+   "name": "ELMER \"TRIGGER\" BURKE",
+   "place": "HIRED GUN"
+  },
+  {
+   "from": 8876,
+   "to": 8933,
+   "kind": "kicker",
+   "line1": "HE",
+   "red": "SURVIVES.",
+   "line2": "SURVIVES."
+  },
+  {
+   "from": 9599,
+   "to": 9656,
+   "kind": "kicker",
+   "line1": "DEADLINE:",
+   "red": "DEADLINE:",
+   "line2": "JAN. 17, 1956"
+  },
+  {
+   "from": 10119,
+   "to": 10176,
+   "kind": "badge",
+   "value": 5,
+   "label": "DAYS TO SPARE"
+  },
+  {
+   "from": 10335,
+   "to": 10392,
+   "kind": "kicker",
+   "line1": "HE TURNED",
+   "red": "IN.",
+   "line2": "THEM ALL IN."
+  },
+  {
+   "from": 10448,
+   "to": 10505,
+   "kind": "badge",
+   "value": 8,
+   "label": "LIFE SENTENCES"
+  },
+  {
+   "from": 10665,
+   "to": 10722,
+   "kind": "badge",
+   "value": 4,
+   "label": "YEARS FOR O'KEEFE"
+  },
+  {
+   "from": 11434,
+   "to": 11491,
+   "kind": "kicker",
+   "line1": "LESS THAN",
+   "red": "$60,000",
+   "line2": "$60,000 FOUND."
+  }
+ ]
+}

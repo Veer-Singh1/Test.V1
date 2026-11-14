@@ -18,6 +18,37 @@ export type Shot = {
   count?: number;
   highlight?: number;
   prison?: boolean;
+  // Added for the Boston scenes.
+  zoom?: number; // multiplies the scene's camera distance
+  sign?: string;
+  gem?: boolean;
+  brick?: boolean;
+  truck?: 'armored' | 'getaway';
+  drive?: 'in' | 'out';
+  masks?: boolean;
+  outfit?: boolean;
+  sacks?: boolean;
+  workers?: number;
+  robbers?: number;
+  tied?: boolean;
+  empty?: boolean;
+  remove?: boolean;
+  key?: boolean;
+  label?: string;
+  text?: string;
+  sub?: string;
+  flash?: boolean;
+  figure?: string;
+  lying?: boolean;
+  coat?: string;
+  hat?: 'cap' | 'beanie' | 'brim';
+  gems?: boolean;
+  files?: boolean;
+  cast?: 'crew';
+  drift?: 'gems' | 'cash';
+  fire?: boolean;
+  few?: boolean;
+  agents?: number;
 };
 
 export type CaptionChunk = {from: number; to: number; words: {w: string; from: number}[]};
@@ -27,6 +58,7 @@ export type Overlay = {
   from: number;
   to: number;
   value?: number;
+  decimals?: number;
   prefix?: string;
   suffix?: string;
   label?: string;

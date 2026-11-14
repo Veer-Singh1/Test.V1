@@ -1,7 +1,7 @@
 import {useMemo, type ReactElement} from 'react';
 import * as THREE from 'three';
 import type {SceneProps} from '../Stage';
-import {B, Cyl, Figure, Gem, Glow, HERO, Lamp, Sign, lerp, rnd, type V3} from '../parts';
+import {B, COATS, Cyl, Figure, Gem, Glow, HERO, Lamp, MASKS, Sign, coatOf, lerp, rnd, useCanvasTex, type V3} from '../parts';
 
 const STEEL = '#8f9aa6';
 const CREW = '#1b2230';
@@ -161,9 +161,12 @@ export const Office = ({shot}: SceneProps) => (
     <Cyl p={[-1.2, 1.6, -0.2]} s={[0.12, 0.26, 0.2]} seg={6} c="#d9a441" e={0.6} />
     <Lamp p={[-1.2, 1.5, -0.2]} size={0.06} halo={2.4} power={9} />
     <B p={[0.3, 1.08, 0.1]} s={[0.8, 0.02, 0.55]} c="#1f2430" />
-    {[0, 1, 2, 3, 4].map((i) => (
-      <Gem key={i} p={[0.15 + i * 0.09, 1.12, 0.1 + (i % 2) * 0.1]} size={0.045} e={1} />
-    ))}
+    {shot.gems === false
+      ? null
+      : [0, 1, 2, 3, 4].map((i) => <Gem key={i} p={[0.15 + i * 0.09, 1.12, 0.1 + (i % 2) * 0.1]} size={0.045} e={1} />)}
+    {shot.files
+      ? [0, 1, 2].map((i) => <B key={i} p={[0.9 - i * 0.05, 1.08 + i * 0.03, 0.25]} s={[0.6, 0.03, 0.42]} r={[0, 0.1 * i, 0]} c={i % 2 ? '#d9c38a' : '#cdb57a'} />)
+      : null}
     <B p={[1.1, 1.14, -0.2]} s={[0.5, 0.14, 0.34]} c="#2a2f3a" />
     {/* cabinet and safe */}
     <B p={[-4.3, 1.1, -2.7]} s={[1.2, 2.2, 1]} c="#6f7f86" />
@@ -172,11 +175,11 @@ export const Office = ({shot}: SceneProps) => (
     ))}
     <B p={[4.3, 0.7, -2.7]} s={[1.3, 1.4, 1.1]} c="#2f3640" />
     <Cyl p={[4.3, 0.75, -2.12]} s={[0.2, 0.2, 0.08]} r={[Math.PI / 2, 0, 0]} seg={8} c="#d9a441" />
-    <Figure p={[0.2, 0, -1.1]} coat={HERO} />
+    <Figure p={[0.2, 0, -1.1]} coat={coatOf(shot.coat, HERO)} hat={shot.hat} />
   </>
 );
 
-const useBlueprint = () =>
+const useBlueprint = (label = 'VAULT', sub = 'LEVEL -2') =>
   useMemo(() => {
     const cv = document.createElement('canvas');
     cv.width = 768;
@@ -198,13 +201,14 @@ const useBlueprint = () =>
     for (let y = 110; y < 440; y += 34) g.strokeRect(430, y, 60, 22);
     g.fillStyle = '#eaf3ff';
     g.font = '800 44px Outfit, sans-serif';
-    g.fillText('VAULT', 232, 285);
+    g.textAlign = 'center';
+    g.fillText(label, 300, 285);
     g.font = '700 22px Outfit, sans-serif';
-    g.fillText('LEVEL -2', 250, 320);
+    g.fillText(sub, 300, 320);
     const tex = new THREE.CanvasTexture(cv);
     tex.colorSpace = THREE.SRGBColorSpace;
     return tex;
-  }, []);
+  }, [label, sub]);
 
 const BreadLayer = ({y, c}: {y: number; c: string}) => (
   <>
@@ -215,9 +219,86 @@ const BreadLayer = ({y, c}: {y: number; c: string}) => (
   </>
 );
 
-// Desk-top close-up. prop: blueprint | envelopes | sandwich
+const usePaper = (kind: string | undefined, text = '', sub = '') =>
+  useCanvasTex(768, kind === 'newspaper' ? 1000 : 768, (g) => {
+    if (kind === 'newspaper') {
+      g.fillStyle = '#ece6d6';
+      g.fillRect(0, 0, 768, 1000);
+      g.fillStyle = '#1b1b1b';
+      g.textAlign = 'center';
+      g.font = '800 54px Outfit, sans-serif';
+      g.fillText('THE EVENING EDITION', 384, 78);
+      g.fillRect(40, 100, 688, 5);
+      g.font = '800 84px Outfit, sans-serif';
+      const words = text.split(' ');
+      const lines: string[] = [];
+      for (const w of words) {
+        const last = lines[lines.length - 1];
+        if (last && g.measureText(`${last} ${w}`).width < 680) lines[lines.length - 1] = `${last} ${w}`;
+        else lines.push(w);
+      }
+      lines.forEach((l, i) => g.fillText(l, 384, 200 + i * 92));
+      g.font = '700 38px Outfit, sans-serif';
+      g.fillText(sub, 384, 210 + lines.length * 92);
+      g.fillStyle = '#9a958a';
+      g.fillRect(60, 300 + lines.length * 92, 300, 260);
+      for (let y = 300 + lines.length * 92; y < 960; y += 22) {
+        g.fillRect(400, y, 300, 8);
+        if (y > 580 + lines.length * 92) g.fillRect(60, y, 300, 8);
+      }
+    } else if (kind === 'calendar') {
+      g.fillStyle = '#f4efe2';
+      g.fillRect(0, 0, 768, 768);
+      g.fillStyle = '#b5443c';
+      g.fillRect(0, 0, 768, 170);
+      g.fillStyle = '#ffffff';
+      g.textAlign = 'center';
+      g.font = '800 92px Outfit, sans-serif';
+      g.fillText(sub, 384, 120);
+      g.fillStyle = '#1b1b1b';
+      g.font = '800 380px Outfit, sans-serif';
+      g.fillText(text, 384, 600);
+      g.strokeStyle = '#d4342a';
+      g.lineWidth = 14;
+      g.beginPath();
+      g.ellipse(384, 470, 300, 210, -0.05, 0, Math.PI * 2);
+      g.stroke();
+    } else {
+      g.fillStyle = '#7a2e2a';
+      g.fillRect(0, 0, 768, 768);
+      g.strokeStyle = '#d9a441';
+      g.lineWidth = 10;
+      g.strokeRect(40, 40, 688, 688);
+      g.fillStyle = '#f1e2b8';
+      g.textAlign = 'center';
+      g.font = '800 76px Outfit, sans-serif';
+      text.split('|').forEach((l, i) => g.fillText(l, 384, 300 + i * 96));
+    }
+  }, [kind, text, sub]);
+
+const Key = ({p, r = 0}: {p: V3; r?: number}) => (
+  <group position={p} rotation={[0, r, 0]}>
+    <B p={[0.3, 0, 0]} s={[0.55, 0.025, 0.07]} c="#d9a441" />
+    <Cyl p={[0, 0, 0]} s={[0.11, 0.11, 0.025]} seg={8} c="#d9a441" />
+    <Cyl p={[0, 0.002, 0]} s={[0.04, 0.04, 0.03]} seg={6} c="#3b2d22" />
+    {[0.3, 0.38, 0.46, 0.53].map((x, i) => (
+      <B key={x} p={[x, 0, 0.05]} s={[0.04, 0.025, 0.04 + (i % 2) * 0.03]} c="#d9a441" />
+    ))}
+  </group>
+);
+
+const LockCylinder = ({p, r = 0}: {p: V3; r?: number}) => (
+  <group position={p} rotation={[0, r, 0]}>
+    <Cyl p={[0, 0.12, 0]} s={[0.12, 0.12, 0.42]} r={[0, 0, Math.PI / 2]} seg={10} c="#e0b45a" e={0.1} />
+    <Cyl p={[0.22, 0.12, 0]} s={[0.15, 0.15, 0.04]} r={[0, 0, Math.PI / 2]} seg={10} c="#c99a3e" />
+    <B p={[0.245, 0.12, 0]} s={[0.01, 0.12, 0.025]} c="#1a1a1a" />
+  </group>
+);
+
+// Desk-top close-up. prop: blueprint | envelopes | sandwich | keys | cylinder | masks | newspaper | calendar | book
 export const Desk = ({shot}: SceneProps) => {
-  const blueprint = useBlueprint();
+  const blueprint = useBlueprint(shot.label, shot.sub);
+  const paper = usePaper(shot.prop, shot.text ?? '', shot.sub ?? '');
   return (
     <>
       <Room w={26} h={10} back={-7} front={12} wall={shot.time === 'day' ? '#56797a' : '#2f3d4a'} floor="#7b5637" />
@@ -252,6 +333,77 @@ export const Desk = ({shot}: SceneProps) => {
           <Sign p={[0.62, 0.105, -0.12]} s={[0.66, 0.13]} r={[-Math.PI / 2, 0, -0.41]} text="DIAMOND CENTRE" bg="#f4efe2" fg="#1f4f8f" e={0.2} />
         </>
       ) : null}
+      {shot.prop === 'keys' ? (
+        <>
+          <mesh position={[-0.2, 0.02, 0.1]} rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[0.2, 0.018, 6, 16]} />
+            <meshStandardMaterial color="#9aa3ad" flatShading roughness={1} />
+          </mesh>
+          {[0, 1, 2, 3, 4].map((i) => (
+            <Key key={i} p={[-0.2 + Math.cos(-0.9 + i * 0.45) * 0.3, 0.025 + i * 0.012, 0.1 + Math.sin(-0.9 + i * 0.45) * 0.3]} r={0.9 - i * 0.45} />
+          ))}
+          <LockCylinder p={[0.9, 0, -0.5]} r={0.6} />
+        </>
+      ) : null}
+      {shot.prop === 'cylinder' ? (
+        <>
+          <group scale={2.2}>
+            <LockCylinder p={[0, 0, 0]} r={0.3} />
+          </group>
+          <Key p={[0.4, 0.02, 0.7]} r={-0.3} />
+          <Cyl p={[-0.9, 0.04, 0.6]} s={[0.025, 0.025, 1.0]} r={[0, 0, Math.PI / 2]} seg={6} c="#9aa3ad" />
+          <Cyl p={[-1.45, 0.07, 0.6]} s={[0.07, 0.07, 0.35]} r={[0, 0, Math.PI / 2]} seg={6} c="#b5443c" />
+        </>
+      ) : null}
+      {shot.prop === 'masks' ? (
+        <>
+          {[0, 1, 2].map((i) => (
+            <group key={i} position={[-0.8 + i * 0.8, 0.08, (i % 2) * 0.35 - 0.1]} rotation={[0, (i - 1) * 0.25, 0]}>
+              <mesh scale={[1, 0.35, 1.2]}>
+                <icosahedronGeometry args={[0.32, 0]} />
+                <meshStandardMaterial color={MASKS[i]} flatShading roughness={1} />
+              </mesh>
+              <B p={[-0.11, 0.1, -0.1]} s={[0.1, 0.04, 0.07]} c="#0c0d10" />
+              <B p={[0.11, 0.1, -0.1]} s={[0.1, 0.04, 0.07]} c="#0c0d10" />
+              <B p={[0, 0.09, 0.15]} s={[0.16, 0.04, 0.04]} c="#0c0d10" />
+            </group>
+          ))}
+          <Cyl p={[1.25, 0.05, -0.75]} s={[0.3, 0.33, 0.1]} seg={8} c="#3a4a5c" />
+          <B p={[-1.2, 0.03, 0.75]} s={[0.9, 0.06, 0.7]} r={[0, 0.3, 0]} c={COATS.navy} />
+        </>
+      ) : null}
+      {shot.prop === 'clues' ? (
+        <>
+          <Cyl p={[-0.75, 0.08, -0.15]} s={[0.36, 0.38, 0.16]} seg={8} c="#3a4a5c" />
+          <Cyl p={[-0.75, 0.02, 0.05]} s={[0.42, 0.42, 0.02]} seg={8} r={[0, 0, 0.05]} c="#22252d" />
+          {[0, 1, 2].map((i) => (
+            <mesh key={i} position={[0.55, 0.035 + i * 0.045, 0.35]} rotation={[Math.PI / 2, 0, i]}>
+              <torusGeometry args={[0.36 - i * 0.05, 0.035, 5, 14]} />
+              <meshStandardMaterial color="#c9b48a" flatShading roughness={1} />
+            </mesh>
+          ))}
+          <mesh position={[0.35, 0.07, -0.65]} rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[0.16, 0.07, 6, 14]} />
+            <meshStandardMaterial color="#efe9da" flatShading roughness={1} />
+          </mesh>
+          {[[-0.75, 0.4], [0.55, 0.85], [0.35, -0.3]].map(([x, z], i) => (
+            <group key={i} position={[x + 0.3, 0.012, z]} rotation={[0, 0.3 - i * 0.25, 0]}>
+              <B p={[0, 0, 0]} s={[0.36, 0.01, 0.2]} c="#f4efe2" />
+              <B p={[0.05, 0.006, 0]} s={[0.2, 0.004, 0.03]} c="#b5443c" />
+            </group>
+          ))}
+        </>
+      ) : null}
+      {shot.prop === 'newspaper' || shot.prop === 'calendar' || shot.prop === 'book' ? (
+        <>
+          {shot.prop === 'book' ? <B p={[0, 0.06, 0.1]} s={[1.5, 0.12, 1.5]} r={[0, 0.12, 0]} c="#5d2420" /> : null}
+          <mesh position={[0, shot.prop === 'book' ? 0.125 : 0.02, 0.1]} rotation={[-Math.PI / 2, 0, shot.prop === 'newspaper' ? 0.08 : 0.12]}>
+            <planeGeometry args={shot.prop === 'newspaper' ? [1.8, 2.34] : [1.5, 1.5]} />
+            <meshStandardMaterial map={paper} emissiveMap={paper} emissive="#ffffff" emissiveIntensity={0.18} roughness={1} />
+          </mesh>
+          <Cyl p={[1.15, 0.03, 0.9]} s={[0.025, 0.025, 0.9]} r={[0, 0.6, Math.PI / 2]} seg={6} c="#1b1b1b" />
+        </>
+      ) : null}
       {shot.prop === 'sandwich' ? (
         <>
           <B p={[0.05, 0.012, 0.05]} s={[1.9, 0.02, 1.3]} r={[0, 0.25, 0]} c="#ece5d3" />
@@ -279,8 +431,13 @@ export const Desk = ({shot}: SceneProps) => {
 };
 
 // A row of characters against a wall. prison: orange coats and height lines.
+// cast "crew": the 11-man Brink's crew. outfit: navy coats and caps. masks: Halloween masks.
+// One figure (count 1) wears shot.coat and shot.hat.
+const CREW_MIX = ['#5d6b78', '#6b6470', '#4f5f58', '#70685c'];
 export const Lineup = ({shot}: SceneProps) => {
-  const n = shot.count ?? 5;
+  const n = shot.count ?? (shot.cast === 'crew' ? 11 : 5);
+  const rows = n > 6 ? 2 : 1;
+  const perRow = Math.ceil(n / rows);
   return (
     <>
       <Room w={16} h={5} back={-1.6} wall={shot.prison ? '#39445c' : '#7f9a94'} floor={shot.prison ? '#2c3140' : '#6d6258'} />
@@ -290,13 +447,31 @@ export const Lineup = ({shot}: SceneProps) => {
       <B p={[0, 4.92, 1]} s={[3, 0.08, 0.5]} c="#fff0d0" e={2.2} />
       <pointLight position={[0, 4.2, 1.5]} color={shot.prison ? '#cfe0ff' : '#fff0d8'} intensity={22} distance={16} decay={1.5} />
       {Array.from({length: n}, (_, i) => {
-        const x = (i - (n - 1) / 2) * 0.98;
+        const row = rows === 2 && i >= perRow ? 1 : 0;
+        const inRow = row ? n - perRow : perRow;
+        const k = row ? i - perRow : i;
+        const x = (k - (inRow - 1) / 2) * 0.98 + row * 0.1;
+        const z = rows === 2 ? (row ? -0.55 : 0.6) : 0;
         const hero = i === shot.highlight;
-        const coat = shot.prison ? PRISON : hero ? HERO : ['#5d6b78', '#6b6470', '#4f5f58', '#70685c'][i % 4];
+        const dressed = shot.outfit || shot.masks;
+        let coat = shot.prison ? PRISON : hero ? HERO : CREW_MIX[i % 4];
+        let hat: 'cap' | 'brim' | 'beanie' | undefined = !shot.prison && i % 2 ? 'cap' : undefined;
+        if (shot.cast === 'crew' && !shot.prison) {
+          coat = i === 2 ? COATS.pino : i === 9 ? COATS.okeefe : CREW_MIX[i % 4];
+          hat = i % 3 === 1 ? 'brim' : undefined;
+        }
+        if (dressed && !shot.prison) {
+          coat = COATS.navy;
+          hat = 'cap';
+        }
+        if (n === 1 && shot.coat) {
+          coat = coatOf(shot.coat, coat);
+          hat = shot.hat;
+        }
         return (
           <group key={i}>
-            <Figure p={[x, 0, 0]} coat={coat} hat={!shot.prison && i % 2 ? 'cap' : undefined} scale={0.94 + rnd(`ls${i}`) * 0.12} />
-            {shot.prison ? null : <B p={[x + 0.4, 0.2, 0.25]} s={[0.1, 0.3, 0.4]} c="#3b2d22" />}
+            <Figure p={[x, 0, z]} coat={coat} hat={hat} scale={0.94 + rnd(`ls${i}`) * 0.12} mask={shot.masks ? MASKS[i % 4] : undefined} />
+            {shot.prison || dressed || shot.cast ? null : <B p={[x + 0.4, 0.2, z + 0.25]} s={[0.1, 0.3, 0.4]} c="#3b2d22" />}
           </group>
         );
       })}
@@ -340,7 +515,7 @@ export const Board = (_: SceneProps) => {
 };
 
 // Prison cell seen through the bars.
-export const Cell = (_: SceneProps) => (
+export const Cell = ({shot}: SceneProps) => (
   <>
     <Room w={8} h={5} back={-2.6} wall="#2d3447" floor="#262b38" />
     <B p={[1.6, 3.7, -2.48]} s={[1.3, 0.9, 0.06]} c="#cfe0ff" e={2.2} />
@@ -353,7 +528,7 @@ export const Cell = (_: SceneProps) => (
     <B p={[-2.5, 0.7, -1.4]} s={[2.5, 0.16, 1.1]} c="#8b93a6" />
     <B p={[-3.55, 0.82, -1.4]} s={[0.5, 0.12, 0.8]} c="#d8dce6" />
     <B p={[-2.5, 0.25, -1.4]} s={[2.6, 0.5, 0.1]} c="#3a4154" />
-    <Figure p={[0.1, 0, -0.4]} coat={PRISON} rot={-0.3} />
+    {shot.empty ? null : <Figure p={[0.1, 0, -0.4]} coat={coatOf(shot.coat, PRISON)} rot={-0.3} />}
     <pointLight position={[0, 2.6, 1.2]} color="#8fa6d8" intensity={8} distance={8} decay={1.5} />
     {Array.from({length: 11}, (_, i) => (
       <Cyl key={i} p={[(i - 5) * 0.78 + 0.39, 2.5, 2.4]} s={[0.05, 0.05, 5]} seg={6} c="#151923" />

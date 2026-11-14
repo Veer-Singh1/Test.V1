@@ -104,14 +104,28 @@ export const Sign = ({p, s, r, text, bg, fg, e = 0.9}: {p: V3; s: [number, numbe
    Coat colour says who it is; an optional hat separates roles. */
 export const SKIN = '#e3c3a0';
 export const HERO = '#d9a441';
-export const Figure = ({p, coat, rot = 0, hat, lying = false, scale = 1}: {p: V3; coat: string; rot?: number; hat?: 'cap' | 'beanie' | 'brim'; lying?: boolean; scale?: number}) => (
-  <group position={p} rotation={[lying ? -Math.PI / 2 : 0, rot, 0]} scale={scale}>
+export const Figure = ({p, coat, rot = 0, hat, lying = false, scale = 1, mask, carry}: {p: V3; coat: string; rot?: number; hat?: 'cap' | 'beanie' | 'brim'; lying?: boolean; scale?: number; mask?: string; carry?: boolean}) => (
+  <group position={lying ? [p[0], p[1] + 0.34, p[2]] : p} rotation={[0, rot, 0]} scale={scale}>
+  <group rotation={[lying ? -Math.PI / 2 : 0, 0, 0]}>
     <Cyl p={[0, 0.62, 0]} s={[0.2, 0.37, 1.24]} seg={6} c={coat} />
     <Cyl p={[0, 1.26, 0]} s={[0.26, 0.2, 0.1]} seg={6} c="#2a2a30" />
     <mesh position={[0, 1.54, 0]}>
       <icosahedronGeometry args={[0.25, 0]} />
-      <Mat c={SKIN} />
+      <Mat c={mask ?? SKIN} />
     </mesh>
+    {mask ? (
+      <>
+        <B p={[-0.09, 1.59, 0.2]} s={[0.08, 0.05, 0.06]} c="#0c0d10" />
+        <B p={[0.09, 1.59, 0.2]} s={[0.08, 0.05, 0.06]} c="#0c0d10" />
+        <B p={[0, 1.45, 0.19]} s={[0.13, 0.03, 0.06]} c="#0c0d10" />
+      </>
+    ) : null}
+    {carry ? (
+      <mesh position={[0.36, 0.78, 0.12]} scale={[1, 1.15, 0.9]}>
+        <icosahedronGeometry args={[0.27, 0]} />
+        <Mat c="#b9a27a" />
+      </mesh>
+    ) : null}
     {hat === 'beanie' ? <Cyl p={[0, 1.7, 0]} s={[0.14, 0.25, 0.2]} seg={6} c="#15171d" /> : null}
     {hat === 'cap' ? <Cyl p={[0, 1.74, 0]} s={[0.22, 0.25, 0.1]} seg={6} c="#3a4a5c" /> : null}
     {hat === 'brim' ? (
@@ -121,7 +135,35 @@ export const Figure = ({p, coat, rot = 0, hat, lying = false, scale = 1}: {p: V3
       </>
     ) : null}
   </group>
+  </group>
 );
+
+// Who wears what. A shot can name a coat ("okeefe") or give a colour.
+export const COATS: Record<string, string> = {
+  pino: HERO,
+  okeefe: '#c0503a',
+  navy: '#1f2a44',
+  worker: '#7f8a99',
+  agent: '#2a2f3a',
+  hitman: '#121418',
+  prison: '#e0762f',
+  judge: '#141418',
+};
+export const coatOf = (name: string | undefined, fallback: string) => (name ? COATS[name] ?? name : fallback);
+export const MASKS = ['#e8d26a', '#c9775a', '#9fc28a', '#d9d4c7'];
+
+// A texture drawn once on a canvas: newspapers, calendars, book covers.
+export const useCanvasTex = (w: number, h: number, draw: (g: CanvasRenderingContext2D) => void, deps: unknown[]) =>
+  useMemo(() => {
+    const cv = document.createElement('canvas');
+    cv.width = w;
+    cv.height = h;
+    draw(cv.getContext('2d')!);
+    const tex = new THREE.CanvasTexture(cv);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    return tex;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 
 export const Tree = ({p, h = 3, c = '#2f5d4a'}: {p: V3; h?: number; c?: string}) => (
   <group position={p}>

@@ -7,3 +7,4 @@ public/*/work/
 public/*/voice_raw.wav
 public/*/heard.json
 __pycache__/
+out/*/check-*.jpg

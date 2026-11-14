@@ -1,13 +1,24 @@
 import type {SceneProps} from '../Stage';
-import {B, Building, Cyl, Figure, Gem, Glow, HERO, Lamp, Sign, Tree, lerp, rnd} from '../parts';
+import {B, Building, COATS, Cyl, Figure, Gem, Glow, HERO, Lamp, MASKS, Sign, Tree, lerp, rnd} from '../parts';
+import {ArmoredTruck, StakeTruck} from './boston';
 
 const GROUND = {day: '#8fa39a', dusk: '#8a6a5c', night: '#141c33'};
 
-// The diamond district: one landmark building, neighbours, lamps and passers-by.
+// A city street: one landmark building, neighbours, lamps and passers-by.
+// sign: text over the door. brick: a lower red-brick building with a garage door.
+// truck: 'armored' or 'getaway', drive: 'in' | 'out'. crew: men by the truck (masks, sacks).
 export const Street = ({shot, t}: SceneProps) => {
   const night = shot.time === 'night';
   const lit = shot.time === 'day' ? 0.08 : night ? 0.3 : 0.6;
-  const stone = night ? '#59607a' : shot.time === 'dusk' ? '#d7b08a' : '#d8cbb4';
+  const brick = !!shot.brick;
+  const stone = brick
+    ? night ? '#5a3a36' : shot.time === 'dusk' ? '#a8604a' : '#9a5a44'
+    : night ? '#59607a' : shot.time === 'dusk' ? '#d7b08a' : '#d8cbb4';
+  const sign = shot.sign ?? 'DIAMOND CENTRE';
+  const gem = shot.gem ?? !shot.sign;
+  const H = brick ? 7.5 : 10;
+  const armoredX = shot.drive === 'in' ? lerp(-9, -2, t) : -2;
+  const getawayX = shot.drive === 'in' ? lerp(8.5, 2.2, t) : shot.drive === 'out' ? lerp(2.2, -9, t) : 2.2;
   const neighbours = [-2, -1, 1, 2].map((i) => {
     const h = 6 + rnd(`nb${i}`) * 5;
     return <Building key={i} p={[i * 6.6 + Math.sign(i) * 1.2, 0, -0.6]} s={[6, h, 5]} c={i % 2 ? '#a9917c' : '#8c97a3'} lit={lit} seed={`nb${i}`} />;
@@ -21,12 +32,25 @@ export const Street = ({shot, t}: SceneProps) => {
       <B p={[0, 0.02, 7]} s={[160, 0.06, 5]} c={night ? '#0e1426' : '#4d4f57'} />
       <B p={[0, 0.08, 3.6]} s={[160, 0.16, 2]} c={night ? '#27304a' : '#b8b2a6'} />
       {/* Diamond Centre */}
-      <Building p={[0, 0, 0]} s={[6.6, 10, 5.2]} c={stone} lit={night ? 0.05 : lit} seed="centre" />
-      <B p={[0, 1.3, 2.62]} s={[1.9, 2.6, 0.1]} c="#1c2230" />
-      <B p={[0, 2.9, 2.9]} s={[3.6, 0.16, 0.9]} c="#2a2f3a" />
-      <Sign p={[0, 3.7, 2.68]} s={[4.6, 0.9]} text="DIAMOND CENTRE" bg="#11141b" fg="#f6d27a" />
-      <Gem p={[0, 11.4, 0]} size={0.9} c="#bfeaff" e={night ? 1.2 : 0.5} />
-      {night ? <Glow p={[0, 11.4, 0]} size={5} c="#9fdcff" strength={0.5} /> : null}
+      <Building p={[0, 0, 0]} s={[brick ? 7.6 : 6.6, H, 5.2]} c={stone} lit={night ? (brick ? 0.35 : 0.05) : lit} seed={brick ? 'brk' : 'centre'} />
+      <B p={[0, brick ? 1.5 : 1.3, 2.62]} s={brick ? [3.4, 3.0, 0.1] : [1.9, 2.6, 0.1]} c="#1c2230" />
+      <B p={[0, brick ? 3.25 : 2.9, 2.9]} s={[3.6, 0.16, 0.9]} c="#2a2f3a" />
+      <Sign p={[0, brick ? 3.95 : 3.7, 2.68]} s={[4.6, 0.9]} text={sign} bg="#11141b" fg="#f6d27a" />
+      {gem ? <Gem p={[0, 11.4, 0]} size={0.9} c="#bfeaff" e={night ? 1.2 : 0.5} /> : null}
+      {gem && night ? <Glow p={[0, 11.4, 0]} size={5} c="#9fdcff" strength={0.5} /> : null}
+      {shot.truck === 'armored' ? <ArmoredTruck p={[armoredX, 0, 6.6]} lit={shot.time !== 'day'} /> : null}
+      {shot.truck === 'getaway' ? <StakeTruck p={[getawayX, 0, 6.8]} rot={Math.PI} lit={shot.time !== 'day'} sacks={shot.sacks} /> : null}
+      {Array.from({length: shot.crew ?? 0}, (_, i) => (
+        <Figure
+          key={`c${i}`}
+          p={[-0.8 + i * 1.1, 0, 9 + (i % 2) * 0.5]}
+          coat={COATS.navy}
+          hat="cap"
+          rot={-0.4 + (i % 2) * 0.5}
+          mask={shot.masks ? MASKS[i % 4] : undefined}
+          carry={shot.sacks}
+        />
+      ))}
       {neighbours}
       {back}
       {[-9, -3.6, 3.6, 9].map((x) => (
@@ -35,7 +59,7 @@ export const Street = ({shot, t}: SceneProps) => {
           <Lamp p={[0, 3.5, 0]} power={shot.time === 'day' ? 0 : 16} halo={shot.time === 'day' ? 0.01 : 2.6} light={shot.time !== 'day'} />
         </group>
       ))}
-      {night
+      {night || shot.crew
         ? null
         : [0, 1, 2, 3, 4].map((i) => {
             const dir = i % 2 ? 1 : -1;
@@ -120,10 +144,17 @@ export const Roadside = ({shot, t}: SceneProps) => {
 };
 
 // Dark backdrop for the title card: a few dim gems drifting upward.
-export const TitleVoid = ({t}: SceneProps) => (
+export const TitleVoid = ({shot, t}: SceneProps) => (
   <>
     <color attach="background" args={['#070a14']} />
-    {Array.from({length: 18}, (_, i) => (
+    {shot.drift === 'cash'
+      ? Array.from({length: 22}, (_, i) => (
+          <group key={i} position={[(rnd(`bx${i}`) - 0.5) * 9, rnd(`by${i}`) * 10 - 3 - t * (0.6 + rnd(`bs${i}`)), -rnd(`bz${i}`) * 8]} rotation={[rnd(`br${i}`) * 3 + t * 2, t * 1.5 + i, 0.4]}>
+            <B p={[0, 0, 0]} s={[0.62, 0.012, 0.28]} c="#5f8a58" e={0.15} />
+          </group>
+        ))
+      : null}
+    {(shot.drift === 'cash' ? [] : Array.from({length: 18})).map((_, i) => (
       <Gem
         key={i}
         p={[(rnd(`gx${i}`) - 0.5) * 9, rnd(`gy${i}`) * 9 - 2 + t * (0.5 + rnd(`gs${i}`)), -rnd(`gz${i}`) * 8]}

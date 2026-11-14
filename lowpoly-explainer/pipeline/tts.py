@@ -45,11 +45,62 @@ def spell_out(text: str, pronounce: dict) -> str:
         head, _, last = w.rpartition(" ")
         last = ORD.get(last, last[:-1] + "ieth" if last.endswith("y") else last + "th")
         return (head + " " + last).strip()
+    text = re.sub(r"(?<=\d),(?=\d{3})", "", text)
+    text = re.sub(r"\b(\d{1,2}):(\d{2})\b", lambda m: number_words(int(m.group(1))) + " " + number_words(int(m.group(2))), text)
+    text = re.sub(r"(\d+)\.(\d+)", lambda m: number_words(int(m.group(1))) + " point " + " ".join(ONES[int(d)] for d in m.group(2)), text)
     text = re.sub(r"(\d+)(?:st|nd|rd|th)\b", ordinal, text)
     text = re.sub(r"\d+", lambda m: number_words(int(m.group())), text)
     for word, said in pronounce.items():
         text = text.replace(word, said)
     return text
+
+
+SIBILANT, VOICELESS = set("s z ʃ ʒ ʧ ʤ".split()), set("p t k f θ".split())
+
+
+def _plus_s(pron: str) -> str:
+    last = pron.split()[-1]
+    return pron + (" ɪ z" if last in SIBILANT else " s" if last in VOICELESS else " z")
+
+
+def _plus_ed(pron: str) -> str:
+    last = pron.split()[-1]
+    return pron + (" ɪ d" if last in {"t", "d", "ɾ"} else " t" if last in VOICELESS | {"s", "ʃ", "ʧ"} else " d")
+
+
+def extra_lexicon(texts: list[str], lex_path: Path, names: dict) -> tuple[str, list[str]]:
+    """Kokoro's word list skips words it doesn't have: possessives ("Brink's"),
+    contractions ("isn't") and many inflections ("agents", "arrested").
+    Build entries for them from their base word, plus the story's own names."""
+    lex: dict[str, str] = {}
+    for line in lex_path.read_text().splitlines():
+        word, _, pron = line.partition(" ")
+        lex.setdefault(word, pron)
+    lex.update({k.lower(): v for k, v in names.items()})
+    endings = [("'s", _plus_s), ("s'", lambda p: p), ("n't", lambda p: p + " ᵊ n t"), ("'re", lambda p: p + " ɹ"),
+               ("'ll", lambda p: p + " l"), ("'ve", lambda p: p + " v"), ("'d", lambda p: p + " d")]
+    out, missing = {}, []
+    for word in sorted({w.lower() for t in texts for w in re.findall(r"[A-Za-z][A-Za-z']*", t)}):
+        if word in lex and word not in names:
+            continue
+        pron = lex.get(word)
+        for end, fn in endings:
+            if pron is None and word.endswith(end) and word[: -len(end)] in lex:
+                pron = fn(lex[word[: -len(end)]])
+        if pron is None and word.endswith("ies") and word[:-3] + "y" in lex:
+            pron = lex[word[:-3] + "y"] + " z"
+        if pron is None and word.endswith("es") and word[:-2] in lex:
+            pron = _plus_s(lex[word[:-2]])
+        if pron is None and word.endswith("s") and word[:-1] in lex:
+            pron = _plus_s(lex[word[:-1]])
+        for base in (word[:-2], word[:-1], word[:-3]) if word.endswith("ed") else ():
+            if pron is None and base in lex:
+                pron = _plus_ed(lex[base])
+        if pron:
+            out[word] = pron
+        else:
+            missing.append(word)
+    return "".join(f"{w} {p}\n" for w, p in out.items()), missing
 
 
 def elevenlabs(script: dict, texts: list[str], work: Path) -> list[Path]:
@@ -90,12 +141,19 @@ def local(script: dict, texts: list[str], work: Path) -> list[Path]:
     m = MODELS / "kokoro-multi-lang-v1_0"
     if not m.exists():
         sys.exit(f"Kokoro model not found at {m}. See README, 'Models'.")
+    voice = script["voice"]
+    texts = [spell_out(t, voice.get("local_pronounce", {})) for t in texts]
+    entries, missing = extra_lexicon(texts, m / "lexicon-us-en.txt", voice.get("local_lexicon", {}))
+    extra = work / "extra-lexicon.txt"
+    extra.write_text(entries)
+    if missing:
+        print("no pronunciation for:", ", ".join(missing))
     tts = sherpa_onnx.OfflineTts(sherpa_onnx.OfflineTtsConfig(
         model=sherpa_onnx.OfflineTtsModelConfig(
             kokoro=sherpa_onnx.OfflineTtsKokoroModelConfig(
                 model=str(m / "model.onnx"), voices=str(m / "voices.bin"),
                 tokens=str(m / "tokens.txt"), data_dir=str(m / "espeak-ng-data"),
-                lexicon=str(m / "lexicon-us-en.txt"), lang="en-us",
+                lexicon=f"{extra},{m / 'lexicon-us-en.txt'}", lang="en-us",
             ),
             num_threads=4,
         ),
@@ -103,7 +161,7 @@ def local(script: dict, texts: list[str], work: Path) -> list[Path]:
     sid = script["voice"].get("local_sid", 16)  # 11 am_adam, 14 am_fenrir, 16 am_michael, 17 am_onyx
     parts = []
     for i, text in enumerate(texts):
-        audio = tts.generate(spell_out(text, script["voice"].get("local_pronounce", {})), sid=sid, speed=1.0)
+        audio = tts.generate(text, sid=sid, speed=1.0)
         wav = work / f"beat_{i:02d}.wav"
         sf.write(wav, audio.samples, audio.sample_rate)
         parts.append(wav)

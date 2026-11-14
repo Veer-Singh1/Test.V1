@@ -4,8 +4,10 @@ A pipeline that turns a `script.json` into a 9:16 narrated video: full-screen lo
 karaoke captions, kicker titles, gold number badges and name tags. Built from the production spec
 (Remotion + React Three Fiber for picture, Python + FFmpeg for voice and timing).
 
-The test story is `stories/antwerp`: a 65-second original script about the 2003 Antwerp diamond
-heist. Output: `out/antwerp/antwerp-test.mp4`.
+| Story | Length | Output |
+| --- | --- | --- |
+| `stories/antwerp`: the 2003 Antwerp diamond heist | 65 s test | `out/antwerp/antwerp-elevenlabs.mp4` |
+| `stories/brinks`: the 1950 Brink's robbery in Boston | 6.4 min, full format | `out/brinks/brinks-preview.mp4` (stand-in voice) |
 
 ## Run it
 
@@ -24,9 +26,13 @@ python pipeline/run.py antwerp --skip-tts
 # render   (step 8)
 npm run render -- out/antwerp/antwerp.mp4 --props='{"story":"antwerp"}'
 
-# contact sheet, one frame per shot   (step 9)
+# narration as plain text, to paste into the ElevenLabs app
+python pipeline/export_text.py brinks          # -> stories/brinks/voice_script.txt
+
+# contact sheets, one frame per shot, in pages of 28   (step 9)
 npm run sheet -- antwerp
 npm run sheet -- antwerp --overlays
+npm run sheet -- brinks --scenes=street,cell   # only some scenes, after changing them
 
 # live preview while editing scenes
 npm run studio
@@ -44,6 +50,11 @@ the sherpa-onnx GitHub releases page:
 | --- | --- | --- |
 | `sherpa-onnx-nemo-parakeet-tdt-0.6b-v2-int8` | Word timings (`asr-models` release) | Always |
 | `kokoro-multi-lang-v1_0` | Stand-in voice (`tts-models` release) | Only with `--provider local` |
+
+The stand-in voice reads from a word list and skips words it doesn't have. `tts.py` builds the
+missing entries for possessives, contractions and plurals from their base word. Names go in
+`voice.local_lexicon` in `script.json` as phonemes, for example `"pino": "p ˈ i n O"`. Unknown
+words are printed as `no pronunciation for: ...`. None of this affects ElevenLabs.
 
 The spec suggested faster-whisper for timings. Its models could not be downloaded on the build
 machine, so alignment uses Parakeet instead. Only the `recognise` function in `pipeline/align.py`
@@ -80,29 +91,41 @@ Timeline rules, all from the spec:
 ```
 
 - `camera`: `push_in`, `pull_out`, `track_left`, `track_right`, `orbit_low`, `top_down`. All move linearly for the whole shot.
+- `zoom`: multiplies the camera distance, for example `1.35` to fit an 11-man lineup.
 - `time`: `day`, `dusk`, `night`.
 - Overlay `kind`: `badge` (`value`, `prefix`, `suffix`, `label`), `kicker` (`line1`, `line2`, `red`), `nametag` (`name`, `place`).
 - The title card is a shot with `"scene": "title"`. Its text comes from the top-level `title`.
 
 ## Scene library
 
-Twelve scenes, registered in `src/three/Stage.tsx`. Reusing a scene with a different camera,
+Twenty scenes, registered in `src/three/Stage.tsx`. Reusing a scene with a different camera,
 time of day or switch gives a new-looking shot.
 
 | Scene | Switches |
 | --- | --- |
-| `street` | |
+| `street` | `sign`, `brick`, `gem`, `truck` (`armored`, `getaway`), `drive` (`in`, `out`), `crew`, `masks`, `sacks` |
 | `skyline` | |
+| `neighborhood` | `car`, `flash`, `figure` (coat), `lying`, `agents` |
 | `roadside` | `car`, `bag`, `crew`, `local` |
+| `junkyard` | `fire`, `agents` |
 | `vault_door` | `lasers`, `open`, `crew` (count) |
 | `vault_room` | `lasers`, `open` |
+| `counting_room` | `workers`, `robbers`, `masks`, `tied`, `empty`, `sacks` |
+| `door_lock` | `label`, `key`, `remove`, `open`, `crew`, `masks` |
+| `stairs` | `crew`, `masks`, `sacks` (carrying down) |
 | `diamonds` | |
-| `office` | |
-| `desk` | `prop`: `blueprint`, `envelopes`, `sandwich` |
-| `lineup` | `count`, `highlight`, `prison` |
+| `cash` | `sacks`, `few` |
+| `office` | `coat`, `hat`, `gems`, `files` |
+| `desk` | `prop`: `blueprint` (`label`, `sub`), `envelopes`, `sandwich`, `keys`, `cylinder`, `masks`, `clues`, `newspaper`, `calendar`, `book` (`text`, `sub`) |
+| `lineup` | `count`, `highlight`, `prison`, `cast: "crew"`, `outfit`, `masks`, `coat` and `hat` (one figure) |
 | `board` | |
-| `cell` | |
-| `title` | |
+| `interrogation` | `coat`, `agents` |
+| `courtroom` | `count` (defendants) |
+| `cell` | `coat`, `empty` |
+| `title` | `drift` (`gems`, `cash`) |
+
+Coats can be named: `pino`, `okeefe`, `navy`, `worker`, `agent`, `hitman`, `prison`, `judge`,
+or given as a colour.
 
 To add a scene, write a component in `src/three/scenes/`, add it to `SCENES` with a camera target
 and distance, and use its key in `script.json`. Shared pieces (boxes, lamps, signs, the character)

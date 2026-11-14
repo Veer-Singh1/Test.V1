@@ -6,6 +6,7 @@ import type {Shot} from '../types';
 import {lerp, type V3} from './parts';
 import {Roadside, Skyline, Street, TitleVoid} from './scenes/exteriors';
 import {Board, Cell, Desk, Diamonds, Lineup, Office, VaultDoor, VaultRoom} from './scenes/interiors';
+import {Cash, CountingRoom, Courtroom, DoorLock, Interrogation, Junkyard, Neighborhood, Stairs} from './scenes/boston';
 
 export type SceneProps = {shot: Shot; t: number};
 type SceneDef = {
@@ -31,6 +32,16 @@ export const SCENES: Record<string, SceneDef> = {
   lineup: {C: Lineup, target: [0, 1.3, 0], dist: 9, height: 1.5, swing: 0.6, indoor: true},
   board: {C: Board, target: [0, 2.1, 0], dist: 6, height: 2, swing: 0.5, indoor: true},
   cell: {C: Cell, target: [0, 1.6, 0], dist: 7.5, height: 1.7, swing: 0.45, indoor: true},
+  // Boston, 1950
+  counting_room: {C: CountingRoom, target: [0, 1.3, 0.6], dist: 9.5, height: 2.6, swing: 0.5, indoor: true},
+  cash: {C: Cash, target: [0, 0.2, 0], dist: 3.6, height: 1.7, indoor: true},
+  door_lock: {C: DoorLock, target: [0.3, 1.4, 0], dist: 3.8, height: 1.5, swing: 0.4, indoor: true},
+  stairs: {C: Stairs, target: [0, 2.2, -3], dist: 7.5, height: 1.4, swing: 0.3, indoor: true},
+  junkyard: {C: Junkyard, target: [0, 0.8, 0.5], dist: 9, height: 2.6},
+  // High camera, so a passing car never hides the people on the sidewalk.
+  neighborhood: {C: Neighborhood, target: [0.4, 1.3, 3.8], dist: 10, height: 4.2, swing: 0.6},
+  interrogation: {C: Interrogation, target: [0, 1.3, 0], dist: 6.4, height: 1.8, swing: 0.5, indoor: true},
+  courtroom: {C: Courtroom, target: [0, 1.7, -2], dist: 10, height: 2.4, swing: 0.5, indoor: true},
 };
 
 const LOOKS = {
@@ -47,7 +58,7 @@ const cameraPose = (shot: Shot, def: SceneDef, t: number): {pos: V3; look: V3} =
   const swing = def.swing ?? 1;
   const az0 = (((shot.seed * 37) % 5) - 2) * 0.1 * swing;
   const polar = (r: number, az: number, y: number): V3 => [tx + r * Math.sin(az), y, tz + r * Math.cos(az)];
-  const d = def.dist;
+  const d = def.dist * (shot.zoom ?? 1);
   switch (shot.camera) {
     case 'pull_out':
       return {pos: polar(d * lerp(0.84, 1.1, t), az0, def.height), look: def.target};
