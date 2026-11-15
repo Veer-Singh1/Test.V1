@@ -504,7 +504,8 @@ def pick_device(want=None):
     return "CPU", "CPU (no supported GPU found. " + "; ".join(tried) + f". CYCLES_ONEAPI_ALL_DEVICES={flag})"
 
 
-def setup_render(sc, scale=100, samples=48, threshold=0.03, seed=3, exposure=1.1, motion_blur=False, haze=0.5, bloom=0.5):
+def setup_render(sc, scale=100, samples=48, threshold=0.03, seed=3, exposure=1.1, motion_blur=False, haze=0.5, bloom=0.5, fast=False):
+    """fast=True trades quality for speed: fewer light bounces, no motion blur."""
     sc.render.fps = 30
     sc.render.engine = "CYCLES"
     c = sc.cycles
@@ -516,11 +517,11 @@ def setup_render(sc, scale=100, samples=48, threshold=0.03, seed=3, exposure=1.1
     c.use_adaptive_sampling, c.adaptive_threshold, c.adaptive_min_samples = True, threshold, 8
     c.use_denoising, c.denoiser = True, "OPENIMAGEDENOISE"
     c.denoising_input_passes, c.denoising_prefilter = "RGB_ALBEDO_NORMAL", "FAST"
-    c.max_bounces, c.diffuse_bounces, c.glossy_bounces, c.transmission_bounces = 5, 2, 3, 1
+    c.max_bounces, c.diffuse_bounces, c.glossy_bounces, c.transmission_bounces = (3, 1, 1, 0) if fast else (5, 2, 3, 1)
     c.sample_clamp_indirect, c.blur_glossy = 6.0, 0.6
     c.caustics_reflective = c.caustics_refractive = False
     c.seed, c.use_animated_seed = seed, False
-    sc.render.use_motion_blur, sc.render.motion_blur_shutter = motion_blur, 0.5
+    sc.render.use_motion_blur, sc.render.motion_blur_shutter = motion_blur and not fast, 0.5
     sc.render.use_persistent_data = True
     sc.render.resolution_x, sc.render.resolution_y, sc.render.resolution_percentage = 1080, 1920, scale
     sc.view_layers[0].use_pass_mist = bool(haze)

@@ -10,6 +10,7 @@ bounced light, reflections on a wet road, depth of field, motion blur).
 Needs the `bpy` package (pip install bpy). No GPU required.
 """
 import argparse
+import json
 import math
 import os
 import random
@@ -724,13 +725,15 @@ def main():
     ap.add_argument("--threshold", type=float, default=0.03, help="noise level at which a pixel stops sampling")
     ap.add_argument("--seed", type=int, default=3)
     ap.add_argument("--dolly", action="store_true", help="move the camera in 3D (slower to render cleanly; see README)")
+    ap.add_argument("--fast", action="store_true", help="lower quality for speed: fewer light bounces, no motion blur")
+    ap.add_argument("--label", default="", help="name for this computer in times.json, e.g. laptop or cloud")
     args = ap.parse_args()
 
     t0 = time.time()
     sc = reset()
     trk, wheels = build(sc, truck_at=Y_END + D_TRUCK)
     animate(sc, trk, wheels, args.frames, args.hold, args.dolly)
-    setup_render(sc, args.scale, args.samples, args.threshold, args.seed, motion_blur=True)
+    setup_render(sc, args.scale, args.samples, args.threshold, args.seed, motion_blur=True, fast=args.fast)
     last = args.frames + args.hold
     print(f"built scene in {time.time() - t0:.1f} s", flush=True)
     if args.frame is not None:
@@ -739,13 +742,20 @@ def main():
         print(f"frame {args.frame}: {time.time() - t0:.1f} s", flush=True)
         return
     os.makedirs(args.out, exist_ok=True)
+    log = os.path.join(args.out, f"times{'_' + args.label if args.label else ''}.json")
+    times = json.load(open(log)) if os.path.exists(log) else {}
     for f in range(args.start, (args.end or last) + 1):
         path = os.path.join(args.out, f"{f:04d}.png")
         if os.path.exists(path):
             continue  # lets an interrupted render resume
         t0 = time.time()
         render(sc, path, f)
+        times[str(f)] = round(time.time() - t0, 2)
+        json.dump({"label": args.label, "scale": args.scale, "samples": args.samples, "fast": args.fast, **times}, open(log, "w"), indent=0)
         print(f"frame {f}/{last}: {time.time() - t0:.1f} s", flush=True)
+    done = [v for k, v in times.items() if k.isdigit()]
+    if done:
+        print(f"{len(done)} frames, {sum(done) / len(done):.1f} s per frame, {sum(done) / 60:.1f} min in all", flush=True)
 
 
 if __name__ == "__main__":

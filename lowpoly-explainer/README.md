@@ -159,6 +159,20 @@ What the path tracer adds over the Remotion scenes:
 | Haze with distance | Linear fog | Depth haze from the render's mist pass |
 | Render time per frame | about 0.3 s | about 40 s at 810 x 1440 on 4 CPU cores |
 
+### Fast drafts, and splitting a render between two computers
+
+`--fast` cuts light bounces from 5 to 3 and turns off motion blur. At `--scale 50 --samples 8` a frame
+takes 7.6 s on the cloud machine instead of 37 s, and still looks close to the full version. Each run
+writes `times_<label>.json` with the seconds for every frame and prints the average at the end, so two
+computers can be compared. A run skips frames that already exist, so it can be stopped and resumed.
+
+```bash
+# laptop (about 0.6x the cloud's speed) takes the first 37% of the frames, the cloud the rest;
+# frame 34 is rendered on both to check that the two halves match
+py -3.13 blender/street.py --out out/test/laptop --frames 90 --start 1 --end 34 --scale 50 --samples 8 --fast --label laptop
+python3 blender/street.py --out out/test/cloud --frames 90 --start 34 --end 90 --scale 50 --samples 8 --fast --label cloud
+```
+
 Two choices keep the render time sane on a machine with no GPU:
 
 - **The camera is locked off in 3D** and the slow push-in is added afterwards as a zoom. With a
