@@ -15,7 +15,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "E1"
+   "plate": "E1",
+   "meta": {
+    "lens": 40,
+    "shift_y": 0.0,
+    "focus": 1.494
+   }
   },
   {
    "from": 77,
@@ -25,7 +30,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "A4"
+   "plate": "A4",
+   "meta": {
+    "lens": 28,
+    "shift_y": 0.1,
+    "focus": 4.615
+   }
   },
   {
    "from": 113,
@@ -35,7 +45,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "B1"
+   "plate": "B1",
+   "meta": {
+    "lens": 28,
+    "shift_y": 0.04,
+    "focus": 4.391
+   }
   },
   {
    "from": 166,
@@ -43,13 +58,18 @@
    "seed": 3,
    "beat": "hook",
    "scene": "plate",
-   "camera": "push_in",
+   "camera": "track_left",
    "time": "night",
    "plate": "B2",
    "anchor": [
     0.55,
     0.45
-   ]
+   ],
+   "meta": {
+    "lens": 55,
+    "shift_y": 0.0,
+    "focus": 0.665
+   }
   },
   {
    "from": 204,
@@ -59,7 +79,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "A1"
+   "plate": "A1",
+   "meta": {
+    "lens": 24,
+    "shift_y": 0.2,
+    "focus": 17.566
+   }
   },
   {
    "from": 276,
@@ -73,7 +98,12 @@
    "anchor": [
     0.42,
     0.63
-   ]
+   ],
+   "meta": {
+    "lens": 28.0,
+    "shift_y": 0.15,
+    "focus": 12.442
+   }
   },
   {
    "from": 406,
@@ -81,10 +111,15 @@
    "seed": 6,
    "beat": "night",
    "scene": "plate",
-   "camera": "push_in",
+   "camera": "track_right",
    "time": "night",
    "plate": "A3",
-   "keep": true
+   "keep": true,
+   "meta": {
+    "lens": 45,
+    "shift_y": 0.03,
+    "focus": 6.629
+   }
   },
   {
    "from": 440,
@@ -94,7 +129,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "B3"
+   "plate": "B3",
+   "meta": {
+    "lens": 26,
+    "shift_y": 0.03,
+    "focus": 3.931
+   }
   },
   {
    "from": 500,
@@ -108,7 +148,12 @@
    "anchor": [
     0.5,
     0.45
-   ]
+   ],
+   "meta": {
+    "lens": 55,
+    "shift_y": 0.0,
+    "focus": 0.665
+   }
   },
   {
    "from": 538,
@@ -119,7 +164,12 @@
    "camera": "pull_out",
    "time": "night",
    "plate": "C1",
-   "keep": true
+   "keep": true,
+   "meta": {
+    "lens": 45,
+    "shift_y": 0.0,
+    "focus": 0.873
+   }
   },
   {
    "from": 560,
@@ -133,7 +183,12 @@
    "anchor": [
     0.5,
     0.45
-   ]
+   ],
+   "meta": {
+    "lens": 55,
+    "shift_y": 0.0,
+    "focus": 0.665
+   }
   },
   {
    "from": 596,
@@ -141,10 +196,15 @@
    "seed": 11,
    "beat": "secret",
    "scene": "plate",
-   "camera": "pan_right",
+   "camera": "track_right",
    "time": "night",
    "plate": "D1",
-   "keep": true
+   "keep": true,
+   "meta": {
+    "lens": 22,
+    "shift_y": 0.05,
+    "focus": 5.036
+   }
   },
   {
    "from": 627,
@@ -155,7 +215,12 @@
    "camera": "push_in",
    "time": "night",
    "plate": "B6",
-   "keep": true
+   "keep": true,
+   "meta": {
+    "lens": 32,
+    "shift_y": 0.03,
+    "focus": 4.014
+   }
   },
   {
    "from": 656,
@@ -166,7 +231,12 @@
    "camera": "push_in",
    "time": "night",
    "plate": "B7",
-   "keep": true
+   "keep": true,
+   "meta": {
+    "lens": 32,
+    "shift_y": 0.03,
+    "focus": 4.014
+   }
   },
   {
    "from": 673,
@@ -177,7 +247,12 @@
    "camera": "push_in",
    "time": "night",
    "plate": "B8",
-   "keep": true
+   "keep": true,
+   "meta": {
+    "lens": 32,
+    "shift_y": 0.03,
+    "focus": 4.014
+   }
   },
   {
    "from": 692,
@@ -188,7 +263,12 @@
    "camera": "push_in",
    "time": "night",
    "plate": "B9",
-   "keep": true
+   "keep": true,
+   "meta": {
+    "lens": 32,
+    "shift_y": 0.03,
+    "focus": 4.014
+   }
   },
   {
    "from": 716,
@@ -199,7 +279,12 @@
    "camera": "push_in",
    "time": "night",
    "plate": "B10",
-   "keep": true
+   "keep": true,
+   "meta": {
+    "lens": 32,
+    "shift_y": 0.03,
+    "focus": 4.014
+   }
   },
   {
    "from": 738,
@@ -209,7 +294,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "D1"
+   "plate": "D1",
+   "meta": {
+    "lens": 22,
+    "shift_y": 0.05,
+    "focus": 5.036
+   }
   },
   {
    "from": 798,
@@ -217,9 +307,14 @@
    "seed": 18,
    "beat": "robbery",
    "scene": "plate",
-   "camera": "push_in",
+   "camera": "track_left",
    "time": "night",
-   "plate": "D2"
+   "plate": "D2",
+   "meta": {
+    "lens": 24,
+    "shift_y": -0.04,
+    "focus": 2.631
+   }
   },
   {
    "from": 846,
@@ -229,7 +324,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "E2"
+   "plate": "E2",
+   "meta": {
+    "lens": 32,
+    "shift_y": 0.0,
+    "focus": 2.089
+   }
   },
   {
    "from": 892,
@@ -239,7 +339,12 @@
    "scene": "plate",
    "camera": "pull_out",
    "time": "night",
-   "plate": "E3"
+   "plate": "E3",
+   "meta": {
+    "lens": 40,
+    "shift_y": 0.0,
+    "focus": 1.432
+   }
   },
   {
    "from": 954,
@@ -250,7 +355,12 @@
    "camera": "push_in",
    "time": "night",
    "plate": "A4b",
-   "keep": true
+   "keep": true,
+   "meta": {
+    "lens": 35,
+    "shift_y": 0.0,
+    "focus": 5.261
+   }
   },
   {
    "from": 985,
@@ -264,7 +374,12 @@
    "anchor": [
     0.45,
     0.4
-   ]
+   ],
+   "meta": {
+    "lens": 28,
+    "shift_y": 0.1,
+    "focus": 3.442
+   }
   },
   {
    "from": 1061,
@@ -272,13 +387,18 @@
    "seed": 23,
    "beat": "robbery",
    "scene": "plate",
-   "camera": "push_in",
+   "camera": "pull_out",
    "time": "night",
    "plate": "A5",
    "anchor": [
     0.42,
     0.63
-   ]
+   ],
+   "meta": {
+    "lens": 28.0,
+    "shift_y": 0.15,
+    "focus": 12.442
+   }
   },
   {
    "from": 1107,
@@ -288,7 +408,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "F1"
+   "plate": "F1",
+   "meta": {
+    "lens": 24,
+    "shift_y": 0.0,
+    "focus": 3.004
+   }
   },
   {
    "from": 1143,
@@ -296,9 +421,14 @@
    "seed": 25,
    "beat": "pact",
    "scene": "plate",
-   "camera": "push_in",
+   "camera": "track_right",
    "time": "night",
-   "plate": "F2"
+   "plate": "F2",
+   "meta": {
+    "lens": 35,
+    "shift_y": 0.0,
+    "focus": 2.34
+   }
   },
   {
    "from": 1220,
@@ -308,7 +438,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "C2"
+   "plate": "C2",
+   "meta": {
+    "lens": 50,
+    "shift_y": 0.0,
+    "focus": 1.033
+   }
   },
   {
    "from": 1270,
@@ -319,7 +454,12 @@
    "camera": "push_in",
    "time": "night",
    "plate": "A6",
-   "keep": true
+   "keep": true,
+   "meta": {
+    "lens": 24,
+    "shift_y": 0.2,
+    "focus": 17.566
+   }
   },
   {
    "from": 1300,
@@ -329,7 +469,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "G1"
+   "plate": "G1",
+   "meta": {
+    "lens": 35,
+    "shift_y": 0.0,
+    "focus": 2.438
+   }
   },
   {
    "from": 1396,
@@ -337,9 +482,14 @@
    "seed": 29,
    "beat": "turn",
    "scene": "plate",
-   "camera": "push_in",
+   "camera": "track_left",
    "time": "night",
-   "plate": "A7"
+   "plate": "A7",
+   "meta": {
+    "lens": 42,
+    "shift_y": 0.06,
+    "focus": 6.046
+   }
   },
   {
    "from": 1440,
@@ -349,7 +499,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "A8"
+   "plate": "A8",
+   "meta": {
+    "lens": 32,
+    "shift_y": 0.0,
+    "focus": 4.428
+   }
   },
   {
    "from": 1489,
@@ -359,7 +514,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "C3"
+   "plate": "C3",
+   "meta": {
+    "lens": 50,
+    "shift_y": 0.0,
+    "focus": 1.033
+   }
   },
   {
    "from": 1578,
@@ -367,9 +527,14 @@
    "seed": 32,
    "beat": "turn",
    "scene": "plate",
-   "camera": "push_in",
+   "camera": "track_right",
    "time": "night",
-   "plate": "G2"
+   "plate": "G2",
+   "meta": {
+    "lens": 28,
+    "shift_y": -0.02,
+    "focus": 3.632
+   }
   },
   {
    "from": 1624,
@@ -379,7 +544,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "A9"
+   "plate": "A9",
+   "meta": {
+    "lens": 35,
+    "shift_y": 0.05,
+    "focus": 4.001
+   }
   },
   {
    "from": 1684,
@@ -390,7 +560,12 @@
    "camera": "push_in",
    "time": "night",
    "plate": "C4",
-   "keep": true
+   "keep": true,
+   "meta": {
+    "lens": 50,
+    "shift_y": 0.0,
+    "focus": 1.033
+   }
   },
   {
    "from": 1712,
@@ -400,7 +575,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "G3"
+   "plate": "G3",
+   "meta": {
+    "lens": 32,
+    "shift_y": 0.02,
+    "focus": 5.914
+   }
   },
   {
    "from": 1751,
@@ -411,7 +591,12 @@
    "camera": "pull_out",
    "time": "night",
    "plate": "E1",
-   "keep": true
+   "keep": true,
+   "meta": {
+    "lens": 40,
+    "shift_y": 0.0,
+    "focus": 1.494
+   }
   },
   {
    "from": 1772,
@@ -421,7 +606,12 @@
    "scene": "plate",
    "camera": "push_in",
    "time": "night",
-   "plate": "E5"
+   "plate": "E5",
+   "meta": {
+    "lens": 45,
+    "shift_y": 0.0,
+    "focus": 1.33
+   }
   }
  ],
  "captions": [

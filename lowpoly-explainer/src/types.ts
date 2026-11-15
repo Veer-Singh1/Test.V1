@@ -54,6 +54,7 @@ export type Shot = {
   clip?: string;
   anchor?: [number, number];
   keep?: boolean;
+  meta?: {lens: number; shift_y: number; focus: number}; // camera that took the plate; present when it has a depth map
 };
 
 export type CaptionChunk = {from: number; to: number; words: {w: string; from: number}[]};

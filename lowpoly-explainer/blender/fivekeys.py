@@ -13,8 +13,8 @@ import os
 import random
 import time
 
-from lib import (Geo, bars, boards, camera, cash, figure, light, pendant, render, reset, room, sack, setup_render,
-                 table, text, tiles, world_flat)
+from lib import (LAST_CAM, Geo, bars, boards, camera, cash, depth_frame, depth_setup, figure, light, pendant, render,
+                 reset, room, sack, setup_render, table, text, tiles, world_flat)
 import street
 
 from mathutils import Matrix, Vector
@@ -653,6 +653,28 @@ def g3(sc):  # eight men, life in prison
 
 
 # ---------------------------------------------------------------------- main
+def clip_depth(out, frames=150):
+    """Depth for every frame of the truck clip, and the clip's frames as JPEGs beside them."""
+    import subprocess
+
+    d = os.path.join(out, "street")
+    os.makedirs(d, exist_ok=True)
+    sc = reset()
+    trk, wheels = street.build(sc, truck_at=street.Y_END + street.D_TRUCK)
+    street.animate(sc, trk, wheels, 90, 60, False)
+    setup_render(sc, 50, 1, 1.0)
+    cam = dict(LAST_CAM)
+    depth_setup(sc)
+    for f in range(1, frames + 1):
+        png = os.path.join(d, f"d_{f:04d}.png")
+        if not os.path.exists(png):
+            sc.frame_set(f)
+            depth_frame(sc, png)
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", os.path.join(out, "street.mp4"), "-frames:v", str(frames), "-q:v", "3",
+                    os.path.join(d, "c_%04d.jpg")], check=True)
+    return cam
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", help="comma-separated plate names")
@@ -661,26 +683,46 @@ def main():
     ap.add_argument("--samples", type=int, default=64)
     ap.add_argument("--threshold", type=float, default=0.02)
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--depth", action="store_true", help="write depth maps (<name>_d.png) and meta.json instead of pictures")
+    ap.add_argument("--clip", action="store_true", help="with --depth: also the truck clip, frame by frame")
+    ap.add_argument("--offset", type=float, nargs=3, help="move the camera by this much (right, up, forward), for checking the depth maps")
     args = ap.parse_args()
+    import json
     from PIL import Image
 
     os.makedirs(args.out, exist_ok=True)
     names = args.only.split(",") if args.only else list(PLATES)
+    meta_path = os.path.join(args.out, "meta.json")
+    meta = json.load(open(meta_path)) if os.path.exists(meta_path) else {}
     for name in names:
         fn, o = PLATES[name]
-        jpg = os.path.join(args.out, f"{name}.jpg")
+        jpg = os.path.join(args.out, f"{name}_d.png" if args.depth else f"{name}.jpg")
         if os.path.exists(jpg) and not args.force:
             continue
         t0 = time.time()
         sc = reset()
         fn(sc)
+        if args.offset:  # in the camera's own axes
+            import bpy
+            bpy.context.view_layer.update()
+            m = sc.camera.matrix_world.copy()
+            sc.camera.location = m @ Vector((args.offset[0], args.offset[1], -args.offset[2]))
         setup_render(sc, args.scale, args.samples, args.threshold, exposure=o.get("exposure", 1.1),
                      haze=o.get("haze", 0.0), bloom=o.get("bloom", 0.5))
-        png = os.path.join(args.out, f"{name}.png")
-        render(sc, png)
-        Image.open(png).convert("RGB").save(jpg, quality=95)
-        os.remove(png)
+        if args.depth:
+            depth_setup(sc)
+            depth_frame(sc, jpg)
+            meta[name] = dict(LAST_CAM)
+        else:
+            png = os.path.join(args.out, f"{name}.png")
+            render(sc, png)
+            Image.open(png).convert("RGB").save(jpg, quality=95)
+            os.remove(png)
         print(f"plate {name}: {time.time() - t0:.1f} s", flush=True)
+    if args.depth:
+        if args.clip:
+            meta["street"] = clip_depth(args.out)
+        json.dump(meta, open(meta_path, "w"), indent=1)
 
 
 if __name__ == "__main__":

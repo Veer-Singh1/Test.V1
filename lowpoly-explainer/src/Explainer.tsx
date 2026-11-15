@@ -8,6 +8,7 @@ import {Captions} from './overlays/Captions';
 import {Kicker} from './overlays/Kicker';
 import {NameTag} from './overlays/NameTag';
 import {Plate} from './Plate';
+import {Plate3D} from './Plate3D';
 import {TitleCard} from './overlays/TitleCard';
 import {Stage} from './three/Stage';
 import type {Timeline} from './types';
@@ -32,7 +33,11 @@ export const Explainer = ({story, timeline}: {story: string; timeline: Timeline}
 
   return (
     <AbsoluteFill style={{backgroundColor: '#05070d'}}>
-      {shot?.scene === 'plate' ? (
+      {shot?.scene === 'plate' && shot.meta ? (
+        <ThreeCanvas width={width} height={height} gl={{antialias: true}}>
+          <Plate3D key={shot.from} shot={shot} story={story} />
+        </ThreeCanvas>
+      ) : shot?.scene === 'plate' ? (
         <Plate key={shot.from} shot={shot} story={story} />
       ) : ready && shot ? (
         <ThreeCanvas width={width} height={height} gl={{antialias: true}} camera={{fov: 46, near: 0.1, far: 220}}>

@@ -121,6 +121,13 @@ def main():
         "captions": build_captions(words, total),
         "overlays": build_overlays(script, words, total),
     }
+    # Plates with a depth map get their camera data, which lets Remotion move a camera through them.
+    meta_path = d / "plates" / "meta.json"
+    if meta_path.exists():
+        meta = json.loads(meta_path.read_text())
+        for sh in timeline["shots"]:
+            if sh.get("plate") in meta or sh.get("clip") in meta:
+                sh["meta"] = meta[sh.get("plate") or sh.get("clip")]
     # An overlay marked "cut": true ends with the shot it starts in.
     for ov in timeline["overlays"]:
         if ov.pop("cut", False):

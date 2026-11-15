@@ -427,6 +427,9 @@ def world_flat(color="#0a0c12", strength=0.05):
     return w
 
 
+LAST_CAM = {}  # lens, shift and subject distance of the camera made last: saved beside each plate
+
+
 def camera(sc, pos, look, lens=28.0, level=True, shift_y=0.0, fstop=None, focus=None):
     """level=True keeps verticals straight (use shift_y to frame); otherwise the camera tilts to aim."""
     cd = bpy.data.cameras.new("cam")
@@ -441,6 +444,8 @@ def camera(sc, pos, look, lens=28.0, level=True, shift_y=0.0, fstop=None, focus=
     if fstop:
         cd.dof.use_dof, cd.dof.aperture_fstop, cd.dof.aperture_blades = True, fstop, 7
         cd.dof.focus_distance = (Vector(focus) - pos).length if focus else d.length
+    LAST_CAM.clear()
+    LAST_CAM.update(lens=lens, shift_y=shift_y, focus=round(((Vector(focus) - pos) if focus else d).length, 3))
     return ob
 
 
@@ -511,3 +516,45 @@ def render(sc, path, frame=None):
         sc.frame_set(frame)
     sc.render.filepath = path
     bpy.ops.render.render(write_still=True)
+
+
+NEAR = 0.1  # metres: disparity 1.0. Depth maps store NEAR / distance, so far things lose precision, not near ones.
+
+
+def depth_setup(sc, scale=50):
+    """Switch a built scene to a fast depth-only render (one sample, sharp, no lens blur)."""
+    c = sc.cycles
+    c.samples, c.use_adaptive_sampling, c.use_denoising = 1, False, False
+    sc.render.use_motion_blur = False
+    sc.camera.data.dof.use_dof = False
+    sc.render.resolution_percentage = scale
+    sc.view_layers[0].use_pass_z = True
+    g = bpy.data.node_groups.new("depth", "CompositorNodeTree")
+    sc.compositing_node_group = g
+    g.interface.new_socket(name="Image", in_out="OUTPUT", socket_type="NodeSocketColor")
+    rl, out, div = g.nodes.new("CompositorNodeRLayers"), g.nodes.new("NodeGroupOutput"), g.nodes.new("ShaderNodeMath")
+    div.operation = "DIVIDE"
+    div.inputs[0].default_value = NEAR
+    g.links.new(rl.outputs["Depth"], div.inputs[1])
+    g.links.new(div.outputs[0], out.inputs[0])
+    sc.render.image_settings.file_format = "OPEN_EXR"
+    sc.render.image_settings.color_mode = "RGB"
+    sc.render.image_settings.color_depth = "32"
+
+
+def depth_frame(sc, png):
+    """Render the depth pass and save it as a PNG: 16-bit disparity, high byte in red, low byte in green."""
+    import numpy as np
+    from PIL import Image
+
+    exr = png[:-4] + ".exr"
+    sc.render.filepath = exr
+    bpy.ops.render.render(write_still=True)
+    img = bpy.data.images.load(exr)
+    w, h = img.size
+    a = np.array(img.pixels[:], dtype=np.float32).reshape(h, w, 4)[::-1, :, 0]
+    bpy.data.images.remove(img)
+    os.remove(exr)
+    v = np.round(np.clip(a, 0.0, 1.0) * 65535).astype(np.uint16)
+    Image.fromarray(np.dstack([(v >> 8).astype(np.uint8), (v & 255).astype(np.uint8), np.zeros_like(v, np.uint8)]), "RGB").save(png)
+    return a

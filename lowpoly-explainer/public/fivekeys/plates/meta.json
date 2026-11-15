@@ -1,0 +1,182 @@
+{
+ "A1": {
+  "lens": 24,
+  "shift_y": 0.2,
+  "focus": 17.566
+ },
+ "A3": {
+  "lens": 45,
+  "shift_y": 0.03,
+  "focus": 6.629
+ },
+ "A4": {
+  "lens": 28,
+  "shift_y": 0.1,
+  "focus": 4.615
+ },
+ "A4b": {
+  "lens": 35,
+  "shift_y": 0.0,
+  "focus": 5.261
+ },
+ "A5": {
+  "lens": 28.0,
+  "shift_y": 0.15,
+  "focus": 12.442
+ },
+ "A6": {
+  "lens": 24,
+  "shift_y": 0.2,
+  "focus": 17.566
+ },
+ "A7": {
+  "lens": 42,
+  "shift_y": 0.06,
+  "focus": 6.046
+ },
+ "A8": {
+  "lens": 32,
+  "shift_y": 0.0,
+  "focus": 4.428
+ },
+ "A9": {
+  "lens": 35,
+  "shift_y": 0.05,
+  "focus": 4.001
+ },
+ "B1": {
+  "lens": 28,
+  "shift_y": 0.04,
+  "focus": 4.391
+ },
+ "B2": {
+  "lens": 55,
+  "shift_y": 0.0,
+  "focus": 0.665
+ },
+ "B4": {
+  "lens": 55,
+  "shift_y": 0.0,
+  "focus": 0.665
+ },
+ "B5": {
+  "lens": 55,
+  "shift_y": 0.0,
+  "focus": 0.665
+ },
+ "B3": {
+  "lens": 26,
+  "shift_y": 0.03,
+  "focus": 3.931
+ },
+ "B6": {
+  "lens": 32,
+  "shift_y": 0.03,
+  "focus": 4.014
+ },
+ "B7": {
+  "lens": 32,
+  "shift_y": 0.03,
+  "focus": 4.014
+ },
+ "B8": {
+  "lens": 32,
+  "shift_y": 0.03,
+  "focus": 4.014
+ },
+ "B9": {
+  "lens": 32,
+  "shift_y": 0.03,
+  "focus": 4.014
+ },
+ "B10": {
+  "lens": 32,
+  "shift_y": 0.03,
+  "focus": 4.014
+ },
+ "C1": {
+  "lens": 45,
+  "shift_y": 0.0,
+  "focus": 0.873
+ },
+ "C2": {
+  "lens": 50,
+  "shift_y": 0.0,
+  "focus": 1.033
+ },
+ "C3": {
+  "lens": 50,
+  "shift_y": 0.0,
+  "focus": 1.033
+ },
+ "C4": {
+  "lens": 50,
+  "shift_y": 0.0,
+  "focus": 1.033
+ },
+ "D1": {
+  "lens": 22,
+  "shift_y": 0.05,
+  "focus": 5.036
+ },
+ "D2": {
+  "lens": 24,
+  "shift_y": -0.04,
+  "focus": 2.631
+ },
+ "D3": {
+  "lens": 28,
+  "shift_y": 0.1,
+  "focus": 3.442
+ },
+ "E1": {
+  "lens": 40,
+  "shift_y": 0.0,
+  "focus": 1.494
+ },
+ "E2": {
+  "lens": 32,
+  "shift_y": 0.0,
+  "focus": 2.089
+ },
+ "E3": {
+  "lens": 40,
+  "shift_y": 0.0,
+  "focus": 1.432
+ },
+ "E5": {
+  "lens": 45,
+  "shift_y": 0.0,
+  "focus": 1.33
+ },
+ "F1": {
+  "lens": 24,
+  "shift_y": 0.0,
+  "focus": 3.004
+ },
+ "F2": {
+  "lens": 35,
+  "shift_y": 0.0,
+  "focus": 2.34
+ },
+ "G1": {
+  "lens": 35,
+  "shift_y": 0.0,
+  "focus": 2.438
+ },
+ "G2": {
+  "lens": 28,
+  "shift_y": -0.02,
+  "focus": 3.632
+ },
+ "G3": {
+  "lens": 32,
+  "shift_y": 0.02,
+  "focus": 5.914
+ },
+ "street": {
+  "lens": 28.0,
+  "shift_y": 0.15,
+  "focus": 12.442
+ }
+}

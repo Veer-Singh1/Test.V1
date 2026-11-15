@@ -51,7 +51,7 @@
      "text": "without breaking a single one?",
      "shot": {
       "scene": "plate",
-      "camera": "push_in",
+      "camera": "track_left",
       "time": "night",
       "plate": "B2",
       "anchor": [
@@ -111,7 +111,7 @@
      "text": "and rubber Halloween masks.",
      "shot": {
       "scene": "plate",
-      "camera": "push_in",
+      "camera": "track_right",
       "time": "night",
       "plate": "A3",
       "keep": true
@@ -186,7 +186,7 @@
      "text": "Nobody noticed.",
      "shot": {
       "scene": "plate",
-      "camera": "pan_right",
+      "camera": "track_right",
       "time": "night",
       "plate": "D1",
       "keep": true
@@ -304,7 +304,7 @@
      "text": "Within minutes they're tied up and gagged.",
      "shot": {
       "scene": "plate",
-      "camera": "push_in",
+      "camera": "track_left",
       "time": "night",
       "plate": "D2"
      }
@@ -378,7 +378,7 @@
      "text": "By then, the truck is gone.",
      "shot": {
       "scene": "plate",
-      "camera": "push_in",
+      "camera": "pull_out",
       "time": "night",
       "plate": "A5",
       "anchor": [
@@ -411,7 +411,7 @@
      "text": "Nobody spends, nobody talks, for six years.",
      "shot": {
       "scene": "plate",
-      "camera": "push_in",
+      "camera": "track_right",
       "time": "night",
       "plate": "F2"
      },
@@ -471,7 +471,7 @@
      "text": "Instead, the crew hires a hitman.",
      "shot": {
       "scene": "plate",
-      "camera": "push_in",
+      "camera": "track_left",
       "time": "night",
       "plate": "A7"
      }
@@ -505,7 +505,7 @@
      "text": "he tells the FBI everything.",
      "shot": {
       "scene": "plate",
-      "camera": "push_in",
+      "camera": "track_right",
       "time": "night",
       "plate": "G2"
      }
