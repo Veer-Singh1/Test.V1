@@ -547,7 +547,8 @@ def setup_render(sc, scale=100, samples=48, threshold=0.03, seed=3, exposure=1.1
 def render(sc, path, frame=None):
     if frame is not None:
         sc.frame_set(frame)
-    sc.render.filepath = path
+    # A full path: Blender on Windows reads a relative one from the root of the drive (C:\out\...).
+    sc.render.filepath = os.path.abspath(path)
     bpy.ops.render.render(write_still=True)
 
 
@@ -583,7 +584,7 @@ def depth_frame(sc, png):
     import numpy as np
     from PIL import Image
 
-    exr = png[:-4] + ".exr"
+    exr = os.path.abspath(png[:-4] + ".exr")
     sc.render.filepath = exr
     bpy.ops.render.render(write_still=True)
     img = bpy.data.images.load(exr)
