@@ -482,20 +482,26 @@ def pick_device(want=None):
     """The fastest device Cycles can use on this computer: OptiX or CUDA (NVIDIA), HIP (AMD),
     Metal (Apple Silicon), oneAPI (Intel Arc), else the CPU. RENDER_DEVICE=cpu forces the CPU."""
     want = (want or os.environ.get("RENDER_DEVICE", "auto")).lower()
+    tried = []
     if want != "cpu":
         cp = bpy.context.preferences.addons["cycles"].preferences
         for kind in ("OPTIX", "CUDA", "HIP", "METAL", "ONEAPI"):
             try:
                 cp.compute_device_type = kind
                 cp.refresh_devices()
-            except Exception:  # this kind of GPU is not supported here
+            except Exception:  # this kind of GPU is not built into this Blender
+                tried.append(f"{kind}: not available in this Blender")
                 continue
             gpus = [d for d in cp.devices if d.type == kind]
             if gpus:
                 for d in cp.devices:
                     d.use = d.type == kind
                 return "GPU", f"{kind}: " + ", ".join(d.name for d in gpus)
-    return "CPU", "CPU" + (" (no supported GPU found)" if want != "cpu" else "")
+            tried.append(f"{kind}: no device found")
+    if want == "cpu":
+        return "CPU", "CPU"
+    flag = os.environ.get("CYCLES_ONEAPI_ALL_DEVICES", "(not set)")
+    return "CPU", "CPU (no supported GPU found. " + "; ".join(tried) + f". CYCLES_ONEAPI_ALL_DEVICES={flag})"
 
 
 def setup_render(sc, scale=100, samples=48, threshold=0.03, seed=3, exposure=1.1, motion_blur=False, haze=0.5, bloom=0.5):
