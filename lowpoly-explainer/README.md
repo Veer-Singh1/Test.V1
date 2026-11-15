@@ -173,6 +173,36 @@ py -3.13 blender/street.py --out out/test/laptop --frames 90 --start 1 --end 34 
 python3 blender/street.py --out out/test/cloud --frames 90 --start 34 --end 90 --scale 50 --samples 8 --fast --label cloud
 ```
 
+Measured: the laptop (Intel Iris Xe, so CPU only) took 10.4 s a frame and the cloud 7.3 s, so the laptop
+is about 0.7x as fast and should take about 41% of the frames. Frame 34 from the two machines differed by
+0.26/255 on average, a third of the change between neighbouring frames, so the join cannot be seen.
+
+### Dragon in flight
+
+`blender/dragon.py` renders 10 seconds of a low-poly dragon flying over a snowy valley at sunset and
+breathing fire twice, with the camera travelling alongside it.
+
+- **The dragon** is built in the script from faceted shapes on a skeleton (armature) of 17 bones, so the
+  wings beat, the neck rears back and lunges, the jaw opens and the tail sways.
+- **The fire** is about 440 low-poly puffs, each keyed frame by frame. They leave the mouth as stretched,
+  white-hot tongues, carry the dragon's speed, slow in the air, rise, cool through orange and red, and turn
+  to grey smoke. A hot core and two flickering lights in the flame light the dragon's head and wings.
+- **The scenery** is free CC0 models by [Quaternius](https://quaternius.com): mountains, clouds, pine
+  trees and rocks, in `blender/assets/quaternius/`. Missing ones are downloaded on the first run from a
+  public mirror of the packs ([quaternius-showcase](https://github.com/trebeljahr/quaternius-showcase)).
+
+```bash
+python3 blender/dragon.py --out frame.png --frame 140 --scale 60 --samples 10 --fast    # one test frame
+# split between the laptop (frames 1-123, 41%) and the cloud (123-300); frame 123 is done on both
+py -3.13 blender/dragon.py --out out/dragon/laptop --start 1 --end 123 --scale 60 --samples 10 --fast --jpg --label laptop
+python3 blender/dragon.py --out out/dragon/cloud --start 123 --end 300 --scale 60 --samples 10 --fast --jpg --label cloud
+python3 blender/assemble.py out/dragon/frames out/dragon/dragon.mp4 --zoom 1.0         # after joining the two folders
+```
+
+At 648 x 1152 and 10 samples a frame takes 8 to 14 s on the cloud machine; the fire frames are the slow
+ones. The smoke is see-through, which makes the mist pass grainy there, so the script blurs that pass a
+little before the haze uses it.
+
 Two choices keep the render time sane on a machine with no GPU:
 
 - **The camera is locked off in 3D** and the slow push-in is added afterwards as a zoom. With a

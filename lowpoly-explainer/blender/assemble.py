@@ -20,7 +20,7 @@ ap.add_argument("--fps", type=int, default=30)
 args = ap.parse_args()
 
 W, H = 1080, 1920
-files = sorted(Path(args.frames).glob("*.png"))
+files = sorted([*Path(args.frames).glob("*.png"), *Path(args.frames).glob("*.jpg")])
 enc = subprocess.Popen(
     ["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(args.fps), "-i", "-",
      # light grain stops the sky gradient from banding once it is compressed
