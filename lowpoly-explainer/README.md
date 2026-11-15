@@ -171,28 +171,49 @@ The script targets Blender 5.3 (`bpy` 5.3.0). Its compositor is set to CPU becau
 
 ### A whole video in the path-traced look: Five Keys
 
-`stories/fivekeys` is a 62-second short made entirely in this look. Animating every shot would
-take days on a CPU, so only the truck clip is animated. Every other shot is one path-traced
-still (a "plate"), and Remotion adds a slow linear zoom or pan, the captions and the overlays.
+`stories/fivekeys` is a 62-second short made entirely in this look. Animating every shot in 3D
+would take days on a CPU, so each shot is one path-traced still (a "plate") plus a depth map,
+and Remotion moves a virtual camera through it. Only the truck clip is animated in Blender.
+
+**How the camera moves through a still** (`src/Plate3D.tsx`): the picture is laid over a fine
+mesh, each point pushed back to its real distance from the depth map, and seen through a camera
+that travels during the shot. Near things slide past far things, as with a real dolly or track.
+A move uncovers things the still never saw, so three layers are drawn:
+
+| Layer | What it is | Where it shows |
+| --- | --- | --- |
+| Front | The picture, cut exactly at its depth edges | Everywhere it is still valid |
+| Middle | The picture with near things filled in from what is just behind them (the wall behind a railing) | Small gaps, and the 2-pixel fringe around each figure |
+| Back | The same, filled as far as the shot's widest gap needs (the sky behind a building) | Large gaps |
 
 ```bash
 python blender/fivekeys.py --samples 48 --threshold 0.03    # 35 plates into public/fivekeys/plates (about 55 min)
 python blender/fivekeys.py --only D2 --force                # redo one plate
+python blender/fivekeys.py --depth --clip --force           # depth maps, plates and truck clip (about 15 min)
+python blender/layers.py public/fivekeys/plates --force     # fringe flags and fill layers (about 11 min)
 python pipeline/run.py fivekeys --skip-tts                  # voice -> timings -> timeline
-npm run render -- out/fivekeys/raw.mp4 --props='{"story":"fivekeys"}'
+npm run render -- out/fivekeys/raw.mp4 --props='{"story":"fivekeys"}'   # about 1 h 40 min without a GPU
 ```
 
+`public/fivekeys/plates/reach.json` sets how far each back layer is filled. It comes from
+measuring the widest gap each shot's move opens. The truck clip's per-frame files
+(`plates/street/`, 900 files) are not in git; the two `--depth --clip` and `layers.py` commands
+rebuild them.
+
 In `script.json` a plate shot is `{"scene": "plate", "plate": "B1", "camera": "push_in"}` and the
-clip is `{"scene": "plate", "clip": "street"}`. Moves: `push_in`, `pull_out`, `pan_left`,
-`pan_right`, `tilt_up`, `tilt_down`. `"keep": true` lets a shot run shorter than one second
-(the five doors), and `"cut": true` on an overlay ends it with its shot.
+clip is `{"scene": "plate", "clip": "street"}`. Camera moves: `push_in`, `pull_out`,
+`track_left`, `track_right`, `rise`. `"move": 0.4` shortens a move where the camera passes close
+to something (the street, the alarm close-up). `"keep": true` lets a shot run shorter than one
+second (the five doors), and `"cut": true` on an overlay ends it with its shot.
 
 | File | What it holds |
 | --- | --- |
-| `blender/lib.py` | Shared palette, geometry collector, the character, props, render settings |
+| `blender/lib.py` | Shared palette, geometry collector, the character, props, render and depth settings |
 | `blender/street.py` | The street: `build()` takes options for crew, truck, cars, daylight |
 | `blender/fivekeys.py` | One function per plate: corridor and locks, bench, calendar, counting room, cash, pact, cell, interview room, prison |
-| `src/Plate.tsx` | Shows a plate or clip with its 2D move |
+| `blender/layers.py` | Fringe flags and the middle and back fill layers |
+| `src/Plate3D.tsx` | Moves a camera through a plate (used when it has a depth map) |
+| `src/Plate.tsx` | The older 2D zoom or pan, for plates without depth |
 
 ## Differences from the spec
 
