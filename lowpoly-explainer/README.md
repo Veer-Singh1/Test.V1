@@ -179,6 +179,19 @@ is about 0.7x as fast and should take about 41% of the frames. Frame 34 from the
 
 ### Dragon in flight
 
+The default look is realistic, built from free CC0 assets by [Poly Haven](https://polyhaven.com), which
+the script downloads into `blender/assets/polyhaven/` (not committed: about 100 MB):
+
+- the sky and its light: [Belfast Sunset (Pure Sky)](https://polyhaven.com/a/belfast_sunset_puresky), 4k HDRI, turned so the sun sets just right of frame
+- [fir_sapling_medium](https://polyhaven.com/a/fir_sapling_medium): 1,600 instances of one 1.5-million-triangle fir
+- [snow_02](https://polyhaven.com/a/snow_02) and [aerial_rocks_02](https://polyhaven.com/a/aerial_rocks_02) on a 10 km terrain: snow on gentle slopes, grey rock on steep ones, mountains rising kilometres away
+
+The dragon gets a smooth, subdivided skin with a scale bump, and the fire and smoke puffs are smooth spheres
+whose edges fade out. Each see-through puff costs two transparent bounces, so the limit is 64; at 16 the
+smoke turned into flat opaque patches. A frame takes about 21 s at 648 x 1152 with 10 samples.
+`--lowpoly` renders the earlier faceted look described below.
+
+
 `blender/dragon.py` renders 10 seconds of a low-poly dragon flying over a snowy valley at sunset and
 breathing fire twice, with the camera travelling alongside it.
 

@@ -1,4 +1,9 @@
-"""A low-poly dragon flies over snowy mountains at sunset and breathes fire. 10 seconds at 30 fps.
+"""A dragon flies over snowy mountains at sunset and breathes fire. 10 seconds at 30 fps.
+
+The default look uses free CC0 assets from Poly Haven (polyhaven.com), downloaded on the first run into
+blender/assets/polyhaven/: the Belfast Sunset (Pure Sky) HDRI for the sky and its light, the
+fir_sapling_medium tree model, and the snow_02 and aerial_rocks_02 textures on a large mountain terrain.
+--lowpoly gives the earlier faceted look instead, with Quaternius's low-poly models described below.
 
 The dragon is built here from faceted shapes on a skeleton (an armature), so its wings, neck, jaw and
 tail bend as it flies. The scenery is free CC0 (public domain) models by Quaternius: mountains, clouds,
@@ -18,7 +23,7 @@ import random
 import time
 import urllib.request
 
-from lib import M, compositor, get_mat, render, reset, setup_render, srgb
+from lib import MAT, M, compositor, get_mat, render, reset, setup_render, srgb
 
 import bpy
 import bmesh
@@ -43,6 +48,12 @@ MODELS = {  # file here: path on the mirror. All CC0, by Quaternius (quaternius.
     "rock_snow.glb": "nature_pack/Rock_Snow_1.glb",
 }
 SUN = Vector((0.85, -0.45, 0.08)).normalized()  # towards the sun: low, behind the dragon as the camera sees it
+# The sun in the Poly Haven sky (its brightest pixel) is 2 degrees up at -0.659 rad from +X. The sky is
+# turned so it sets at SUN_AZ, just right of frame for most of the shot; the sun lamp matches, a little higher.
+HDRI_SUN_AZ, SUN_AZ = -0.659, -0.35
+SUN_REAL = Vector((math.cos(SUN_AZ) * math.cos(0.07), math.sin(SUN_AZ) * math.cos(0.07), math.sin(0.07)))
+PH = os.path.join(HERE, "assets", "polyhaven")
+UA = {"User-Agent": "lowpoly-explainer-render/1.0"}  # Poly Haven refuses Python's default one
 BURSTS = [(2.9, 5.0), (6.6, 9.3)]  # seconds when it breathes fire
 
 
@@ -61,7 +72,21 @@ def translucent(amount):
     return setup
 
 
+def scales(m):
+    """Material setup: a fine pattern of raised scales, as a bump on the skin."""
+    nt = m.node_tree
+    p = next(n for n in nt.nodes if n.bl_idname == "ShaderNodeBsdfPrincipled")
+    tc, vor, bump = nt.nodes.new("ShaderNodeTexCoord"), nt.nodes.new("ShaderNodeTexVoronoi"), nt.nodes.new("ShaderNodeBump")
+    vor.feature = "DISTANCE_TO_EDGE"
+    vor.inputs["Scale"].default_value = 9.0
+    bump.inputs["Strength"].default_value, bump.inputs["Distance"].default_value = 0.35, 0.03
+    nt.links.new(tc.outputs["Object"], vor.inputs["Vector"])
+    nt.links.new(vor.outputs["Distance"], bump.inputs["Height"])
+    nt.links.new(bump.outputs["Normal"], p.inputs["Normal"])
+
+
 M("dr_scale", "#7c1b15", rough=0.5, coat=0.2, vary=0.15)
+M("dr_scale_real", "#6e1712", rough=0.42, coat=0.35, vary=0.2, setup=scales)
 M("dr_belly", "#c0824a", rough=0.6)
 M("dr_membrane", "#5e1610", rough=0.65, setup=translucent(0.45))
 M("dr_horn", "#e3d4b2", rough=0.45)
@@ -89,6 +114,7 @@ M("dr_ground", "#d6d0d8", rough=0.9, setup=snow_patches)
 M("dr_cloud", "#f6e4dc", rough=1.0, emit="#f2c9bd", strength=0.15, setup=translucent(0.5))
 
 rng = random.Random(7)
+SMOOTH_SKIN = False  # set by build(): rounded, subdivided skin for the realistic look
 
 
 # ------------------------------------------------------------------ assets
@@ -214,6 +240,10 @@ class Skin:
                 groups[b].add([i], x, "REPLACE")
         ob.parent = arm
         ob.modifiers.new("bones", "ARMATURE").object = arm
+        if SMOOTH_SKIN:
+            me.shade_smooth()
+            sub = ob.modifiers.new("smooth", "SUBSURF")
+            sub.levels, sub.render_levels = 0, 1
         return ob
 
 
@@ -274,6 +304,9 @@ def build_dragon(sc):
 
     sk = Skin()
     belly = lambda lo: (lambda a: "dr_belly" if math.sin(a - math.pi / 8) < lo else "dr_scale")
+    if SMOOTH_SKIN:
+        get_mat("dr_scale_real")
+        MAT["dr_scale"] = MAT["dr_scale_real"]  # same faces, the scaled skin
     # body, from the tail tip to the base of the skull: (y, z, half width, half height)
     key = [(-11.4, -0.4, 0.04, 0.04), (-10.0, -0.4, 0.12, 0.13), (-8.5, -0.38, 0.2, 0.22), (-7.0, -0.33, 0.28, 0.3),
            (-5.5, -0.26, 0.4, 0.42), (-4.0, -0.15, 0.58, 0.6), (-2.6, -0.05, 0.8, 0.82), (-1.2, 0.0, 0.98, 0.98),
@@ -454,7 +487,7 @@ def fire_material():
     fade.attribute_type, fade.attribute_name = "OBJECT", "fade"
     emit, smoke, trans = nt.nodes.new("ShaderNodeEmission"), nt.nodes.new("ShaderNodeBsdfDiffuse"), nt.nodes.new("ShaderNodeBsdfTransparent")
     strength, hot = nt.nodes.new("ShaderNodeMath"), nt.nodes.new("ShaderNodeMath")
-    strength.operation, strength.inputs[1].default_value = "MULTIPLY", 9.0
+    strength.operation, strength.inputs[1].default_value = "MULTIPLY", 18.0 if SMOOTH_SKIN else 9.0
     hot.operation, hot.inputs[1].default_value, hot.use_clamp = "MULTIPLY", 3.0, True
     mix1, mix2, out = nt.nodes.new("ShaderNodeMixShader"), nt.nodes.new("ShaderNodeMixShader"), nt.nodes.new("ShaderNodeOutputMaterial")
     L = nt.links.new
@@ -466,7 +499,22 @@ def fire_material():
     L(hot.outputs[0], mix1.inputs[0])
     L(smoke.outputs[0], mix1.inputs[1])
     L(emit.outputs[0], mix1.inputs[2])
-    L(fade.outputs["Fac"], mix2.inputs[0])
+    if SMOOTH_SKIN:
+        # feather the edges: a puff is solid where it faces the camera and fades out towards its outline,
+        # so the smooth spheres read as soft volume instead of balls
+        lw, inv, pw, mul = (nt.nodes.new("ShaderNodeLayerWeight"), nt.nodes.new("ShaderNodeMath"),
+                            nt.nodes.new("ShaderNodeMath"), nt.nodes.new("ShaderNodeMath"))
+        lw.inputs["Blend"].default_value = 0.5
+        inv.operation, inv.inputs[0].default_value = "SUBTRACT", 1.0
+        pw.operation, pw.inputs[1].default_value = "POWER", 2.0
+        mul.operation = "MULTIPLY"
+        L(lw.outputs["Facing"], inv.inputs[1])
+        L(inv.outputs[0], pw.inputs[0])
+        L(pw.outputs[0], mul.inputs[0])
+        L(fade.outputs["Fac"], mul.inputs[1])
+        L(mul.outputs[0], mix2.inputs[0])
+    else:
+        L(fade.outputs["Fac"], mix2.inputs[0])
     L(trans.outputs[0], mix2.inputs[1])
     L(mix1.outputs[0], mix2.inputs[2])
     L(mix2.outputs[0], out.inputs["Surface"])
@@ -476,11 +524,12 @@ def fire_material():
 HEAT = [(0.0, (1.0, 0.9, 0.62), 1.0), (0.1, (1.0, 0.72, 0.3), 1.0), (0.35, (1.0, 0.42, 0.08), 0.85),
         (0.7, (0.85, 0.16, 0.02), 0.5), (1.0, (0.2, 0.06, 0.02), 0.0)]
 SMOKE = (0.11, 0.1, 0.095)
+SMOKE_REAL = (0.035, 0.033, 0.032)
 
 
 def heat_at(u):
     if u >= 1:
-        return SMOKE, 0.0
+        return (SMOKE_REAL if SMOOTH_SKIN else SMOKE), 0.0
     for (u0, c0, h0), (u1, c1, h1) in zip(HEAT, HEAT[1:]):
         if u <= u1:
             k = (u - u0) / (u1 - u0)
@@ -490,11 +539,13 @@ def heat_at(u):
 
 def build_fire(sc, track, n):
     mat = fire_material()
-    bm = ico(1.0, (0, 0, 0), sub=2)
+    bm = ico(1.0, (0, 0, 0), sub=3 if SMOOTH_SKIN else 2)
     puff_me = bpy.data.meshes.new("puff")
     bm.to_mesh(puff_me)
     bm.free()
     puff_me.materials.append(mat)
+    if SMOOTH_SKIN:
+        puff_me.shade_smooth()
     up = Vector((0, 0, 1))
     count = 0
     for a, b in BURSTS:
@@ -506,7 +557,7 @@ def build_fire(sc, track, n):
             spread = Vector((rng.gauss(0, 1), rng.gauss(0, 1), rng.gauss(0, 1))) * 0.12
             vrel = (d0 + spread).normalized() * rng.uniform(20, 26)
             l_fire = rng.uniform(0.32, 0.5)
-            life = l_fire + rng.uniform(0.8, 1.3)
+            life = l_fire + (rng.uniform(0.45, 0.8) if SMOOTH_SKIN else rng.uniform(0.8, 1.3))
             size = rng.uniform(0.8, 1.25)
             roll0, spin = rng.uniform(0, 6.3), rng.uniform(-4, 4)
             seed = Vector((rng.uniform(0, 100), rng.uniform(0, 100), rng.uniform(0, 100)))
@@ -536,7 +587,7 @@ def build_fire(sc, track, n):
                 ob.scale = (r, r, r * stretch)
                 col, heat = heat_at(age / l_fire)
                 ob.color = col + (heat,)
-                ob["fade"] = 0.6 if age < l_fire else 0.42 * (1 - (age - l_fire) / (life - l_fire))
+                ob["fade"] = 0.6 if age < l_fire else (0.28 if SMOOTH_SKIN else 0.42) * (1 - (age - l_fire) / (life - l_fire))
                 for prop in ("location", "scale", "rotation_quaternion", "color", '["fade"]'):
                     ob.keyframe_insert(prop, frame=f)
             count += 1
@@ -645,6 +696,186 @@ def world_sunset():
     return w
 
 
+def ph_fetch(asset, kind, res):
+    """Download a Poly Haven asset once: kind is hdri, model or texture. Returns its local path(s)."""
+    folder = os.path.join(PH, asset)
+
+    def get(url, dst):
+        if not os.path.exists(dst):
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            print(f"downloading {url.split('/')[-1]}", flush=True)
+            req = urllib.request.Request(url, headers=UA)
+            with urllib.request.urlopen(req, timeout=600) as r, open(dst + ".part", "wb") as f:
+                f.write(r.read())
+            os.replace(dst + ".part", dst)
+        return dst
+
+    files = None
+    def info():
+        nonlocal files
+        if files is None:
+            req = urllib.request.Request(f"https://api.polyhaven.com/files/{asset}", headers=UA)
+            files = json.load(urllib.request.urlopen(req, timeout=60))
+        return files
+
+    if kind == "hdri":
+        dst = os.path.join(PH, f"{asset}_{res}.hdr")
+        return dst if os.path.exists(dst) else get(info()["hdri"][res]["hdr"]["url"], dst)
+    if kind == "model":
+        dst = os.path.join(folder, f"{asset}_{res}.gltf")
+        if not os.path.exists(dst):
+            g = info()["gltf"][res]["gltf"]
+            for rel, f in g["include"].items():
+                get(f["url"], os.path.join(folder, rel))
+            get(g["url"], dst)
+        return dst
+    out = {}
+    for m in ("Diffuse", "Rough", "Displacement"):
+        dst = os.path.join(folder, f"{asset}_{m.lower()}_{res}.jpg")
+        out[m] = dst if os.path.exists(dst) else get(info()[m][res]["jpg"]["url"], dst)
+    return out
+
+
+def world_hdri():
+    w = bpy.data.worlds.new("hdri")
+    w.use_nodes = True
+    nt = w.node_tree
+    bg = next(n for n in nt.nodes if n.bl_idname == "ShaderNodeBackground")
+    env, tc, mp = nt.nodes.new("ShaderNodeTexEnvironment"), nt.nodes.new("ShaderNodeTexCoord"), nt.nodes.new("ShaderNodeMapping")
+    env.image = bpy.data.images.load(ph_fetch("belfast_sunset_puresky", "hdri", "4k"))
+    mp.inputs["Rotation"].default_value = (0, 0, HDRI_SUN_AZ - SUN_AZ)
+    nt.links.new(tc.outputs["Generated"], mp.inputs["Vector"])
+    nt.links.new(mp.outputs["Vector"], env.inputs["Vector"])
+    nt.links.new(env.outputs["Color"], bg.inputs["Color"])
+    bg.inputs["Strength"].default_value = 1.0
+    w.mist_settings.start, w.mist_settings.depth, w.mist_settings.falloff = 60.0, 5000.0, "LINEAR"
+    return w
+
+
+def warp(u, r):
+    """Grid spacing that is fine near the flight path and coarse far away."""
+    return r * (0.12 * u + 0.88 * math.copysign(abs(u) ** 2.5, u))
+
+
+def terrain_h(x, y):
+    """A snowy valley under the flight path, mountains rising either side and far ahead and behind."""
+    v = Vector((x, y, 0))
+    h = -30 + 25 * noise.noise(v * 0.0012) + 12 * noise.noise(v * 0.0025) + 4 * noise.noise(v * 0.012 + Vector((3, 7, 0)))
+    side = smooth((abs(x) - 900) / 2200)
+    ends = smooth((abs(y - 60) - 1800) / 2200)
+    mask = max(side, ends)
+    if mask > 0:
+        ridge = noise.ridged_multi_fractal(v * 0.00045 + Vector((11.3, 4.1, 0)), 1.0, 2.1, 6, 1.0, 2.0)
+        h += mask * (250 + 1100 * max(0.0, ridge - 0.25))
+    return h
+
+
+def terrain_material(rock, snow):
+    m = bpy.data.materials.new("dr_terrain")
+    m.use_nodes = True
+    nt = m.node_tree
+    p = next(n for n in nt.nodes if n.bl_idname == "ShaderNodeBsdfPrincipled")
+    L = nt.links.new
+    tc, geo = nt.nodes.new("ShaderNodeTexCoord"), nt.nodes.new("ShaderNodeNewGeometry")
+
+    def tex(path, tile, color=True):
+        mp, im = nt.nodes.new("ShaderNodeMapping"), nt.nodes.new("ShaderNodeTexImage")
+        mp.inputs["Scale"].default_value = (1 / tile,) * 3
+        im.image = bpy.data.images.load(path)
+        if not color:
+            im.image.colorspace_settings.name = "Non-Color"
+        im.projection, im.projection_blend = "BOX", 0.25
+        L(tc.outputs["Object"], mp.inputs["Vector"])
+        L(mp.outputs["Vector"], im.inputs["Vector"])
+        return im
+
+    rc, rr, rd = tex(rock["Diffuse"], 140.0), tex(rock["Rough"], 140.0, False), tex(rock["Displacement"], 140.0, False)
+    grey = nt.nodes.new("ShaderNodeHueSaturation")  # the photo's moss reads green from afar: make it grey stone
+    grey.inputs["Saturation"].default_value, grey.inputs["Value"].default_value = 0.25, 0.8
+    L(rc.outputs["Color"], grey.inputs["Color"])
+    sc_, sr, sd = tex(snow["Diffuse"], 5.0), tex(snow["Rough"], 5.0, False), tex(snow["Displacement"], 5.0, False)
+    # snow lies where the ground is gentle; broken up a little so the edge is not a clean line
+    sep, flat, nz, add = (nt.nodes.new("ShaderNodeSeparateXYZ"), nt.nodes.new("ShaderNodeMapRange"),
+                          nt.nodes.new("ShaderNodeTexNoise"), nt.nodes.new("ShaderNodeMath"))
+    L(geo.outputs["Normal"], sep.inputs[0])
+    L(sep.outputs["Z"], flat.inputs["Value"])
+    flat.inputs["From Min"].default_value, flat.inputs["From Max"].default_value = 0.52, 0.74
+    nz.inputs["Scale"].default_value = 0.02
+    L(tc.outputs["Object"], nz.inputs["Vector"])
+    add.operation, add.use_clamp = "ADD", True
+    L(flat.outputs[0], add.inputs[0])
+    sub_ = nt.nodes.new("ShaderNodeMath")
+    sub_.operation, sub_.inputs[1].default_value = "SUBTRACT", 0.5
+    L(nz.outputs["Fac"], sub_.inputs[0])
+    L(sub_.outputs[0], add.inputs[1])
+    tint = nt.nodes.new("ShaderNodeMix")
+    tint.data_type, tint.blend_type = "RGBA", "MULTIPLY"
+    tint.inputs[0].default_value = 1.0
+    tint.inputs[7].default_value = (0.92, 0.95, 1.05, 1.0)  # snow reads slightly blue
+    L(sc_.outputs["Color"], tint.inputs[6])
+    col, rough, disp = (nt.nodes.new("ShaderNodeMix"), nt.nodes.new("ShaderNodeMix"), nt.nodes.new("ShaderNodeMix"))
+    col.data_type = "RGBA"
+    for node, a, b in ((col, rc, tint), (rough, rr, sr), (disp, rd, sd)):
+        L(add.outputs[0], node.inputs[0])
+        if node is col:
+            L(grey.outputs["Color"], node.inputs[6])
+            L(b.outputs[2], node.inputs[7])
+        else:
+            L(a.outputs["Color"], node.inputs[2])
+            L(b.outputs["Color"], node.inputs[3])
+    bump = nt.nodes.new("ShaderNodeBump")
+    bump.inputs["Strength"].default_value, bump.inputs["Distance"].default_value = 0.6, 0.4
+    L(disp.outputs[0], bump.inputs["Height"])
+    L(col.outputs[2], p.inputs["Base Color"])
+    L(rough.outputs[0], p.inputs["Roughness"])
+    L(bump.outputs["Normal"], p.inputs["Normal"])
+    return m
+
+
+def build_scenery_real(sc):
+    n = 360
+    us = [-1 + 2 * i / (n - 1) for i in range(n)]
+    xs, ys = [warp(u, 5200) for u in us], [warp(u, 5200) + 60 for u in us]
+    verts = [(x, y, terrain_h(x, y)) for y in ys for x in xs]
+    faces = [(j * n + i, j * n + i + 1, (j + 1) * n + i + 1, (j + 1) * n + i) for j in range(n - 1) for i in range(n - 1)]
+    me = bpy.data.meshes.new("terrain")
+    me.from_pydata(verts, [], faces)
+    me.shade_smooth()
+    me.materials.append(terrain_material(ph_fetch("aerial_rocks_02", "texture", "2k"), ph_fetch("snow_02", "texture", "2k")))
+    sc.collection.objects.link(bpy.data.objects.new("terrain", me))
+
+    # fir trees, all sharing one mesh, on the gentle lower ground
+    before = set(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath=ph_fetch("fir_sapling_medium", "model", "1k"))
+    bpy.context.view_layer.update()
+    parts = [o for o in bpy.data.objects if o not in before]
+    tree = bpy.data.collections.new("fir")
+    for o in parts:
+        for c in o.users_collection:
+            c.objects.unlink(o)
+        tree.objects.link(o)
+    placed = 0
+    while placed < 1600:
+        x, y = rng.uniform(-900, 1300), rng.uniform(-1400, 1500)
+        h = terrain_h(x, y)
+        slope = abs(terrain_h(x + 6, y) - h) + abs(terrain_h(x, y + 6) - h)
+        if h > 140 or slope > 4.5 or noise.noise(Vector((x * 0.006, y * 0.006, 5.0))) < -0.2:
+            continue  # bare ground on steep slopes and high up, and a few clearings
+        ob = bpy.data.objects.new("fir", None)
+        ob.instance_type, ob.instance_collection = "COLLECTION", tree
+        ob.location = (x, y, h - 0.4)
+        ob.scale = (rng.uniform(1.5, 2.3),) * 3
+        ob.rotation_euler = (0, 0, rng.uniform(0, 6.3))
+        sc.collection.objects.link(ob)
+        placed += 1
+
+    sun = bpy.data.lights.new("sun", "SUN")
+    sun.energy, sun.color, sun.angle = 2.2, srgb("#ffb27a")[:3], 0.03
+    ob = bpy.data.objects.new("sun", sun)
+    ob.rotation_euler = (-SUN_REAL).to_track_quat("-Z", "Y").to_euler()
+    sc.collection.objects.link(ob)
+
+
 def ground_h(x, y):
     v = Vector((x, y, 0))
     h = 18 * noise.noise(v * 0.0035) + 7 * noise.noise(v * 0.011 + Vector((5, 1, 0))) + 2.5 * noise.noise(v * 0.03)
@@ -717,8 +948,12 @@ def cam_at(t):
     p, yaw = path(t)
     rz = Matrix.Rotation(yaw, 3, "Z")
     shake = Vector([0.15 * noise.noise(Vector((t * 0.7, k * 3.1, 0.5))) for k in range(3)])
-    pos = p + rz @ Vector((dist * math.sin(az), dist * math.cos(az), 7.0 - 5.0 * u)) + shake
-    look = p + rz @ Vector((0, 1.5, -1.6)) + shake * 0.4
+    if SMOOTH_SKIN:  # realistic look: just below the dragon, so the sunset sky is behind it
+        pos = p + rz @ Vector((dist * math.sin(az), dist * math.cos(az), 1.0 - 3.0 * u)) + shake
+        look = p + rz @ Vector((0, 1.5, 0.4)) + shake * 0.4
+    else:
+        pos = p + rz @ Vector((dist * math.sin(az), dist * math.cos(az), 7.0 - 5.0 * u)) + shake
+        look = p + rz @ Vector((0, 1.5, -1.6)) + shake * 0.4
     return pos, look, (p + rz @ Vector((0, 4.5, 1.2)) - pos).length
 
 
@@ -746,10 +981,16 @@ def build_camera(sc, n):
     return cam
 
 
-def build(sc, n=FRAMES):
+def build(sc, n=FRAMES, lowpoly=False):
+    global SMOOTH_SKIN
+    SMOOTH_SKIN = not lowpoly
     sc.frame_start, sc.frame_end = 1, n
-    sc.world = world_sunset()
-    build_scenery(sc)
+    if lowpoly:
+        sc.world = world_sunset()
+        build_scenery(sc)
+    else:
+        sc.world = world_hdri()
+        build_scenery_real(sc)
     arm = build_dragon(sc)
     animate_dragon(arm, n)
     track = mouth_track(sc, arm, n)
@@ -787,16 +1028,24 @@ def main():
     ap.add_argument("--blur", action="store_true", help="motion blur on the wings (slower)")
     ap.add_argument("--label", default="", help="name for this computer in times.json, e.g. laptop or cloud")
     ap.add_argument("--jpg", action="store_true", help="save frames as JPEG (quality 95): a fifth of the size, to upload")
+    ap.add_argument("--lowpoly", action="store_true", help="the earlier faceted look, with Quaternius models")
+    ap.add_argument("--exposure", type=float, default=None)
     args = ap.parse_args()
 
     t0 = time.time()
     sc = reset()
-    puffs = build(sc, args.frames)
-    setup_render(sc, args.scale, args.samples, args.threshold, args.seed, exposure=0.9, motion_blur=args.blur,
+    puffs = build(sc, args.frames, args.lowpoly)
+    exposure = args.exposure if args.exposure is not None else (0.9 if args.lowpoly else -0.5)
+    setup_render(sc, args.scale, args.samples, args.threshold, args.seed, exposure=exposure, motion_blur=args.blur,
                  haze=0.25, bloom=0.6, fast=args.fast)
     sc.render.use_motion_blur = args.blur
-    compositor(sc, haze=0.25, haze_color="#b48c96", bloom=0.6, size=0.5, threshold=1.4)
-    sc.cycles.transparent_max_bounces = 16
+    if args.lowpoly:
+        compositor(sc, haze=0.25, haze_color="#b48c96", bloom=0.6, size=0.5, threshold=1.4)
+    else:
+        compositor(sc, haze=0.5, haze_color="#a693a8", bloom=0.5, size=0.5, threshold=1.6)
+    # each see-through puff costs two bounces; where many overlap, a low limit stops rays and leaves flat
+    # opaque patches
+    sc.cycles.transparent_max_bounces = 16 if args.lowpoly else 64
     smooth_mist(sc, max(2, round(8 * args.scale / 100)))
     ext = "png"
     if args.jpg:
