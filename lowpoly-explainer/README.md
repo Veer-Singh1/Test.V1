@@ -203,6 +203,11 @@ At 648 x 1152 and 10 samples a frame takes 8 to 14 s on the cloud machine; the f
 ones. The smoke is see-through, which makes the mist pass grainy there, so the script blurs that pass a
 little before the haze uses it.
 
+Measured on the first full render: the laptop did frames 1-123 in 26 min (12.7 s a frame) and the cloud
+frames 123-300 in 35 min (11.9 s a frame). On the same frame the laptop was 0.62x the cloud's speed, but its
+share had no fire in the first 3 seconds, so it finished early; give it frames 1-150 next time. Frame 123
+from the two machines differed by 0.07/255 on average.
+
 Two choices keep the render time sane on a machine with no GPU:
 
 - **The camera is locked off in 3D** and the slow push-in is added afterwards as a zoom. With a
