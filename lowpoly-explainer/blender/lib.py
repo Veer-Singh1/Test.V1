@@ -475,11 +475,37 @@ def compositor(sc, haze=0.5, haze_color="#59608f", bloom=0.5, size=0.45, thresho
     g.links.new(glare.outputs["Image"], out.inputs[0])
 
 
+DEVICE_NOTE = []  # what pick_device chose, printed once
+
+
+def pick_device(want=None):
+    """The fastest device Cycles can use on this computer: OptiX or CUDA (NVIDIA), HIP (AMD),
+    Metal (Apple Silicon), oneAPI (Intel Arc), else the CPU. RENDER_DEVICE=cpu forces the CPU."""
+    want = (want or os.environ.get("RENDER_DEVICE", "auto")).lower()
+    if want != "cpu":
+        cp = bpy.context.preferences.addons["cycles"].preferences
+        for kind in ("OPTIX", "CUDA", "HIP", "METAL", "ONEAPI"):
+            try:
+                cp.compute_device_type = kind
+                cp.refresh_devices()
+            except Exception:  # this kind of GPU is not supported here
+                continue
+            gpus = [d for d in cp.devices if d.type == kind]
+            if gpus:
+                for d in cp.devices:
+                    d.use = d.type == kind
+                return "GPU", f"{kind}: " + ", ".join(d.name for d in gpus)
+    return "CPU", "CPU" + (" (no supported GPU found)" if want != "cpu" else "")
+
+
 def setup_render(sc, scale=100, samples=48, threshold=0.03, seed=3, exposure=1.1, motion_blur=False, haze=0.5, bloom=0.5):
     sc.render.fps = 30
     sc.render.engine = "CYCLES"
     c = sc.cycles
-    c.device = "CPU"
+    c.device, what = pick_device()
+    if what not in DEVICE_NOTE:
+        DEVICE_NOTE.append(what)
+        print(f"render device: {what}", flush=True)
     c.samples = samples
     c.use_adaptive_sampling, c.adaptive_threshold, c.adaptive_min_samples = True, threshold, 8
     c.use_denoising, c.denoiser = True, "OPENIMAGEDENOISE"
