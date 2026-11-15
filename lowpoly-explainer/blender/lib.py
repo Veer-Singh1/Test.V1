@@ -521,11 +521,14 @@ def render(sc, path, frame=None):
 NEAR = 0.1  # metres: disparity 1.0. Depth maps store NEAR / distance, so far things lose precision, not near ones.
 
 
-def depth_setup(sc, scale=50):
-    """Switch a built scene to a fast depth-only render (one sample, sharp, no lens blur)."""
+def depth_setup(sc, scale=100):
+    """Switch a built scene to a fast depth-only render: one sample at each pixel centre, so every
+    pixel is one surface (no blended edges), and no lens blur."""
     c = sc.cycles
     c.samples, c.use_adaptive_sampling, c.use_denoising = 1, False, False
     sc.render.use_motion_blur = False
+    c.filter_width = 0.01
+    c.seed = 0
     sc.camera.data.dof.use_dof = False
     sc.render.resolution_percentage = scale
     sc.view_layers[0].use_pass_z = True

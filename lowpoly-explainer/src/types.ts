@@ -54,6 +54,7 @@ export type Shot = {
   clip?: string;
   anchor?: [number, number];
   keep?: boolean;
+  move?: number; // scales the 3D camera move on a plate (default 1)
   meta?: {lens: number; shift_y: number; focus: number}; // camera that took the plate; present when it has a depth map
 };
 

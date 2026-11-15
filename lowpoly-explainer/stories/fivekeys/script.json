@@ -78,7 +78,8 @@
       "scene": "plate",
       "camera": "push_in",
       "time": "night",
-      "plate": "A1"
+      "plate": "A1",
+      "move": 0.4
      },
      "overlay": {
       "kind": "kicker",
@@ -101,7 +102,8 @@
       "anchor": [
        0.42,
        0.63
-      ]
+      ],
+      "move": 0.55
      }
     },
     {
@@ -297,7 +299,8 @@
       "scene": "plate",
       "camera": "push_in",
       "time": "night",
-      "plate": "D1"
+      "plate": "D1",
+      "move": 0.85
      }
     },
     {
@@ -365,7 +368,8 @@
       "anchor": [
        0.45,
        0.4
-      ]
+      ],
+      "move": 0.4
      },
      "overlay": {
       "kind": "kicker",
@@ -384,13 +388,15 @@
       "anchor": [
        0.42,
        0.63
-      ]
+      ],
+      "move": 0.85
      },
      "overlay": {
       "kind": "kicker",
       "line1": "GONE.",
       "red": "GONE.",
-      "on_word": "gone"
+      "on_word": "gone",
+      "cut": true
      }
     }
    ]
@@ -413,7 +419,8 @@
       "scene": "plate",
       "camera": "track_right",
       "time": "night",
-      "plate": "F2"
+      "plate": "F2",
+      "move": 0.4
      },
      "overlay": {
       "kind": "badge",
@@ -438,7 +445,8 @@
       "camera": "push_in",
       "time": "night",
       "plate": "A6",
-      "keep": true
+      "keep": true,
+      "move": 0.75
      },
      "overlay": {
       "kind": "kicker",
@@ -458,7 +466,8 @@
       "scene": "plate",
       "camera": "push_in",
       "time": "night",
-      "plate": "G1"
+      "plate": "G1",
+      "move": 0.55
      },
      "overlay": {
       "kind": "nametag",

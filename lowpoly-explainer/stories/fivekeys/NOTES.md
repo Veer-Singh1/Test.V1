@@ -10,13 +10,15 @@ The user's rule: if a usage limit hits, do not use extra usage. Schedule a conti
 (send_later, about 5 h 15 min ahead) and stop.
 
 ## Done
-- Depth maps for all 35 plates and 150 clip frames (`python blender/fivekeys.py --depth --clip`), `plates/meta.json`.
-- Background layers (`python blender/layers.py public/fivekeys/plates`, about 8 min).
-- `src/Plate3D.tsx`, wired into `src/Explainer.tsx`; timeline carries `meta` per shot.
+- Full-resolution depth maps for all 35 plates and 150 clip frames (`python blender/fivekeys.py --depth --clip --force`), `plates/meta.json`.
+- `plates/reach.json`: fill reach per plate from the widest gap its camera move opens (scratch gap script; values in the file).
+- Layers (`python blender/layers.py public/fivekeys/plates --force`, about 10 min): fringe flags in the depth PNG blue channel,
+  middle layer `_bg/_bgd` (reach 30), back layer `_bg2/_bg2d` (per-plate reach); clip: b_/e_ and f_/g_.
+  The fill takes the nearest surface behind (not the farthest), which stopped sky showing through railings.
+- `src/Plate3D.tsx`: three layers (front and middle drop pixels not where their depth says; back always draws).
 
 ## To do
-1. Plate3D back layer: use the `_bg.jpg`/`_bgd.png` (clip: `b_`/`e_`) textures, not the in-shader search.
-2. Check B1 end frame against `python blender/fivekeys.py --only B1 --out /tmp/x --offset ...` (a real render from the moved camera).
-3. Contact sheet of first and last frames of each shot; fix any tearing.
-4. Render (`GL=swangle`, CHROME_PATH = Playwright headless shell), grain + encode to `out/fivekeys/fivekeys.mp4`,
-   commit (plates folder is large: commit depth/bg files too), push, send, delete this note, cancel the scheduled continuation.
+1. Check end frames of A1, D3, F2, D2, G1, G2 (`npx remotion still ... --frame=<shot end>`); fix what remains.
+2. Contact sheet of all shot ends (`node scripts/contact-sheet.mjs fivekeys --end`).
+3. Render, grain, encode `out/fivekeys/fivekeys.mp4`, commit everything (plates folder is large), push, send,
+   delete this note, cancel the scheduled continuation (trig_01NCec9ndhorFXgnnaJgERT9).

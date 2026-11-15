@@ -80,6 +80,7 @@
    "camera": "push_in",
    "time": "night",
    "plate": "A1",
+   "move": 0.4,
    "meta": {
     "lens": 24,
     "shift_y": 0.2,
@@ -99,6 +100,7 @@
     0.42,
     0.63
    ],
+   "move": 0.55,
    "meta": {
     "lens": 28.0,
     "shift_y": 0.15,
@@ -295,6 +297,7 @@
    "camera": "push_in",
    "time": "night",
    "plate": "D1",
+   "move": 0.85,
    "meta": {
     "lens": 22,
     "shift_y": 0.05,
@@ -375,6 +378,7 @@
     0.45,
     0.4
    ],
+   "move": 0.4,
    "meta": {
     "lens": 28,
     "shift_y": 0.1,
@@ -394,6 +398,7 @@
     0.42,
     0.63
    ],
+   "move": 0.85,
    "meta": {
     "lens": 28.0,
     "shift_y": 0.15,
@@ -424,6 +429,7 @@
    "camera": "track_right",
    "time": "night",
    "plate": "F2",
+   "move": 0.4,
    "meta": {
     "lens": 35,
     "shift_y": 0.0,
@@ -455,6 +461,7 @@
    "time": "night",
    "plate": "A6",
    "keep": true,
+   "move": 0.75,
    "meta": {
     "lens": 24,
     "shift_y": 0.2,
@@ -470,6 +477,7 @@
    "camera": "push_in",
    "time": "night",
    "plate": "G1",
+   "move": 0.55,
    "meta": {
     "lens": 35,
     "shift_y": 0.0,
@@ -2329,7 +2337,7 @@
   },
   {
    "from": 1093,
-   "to": 1150,
+   "to": 1107,
    "kind": "kicker",
    "line1": "GONE.",
    "red": "GONE."

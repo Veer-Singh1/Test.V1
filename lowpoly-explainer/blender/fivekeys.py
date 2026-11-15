@@ -653,7 +653,7 @@ def g3(sc):  # eight men, life in prison
 
 
 # ---------------------------------------------------------------------- main
-def clip_depth(out, frames=150):
+def clip_depth(out, frames=150, force=False):
     """Depth for every frame of the truck clip, and the clip's frames as JPEGs beside them."""
     import subprocess
 
@@ -667,7 +667,7 @@ def clip_depth(out, frames=150):
     depth_setup(sc)
     for f in range(1, frames + 1):
         png = os.path.join(d, f"d_{f:04d}.png")
-        if not os.path.exists(png):
+        if force or not os.path.exists(png):
             sc.frame_set(f)
             depth_frame(sc, png)
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", os.path.join(out, "street.mp4"), "-frames:v", str(frames), "-q:v", "3",
@@ -721,7 +721,7 @@ def main():
         print(f"plate {name}: {time.time() - t0:.1f} s", flush=True)
     if args.depth:
         if args.clip:
-            meta["street"] = clip_depth(args.out)
+            meta["street"] = clip_depth(args.out, force=args.force)
         json.dump(meta, open(meta_path, "w"), indent=1)
 
 

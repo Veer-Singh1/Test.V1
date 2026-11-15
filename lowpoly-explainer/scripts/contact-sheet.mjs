@@ -1,5 +1,5 @@
 // Step 9: one frame from the middle of every shot, tiled into a contact sheet.
-// Usage: node scripts/contact-sheet.mjs [story] [--overlays] [--scenes=street,cell]
+// Usage: node scripts/contact-sheet.mjs [story] [--overlays] [--scenes=street,cell] [--end]
 import {bundle} from '@remotion/bundler';
 import {renderStill, selectComposition} from '@remotion/renderer';
 import {execFileSync} from 'node:child_process';
@@ -20,10 +20,11 @@ const serveUrl = await bundle({entryPoint: path.join(root, 'src/index.ts')});
 const inputProps = {story};
 const composition = await selectComposition({serveUrl, id: 'Explainer', inputProps, browserExecutable, chromiumOptions});
 
+const atEnd = process.argv.includes('--end'); // last frame of each shot, where a camera move has gone furthest
 const only = process.argv.find((a) => a.startsWith('--scenes='))?.slice(9).split(',');
 const frames = onOverlays
   ? timeline.overlays.map((o) => Math.min(o.to - 8, o.from + 26))
-  : timeline.shots.filter((s) => !only || only.includes(s.scene)).map((s) => Math.floor((s.from + s.to) / 2));
+  : timeline.shots.filter((s) => !only || only.includes(s.scene)).map((s) => (atEnd ? s.to - 1 : Math.floor((s.from + s.to) / 2)));
 for (const [i, frame] of frames.entries()) {
   await renderStill({
     composition, serveUrl, inputProps, frame, scale: 0.4, browserExecutable, chromiumOptions,

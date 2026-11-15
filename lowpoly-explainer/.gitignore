@@ -13,3 +13,7 @@ out/street/render.log
 public/fktest/
 out/fktest/
 out/fivekeys/plates.log
+public/fivekeys/plates/street/
+out/fivekeys/raw.mp4
+out/fivekeys/render.log
+out/fivekeys/depth.log
