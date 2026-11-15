@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import fivekeys  # noqa: E402  (imports Blender)
 from lib import render, reset, setup_render  # noqa: E402
 
-CLOUD_SECONDS = 15.6  # the same test on the 4-core cloud machine the project was built on (CPU only)
+CLOUD_SECONDS = 12.7  # measured: the same test on the 4-core cloud machine the project was built on (CPU only)
 
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "out", "gpu_check.png")
 os.makedirs(os.path.dirname(out), exist_ok=True)
