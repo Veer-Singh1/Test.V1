@@ -1,0 +1,1514 @@
+{
+ "fps": 30,
+ "width": 1920,
+ "height": 1080,
+ "durationInFrames": 9418,
+ "audio": "narration.wav",
+ "shots": [
+  {
+   "kind": "art",
+   "src": "anglo_saxon_chronicle_d.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.35,
+    1.15
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.35
+   ],
+   "credit": "ANGLO-SAXON CHRONICLE \u00b7 11TH-CENTURY COPY",
+   "from": 0,
+   "to": 99
+  },
+  {
+   "kind": "quote",
+   "text": "Immense sheets of light rushing through the air, and whirlwinds, and fiery dragons flying across the firmament.",
+   "by": "ANGLO-SAXON CHRONICLE \u00b7 AD 793",
+   "bg": "anglo_saxon_chronicle_d.jpg",
+   "from": 84,
+   "to": 272
+  },
+  {
+   "kind": "art",
+   "src": "oseberg_animal_head_post.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.45,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.42,
+    1.15
+   ],
+   "credit": "VIKING ANIMAL-HEAD POST \u00b7 OSEBERG SHIP, 9TH CENTURY",
+   "from": 257,
+   "to": 491
+  },
+  {
+   "kind": "clip",
+   "src": "mountain_fire.mp4",
+   "clip_start": 0.0,
+   "zoom": [
+    1.0,
+    1.04
+   ],
+   "from": 476,
+   "to": 680
+  },
+  {
+   "kind": "title",
+   "src": "mountain_fire.mp4",
+   "clip_start": 3.6,
+   "title": "MEDIEVAL DRAGONS",
+   "sub": "What people really believed",
+   "from": 665,
+   "to": 845
+  },
+  {
+   "kind": "chapter",
+   "label": "CHAPTER I",
+   "title": "What a dragon was",
+   "bg": "aberdeen_bestiary_dragon_elephant.jpg",
+   "from": 830,
+   "to": 952
+  },
+  {
+   "kind": "art",
+   "src": "romanesque_dragon_head_carving.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.52,
+    0.48,
+    1.12
+   ],
+   "credit": "DRAGON'S HEAD \u00b7 ROMANESQUE, 12TH CENTURY",
+   "from": 937,
+   "to": 1041
+  },
+  {
+   "kind": "art",
+   "src": "gessner_dragons.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.07
+   ],
+   "credit": "CONRAD GESSNER \u00b7 16TH CENTURY",
+   "from": 1026,
+   "to": 1228
+  },
+  {
+   "kind": "art",
+   "src": "harley3244_elephant_dragon.jpg",
+   "fit": "cover",
+   "start": [
+    0.35,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.6,
+    0.5,
+    1.1
+   ],
+   "credit": "BRITISH LIBRARY HARLEY MS 3244 \u00b7 c. 1260",
+   "from": 1213,
+   "to": 1472
+  },
+  {
+   "kind": "art",
+   "src": "harley3244_elephant_dragon_page.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.45,
+    1.08
+   ],
+   "credit": "BRITISH LIBRARY HARLEY MS 3244 \u00b7 c. 1260",
+   "from": 1457,
+   "to": 1608
+  },
+  {
+   "kind": "art",
+   "src": "aberdeen_bestiary_dragon_elephant.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.35,
+    1.05
+   ],
+   "end": [
+    0.35,
+    0.75,
+    1.35
+   ],
+   "credit": "ABERDEEN BESTIARY \u00b7 c. 1200",
+   "from": 1593,
+   "w": 1221,
+   "h": 1024,
+   "to": 1815
+  },
+  {
+   "kind": "art",
+   "src": "aberdeen_bestiary_panther_dragon.jpg",
+   "fit": "cover",
+   "start": [
+    0.3,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.65,
+    0.5,
+    1.12
+   ],
+   "credit": "ABERDEEN BESTIARY \u00b7 c. 1200",
+   "from": 1800,
+   "to": 2053
+  },
+  {
+   "kind": "art",
+   "src": "aldrovandi_dragon.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.08
+   ],
+   "credit": "ULISSE ALDROVANDI \u00b7 1640",
+   "from": 2038,
+   "to": 2182
+  },
+  {
+   "kind": "chapter",
+   "label": "CHAPTER II",
+   "title": "The hoard",
+   "bg": "beowulf_first_page.jpg",
+   "from": 2167,
+   "to": 2289
+  },
+  {
+   "kind": "clip",
+   "src": "mountain_fire.mp4",
+   "clip_start": 2.6,
+   "zoom": [
+    1.0,
+    1.05
+   ],
+   "from": 2274,
+   "to": 2342
+  },
+  {
+   "kind": "art",
+   "src": "beowulf_first_page.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.3,
+    1.1
+   ],
+   "end": [
+    0.5,
+    0.55,
+    1.3
+   ],
+   "credit": "BEOWULF \u00b7 NOWELL CODEX, c. 1000",
+   "from": 2327,
+   "to": 2551
+  },
+  {
+   "kind": "clip",
+   "src": "mountain_fire.mp4",
+   "clip_start": 6.4,
+   "zoom": [
+    1.02,
+    1.08
+   ],
+   "from": 2536,
+   "to": 3007
+  },
+  {
+   "kind": "art",
+   "src": "beowulf_first_page.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.06
+   ],
+   "credit": "BRITISH LIBRARY \u00b7 COTTON MS VITELLIUS A XV",
+   "from": 2992,
+   "to": 3206
+  },
+  {
+   "kind": "art",
+   "src": "beowulf_first_page.jpg",
+   "fit": "cover",
+   "start": [
+    0.15,
+    0.85,
+    1.9
+   ],
+   "end": [
+    0.2,
+    0.7,
+    1.6
+   ],
+   "from": 3191,
+   "to": 3378
+  },
+  {
+   "kind": "art",
+   "src": "ramsund_carving_photo.jpg",
+   "fit": "cover",
+   "start": [
+    0.3,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.7,
+    0.5,
+    1.1
+   ],
+   "credit": "RAMSUND CARVING \u00b7 SWEDEN, c. 1030",
+   "from": 3363,
+   "to": 3587
+  },
+  {
+   "kind": "art",
+   "src": "ramsund_carving_drawing.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.08
+   ],
+   "credit": "RAMSUND CARVING \u00b7 DRAWING, 1877",
+   "from": 3572,
+   "to": 3709
+  },
+  {
+   "kind": "art",
+   "src": "hylestad_sigurd_roasting_heart.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.4,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.15
+   ],
+   "credit": "HYLESTAD STAVE CHURCH PORTAL \u00b7 12TH CENTURY",
+   "from": 3694,
+   "to": 3874
+  },
+  {
+   "kind": "chapter",
+   "label": "CHAPTER III",
+   "title": "Saints against serpents",
+   "bg": "angers_tapestry_st_michael.jpg",
+   "from": 3859,
+   "to": 3978
+  },
+  {
+   "kind": "art",
+   "src": "bamberg_apocalypse_woman_dragon.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.07
+   ],
+   "credit": "BAMBERG APOCALYPSE \u00b7 c. 1010",
+   "from": 3963,
+   "to": 4065
+  },
+  {
+   "kind": "art",
+   "src": "durer_apocalypse_woman_dragon.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.35,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.65,
+    1.15
+   ],
+   "credit": "ALBRECHT D\u00dcRER \u00b7 APOCALYPSE, 1498",
+   "from": 4050,
+   "to": 4175
+  },
+  {
+   "kind": "art",
+   "src": "durer_apocalypse_st_michael.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.3,
+    1.05
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.2
+   ],
+   "credit": "ALBRECHT D\u00dcRER \u00b7 APOCALYPSE, 1498",
+   "from": 4160,
+   "to": 4257
+  },
+  {
+   "kind": "art",
+   "src": "novgorod_icon_st_george.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.07
+   ],
+   "credit": "ICON \u00b7 NOVGOROD",
+   "from": 4242,
+   "to": 4521
+  },
+  {
+   "kind": "art",
+   "src": "uccello_st_george_london.jpg",
+   "fit": "cover",
+   "start": [
+    0.3,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.45,
+    0.5,
+    1.08
+   ],
+   "credit": "PAOLO UCCELLO \u00b7 c. 1470",
+   "from": 4506,
+   "to": 4834
+  },
+  {
+   "kind": "art",
+   "src": "carpaccio_st_george.jpg",
+   "fit": "cover",
+   "start": [
+    0.75,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.6,
+    0.5,
+    1.08
+   ],
+   "credit": "VITTORE CARPACCIO \u00b7 c. 1502",
+   "from": 4819,
+   "to": 4896
+  },
+  {
+   "kind": "art",
+   "src": "raphael_st_george_washington.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.4,
+    1.0
+   ],
+   "end": [
+    0.45,
+    0.55,
+    1.15
+   ],
+   "credit": "RAPHAEL \u00b7 c. 1506",
+   "from": 4881,
+   "to": 4963
+  },
+  {
+   "kind": "art",
+   "src": "uccello_st_george_london.jpg",
+   "fit": "cover",
+   "start": [
+    0.7,
+    0.5,
+    1.15
+   ],
+   "end": [
+    0.55,
+    0.5,
+    1.3
+   ],
+   "credit": "PAOLO UCCELLO \u00b7 c. 1470",
+   "from": 4948,
+   "to": 5093
+  },
+  {
+   "kind": "art",
+   "src": "martorell_st_george.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.07
+   ],
+   "credit": "BERNAT MARTORELL \u00b7 c. 1435",
+   "from": 5078,
+   "to": 5194
+  },
+  {
+   "kind": "art",
+   "src": "st_margaret_vrelant.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.08
+   ],
+   "credit": "WILLEM VRELANT \u00b7 SAINT MARGARET, 1460s",
+   "from": 5179,
+   "to": 5393
+  },
+  {
+   "kind": "chapter",
+   "label": "CHAPTER IV",
+   "title": "Dragons of nations",
+   "bg": "bayeux_draco_standard.jpg",
+   "from": 5378,
+   "to": 5497
+  },
+  {
+   "kind": "clip",
+   "src": "mountain_fire.mp4",
+   "clip_start": 0.5,
+   "rate": 0.9,
+   "zoom": [
+    1.05,
+    1.0
+   ],
+   "from": 5482,
+   "to": 5692
+  },
+  {
+   "kind": "art",
+   "src": "bayeux_draco_standard.jpg",
+   "fit": "cover",
+   "start": [
+    0.35,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.65,
+    0.5,
+    1.05
+   ],
+   "credit": "BAYEUX TAPESTRY \u00b7 1070s",
+   "from": 5677,
+   "to": 5831
+  },
+  {
+   "kind": "art",
+   "src": "vortigern_dragons_lambeth.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.07
+   ],
+   "credit": "ST ALBANS CHRONICLE \u00b7 15TH CENTURY",
+   "from": 5816,
+   "to": 6147
+  },
+  {
+   "kind": "art",
+   "src": "vortigern_dragons_lambeth.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.65,
+    1.4
+   ],
+   "end": [
+    0.5,
+    0.7,
+    1.6
+   ],
+   "from": 6132,
+   "to": 6209
+  },
+  {
+   "kind": "art",
+   "src": "welsh_flag.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.12
+   ],
+   "credit": "FLAG OF WALES \u00b7 OFFICIAL SINCE 1959",
+   "from": 6194,
+   "to": 6403
+  },
+  {
+   "kind": "art",
+   "src": "wawel_dragon_statue.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.45,
+    1.15
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "credit": "WAWEL DRAGON STATUE \u00b7 KRAK\u00d3W",
+   "from": 6388,
+   "to": 6731
+  },
+  {
+   "kind": "chapter",
+   "label": "CHAPTER V",
+   "title": "The evidence",
+   "bg": "klagenfurt_lindwurm_fountain.jpg",
+   "from": 6716,
+   "to": 6838
+  },
+  {
+   "kind": "art",
+   "src": "kircher_dragon.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.07
+   ],
+   "credit": "ATHANASIUS KIRCHER \u00b7 MUNDUS SUBTERRANEUS, 1678",
+   "from": 6823,
+   "to": 6898
+  },
+  {
+   "kind": "art",
+   "src": "klagenfurt_lindwurm_fountain.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.45,
+    0.45,
+    1.15
+   ],
+   "credit": "LINDWURM FOUNTAIN \u00b7 KLAGENFURT",
+   "from": 6883,
+   "to": 7102
+  },
+  {
+   "kind": "art",
+   "src": "klagenfurt_lindwurm_fountain.jpg",
+   "fit": "cover",
+   "start": [
+    0.4,
+    0.4,
+    1.5
+   ],
+   "end": [
+    0.42,
+    0.42,
+    1.7
+   ],
+   "from": 7087,
+   "to": 7218
+  },
+  {
+   "kind": "art",
+   "src": "klagenfurt_lindwurm_fountain.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.5,
+    1.25
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "credit": "CARVED 1590s",
+   "from": 7203,
+   "to": 7350
+  },
+  {
+   "kind": "art",
+   "src": "gessner_dragons.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.5,
+    1.2
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.35
+   ],
+   "from": 7335,
+   "to": 7547
+  },
+  {
+   "kind": "art",
+   "src": "wawel_dragon_bones.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.45,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.45,
+    1.15
+   ],
+   "credit": "DRAGON BONES \u00b7 WAWEL CATHEDRAL, KRAK\u00d3W",
+   "from": 7532,
+   "to": 7661
+  },
+  {
+   "kind": "chapter",
+   "label": "CHAPTER VI",
+   "title": "The edge of the map",
+   "bg": "carta_marina.jpg",
+   "from": 7646,
+   "to": 7763
+  },
+  {
+   "kind": "art",
+   "src": "hereford_mappa_mundi.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.1
+   ],
+   "credit": "HEREFORD MAPPA MUNDI \u00b7 c. 1300",
+   "from": 7748,
+   "to": 7919
+  },
+  {
+   "kind": "art",
+   "src": "carta_marina_sea_serpent.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.55,
+    0.5,
+    1.15
+   ],
+   "credit": "CARTA MARINA \u00b7 1539",
+   "from": 7904,
+   "to": 8037
+  },
+  {
+   "kind": "art",
+   "src": "hunt_lenox_globe.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.1
+   ],
+   "credit": "HUNT\u2013LENOX GLOBE \u00b7 EARLY 1500s",
+   "from": 8022,
+   "to": 8159
+  },
+  {
+   "kind": "art",
+   "src": "hunt_lenox_globe_asia.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.25
+   ],
+   "credit": "HC SVNT DRACONES",
+   "from": 8144,
+   "to": 8298
+  },
+  {
+   "kind": "art",
+   "src": "hunt_lenox_globe.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.5,
+    1.3
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.1
+   ],
+   "credit": "NEW YORK PUBLIC LIBRARY",
+   "from": 8283,
+   "to": 8477
+  },
+  {
+   "kind": "clip",
+   "src": "mountain_fire.mp4",
+   "clip_start": 0.0,
+   "zoom": [
+    1.08,
+    1.0
+   ],
+   "from": 8462,
+   "to": 8594
+  },
+  {
+   "kind": "art",
+   "src": "klagenfurt_lindwurm_fountain.jpg",
+   "fit": "cover",
+   "start": [
+    0.45,
+    0.45,
+    1.3
+   ],
+   "end": [
+    0.45,
+    0.45,
+    1.4
+   ],
+   "from": 8579,
+   "to": 8637
+  },
+  {
+   "kind": "art",
+   "src": "aldrovandi_dragon.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.5,
+    1.1
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.2
+   ],
+   "from": 8622,
+   "to": 8700
+  },
+  {
+   "kind": "art",
+   "src": "durer_apocalypse_st_michael.jpg",
+   "fit": "cover",
+   "start": [
+    0.5,
+    0.5,
+    1.2
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.3
+   ],
+   "from": 8685,
+   "to": 8738
+  },
+  {
+   "kind": "clip",
+   "src": "mountain_fire.mp4",
+   "clip_start": 6.0,
+   "zoom": [
+    1.0,
+    1.06
+   ],
+   "from": 8723,
+   "to": 9013
+  },
+  {
+   "kind": "end",
+   "title": "MEDIEVAL DRAGONS",
+   "bg": "hereford_mappa_mundi.jpg",
+   "lines": [
+    "Narration and research: sources for every claim are in the description",
+    "Dragon model: \u201cAnimated Dragon Three Motion Loops\u201d by LasquetiSpice, CC BY 4.0",
+    "Skies, textures and trees: Poly Haven, CC0",
+    "Historical artwork: Wikimedia Commons (public domain and CC licences; full credits in the description)"
+   ],
+   "from": 8998,
+   "to": 9418
+  }
+ ],
+ "captions": [
+  {
+   "from": 23,
+   "to": 72,
+   "text": "In the year 793, England's chroniclers recorded something"
+  },
+  {
+   "from": 73,
+   "to": 88,
+   "text": "terrifying."
+  },
+  {
+   "from": 90,
+   "to": 168,
+   "text": "\"Immense sheets of light rushing through the air, and"
+  },
+  {
+   "from": 169,
+   "to": 261,
+   "text": "whirlwinds, and fiery dragons flying across the firmament.\""
+  },
+  {
+   "from": 263,
+   "to": 327,
+   "text": "Soon after, the Vikings came."
+  },
+  {
+   "from": 328,
+   "to": 398,
+   "text": "They struck the holy island of Lindisfarne, and"
+  },
+  {
+   "from": 399,
+   "to": 480,
+   "text": "the chronicle remembered those dragons as a warning."
+  },
+  {
+   "from": 482,
+   "to": 593,
+   "text": "So what did medieval people actually believe a dragon was?"
+  },
+  {
+   "from": 595,
+   "to": 674,
+   "text": "The answer is stranger than any movie."
+  },
+  {
+   "from": 943,
+   "to": 1030,
+   "text": "The word comes from the Latin \"draco\", a giant serpent."
+  },
+  {
+   "from": 1032,
+   "to": 1054,
+   "text": "Around the year 600,"
+  },
+  {
+   "from": 1056,
+   "to": 1148,
+   "text": "Isidore of Seville wrote the encyclopedia that medieval"
+  },
+  {
+   "from": 1150,
+   "to": 1218,
+   "text": "Europe trusted most after the Bible."
+  },
+  {
+   "from": 1219,
+   "to": 1297,
+   "text": "His dragon was the largest creature on Earth."
+  },
+  {
+   "from": 1299,
+   "to": 1365,
+   "text": "It had a crest and a small mouth, and"
+  },
+  {
+   "from": 1366,
+   "to": 1429,
+   "text": "its power was not in its teeth."
+  },
+  {
+   "from": 1431,
+   "to": 1462,
+   "text": "It was in its tail."
+  },
+  {
+   "from": 1463,
+   "to": 1557,
+   "text": "The bestiaries, the illustrated animal books of the twelfth and"
+  },
+  {
+   "from": 1558,
+   "to": 1597,
+   "text": "thirteenth centuries, added the details."
+  },
+  {
+   "from": 1599,
+   "to": 1675,
+   "text": "A dragon waited on the paths elephants used,"
+  },
+  {
+   "from": 1676,
+   "to": 1740,
+   "text": "knotted its tail around their legs, and"
+  },
+  {
+   "from": 1741,
+   "to": 1804,
+   "text": "squeezed until they suffocated."
+  },
+  {
+   "from": 1806,
+   "to": 1891,
+   "text": "It feared one animal above all: the panther,"
+  },
+  {
+   "from": 1892,
+   "to": 1965,
+   "text": "whose sweet breath drew every creature to it,"
+  },
+  {
+   "from": 1967,
+   "to": 2042,
+   "text": "except the dragon, which fled into hiding."
+  },
+  {
+   "from": 2044,
+   "to": 2128,
+   "text": "And in these books, the dragon did not breathe fire."
+  },
+  {
+   "from": 2130,
+   "to": 2176,
+   "text": "It didn't need to."
+  },
+  {
+   "from": 2280,
+   "to": 2331,
+   "text": "The fire came from the poets."
+  },
+  {
+   "from": 2333,
+   "to": 2430,
+   "text": "In Beowulf, a thief steals a jewelled cup from a dragon"
+  },
+  {
+   "from": 2431,
+   "to": 2540,
+   "text": "sleeping on its treasure inside an ancient burial mound."
+  },
+  {
+   "from": 2542,
+   "to": 2618,
+   "text": "The dragon wakes, and it burns the land,"
+  },
+  {
+   "from": 2619,
+   "to": 2668,
+   "text": "the king's own hall included."
+  },
+  {
+   "from": 2669,
+   "to": 2735,
+   "text": "The old king goes out to face it."
+  },
+  {
+   "from": 2737,
+   "to": 2774,
+   "text": "His sword shatters."
+  },
+  {
+   "from": 2775,
+   "to": 2805,
+   "text": "His men run."
+  },
+  {
+   "from": 2806,
+   "to": 2872,
+   "text": "Only young Wiglaf stays beside him."
+  },
+  {
+   "from": 2873,
+   "to": 2997,
+   "text": "Together they kill the dragon, but Beowulf dies of his wounds."
+  },
+  {
+   "from": 2998,
+   "to": 3074,
+   "text": "It's often called medieval Europe's first fire-breathing"
+  },
+  {
+   "from": 3075,
+   "to": 3196,
+   "text": "dragon, and the poem survives in exactly one manuscript."
+  },
+  {
+   "from": 3197,
+   "to": 3292,
+   "text": "In 1731 that manuscript was caught in a library fire."
+  },
+  {
+   "from": 3293,
+   "to": 3368,
+   "text": "You can still see where its edges burned."
+  },
+  {
+   "from": 3369,
+   "to": 3432,
+   "text": "Further north, the Norse told of F\u00e1fnir,"
+  },
+  {
+   "from": 3434,
+   "to": 3526,
+   "text": "so greedy for cursed gold that he killed his own father and"
+  },
+  {
+   "from": 3527,
+   "to": 3576,
+   "text": "became a serpent coiled on it."
+  },
+  {
+   "from": 3578,
+   "to": 3632,
+   "text": "The hero Sigurd hid in a pit and"
+  },
+  {
+   "from": 3633,
+   "to": 3699,
+   "text": "stabbed upward as the dragon passed."
+  },
+  {
+   "from": 3700,
+   "to": 3788,
+   "text": "When he roasted its heart and licked his burned finger,"
+  },
+  {
+   "from": 3789,
+   "to": 3868,
+   "text": "he could suddenly understand the birds."
+  },
+  {
+   "from": 3969,
+   "to": 4054,
+   "text": "For the Church, the dragon was the Devil himself."
+  },
+  {
+   "from": 4056,
+   "to": 4136,
+   "text": "The Book of Revelation describes a great red dragon with"
+  },
+  {
+   "from": 4137,
+   "to": 4247,
+   "text": "seven heads, thrown out of heaven by the archangel Michael."
+  },
+  {
+   "from": 4248,
+   "to": 4290,
+   "text": "Then there's Saint George."
+  },
+  {
+   "from": 4291,
+   "to": 4388,
+   "text": "The real George was a Roman soldier who died around the"
+  },
+  {
+   "from": 4390,
+   "to": 4400,
+   "text": "year 303."
+  },
+  {
+   "from": 4402,
+   "to": 4494,
+   "text": "His dragon didn't join the story for roughly seven hundred"
+  },
+  {
+   "from": 4495,
+   "to": 4511,
+   "text": "years."
+  },
+  {
+   "from": 4512,
+   "to": 4597,
+   "text": "The famous version comes from the Golden Legend,"
+  },
+  {
+   "from": 4599,
+   "to": 4634,
+   "text": "written in the 1260s."
+  },
+  {
+   "from": 4635,
+   "to": 4747,
+   "text": "Outside a city called Silene, a dragon was fed sheep, then"
+  },
+  {
+   "from": 4748,
+   "to": 4823,
+   "text": "people, then children chosen by lottery,"
+  },
+  {
+   "from": 4825,
+   "to": 4886,
+   "text": "until the lot fell on the king's daughter."
+  },
+  {
+   "from": 4887,
+   "to": 4958,
+   "text": "George wounded the beast with his lance, and"
+  },
+  {
+   "from": 4959,
+   "to": 5083,
+   "text": "the princess led it into the city on her belt, like a tame dog."
+  },
+  {
+   "from": 5084,
+   "to": 5183,
+   "text": "Afterwards, it took four ox-carts to drag the body away."
+  },
+  {
+   "from": 5185,
+   "to": 5271,
+   "text": "The same book tells of a saint who escaped from inside a"
+  },
+  {
+   "from": 5273,
+   "to": 5296,
+   "text": "dragon's belly."
+  },
+  {
+   "from": 5298,
+   "to": 5387,
+   "text": "Its own author called that story nonsense."
+  },
+  {
+   "from": 5488,
+   "to": 5556,
+   "text": "Dragons flew over battlefields too."
+  },
+  {
+   "from": 5558,
+   "to": 5657,
+   "text": "Roman cavalry rode behind dragon-shaped banners that hissed"
+  },
+  {
+   "from": 5659,
+   "to": 5681,
+   "text": "in the wind."
+  },
+  {
+   "from": 5683,
+   "to": 5711,
+   "text": "On the Bayeux Tapestry,"
+  },
+  {
+   "from": 5712,
+   "to": 5821,
+   "text": "a dragon standard falls beside King Harold at Hastings, in 1066."
+  },
+  {
+   "from": 5822,
+   "to": 5891,
+   "text": "In a history written in Wales around 830,"
+  },
+  {
+   "from": 5892,
+   "to": 5946,
+   "text": "a king's tower keeps collapsing,"
+  },
+  {
+   "from": 5947,
+   "to": 6037,
+   "text": "because two dragons are fighting in a pool beneath it:"
+  },
+  {
+   "from": 6038,
+   "to": 6137,
+   "text": "a red one for the Britons, and a white one for the Saxons."
+  },
+  {
+   "from": 6138,
+   "to": 6199,
+   "text": "A boy prophesies that the red will win."
+  },
+  {
+   "from": 6200,
+   "to": 6293,
+   "text": "Henry Tudor carried that red dragon at Bosworth in 1485,"
+  },
+  {
+   "from": 6294,
+   "to": 6393,
+   "text": "though it only became the official flag of Wales in 1959."
+  },
+  {
+   "from": 6394,
+   "to": 6470,
+   "text": "In Poland, the oldest tale of the Wawel Dragon,"
+  },
+  {
+   "from": 6471,
+   "to": 6549,
+   "text": "from around 1200, has two princes kill it with a cattle"
+  },
+  {
+   "from": 6550,
+   "to": 6611,
+   "text": "hide stuffed with burning sulphur."
+  },
+  {
+   "from": 6613,
+   "to": 6725,
+   "text": "Then one prince murders his brother, to take the credit."
+  },
+  {
+   "from": 6829,
+   "to": 6887,
+   "text": "People also thought they had proof."
+  },
+  {
+   "from": 6889,
+   "to": 6976,
+   "text": "Around 1335, a huge skull was dug out of a gravel pit near"
+  },
+  {
+   "from": 6977,
+   "to": 7012,
+   "text": "Klagenfurt, in Austria, and"
+  },
+  {
+   "from": 7014,
+   "to": 7091,
+   "text": "put on display in the town hall as a dragon's skull."
+  },
+  {
+   "from": 7093,
+   "to": 7142,
+   "text": "In 1840 it was identified."
+  },
+  {
+   "from": 7143,
+   "to": 7208,
+   "text": "It belonged to a woolly rhinoceros."
+  },
+  {
+   "from": 7209,
+   "to": 7282,
+   "text": "The city's stone dragon, carved in the 1590s,"
+  },
+  {
+   "from": 7284,
+   "to": 7340,
+   "text": "may even have been modelled on it."
+  },
+  {
+   "from": 7341,
+   "to": 7395,
+   "text": "In the Czech city of Brno,"
+  },
+  {
+   "from": 7397,
+   "to": 7472,
+   "text": "a dragon still hangs in the old town hall."
+  },
+  {
+   "from": 7473,
+   "to": 7537,
+   "text": "It's a stuffed Nile crocodile."
+  },
+  {
+   "from": 7538,
+   "to": 7613,
+   "text": "And in Krak\u00f3w, giant bones hang on a chain outside the"
+  },
+  {
+   "from": 7615,
+   "to": 7655,
+   "text": "cathedral door."
+  },
+  {
+   "from": 7754,
+   "to": 7829,
+   "text": "Medieval maps did show dragons,"
+  },
+  {
+   "from": 7831,
+   "to": 7909,
+   "text": "sometimes coiled beneath the whole world."
+  },
+  {
+   "from": 7910,
+   "to": 7988,
+   "text": "But the famous phrase \"here be dragons\" appears on exactly"
+  },
+  {
+   "from": 7989,
+   "to": 8087,
+   "text": "one known object: a copper globe about the size of a"
+  },
+  {
+   "from": 8088,
+   "to": 8149,
+   "text": "grapefruit, from the early 1500s."
+  },
+  {
+   "from": 8150,
+   "to": 8259,
+   "text": "Off the coast of Asia, it reads, in Latin, \"Hic sunt dracones\"."
+  },
+  {
+   "from": 8260,
+   "to": 8288,
+   "text": "Here are dragons."
+  },
+  {
+   "from": 8289,
+   "to": 8389,
+   "text": "In 1855, an architect bought it in Paris for almost nothing,"
+  },
+  {
+   "from": 8390,
+   "to": 8458,
+   "text": "and let his children play with it."
+  },
+  {
+   "from": 8468,
+   "to": 8543,
+   "text": "So a medieval dragon was many things."
+  },
+  {
+   "from": 8544,
+   "to": 8584,
+   "text": "A light in the sky."
+  },
+  {
+   "from": 8585,
+   "to": 8627,
+   "text": "A skull in the gravel."
+  },
+  {
+   "from": 8628,
+   "to": 8689,
+   "text": "A crocodile from far away."
+  },
+  {
+   "from": 8691,
+   "to": 8728,
+   "text": "The Devil himself."
+  },
+  {
+   "from": 8729,
+   "to": 8819,
+   "text": "Most of all, it was the shape people gave to everything"
+  },
+  {
+   "from": 8820,
+   "to": 8859,
+   "text": "they couldn't explain."
+  },
+  {
+   "from": 8861,
+   "to": 8917,
+   "text": "If you enjoyed this, subscribe."
+  },
+  {
+   "from": 8918,
+   "to": 8983,
+   "text": "There are more legends to come."
+  }
+ ],
+ "sfx": []
+}
