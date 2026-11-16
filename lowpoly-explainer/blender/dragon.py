@@ -24,6 +24,7 @@ import time
 import urllib.request
 
 from lib import MAT, M, compositor, get_mat, render, reset, setup_render, srgb
+import dragon_model
 
 import bpy
 import bmesh
@@ -453,6 +454,38 @@ def animate_dragon(arm, n):
         phase += 2 * math.pi * (0.85 - 0.15 * fire) / FPS
 
 
+def animate_rig(rig, arm, n):
+    """Fly the downloaded model along the same path: it banks into the turns, rears its head back before
+    each burst and lunges into it, sweeps its neck through the second, and opens its jaw. Its own
+    wingbeat keeps playing underneath."""
+    rig.rotation_mode = "XYZ"
+    for f in range(1, n + 1):
+        t = (f - 1) / FPS
+        fire, rear = fire_env(t), rear_env(t)
+        p, yaw = path(t)
+        lateral = -6 * 0.21 ** 2 * math.sin(0.21 * t)
+        rig.location = p
+        rig.rotation_euler = (0.06 * rear - 0.03 * fire, 0.25 * lateral, yaw)
+        rig.keyframe_insert("location", frame=f)
+        rig.keyframe_insert("rotation_euler", frame=f)
+        sweep = 0.22 * math.sin(2 * math.pi * (t - 6.6) / 2.7) * window(t, 6.6, 9.3, 0.3, 0.3)
+        dragon_model.neck_key(arm, f, 0.55 * rear - 0.35 * fire, sweep)
+        dragon_model.jaw_key(arm, f, 0.15 * rear + 0.55 * fire + 0.06 * fire * math.sin(t * 37))
+
+
+def mouth_track_model(sc, arm, n):
+    """The mouth track for the downloaded model: its fireBreath bone, aimed out of the open jaw."""
+    out = []
+    for f in range(1, n + 1):
+        sc.frame_set(f)
+        p, d = dragon_model.mouth(arm)
+        side = d.cross(Vector((0, 0, 1))).normalized()
+        d = (Quaternion(side, -0.22) @ d).normalized()  # a little below the line of the head
+        out.append((p + d * 0.3, d))
+    vel = [(out[min(i + 1, n - 1)][0] - out[max(i - 1, 0)][0]) * (FPS / 2) for i in range(n)]
+    return [(p, d, v) for (p, d), v in zip(out, vel)]
+
+
 def mouth_track(sc, arm, n):
     """Where the mouth is, which way it points, and how fast it moves, at every frame."""
     out = []
@@ -512,7 +545,25 @@ def fire_material():
         L(inv.outputs[0], pw.inputs[0])
         L(pw.outputs[0], mul.inputs[0])
         L(fade.outputs["Fac"], mul.inputs[1])
-        L(mul.outputs[0], mix2.inputs[0])
+        # ragged flames: a noise pattern fixed to each puff (so it tumbles with it) cuts holes and
+        # varies the glow, instead of every puff being a smooth disc
+        tc, nz, mr, mul2, glow, add = (nt.nodes.new("ShaderNodeTexCoord"), nt.nodes.new("ShaderNodeTexNoise"),
+                                       nt.nodes.new("ShaderNodeMapRange"), nt.nodes.new("ShaderNodeMath"),
+                                       nt.nodes.new("ShaderNodeMath"), nt.nodes.new("ShaderNodeMath"))
+        nz.inputs["Scale"].default_value, nz.inputs["Detail"].default_value = 1.4, 6.0
+        nz.inputs["Roughness"].default_value, nz.inputs["Distortion"].default_value = 0.62, 0.8
+        mr.inputs["From Min"].default_value, mr.inputs["From Max"].default_value = 0.38, 0.68
+        mul2.operation, glow.operation, add.operation = "MULTIPLY", "MULTIPLY", "ADD"
+        add.inputs[1].default_value = 0.4
+        L(tc.outputs["Object"], nz.inputs["Vector"])
+        L(nz.outputs["Fac"], mr.inputs["Value"])
+        L(mul.outputs[0], mul2.inputs[0])
+        L(mr.outputs[0], mul2.inputs[1])
+        L(mul2.outputs[0], mix2.inputs[0])
+        L(mr.outputs[0], add.inputs[0])
+        L(strength.outputs[0], glow.inputs[0])
+        L(add.outputs[0], glow.inputs[1])
+        L(glow.outputs[0], emit.inputs["Strength"])
     else:
         L(fade.outputs["Fac"], mix2.inputs[0])
     L(trans.outputs[0], mix2.inputs[1])
@@ -945,6 +996,8 @@ def cam_at(t):
     u = smooth(t / 10.0)
     az = math.radians(-128 + 66 * u)
     dist = 23 - 2 * u
+    if WIDE:  # 16:9: more from the side, so the dragon and its fire run across the wide frame
+        az, dist = math.radians(-118 + 50 * u), 21 - 3 * u
     p, yaw = path(t)
     rz = Matrix.Rotation(yaw, 3, "Z")
     shake = Vector([0.15 * noise.noise(Vector((t * 0.7, k * 3.1, 0.5))) for k in range(3)])
@@ -962,7 +1015,7 @@ def build_camera(sc, n):
     cam = bpy.data.objects.new("cam", cd)
     sc.collection.objects.link(cam)
     sc.camera = cam
-    cd.lens, cd.sensor_width = 26.0, 36.0
+    cd.lens, cd.sensor_width = (32.0 if WIDE else 26.0), 36.0
     cd.clip_end = 4000.0
     cd.dof.use_dof, cd.dof.aperture_fstop, cd.dof.aperture_blades = True, 4.0, 7
     prev = None
@@ -981,9 +1034,13 @@ def build_camera(sc, n):
     return cam
 
 
-def build(sc, n=FRAMES, lowpoly=False):
-    global SMOOTH_SKIN
-    SMOOTH_SKIN = not lowpoly
+WIDE = False  # set by build(): 16:9 framing
+
+
+def build(sc, n=FRAMES, lowpoly=False, model=True, wide=False):
+    """model: the downloaded dragon (dragon_model.py) rather than the one built here (realistic look only)."""
+    global SMOOTH_SKIN, WIDE
+    SMOOTH_SKIN, WIDE = not lowpoly, wide
     sc.frame_start, sc.frame_end = 1, n
     if lowpoly:
         sc.world = world_sunset()
@@ -991,9 +1048,14 @@ def build(sc, n=FRAMES, lowpoly=False):
     else:
         sc.world = world_hdri()
         build_scenery_real(sc)
-    arm = build_dragon(sc)
-    animate_dragon(arm, n)
-    track = mouth_track(sc, arm, n)
+    if model and not lowpoly:
+        rig, arm = dragon_model.load(sc, wingspan=18.0)
+        animate_rig(rig, arm, n)
+        track = mouth_track_model(sc, arm, n)
+    else:
+        arm = build_dragon(sc)
+        animate_dragon(arm, n)
+        track = mouth_track(sc, arm, n)
     puffs = build_fire(sc, track, n)
     build_camera(sc, n)
     return puffs
@@ -1020,7 +1082,7 @@ def main():
     ap.add_argument("--start", type=int, default=1)
     ap.add_argument("--end", type=int)
     ap.add_argument("--frames", type=int, default=FRAMES, help="300 = 10 seconds at 30 fps")
-    ap.add_argument("--scale", type=int, default=100, help="percent of 1080 x 1920")
+    ap.add_argument("--scale", type=float, default=100, help="percent of 1080 x 1920 (or 1920 x 1080 with --wide)")
     ap.add_argument("--samples", type=int, default=48, help="upper limit per pixel; easy pixels stop early")
     ap.add_argument("--threshold", type=float, default=0.03, help="noise level at which a pixel stops sampling")
     ap.add_argument("--seed", type=int, default=3)
@@ -1030,15 +1092,21 @@ def main():
     ap.add_argument("--jpg", action="store_true", help="save frames as JPEG (quality 95): a fifth of the size, to upload")
     ap.add_argument("--lowpoly", action="store_true", help="the earlier faceted look, with Quaternius models")
     ap.add_argument("--exposure", type=float, default=None)
+    ap.add_argument("--wide", action="store_true", help="16:9 (1920 x 1080 at --scale 100) instead of 9:16")
+    ap.add_argument("--built", action="store_true", help="the dragon built in this script, not the downloaded model")
     args = ap.parse_args()
 
     t0 = time.time()
     sc = reset()
-    puffs = build(sc, args.frames, args.lowpoly)
+    puffs = build(sc, args.frames, args.lowpoly, model=not args.built, wide=args.wide)
     exposure = args.exposure if args.exposure is not None else (0.9 if args.lowpoly else -0.5)
-    setup_render(sc, args.scale, args.samples, args.threshold, args.seed, exposure=exposure, motion_blur=args.blur,
+    setup_render(sc, int(round(args.scale)), args.samples, args.threshold, args.seed, exposure=exposure, motion_blur=args.blur,
                  haze=0.25, bloom=0.6, fast=args.fast)
     sc.render.use_motion_blur = args.blur
+    if args.wide:  # sizes rounded to even numbers, which video encoders need
+        sc.render.resolution_x = 2 * round(1920 * args.scale / 200)
+        sc.render.resolution_y = 2 * round(1080 * args.scale / 200)
+        sc.render.resolution_percentage = 100
     if args.lowpoly:
         compositor(sc, haze=0.25, haze_color="#b48c96", bloom=0.6, size=0.5, threshold=1.4)
     else:
