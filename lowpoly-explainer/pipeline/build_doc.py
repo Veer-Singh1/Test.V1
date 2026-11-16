@@ -51,16 +51,20 @@ def trimmed(src, dst):
     return duration(dst)
 
 
-def phrases(text):
-    """Subtitle phrases: sentences, split again at commas or 'and'/'but' when long."""
+def phrases(text, limit=62):
+    """Subtitle phrases: sentences, and long sentences split into balanced pieces, preferring a break
+    after a comma or before "and"/"but"/"then" near each balanced point."""
     out = []
     for sent in re.findall(r"[^.!?]+[.!?]+[\"”]?|[^.!?]+$", text):
         sent = sent.strip()
-        while len(sent) > 64:
-            cut = max((m.end() for m in re.finditer(r"[,;:] |\bthen\b |\band\b |\bbut\b ", sent[:64])
-                       if m.end() > 20), default=0)
-            if not cut:
-                cut = sent.rfind(" ", 0, 60)
+        while len(sent) > limit:
+            n = -(-len(sent) // limit)  # pieces still needed
+            target = len(sent) / n
+            spaces = [m.start() for m in re.finditer(" ", sent)]
+            def cost(i):
+                good = sent[i - 1] in ",;:" or sent[i + 1:].startswith(("and ", "but ", "then "))
+                return abs(i - target) - (10 if good else 0)
+            cut = min((i for i in spaces if 12 < i < len(sent) - 12), key=cost)
             out.append(sent[:cut].strip())
             sent = sent[cut:].strip()
         if sent:
@@ -149,8 +153,11 @@ def main():
         s["_part"] = part
         s["from"] = round(t0 * FPS)
         if s["kind"] == "art" and s.get("src"):
-            with Image.open(pub / "art" / s["src"]) as im:
-                s["w"], s["h"] = im.size
+            if (pub / "art" / s["src"]).exists():
+                with Image.open(pub / "art" / s["src"]) as im:
+                    s["w"], s["h"] = im.size
+            else:
+                print(f"warning: art {s['src']} is missing")
         shots.append(s)
     n = round(total * FPS)
     for a, b in zip(shots, shots[1:]):

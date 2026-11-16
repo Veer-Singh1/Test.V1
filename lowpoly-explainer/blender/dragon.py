@@ -56,6 +56,7 @@ SUN_REAL = Vector((math.cos(SUN_AZ) * math.cos(0.07), math.sin(SUN_AZ) * math.co
 PH = os.path.join(HERE, "assets", "polyhaven")
 UA = {"User-Agent": "lowpoly-explainer-render/1.0"}  # Poly Haven refuses Python's default one
 BURSTS = [(2.9, 5.0), (6.6, 9.3)]  # seconds when it breathes fire
+FIRE_SCALE = 1.0  # size and reach of the flames: other shots with bigger dragons raise it
 
 
 def translucent(amount):
@@ -606,7 +607,7 @@ def build_fire(sc, track, n):
             f0 = 1 + ts * FPS
             p0, d0, vd = at(track, f0)
             spread = Vector((rng.gauss(0, 1), rng.gauss(0, 1), rng.gauss(0, 1))) * 0.12
-            vrel = (d0 + spread).normalized() * rng.uniform(20, 26)
+            vrel = (d0 + spread).normalized() * rng.uniform(20, 26) * FIRE_SCALE
             l_fire = rng.uniform(0.32, 0.5)
             life = l_fire + (rng.uniform(0.45, 0.8) if SMOOTH_SKIN else rng.uniform(0.8, 1.3))
             size = rng.uniform(0.8, 1.25)
@@ -631,7 +632,7 @@ def build_fire(sc, track, n):
                 ob.location = (p0 + vd * ((1 - math.exp(-kd * age)) / kd) + vrel * ((1 - math.exp(-k * age)) / k)
                                + up * (1.4 * age * age) + swirl * (2.2 * age * age))
                 vel = vd * math.exp(-kd * age) + vrel * math.exp(-k * age) + up * (2.8 * age)
-                r = size * (0.12 + 1.5 * age ** 0.9)
+                r = size * (0.12 + 1.5 * age ** 0.9) * FIRE_SCALE
                 stretch = 1 + 1.8 * (vrel * math.exp(-k * age)).length / 23  # long tongues near the mouth
                 ob.rotation_mode = "QUATERNION"
                 ob.rotation_quaternion = Vector((0, 0, 1)).rotation_difference(vel.normalized()) @ Quaternion((0, 0, 1), roll0 + spin * age)
