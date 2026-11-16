@@ -1,0 +1,281 @@
+{
+ "fps": 30,
+ "width": 1920,
+ "height": 1080,
+ "durationInFrames": 689,
+ "audio": "narration_opening.wav",
+ "shots": [
+  {
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     940,
+     540,
+     1.05
+    ]
+   },
+   "items": [
+    {
+     "type": "clip",
+     "src": "lindisfarne.mp4",
+     "clip_start": 0.0,
+     "x": 1220,
+     "y": 520,
+     "w": 1060,
+     "h": 596,
+     "rot": 2,
+     "enter": "right"
+    },
+    {
+     "type": "big",
+     "text": "793",
+     "x": 430,
+     "y": 400,
+     "size": 300,
+     "bg": "yellow",
+     "f": 14
+    },
+    {
+     "type": "note",
+     "text": "Northumbria,\nEngland",
+     "x": 430,
+     "y": 640,
+     "size": 70,
+     "rot": -4,
+     "f": 25
+    },
+    {
+     "type": "label",
+     "text": "SOMETHING TERRIFYING",
+     "x": 640,
+     "y": 900,
+     "size": 66,
+     "bg": "red",
+     "rot": -2,
+     "f": 52
+    }
+   ],
+   "from": 0,
+   "to": 93
+  },
+  {
+   "kind": "document",
+   "text": "\u201cImmense sheets of light rushing through the air, and whirlwinds, and fiery dragons flying across the firmament.\u201d",
+   "by": "ANGLO-SAXON CHRONICLE \u00b7 AD 793",
+   "highlights": [
+    {
+     "words": "\u201cImmense sheets of light",
+     "f": 3
+    },
+    {
+     "words": "fiery dragons flying across the firmament.\u201d",
+     "f": 92
+    }
+   ],
+   "from": 78,
+   "to": 266
+  },
+  {
+   "kind": "map",
+   "view": {
+    "from": [
+     6,
+     57.5,
+     1.7
+    ],
+    "to": [
+     1,
+     56.8,
+     2.5
+    ]
+   },
+   "pins": [
+    {
+     "name": "Norway",
+     "lat": 60.4,
+     "lon": 5.3,
+     "f": 22
+    },
+    {
+     "name": "Lindisfarne",
+     "lat": 55.68,
+     "lon": -1.8,
+     "side": "left",
+     "f": 87
+    }
+   ],
+   "routes": [
+    {
+     "from": 0,
+     "to": 1,
+     "f": 22
+    }
+   ],
+   "items": [
+    {
+     "type": "img",
+     "src": "oseberg_animal_head_post.jpg",
+     "look": "torn",
+     "crop": [
+      0.15,
+      0.05,
+      0.85,
+      0.75
+     ],
+     "x": 1520,
+     "y": 760,
+     "w": 400,
+     "h": 400,
+     "rot": -4,
+     "ar": 0.6667,
+     "f": 22
+    },
+    {
+     "type": "label",
+     "text": "VIKING RAID",
+     "x": 1520,
+     "y": 990,
+     "size": 56,
+     "bg": "red",
+     "f": 68
+    }
+   ],
+   "from": 251,
+   "to": 398
+  },
+  {
+   "kind": "scene",
+   "items": [
+    {
+     "type": "clip",
+     "src": "lindisfarne.mp4",
+     "clip_start": 3.4,
+     "look": "plain",
+     "x": 960,
+     "y": 540,
+     "w": 1920,
+     "h": 1080,
+     "enter": "fade"
+    },
+    {
+     "type": "label",
+     "text": "A WARNING?",
+     "x": 960,
+     "y": 900,
+     "size": 96,
+     "bg": "yellow",
+     "f": 54
+    }
+   ],
+   "from": 383,
+   "to": 485
+  },
+  {
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     960,
+     540,
+     1.05
+    ]
+   },
+   "items": [
+    {
+     "type": "clip",
+     "src": "mountain_fire.mp4",
+     "clip_start": 2.6,
+     "x": 1250,
+     "y": 540,
+     "w": 1000,
+     "h": 562,
+     "rot": -2,
+     "enter": "up"
+    },
+    {
+     "type": "label",
+     "text": "WHAT WAS\nA DRAGON?",
+     "x": 470,
+     "y": 430,
+     "size": 110,
+     "f": 63
+    },
+    {
+     "type": "note",
+     "text": "stranger than\nany movie",
+     "x": 470,
+     "y": 720,
+     "size": 72,
+     "rot": -4,
+     "f": 137
+    }
+   ],
+   "from": 470,
+   "to": 689
+  }
+ ],
+ "captions": [
+  {
+   "from": 17,
+   "to": 34,
+   "text": "In the year 793, England's chroniclers"
+  },
+  {
+   "from": 36,
+   "to": 82,
+   "text": "recorded something terrifying."
+  },
+  {
+   "from": 84,
+   "to": 159,
+   "text": "\"Immense sheets of light rushing through the air,"
+  },
+  {
+   "from": 161,
+   "to": 202,
+   "text": "and whirlwinds, and fiery dragons"
+  },
+  {
+   "from": 204,
+   "to": 255,
+   "text": "flying across the firmament.\""
+  },
+  {
+   "from": 257,
+   "to": 321,
+   "text": "Soon after, the Vikings came."
+  },
+  {
+   "from": 322,
+   "to": 388,
+   "text": "They struck the holy island of Lindisfarne,"
+  },
+  {
+   "from": 389,
+   "to": 474,
+   "text": "and the chronicle remembered those dragons as a warning."
+  },
+  {
+   "from": 476,
+   "to": 587,
+   "text": "So what did medieval people actually believe a dragon was?"
+  },
+  {
+   "from": 589,
+   "to": 668,
+   "text": "The answer is stranger than any movie."
+  }
+ ],
+ "sfx": [],
+ "subtitles": false,
+ "theme": "night"
+}

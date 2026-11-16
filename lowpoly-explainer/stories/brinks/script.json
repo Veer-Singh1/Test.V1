@@ -1,0 +1,1996 @@
+{
+ "slug": "brinks",
+ "title": {
+  "line1": "THE CRIME OF",
+  "line2_red": "THE CENTURY"
+ },
+ "voice": {
+  "provider": "elevenlabs",
+  "voice_id": "nPczCjzI2devNBz1zQrb",
+  "name": "Brian",
+  "atempo": 1.18,
+  "local_sid": 16,
+  "local_pronounce": {},
+  "local_lexicon": {
+   "pino": "p ˈ i n O",
+   "mcginnis": "m ə ɡ ˈ ɪ n ɪ s",
+   "o'keefe": "O k ˈ i f",
+   "stoughton": "s t ˈ O t ᵊ n",
+   "fbi": "ˌ ɛ f b i ˈ I",
+   "gunmen": "ɡ ˈ ʌ n m ᵊ n"
+  }
+ },
+ "beats": [
+  {
+   "type": "hook",
+   "sentences": [
+    {
+     "text": "Did you know the biggest robbery in American history, at the time, was pulled off by men in Halloween masks?",
+     "shot": {
+      "scene": "street",
+      "camera": "track_right",
+      "time": "night",
+      "truck": "getaway",
+      "crew": 3,
+      "masks": true,
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "In 1950, they walk right into the building of the company that guards Boston's money.",
+     "shot": {
+      "scene": "door_lock",
+      "camera": "push_in",
+      "time": "night",
+      "open": true,
+      "key": true,
+      "crew": 2,
+      "masks": true
+     }
+    },
+    {
+     "text": "They don't break a single lock.",
+     "shot": {
+      "scene": "door_lock",
+      "camera": "orbit_low",
+      "time": "night",
+      "key": true,
+      "label": "2"
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "NO BROKEN",
+      "red": "LOCKS.",
+      "on_word": "break",
+      "line2": "LOCKS."
+     }
+    },
+    {
+     "text": "They don't fire a single shot.",
+     "shot": {
+      "scene": "counting_room",
+      "camera": "orbit_low",
+      "time": "night",
+      "robbers": 3,
+      "masks": true,
+      "workers": 4
+     }
+    },
+    {
+     "text": "And in less than half an hour, they're gone.",
+     "shot": {
+      "scene": "street",
+      "camera": "track_left",
+      "time": "night",
+      "truck": "getaway",
+      "drive": "out",
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "With almost 3 million dollars.",
+     "shot": {
+      "scene": "cash",
+      "camera": "orbit_low",
+      "time": "night",
+      "sacks": true
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 2.7,
+      "label": "STOLEN",
+      "on_word": "3",
+      "prefix": "$",
+      "suffix": " MILLION",
+      "decimals": 1
+     }
+    },
+    {
+     "text": "For six years, the FBI can't touch them.",
+     "shot": {
+      "scene": "board",
+      "camera": "push_in",
+      "time": "night"
+     }
+    },
+    {
+     "text": "Then, just five days before they'd be free forever, the whole plan falls apart.",
+     "shot": {
+      "scene": "desk",
+      "camera": "top_down",
+      "time": "night",
+      "prop": "calendar",
+      "text": "17",
+      "sub": "JANUARY 1956"
+     }
+    },
+    {
+     "text": "And it isn't a clue that brings them down.",
+     "shot": {
+      "scene": "interrogation",
+      "camera": "track_right",
+      "time": "night"
+     }
+    },
+    {
+     "text": "It's something the crew does to one of their own.",
+     "shot": {
+      "scene": "neighborhood",
+      "camera": "track_left",
+      "time": "night",
+      "car": true,
+      "figure": "okeefe"
+     }
+    },
+    {
+     "text": "And the money?",
+     "shot": {
+      "scene": "cash",
+      "camera": "pull_out",
+      "time": "night",
+      "sacks": true
+     }
+    },
+    {
+     "text": "Almost all of it is still missing.",
+     "shot": {
+      "scene": "counting_room",
+      "camera": "pull_out",
+      "time": "night",
+      "empty": true,
+      "workers": 0
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "STILL",
+      "red": "MISSING.",
+      "on_word": "missing",
+      "line2": "MISSING."
+     }
+    }
+   ]
+  },
+  {
+   "type": "title",
+   "sentences": [
+    {
+     "text": "This is the true story of the Brink's job.",
+     "shot": {
+      "scene": "title",
+      "camera": "push_in",
+      "time": "night",
+      "drift": "cash"
+     }
+    }
+   ]
+  },
+  {
+   "type": "setup",
+   "sentences": [
+    {
+     "text": "Boston, 1948.",
+     "shot": {
+      "scene": "skyline",
+      "camera": "push_in",
+      "time": "dusk"
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "BOSTON,",
+      "red": "1948",
+      "on_word": "Boston",
+      "line2": "1948"
+     }
+    },
+    {
+     "text": "In the North End, on Prince Street, stands a plain brick building.",
+     "shot": {
+      "scene": "street",
+      "camera": "push_in",
+      "time": "day",
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "It belongs to Brink's, the armored truck company.",
+     "shot": {
+      "scene": "street",
+      "camera": "track_right",
+      "time": "day",
+      "truck": "armored",
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "Its whole job is keeping other people's money safe."
+    },
+    {
+     "text": "Brink's is about to learn how hard that can be."
+    },
+    {
+     "text": "Every evening, its trucks roll back in, full of money from banks and businesses across the city.",
+     "shot": {
+      "scene": "street",
+      "camera": "orbit_low",
+      "time": "dusk",
+      "truck": "armored",
+      "drive": "in",
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "The money goes upstairs, into a counting room, to be sorted and locked away.",
+     "shot": {
+      "scene": "counting_room",
+      "camera": "push_in",
+      "time": "dusk",
+      "workers": 4
+     }
+    },
+    {
+     "text": "Tony Pino is a career thief with a big idea.",
+     "shot": {
+      "scene": "office",
+      "camera": "push_in",
+      "time": "dusk",
+      "gems": false
+     },
+     "overlay": {
+      "kind": "nametag",
+      "name": "TONY PINO",
+      "place": "THE PLANNER",
+      "on_word": "Pino"
+     }
+    },
+    {
+     "text": "He has done time before, and he isn't afraid to do it again."
+    },
+    {
+     "text": "He knows this building.",
+     "shot": {
+      "scene": "desk",
+      "camera": "top_down",
+      "time": "dusk",
+      "prop": "blueprint",
+      "label": "BRINK'S",
+      "sub": "PRINCE STREET"
+     }
+    },
+    {
+     "text": "He knows those trucks.",
+     "shot": {
+      "scene": "street",
+      "camera": "track_left",
+      "time": "dusk",
+      "truck": "armored",
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "And he starts to wonder what it would take to walk right in and take that money.",
+     "shot": {
+      "scene": "office",
+      "camera": "pull_out",
+      "time": "dusk",
+      "gems": false
+     }
+    },
+    {
+     "text": "He can't do it alone.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "push_in",
+      "time": "day",
+      "count": 1,
+      "coat": "pino"
+     }
+    },
+    {
+     "text": "So, piece by piece, he builds a crew."
+    },
+    {
+     "text": "By the end, there are 11 of them.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "track_right",
+      "time": "day",
+      "cast": "crew",
+      "zoom": 1.35
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 11,
+      "label": "MEN IN THE CREW",
+      "on_word": "11"
+     }
+    },
+    {
+     "text": "There's his partner, Joe McGinnis.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "orbit_low",
+      "time": "day",
+      "count": 1,
+      "coat": "#5d6b78",
+      "hat": "brim"
+     },
+     "overlay": {
+      "kind": "nametag",
+      "name": "JOE McGINNIS",
+      "place": "THE PARTNER",
+      "on_word": "McGinnis"
+     }
+    },
+    {
+     "text": "There's a driver, a lookout, and a team of men who will go inside.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "pull_out",
+      "time": "day",
+      "cast": "crew",
+      "zoom": 1.35
+     }
+    },
+    {
+     "text": "And there's a burglar named Joseph O'Keefe.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "push_in",
+      "time": "day",
+      "count": 1,
+      "coat": "okeefe"
+     },
+     "overlay": {
+      "kind": "nametag",
+      "name": "JOSEPH \"SPECS\" O'KEEFE",
+      "place": "THE BURGLAR",
+      "on_word": "O'Keefe"
+     }
+    },
+    {
+     "text": "Everyone calls him Specs."
+    },
+    {
+     "text": "Remember that name.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "orbit_low",
+      "time": "night",
+      "count": 1,
+      "coat": "okeefe"
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "REMEMBER",
+      "red": "NAME.",
+      "on_word": "Remember",
+      "line2": "THAT NAME."
+     }
+    }
+   ]
+  },
+  {
+   "type": "stage",
+   "sentences": [
+    {
+     "text": "Step one.",
+     "shot": {
+      "scene": "street",
+      "camera": "push_in",
+      "time": "night",
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "STEP ONE:",
+      "red": "ONE:",
+      "on_word": "Step",
+      "line2": "THE BUILDING"
+     }
+    },
+    {
+     "text": "Learn the building."
+    },
+    {
+     "text": "The crew watches it for months.",
+     "shot": {
+      "scene": "street",
+      "camera": "track_left",
+      "time": "dusk",
+      "crew": 2,
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "Pino wants to know this place better than the people who work there."
+    },
+    {
+     "text": "They learn when the trucks come home.",
+     "shot": {
+      "scene": "street",
+      "camera": "push_in",
+      "time": "dusk",
+      "truck": "armored",
+      "drive": "in",
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "They learn which rooms are busy, and which are empty.",
+     "shot": {
+      "scene": "counting_room",
+      "camera": "orbit_low",
+      "time": "night",
+      "workers": 0
+     }
+    },
+    {
+     "text": "This isn't a smash and grab.",
+     "shot": {
+      "scene": "skyline",
+      "camera": "track_left",
+      "time": "night"
+     }
+    },
+    {
+     "text": "It's patient work."
+    },
+    {
+     "text": "And late at night, when the building is quiet, they start slipping inside.",
+     "shot": {
+      "scene": "stairs",
+      "camera": "push_in",
+      "time": "night",
+      "crew": 2
+     }
+    },
+    {
+     "text": "They take nothing.",
+     "shot": {
+      "scene": "counting_room",
+      "camera": "track_right",
+      "time": "night",
+      "workers": 0,
+      "robbers": 1
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "THEY TAKE",
+      "red": "NOTHING.",
+      "on_word": "nothing",
+      "line2": "NOTHING."
+     }
+    },
+    {
+     "text": "They just look."
+    },
+    {
+     "text": "Every visit is a risk.",
+     "shot": {
+      "scene": "stairs",
+      "camera": "orbit_low",
+      "time": "night",
+      "crew": 1
+     }
+    },
+    {
+     "text": "One wrong night, and the whole plan is over."
+    },
+    {
+     "text": "But nobody ever catches them."
+    },
+    {
+     "text": "They count the doors between the street and the money.",
+     "shot": {
+      "scene": "door_lock",
+      "camera": "track_right",
+      "time": "night",
+      "label": "1"
+     }
+    },
+    {
+     "text": "There are five, and every one of them is locked.",
+     "shot": {
+      "scene": "door_lock",
+      "camera": "pull_out",
+      "time": "night",
+      "label": "5"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 5,
+      "label": "LOCKED DOORS",
+      "on_word": "five"
+     }
+    },
+    {
+     "text": "So that's the next problem."
+    }
+   ]
+  },
+  {
+   "type": "stage",
+   "sentences": [
+    {
+     "text": "Step two.",
+     "shot": {
+      "scene": "desk",
+      "camera": "top_down",
+      "time": "night",
+      "prop": "keys"
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "STEP TWO:",
+      "red": "TWO:",
+      "on_word": "Step",
+      "line2": "THE KEYS"
+     }
+    },
+    {
+     "text": "The keys."
+    },
+    {
+     "text": "One night, one of the crew stops at the first door.",
+     "shot": {
+      "scene": "door_lock",
+      "camera": "track_right",
+      "time": "night",
+      "label": "1",
+      "crew": 1
+     }
+    },
+    {
+     "text": "He doesn't pick the lock."
+    },
+    {
+     "text": "He takes the whole lock out.",
+     "shot": {
+      "scene": "door_lock",
+      "camera": "push_in",
+      "time": "night",
+      "label": "1",
+      "remove": true
+     }
+    },
+    {
+     "text": "He unscrews the brass cylinder, the part where the key goes, and carries it away.",
+     "shot": {
+      "scene": "desk",
+      "camera": "orbit_low",
+      "time": "night",
+      "prop": "cylinder"
+     }
+    },
+    {
+     "text": "A key maker cuts a key to fit it.",
+     "shot": {
+      "scene": "desk",
+      "camera": "push_in",
+      "time": "dusk",
+      "prop": "cylinder"
+     }
+    },
+    {
+     "text": "Then the lock goes back into the door, as if it was never gone.",
+     "shot": {
+      "scene": "door_lock",
+      "camera": "pull_out",
+      "time": "night",
+      "label": "1"
+     }
+    },
+    {
+     "text": "Nobody at Brink's notices a thing.",
+     "shot": {
+      "scene": "counting_room",
+      "camera": "track_left",
+      "time": "day",
+      "workers": 4
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "NOT A",
+      "red": "THING.",
+      "on_word": "notices",
+      "line2": "THING."
+     }
+    },
+    {
+     "text": "So they do it again.",
+     "shot": {
+      "scene": "door_lock",
+      "camera": "push_in",
+      "time": "night",
+      "label": "2",
+      "remove": true
+     }
+    },
+    {
+     "text": "And again.",
+     "shot": {
+      "scene": "door_lock",
+      "camera": "orbit_low",
+      "time": "night",
+      "label": "3",
+      "remove": true
+     }
+    },
+    {
+     "text": "It's slow.",
+     "shot": {
+      "scene": "desk",
+      "camera": "push_in",
+      "time": "night",
+      "prop": "cylinder"
+     }
+    },
+    {
+     "text": "It's risky."
+    },
+    {
+     "text": "And it works."
+    },
+    {
+     "text": "One lock at a time, over several months, they get a key for all five doors.",
+     "shot": {
+      "scene": "desk",
+      "camera": "top_down",
+      "time": "night",
+      "prop": "keys"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 5,
+      "label": "KEYS MADE",
+      "on_word": "five"
+     }
+    },
+    {
+     "text": "Now they can walk from the street to the money without breaking anything.",
+     "shot": {
+      "scene": "stairs",
+      "camera": "track_right",
+      "time": "night",
+      "crew": 2
+     }
+    },
+    {
+     "text": "Think about that for a second.",
+     "shot": {
+      "scene": "skyline",
+      "camera": "push_in",
+      "time": "night"
+     }
+    },
+    {
+     "text": "Without knowing it, the company that guards Boston's money has given its keys to the men who plan to rob it.",
+     "shot": {
+      "scene": "desk",
+      "camera": "orbit_low",
+      "time": "dusk",
+      "prop": "keys"
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "THEY HAVE",
+      "red": "KEYS.",
+      "on_word": "keys",
+      "line2": "THE KEYS."
+     }
+    }
+   ]
+  },
+  {
+   "type": "stage",
+   "sentences": [
+    {
+     "text": "Step three.",
+     "shot": {
+      "scene": "street",
+      "camera": "push_in",
+      "time": "night",
+      "truck": "getaway",
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "STEP THREE:",
+      "red": "THREE:",
+      "on_word": "Step",
+      "line2": "THE GETAWAY"
+     }
+    },
+    {
+     "text": "The getaway."
+    },
+    {
+     "text": "In November 1949, the crew steals a truck from a Ford dealer.",
+     "shot": {
+      "scene": "street",
+      "camera": "track_left",
+      "time": "night",
+      "truck": "getaway",
+      "drive": "out",
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "A green Ford, with an open back and wooden sides.",
+     "shot": {
+      "scene": "street",
+      "camera": "orbit_low",
+      "time": "dusk",
+      "truck": "getaway",
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "That truck will matter later.",
+     "overlay": {
+      "kind": "kicker",
+      "line1": "WATCH THAT",
+      "red": "TRUCK.",
+      "on_word": "truck",
+      "line2": "TRUCK."
+     }
+    },
+    {
+     "text": "Then they pick their outfits.",
+     "shot": {
+      "scene": "desk",
+      "camera": "top_down",
+      "time": "night",
+      "prop": "masks"
+     }
+    },
+    {
+     "text": "Navy pea coats.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "push_in",
+      "time": "night",
+      "count": 3,
+      "outfit": true
+     }
+    },
+    {
+     "text": "Chauffeur caps."
+    },
+    {
+     "text": "Gloves, and soft rubber shoes, so their footsteps make no sound.",
+     "shot": {
+      "scene": "stairs",
+      "camera": "push_in",
+      "time": "night",
+      "crew": 2
+     }
+    },
+    {
+     "text": "And rubber Halloween masks, so no one will ever see their faces.",
+     "shot": {
+      "scene": "desk",
+      "camera": "orbit_low",
+      "time": "night",
+      "prop": "masks"
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "HALLOWEEN",
+      "red": "MASKS.",
+      "on_word": "Halloween",
+      "line2": "MASKS."
+     }
+    },
+    {
+     "text": "If anyone sees them, all they'll remember is a coat, a cap and a rubber face.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "orbit_low",
+      "time": "night",
+      "count": 3,
+      "masks": true
+     }
+    },
+    {
+     "text": "Everything is ready.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "track_right",
+      "time": "night",
+      "count": 5,
+      "masks": true
+     }
+    }
+   ]
+  },
+  {
+   "type": "stage",
+   "sentences": [
+    {
+     "text": "January 17th, 1950.",
+     "shot": {
+      "scene": "street",
+      "camera": "push_in",
+      "time": "night",
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "JANUARY 17,",
+      "red": "1950",
+      "on_word": "January",
+      "line2": "1950"
+     }
+    },
+    {
+     "text": "It's a winter evening, just after 7.",
+     "shot": {
+      "scene": "skyline",
+      "camera": "track_right",
+      "time": "night"
+     }
+    },
+    {
+     "text": "The green truck pulls up near the building.",
+     "shot": {
+      "scene": "street",
+      "camera": "track_left",
+      "time": "night",
+      "truck": "getaway",
+      "drive": "in",
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "The masked men climb out.",
+     "shot": {
+      "scene": "street",
+      "camera": "orbit_low",
+      "time": "night",
+      "truck": "getaway",
+      "crew": 4,
+      "masks": true,
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "A lookout keeps watch on the street.",
+     "shot": {
+      "scene": "street",
+      "camera": "track_right",
+      "time": "night",
+      "crew": 1,
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "Key one, and the first door opens.",
+     "shot": {
+      "scene": "door_lock",
+      "camera": "push_in",
+      "time": "night",
+      "label": "1",
+      "key": true,
+      "open": true,
+      "crew": 1,
+      "masks": true
+     }
+    },
+    {
+     "text": "Key two. Key three.",
+     "shot": {
+      "scene": "door_lock",
+      "camera": "track_right",
+      "time": "night",
+      "label": "3",
+      "key": true,
+      "open": true
+     }
+    },
+    {
+     "text": "Key four. Key five.",
+     "shot": {
+      "scene": "door_lock",
+      "camera": "orbit_low",
+      "time": "night",
+      "label": "5",
+      "key": true,
+      "open": true,
+      "crew": 2,
+      "masks": true
+     }
+    },
+    {
+     "text": "No alarm goes off.",
+     "shot": {
+      "scene": "stairs",
+      "camera": "push_in",
+      "time": "night",
+      "crew": 3,
+      "masks": true
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "NO",
+      "red": "ALARM.",
+      "on_word": "alarm",
+      "line2": "ALARM."
+     }
+    },
+    {
+     "text": "They've walked this route before, in the dark."
+    },
+    {
+     "text": "Upstairs, in the counting room, a few Brink's workers are putting the day's money away.",
+     "shot": {
+      "scene": "counting_room",
+      "camera": "push_in",
+      "time": "night",
+      "workers": 4
+     }
+    },
+    {
+     "text": "They look up, and they see masks.",
+     "shot": {
+      "scene": "counting_room",
+      "camera": "orbit_low",
+      "time": "night",
+      "workers": 4,
+      "robbers": 3,
+      "masks": true
+     }
+    },
+    {
+     "text": "And guns."
+    },
+    {
+     "text": "The workers are tied up, hand and foot, and their mouths are taped shut.",
+     "shot": {
+      "scene": "counting_room",
+      "camera": "track_right",
+      "time": "night",
+      "workers": 4,
+      "tied": true,
+      "robbers": 3,
+      "masks": true
+     }
+    },
+    {
+     "text": "They can't move, and they can't call for help."
+    },
+    {
+     "text": "Then the crew gets to work.",
+     "shot": {
+      "scene": "cash",
+      "camera": "push_in",
+      "time": "night",
+      "sacks": true
+     }
+    },
+    {
+     "text": "They fill bag after bag.",
+     "shot": {
+      "scene": "cash",
+      "camera": "orbit_low",
+      "time": "night",
+      "sacks": true
+     }
+    },
+    {
+     "text": "Cash. Checks. Money orders. Bonds.",
+     "shot": {
+      "scene": "cash",
+      "camera": "top_down",
+      "time": "night"
+     }
+    },
+    {
+     "text": "There's even more money in coins, but it's too heavy to carry, so they leave it behind.",
+     "shot": {
+      "scene": "cash",
+      "camera": "orbit_low",
+      "time": "night"
+     }
+    },
+    {
+     "text": "In a few minutes, the tables are bare.",
+     "shot": {
+      "scene": "counting_room",
+      "camera": "track_left",
+      "time": "night",
+      "empty": true,
+      "workers": 4,
+      "tied": true,
+      "robbers": 2,
+      "masks": true,
+      "sacks": true
+     }
+    },
+    {
+     "text": "More than 1.2 million dollars in cash alone.",
+     "shot": {
+      "scene": "cash",
+      "camera": "pull_out",
+      "time": "night",
+      "sacks": true
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 1.2,
+      "label": "IN CASH ALONE",
+      "on_word": "1.2",
+      "prefix": "$",
+      "suffix": " MILLION",
+      "decimals": 1
+     }
+    },
+    {
+     "text": "They carry it all down the stairs and out to the truck.",
+     "shot": {
+      "scene": "stairs",
+      "camera": "pull_out",
+      "time": "night",
+      "crew": 3,
+      "masks": true,
+      "sacks": true
+     }
+    },
+    {
+     "text": "At 7:37, one of the workers gets free and raises the alarm.",
+     "shot": {
+      "scene": "counting_room",
+      "camera": "push_in",
+      "time": "night",
+      "workers": 4,
+      "tied": true,
+      "empty": true
+     }
+    },
+    {
+     "text": "By then, the truck is gone.",
+     "shot": {
+      "scene": "street",
+      "camera": "pull_out",
+      "time": "night",
+      "sign": "BRINK'S",
+      "brick": true,
+      "gem": false
+     }
+    },
+    {
+     "text": "From the first door to the last bag, it's all over in less than half an hour.",
+     "shot": {
+      "scene": "skyline",
+      "camera": "pull_out",
+      "time": "night"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 27,
+      "label": "MINUTES, DOOR TO ALARM",
+      "on_word": "half"
+     }
+    }
+   ]
+  },
+  {
+   "type": "stage",
+   "sentences": [
+    {
+     "text": "By morning, it's front-page news across the country.",
+     "shot": {
+      "scene": "desk",
+      "camera": "top_down",
+      "time": "day",
+      "prop": "newspaper",
+      "text": "MASKED GANG ROBS BRINK'S",
+      "sub": "MILLIONS TAKEN IN BOSTON"
+     }
+    },
+    {
+     "text": "People call it the crime of the century.",
+     "shot": {
+      "scene": "desk",
+      "camera": "orbit_low",
+      "time": "day",
+      "prop": "newspaper",
+      "text": "MASKED GANG ROBS BRINK'S",
+      "sub": "MILLIONS TAKEN IN BOSTON"
+     }
+    },
+    {
+     "text": "The crew splits up the cash.",
+     "shot": {
+      "scene": "cash",
+      "camera": "orbit_low",
+      "time": "dusk"
+     }
+    },
+    {
+     "text": "Each man takes his share."
+    },
+    {
+     "text": "And then they wait.",
+     "shot": {
+      "scene": "skyline",
+      "camera": "push_in",
+      "time": "dusk"
+     }
+    },
+    {
+     "text": "Then they make a deal.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "track_left",
+      "time": "dusk",
+      "cast": "crew",
+      "zoom": 1.35
+     }
+    },
+    {
+     "text": "Nobody spends big."
+    },
+    {
+     "text": "Nobody talks.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "push_in",
+      "time": "dusk",
+      "cast": "crew",
+      "zoom": 1.2
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "NOBODY",
+      "red": "TALKS.",
+      "on_word": "talks",
+      "line2": "TALKS."
+     }
+    },
+    {
+     "text": "Not for six years.",
+     "shot": {
+      "scene": "desk",
+      "camera": "push_in",
+      "time": "night",
+      "prop": "calendar",
+      "text": "17",
+      "sub": "JANUARY 1956"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 6,
+      "label": "YEARS OF SILENCE",
+      "on_word": "six"
+     }
+    },
+    {
+     "text": "Why six?"
+    },
+    {
+     "text": "Because in Massachusetts, once six years have passed, they can never be charged for this robbery.",
+     "shot": {
+      "scene": "courtroom",
+      "camera": "track_right",
+      "time": "day"
+     }
+    },
+    {
+     "text": "Remember that number.",
+     "shot": {
+      "scene": "desk",
+      "camera": "orbit_low",
+      "time": "night",
+      "prop": "calendar",
+      "text": "17",
+      "sub": "JANUARY 1956"
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "REMEMBER",
+      "red": "NUMBER.",
+      "on_word": "Remember",
+      "line2": "THAT NUMBER."
+     }
+    },
+    {
+     "text": "Then they get rid of the truck.",
+     "shot": {
+      "scene": "junkyard",
+      "camera": "push_in",
+      "time": "night",
+      "fire": true
+     }
+    },
+    {
+     "text": "They cut it into pieces with a torch, smash the engine, and throw it away.",
+     "shot": {
+      "scene": "junkyard",
+      "camera": "orbit_low",
+      "time": "night",
+      "fire": true
+     }
+    },
+    {
+     "text": "In March, pieces of it turn up at a dump in Stoughton, south of Boston.",
+     "shot": {
+      "scene": "junkyard",
+      "camera": "track_right",
+      "time": "day"
+     }
+    },
+    {
+     "text": "The FBI now has a truck.",
+     "shot": {
+      "scene": "junkyard",
+      "camera": "pull_out",
+      "time": "day",
+      "agents": 2
+     }
+    },
+    {
+     "text": "What it doesn't have is a name.",
+     "shot": {
+      "scene": "board",
+      "camera": "push_in",
+      "time": "night"
+     }
+    }
+   ]
+  },
+  {
+   "type": "stage",
+   "sentences": [
+    {
+     "text": "The FBI throws everything at the case.",
+     "shot": {
+      "scene": "office",
+      "camera": "push_in",
+      "time": "day",
+      "gems": false,
+      "coat": "agent",
+      "hat": "brim",
+      "files": true
+     }
+    },
+    {
+     "text": "Brink's offers a reward of 100,000 dollars.",
+     "shot": {
+      "scene": "desk",
+      "camera": "top_down",
+      "time": "day",
+      "prop": "newspaper",
+      "text": "$100,000 REWARD",
+      "sub": "FOR THE BRINK'S ROBBERS"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 100000,
+      "label": "REWARD",
+      "on_word": "100,000",
+      "prefix": "$"
+     }
+    },
+    {
+     "text": "But the clues are thin.",
+     "shot": {
+      "scene": "counting_room",
+      "camera": "orbit_low",
+      "time": "day",
+      "empty": true,
+      "workers": 0
+     }
+    },
+    {
+     "text": "The crew left almost nothing behind."
+    },
+    {
+     "text": "A chauffeur's cap. Some rope. Some tape.",
+     "shot": {
+      "scene": "desk",
+      "camera": "top_down",
+      "time": "day",
+      "prop": "clues"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 3,
+      "label": "CLUES LEFT BEHIND",
+      "on_word": "cap."
+     }
+    },
+    {
+     "text": "Agents talk to hundreds of people.",
+     "shot": {
+      "scene": "interrogation",
+      "camera": "track_left",
+      "time": "day",
+      "coat": "worker"
+     }
+    },
+    {
+     "text": "They chase hundreds of dead ends.",
+     "shot": {
+      "scene": "board",
+      "camera": "orbit_low",
+      "time": "night"
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "HUNDREDS OF",
+      "red": "DEAD",
+      "on_word": "hundreds",
+      "line2": "DEAD ENDS."
+     }
+    },
+    {
+     "text": "They have their suspects, Pino among them.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "push_in",
+      "time": "day",
+      "count": 1,
+      "coat": "pino"
+     }
+    },
+    {
+     "text": "But suspicion isn't proof.",
+     "shot": {
+      "scene": "board",
+      "camera": "pull_out",
+      "time": "night"
+     }
+    },
+    {
+     "text": "And the crew keeps its promise.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "track_right",
+      "time": "dusk",
+      "cast": "crew",
+      "zoom": 1.35
+     }
+    },
+    {
+     "text": "Months go by.",
+     "shot": {
+      "scene": "skyline",
+      "camera": "track_left",
+      "time": "dusk"
+     }
+    },
+    {
+     "text": "Then years."
+    },
+    {
+     "text": "But the crew has a weak spot.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "push_in",
+      "time": "night",
+      "count": 1,
+      "coat": "okeefe"
+     }
+    },
+    {
+     "text": "Remember Specs O'Keefe, the burglar?"
+    },
+    {
+     "text": "In June 1950, just five months after the robbery, O'Keefe and another crew member are arrested in Pennsylvania.",
+     "shot": {
+      "scene": "roadside",
+      "camera": "push_in",
+      "time": "night",
+      "car": true,
+      "crew": 1
+     }
+    },
+    {
+     "text": "Not for the Brink's job.",
+     "shot": {
+      "scene": "roadside",
+      "camera": "orbit_low",
+      "time": "night",
+      "car": true,
+      "crew": 1
+     }
+    },
+    {
+     "text": "For a different burglary."
+    },
+    {
+     "text": "O'Keefe gets three years in a Pennsylvania jail.",
+     "shot": {
+      "scene": "cell",
+      "camera": "push_in",
+      "time": "night",
+      "coat": "okeefe"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 3,
+      "label": "YEARS IN JAIL",
+      "on_word": "three"
+     }
+    },
+    {
+     "text": "He needs money for lawyers.",
+     "shot": {
+      "scene": "cell",
+      "camera": "track_right",
+      "time": "night",
+      "coat": "okeefe"
+     }
+    },
+    {
+     "text": "He asks the others for his share.",
+     "shot": {
+      "scene": "office",
+      "camera": "push_in",
+      "time": "dusk",
+      "gems": false
+     }
+    },
+    {
+     "text": "What comes back isn't enough.",
+     "shot": {
+      "scene": "cash",
+      "camera": "push_in",
+      "time": "dusk",
+      "few": true
+     }
+    },
+    {
+     "text": "He feels cheated.",
+     "shot": {
+      "scene": "cell",
+      "camera": "orbit_low",
+      "time": "night",
+      "coat": "okeefe"
+     }
+    },
+    {
+     "text": "In jail, there's a lot of time to think."
+    },
+    {
+     "text": "And O'Keefe thinks about his money."
+    },
+    {
+     "text": "Over the next few years, he keeps asking.",
+     "shot": {
+      "scene": "skyline",
+      "camera": "track_right",
+      "time": "dusk"
+     }
+    },
+    {
+     "text": "And the others start to worry.",
+     "shot": {
+      "scene": "office",
+      "camera": "pull_out",
+      "time": "night",
+      "gems": false
+     }
+    },
+    {
+     "text": "A man who feels cheated is a man who might talk.",
+     "shot": {
+      "scene": "board",
+      "camera": "push_in",
+      "time": "night"
+     }
+    }
+   ]
+  },
+  {
+   "type": "stage",
+   "sentences": [
+    {
+     "text": "So they decide to solve the problem another way.",
+     "shot": {
+      "scene": "office",
+      "camera": "orbit_low",
+      "time": "night",
+      "gems": false
+     }
+    },
+    {
+     "text": "They hire a hitman.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "push_in",
+      "time": "night",
+      "count": 1,
+      "coat": "hitman",
+      "hat": "brim"
+     }
+    },
+    {
+     "text": "He's a professional killer from New York."
+    },
+    {
+     "text": "His name is Elmer Burke, and people call him Trigger.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "orbit_low",
+      "time": "night",
+      "count": 1,
+      "coat": "hitman",
+      "hat": "brim"
+     },
+     "overlay": {
+      "kind": "nametag",
+      "name": "ELMER \"TRIGGER\" BURKE",
+      "place": "HIRED GUN",
+      "on_word": "Burke"
+     }
+    },
+    {
+     "text": "In 1954, Burke finds O'Keefe and opens fire with a machine gun.",
+     "shot": {
+      "scene": "neighborhood",
+      "camera": "track_right",
+      "time": "night",
+      "car": true,
+      "flash": true,
+      "figure": "okeefe"
+     }
+    },
+    {
+     "text": "O'Keefe is hit in the chest and the wrist.",
+     "shot": {
+      "scene": "neighborhood",
+      "camera": "orbit_low",
+      "time": "night",
+      "lying": true,
+      "figure": "okeefe"
+     }
+    },
+    {
+     "text": "Burke thinks he has done the job."
+    },
+    {
+     "text": "He survives.",
+     "shot": {
+      "scene": "neighborhood",
+      "camera": "pull_out",
+      "time": "night",
+      "lying": true,
+      "figure": "okeefe",
+      "agents": 1
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "HE",
+      "red": "SURVIVES.",
+      "on_word": "survives",
+      "line2": "SURVIVES."
+     }
+    },
+    {
+     "text": "Burke is arrested days later.",
+     "shot": {
+      "scene": "cell",
+      "camera": "push_in",
+      "time": "night",
+      "coat": "hitman"
+     }
+    },
+    {
+     "text": "That summer, gunmen break him out of a Boston jail in broad daylight.",
+     "shot": {
+      "scene": "cell",
+      "camera": "pull_out",
+      "time": "day",
+      "empty": true
+     }
+    },
+    {
+     "text": "He's caught again a year later."
+    },
+    {
+     "text": "Now O'Keefe knows exactly what his old friends think of him.",
+     "shot": {
+      "scene": "skyline",
+      "camera": "push_in",
+      "time": "night"
+     }
+    },
+    {
+     "text": "And the FBI knows it too.",
+     "shot": {
+      "scene": "interrogation",
+      "camera": "push_in",
+      "time": "night"
+     }
+    },
+    {
+     "text": "Agents keep coming back to see him.",
+     "shot": {
+      "scene": "interrogation",
+      "camera": "track_right",
+      "time": "night",
+      "agents": 2
+     }
+    },
+    {
+     "text": "They ask him the same question, again and again.",
+     "shot": {
+      "scene": "interrogation",
+      "camera": "orbit_low",
+      "time": "night",
+      "agents": 2
+     }
+    },
+    {
+     "text": "And this time, he's listening."
+    }
+   ]
+  },
+  {
+   "type": "turn",
+   "sentences": [
+    {
+     "text": "It looks like the perfect crime.",
+     "shot": {
+      "scene": "skyline",
+      "camera": "track_right",
+      "time": "night"
+     }
+    },
+    {
+     "text": "Six years of silence, and the clock is almost out.",
+     "shot": {
+      "scene": "desk",
+      "camera": "push_in",
+      "time": "night",
+      "prop": "calendar",
+      "text": "17",
+      "sub": "JANUARY 1956"
+     }
+    },
+    {
+     "text": "Remember that number?"
+    },
+    {
+     "text": "For the FBI, it's now a race against the calendar."
+    },
+    {
+     "text": "The deadline is January 17th, 1956.",
+     "overlay": {
+      "kind": "kicker",
+      "line1": "DEADLINE:",
+      "red": "DEADLINE:",
+      "on_word": "deadline",
+      "line2": "JAN. 17, 1956"
+     }
+    },
+    {
+     "text": "On January 6th, 11 days before it runs out, Specs O'Keefe cracks.",
+     "shot": {
+      "scene": "interrogation",
+      "camera": "push_in",
+      "time": "night",
+      "agents": 2
+     }
+    },
+    {
+     "text": "He tells the FBI everything.",
+     "shot": {
+      "scene": "interrogation",
+      "camera": "track_left",
+      "time": "night"
+     }
+    },
+    {
+     "text": "Who planned it, who went inside, and who drove the truck."
+    },
+    {
+     "text": "The names. The doors.",
+     "shot": {
+      "scene": "board",
+      "camera": "push_in",
+      "time": "night"
+     }
+    },
+    {
+     "text": "The keys. The truck.",
+     "shot": {
+      "scene": "desk",
+      "camera": "top_down",
+      "time": "night",
+      "prop": "keys"
+     }
+    },
+    {
+     "text": "On January 12th, agents arrest six men.",
+     "shot": {
+      "scene": "neighborhood",
+      "camera": "track_left",
+      "time": "day",
+      "agents": 3,
+      "car": true
+     }
+    },
+    {
+     "text": "Pino and McGinnis are among them.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "push_in",
+      "time": "night",
+      "count": 6,
+      "outfit": true
+     }
+    },
+    {
+     "text": "It's just five days before the deadline.",
+     "shot": {
+      "scene": "desk",
+      "camera": "push_in",
+      "time": "day",
+      "prop": "calendar",
+      "text": "12",
+      "sub": "JANUARY 1956"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 5,
+      "label": "DAYS TO SPARE",
+      "on_word": "five"
+     }
+    },
+    {
+     "text": "It was never a clue that brought them down.",
+     "shot": {
+      "scene": "board",
+      "camera": "pull_out",
+      "time": "night"
+     }
+    },
+    {
+     "text": "Not the cap. Not the rope. Not the truck."
+    },
+    {
+     "text": "The crew tried to kill one of its own, and he turned them all in.",
+     "shot": {
+      "scene": "neighborhood",
+      "camera": "orbit_low",
+      "time": "night",
+      "lying": true,
+      "figure": "okeefe"
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "HE TURNED",
+      "red": "IN.",
+      "on_word": "turned",
+      "line2": "THEM ALL IN."
+     }
+    }
+   ]
+  },
+  {
+   "type": "aftermath",
+   "sentences": [
+    {
+     "text": "In October 1956, a Boston jury found eight of the men guilty.",
+     "shot": {
+      "scene": "courtroom",
+      "camera": "push_in",
+      "time": "day",
+      "count": 8
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 8,
+      "label": "LIFE SENTENCES",
+      "on_word": "eight"
+     }
+    },
+    {
+     "text": "Every one of them got life in prison.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "track_right",
+      "time": "night",
+      "count": 8,
+      "prison": true,
+      "zoom": 1.2
+     }
+    },
+    {
+     "text": "One member of the crew died before the trial even started.",
+     "shot": {
+      "scene": "cell",
+      "camera": "pull_out",
+      "time": "night",
+      "empty": true
+     }
+    },
+    {
+     "text": "O'Keefe, the man who talked, got just four years.",
+     "shot": {
+      "scene": "cell",
+      "camera": "push_in",
+      "time": "night",
+      "coat": "okeefe"
+     },
+     "overlay": {
+      "kind": "badge",
+      "value": 4,
+      "label": "YEARS FOR O'KEEFE",
+      "on_word": "four"
+     }
+    },
+    {
+     "text": "He was out by 1960, and he even helped write a book about the robbery.",
+     "shot": {
+      "scene": "desk",
+      "camera": "top_down",
+      "time": "day",
+      "prop": "book",
+      "text": "THE MEN|WHO ROBBED|BRINK'S"
+     }
+    },
+    {
+     "text": "Joe McGinnis died in prison.",
+     "shot": {
+      "scene": "cell",
+      "camera": "track_right",
+      "time": "night"
+     }
+    },
+    {
+     "text": "The Brink's job became one of the most famous cases in FBI history.",
+     "shot": {
+      "scene": "board",
+      "camera": "pull_out",
+      "time": "day"
+     }
+    },
+    {
+     "text": "Trigger Burke was executed in New York in 1958, for a different murder.",
+     "shot": {
+      "scene": "cell",
+      "camera": "push_in",
+      "time": "night",
+      "coat": "hitman"
+     }
+    },
+    {
+     "text": "Over the next 15 years, the rest were let out on parole, one by one.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "pull_out",
+      "time": "day",
+      "count": 4,
+      "prison": true
+     }
+    },
+    {
+     "text": "Specs O'Keefe lived until 1976.",
+     "shot": {
+      "scene": "skyline",
+      "camera": "pull_out",
+      "time": "dusk"
+     }
+    }
+   ]
+  },
+  {
+   "type": "closer",
+   "sentences": [
+    {
+     "text": "Eleven men. Five keys.",
+     "shot": {
+      "scene": "lineup",
+      "camera": "push_in",
+      "time": "night",
+      "count": 11,
+      "masks": true,
+      "zoom": 1.35
+     }
+    },
+    {
+     "text": "Less than half an hour, and six years minus five days.",
+     "shot": {
+      "scene": "desk",
+      "camera": "orbit_low",
+      "time": "night",
+      "prop": "calendar",
+      "text": "12",
+      "sub": "JANUARY 1956"
+     }
+    },
+    {
+     "text": "And the 1.2 million dollars in cash?",
+     "shot": {
+      "scene": "cash",
+      "camera": "pull_out",
+      "time": "night",
+      "sacks": true
+     }
+    },
+    {
+     "text": "Less than 60,000 dollars of it has ever turned up.",
+     "shot": {
+      "scene": "cash",
+      "camera": "push_in",
+      "time": "night",
+      "few": true
+     },
+     "overlay": {
+      "kind": "kicker",
+      "line1": "LESS THAN",
+      "red": "$60,000",
+      "on_word": "Less",
+      "line2": "$60,000 FOUND."
+     }
+    },
+    {
+     "text": "The rest is still missing.",
+     "shot": {
+      "scene": "counting_room",
+      "camera": "pull_out",
+      "time": "night",
+      "empty": true,
+      "workers": 0
+     }
+    }
+   ]
+  }
+ ]
+}

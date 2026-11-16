@@ -1,0 +1,505 @@
+{
+ "parts": [
+  "02"
+ ],
+ "preroll": 0.4,
+ "tail": 0.8,
+ "size": [
+  1920,
+  1080
+ ],
+ "out": "sample.json",
+ "voice_out": "narration_sample.wav",
+ "subtitles": false,
+ "shots": [
+  {
+   "part": "02",
+   "at": "The word comes from",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     960.0,
+     540.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "romanesque_dragon_head_carving_cut.png",
+     "look": "sticker",
+     "x": 1420,
+     "y": 560,
+     "w": 470,
+     "rot": 5,
+     "enter": "right"
+    },
+    {
+     "type": "note",
+     "text": "Latin:",
+     "x": 470,
+     "y": 300,
+     "size": 80,
+     "at": "Latin",
+     "rot": -6
+    },
+    {
+     "type": "big",
+     "text": "DRACO",
+     "x": 700,
+     "y": 470,
+     "size": 270,
+     "bg": "yellow",
+     "at": "draco"
+    },
+    {
+     "type": "label",
+     "text": "= A GIANT SERPENT",
+     "x": 700,
+     "y": 720,
+     "size": 70,
+     "at": "giant serpent"
+    }
+   ]
+  },
+  {
+   "part": "02",
+   "at": "Around the year 600",
+   "kind": "map",
+   "view": {
+    "from": [
+     10,
+     46,
+     1.0
+    ],
+    "to": [
+     -4,
+     40,
+     2.3
+    ]
+   },
+   "pins": [
+    {
+     "name": "Seville",
+     "lat": 37.39,
+     "lon": -5.98,
+     "at": "Isidore of Seville"
+    }
+   ],
+   "items": [
+    {
+     "type": "label",
+     "text": "c. AD 600",
+     "x": 330,
+     "y": 170,
+     "size": 72,
+     "bg": "yellow",
+     "at": "Around the year 600"
+    },
+    {
+     "type": "label",
+     "text": "ISIDORE OF SEVILLE",
+     "x": 1380,
+     "y": 170,
+     "size": 64,
+     "at": "Isidore of Seville"
+    },
+    {
+     "type": "label",
+     "text": "THE ETYMOLOGIES",
+     "x": 1420,
+     "y": 820,
+     "size": 64,
+     "bg": "red",
+     "at": "the encyclopedia",
+     "rot": -2
+    },
+    {
+     "type": "note",
+     "text": "most trusted book\nafter the Bible",
+     "x": 1420,
+     "y": 950,
+     "size": 58,
+     "at": "after the Bible",
+     "rot": -3
+    }
+   ]
+  },
+  {
+   "part": "02",
+   "at": "His dragon was the largest",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     918.0,
+     558.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "aldrovandi_dragon_ink.png",
+     "look": "ink",
+     "x": 960,
+     "y": 560,
+     "w": 1500,
+     "enter": "fade"
+    },
+    {
+     "type": "label",
+     "text": "LARGEST CREATURE ON EARTH",
+     "x": 760,
+     "y": 150,
+     "size": 70,
+     "bg": "yellow",
+     "at": "largest creature"
+    },
+    {
+     "type": "callout",
+     "text": "CREST",
+     "x": 1660,
+     "y": 210,
+     "to": [
+      1525,
+      365
+     ],
+     "size": 56,
+     "at": "a crest"
+    },
+    {
+     "type": "callout",
+     "text": "SMALL MOUTH",
+     "x": 1660,
+     "y": 820,
+     "to": [
+      1575,
+      615
+     ],
+     "size": 56,
+     "at": "small mouth"
+    },
+    {
+     "type": "label",
+     "text": "TEETH",
+     "x": 1240,
+     "y": 950,
+     "size": 74,
+     "bg": "none",
+     "at": "not in its teeth"
+    },
+    {
+     "type": "strike",
+     "x": 1240,
+     "y": 950,
+     "w": 260,
+     "at": "not in its teeth"
+    },
+    {
+     "type": "circle",
+     "x": 560,
+     "y": 640,
+     "rx": 250,
+     "ry": 210,
+     "at": "It was in its tail"
+    },
+    {
+     "type": "label",
+     "text": "POWER: THE TAIL",
+     "x": 470,
+     "y": 330,
+     "size": 66,
+     "bg": "red",
+     "at": "It was in its tail"
+    }
+   ]
+  },
+  {
+   "part": "02",
+   "at": "The bestiaries, the illustrated",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     972.0,
+     540.0,
+     1.05
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "harley3244_elephant_dragon_page.jpg",
+     "look": "torn",
+     "x": 520,
+     "y": 560,
+     "w": 500,
+     "rot": -5,
+     "enter": "up",
+     "at": "The bestiaries"
+    },
+    {
+     "type": "img",
+     "src": "aberdeen_bestiary_panther_dragon.jpg",
+     "look": "torn",
+     "x": 1290,
+     "y": 400,
+     "w": 840,
+     "rot": 3,
+     "enter": "right",
+     "at": "illustrated animal books"
+    },
+    {
+     "type": "label",
+     "text": "BESTIARIES",
+     "x": 1290,
+     "y": 730,
+     "size": 80,
+     "at": "The bestiaries"
+    },
+    {
+     "type": "big",
+     "text": "1100s–1200s",
+     "x": 1290,
+     "y": 880,
+     "size": 110,
+     "bg": "yellow",
+     "at": "twelfth and thirteenth centuries"
+    }
+   ]
+  },
+  {
+   "part": "02",
+   "at": "A dragon waited on the paths",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     545,
+     1.0
+    ],
+    "to": [
+     921.0,
+     570.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "aberdeen_bestiary_dragon_elephant.jpg",
+     "look": "print",
+     "x": 960,
+     "y": 545,
+     "w": 1000,
+     "rot": -1.5,
+     "enter": "drop"
+    },
+    {
+     "type": "callout",
+     "text": "THE DRAGON",
+     "x": 1660,
+     "y": 900,
+     "to": [
+      1160,
+      830
+     ],
+     "size": 56,
+     "at": "A dragon waited"
+    },
+    {
+     "type": "callout",
+     "text": "THE ELEPHANT",
+     "x": 1660,
+     "y": 250,
+     "to": [
+      1330,
+      440
+     ],
+     "size": 56,
+     "at": "elephants used"
+    },
+    {
+     "type": "circle",
+     "x": 770,
+     "y": 690,
+     "rx": 240,
+     "ry": 120,
+     "at": "knotted its tail"
+    },
+    {
+     "type": "label",
+     "text": "SQUEEZE",
+     "x": 300,
+     "y": 470,
+     "size": 90,
+     "bg": "red",
+     "at": "squeezed",
+     "rot": -4
+    },
+    {
+     "type": "note",
+     "text": "...until it\nsuffocates",
+     "x": 300,
+     "y": 640,
+     "size": 64,
+     "at": "suffocated",
+     "rot": -4
+    }
+   ]
+  },
+  {
+   "part": "02",
+   "at": "It feared one animal",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     560,
+     1.0
+    ],
+    "to": [
+     990.0,
+     546.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "aberdeen_bestiary_panther_dragon.jpg",
+     "look": "torn",
+     "x": 960,
+     "y": 600,
+     "w": 1500,
+     "rot": 1,
+     "enter": "left"
+    },
+    {
+     "type": "callout",
+     "text": "THE PANTHER",
+     "x": 960,
+     "y": 150,
+     "to": [
+      1100,
+      520
+     ],
+     "size": 62,
+     "at": "the panther"
+    },
+    {
+     "type": "note",
+     "text": "sweet breath",
+     "x": 1390,
+     "y": 250,
+     "size": 64,
+     "at": "sweet breath"
+    },
+    {
+     "type": "arrow",
+     "x": 1340,
+     "y": 290,
+     "to": [
+      1215,
+      455
+     ],
+     "at": "sweet breath"
+    },
+    {
+     "type": "circle",
+     "x": 510,
+     "y": 600,
+     "rx": 290,
+     "ry": 240,
+     "color": "#1d1a17",
+     "at": "drew every creature"
+    },
+    {
+     "type": "circle",
+     "x": 1505,
+     "y": 570,
+     "rx": 170,
+     "ry": 240,
+     "at": "except the dragon"
+    },
+    {
+     "type": "label",
+     "text": "HIDING",
+     "x": 1640,
+     "y": 950,
+     "size": 66,
+     "bg": "red",
+     "at": "fled into hiding"
+    }
+   ]
+  },
+  {
+   "part": "02",
+   "at": "And in these books",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     960.0,
+     540.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "gessner_dragons_ink.png",
+     "look": "ink",
+     "x": 1480,
+     "y": 560,
+     "w": 700,
+     "rot": 3,
+     "enter": "fade"
+    },
+    {
+     "type": "big",
+     "text": "FIRE",
+     "x": 650,
+     "y": 470,
+     "size": 330,
+     "at": "And in these books"
+    },
+    {
+     "type": "strike",
+     "x": 650,
+     "y": 470,
+     "w": 640,
+     "at": "breathe fire"
+    },
+    {
+     "type": "label",
+     "text": "NOT NEEDED",
+     "x": 650,
+     "y": 760,
+     "size": 80,
+     "bg": "yellow",
+     "at": "It didn't need to"
+    }
+   ]
+  }
+ ],
+ "theme": "forest"
+}

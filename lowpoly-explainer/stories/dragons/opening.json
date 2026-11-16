@@ -1,0 +1,233 @@
+{
+ "parts": [
+  "01"
+ ],
+ "preroll": 0.4,
+ "tail": 1.0,
+ "size": [
+  1920,
+  1080
+ ],
+ "out": "opening.json",
+ "voice_out": "narration_opening.wav",
+ "subtitles": false,
+ "shots": [
+  {
+   "part": "01",
+   "at": "In the year 793",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     940,
+     540,
+     1.05
+    ]
+   },
+   "items": [
+    {
+     "type": "clip",
+     "src": "lindisfarne.mp4",
+     "clip_start": 0.0,
+     "x": 1220,
+     "y": 520,
+     "w": 1060,
+     "h": 596,
+     "rot": 2,
+     "enter": "right"
+    },
+    {
+     "type": "big",
+     "text": "793",
+     "x": 430,
+     "y": 400,
+     "size": 300,
+     "bg": "yellow",
+     "at": "In the year"
+    },
+    {
+     "type": "note",
+     "text": "Northumbria,\nEngland",
+     "x": 430,
+     "y": 640,
+     "size": 70,
+     "at": "England's chroniclers",
+     "rot": -4
+    },
+    {
+     "type": "label",
+     "text": "SOMETHING TERRIFYING",
+     "x": 640,
+     "y": 900,
+     "size": 66,
+     "bg": "red",
+     "at": "something terrifying",
+     "rot": -2
+    }
+   ]
+  },
+  {
+   "part": "01",
+   "at": "Immense sheets of light",
+   "kind": "document",
+   "text": "“Immense sheets of light rushing through the air, and whirlwinds, and fiery dragons flying across the firmament.”",
+   "by": "ANGLO-SAXON CHRONICLE · AD 793",
+   "highlights": [
+    {
+     "words": "“Immense sheets of light",
+     "at": "Immense sheets"
+    },
+    {
+     "words": "fiery dragons flying across the firmament.”",
+     "at": "fiery dragons"
+    }
+   ]
+  },
+  {
+   "part": "01",
+   "at": "Soon after, the Vikings came",
+   "kind": "map",
+   "view": {
+    "from": [
+     6,
+     57.5,
+     1.7
+    ],
+    "to": [
+     1,
+     56.8,
+     2.5
+    ]
+   },
+   "pins": [
+    {
+     "name": "Norway",
+     "lat": 60.4,
+     "lon": 5.3,
+     "at": "the Vikings came"
+    },
+    {
+     "name": "Lindisfarne",
+     "lat": 55.68,
+     "lon": -1.8,
+     "side": "left",
+     "at": "holy island of Lindisfarne"
+    }
+   ],
+   "routes": [
+    {
+     "from": 0,
+     "to": 1,
+     "at": "the Vikings came"
+    }
+   ],
+   "items": [
+    {
+     "type": "img",
+     "src": "oseberg_animal_head_post.jpg",
+     "look": "torn",
+     "crop": [
+      0.15,
+      0.05,
+      0.85,
+      0.75
+     ],
+     "x": 1520,
+     "y": 760,
+     "w": 400,
+     "h": 400,
+     "rot": -4,
+     "at": "the Vikings came"
+    },
+    {
+     "type": "label",
+     "text": "VIKING RAID",
+     "x": 1520,
+     "y": 990,
+     "size": 56,
+     "bg": "red",
+     "at": "They struck"
+    }
+   ]
+  },
+  {
+   "part": "01",
+   "at": "and the chronicle remembered",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "clip",
+     "src": "lindisfarne.mp4",
+     "clip_start": 3.4,
+     "look": "plain",
+     "x": 960,
+     "y": 540,
+     "w": 1920,
+     "h": 1080,
+     "enter": "fade"
+    },
+    {
+     "type": "label",
+     "text": "A WARNING?",
+     "x": 960,
+     "y": 900,
+     "size": 96,
+     "bg": "yellow",
+     "at": "as a warning"
+    }
+   ]
+  },
+  {
+   "part": "01",
+   "at": "So what did medieval people",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     960,
+     540,
+     1.05
+    ]
+   },
+   "items": [
+    {
+     "type": "clip",
+     "src": "mountain_fire.mp4",
+     "clip_start": 2.6,
+     "x": 1250,
+     "y": 540,
+     "w": 1000,
+     "h": 562,
+     "rot": -2,
+     "enter": "up"
+    },
+    {
+     "type": "label",
+     "text": "WHAT WAS\nA DRAGON?",
+     "x": 470,
+     "y": 430,
+     "size": 110,
+     "at": "believe a dragon was"
+    },
+    {
+     "type": "note",
+     "text": "stranger than\nany movie",
+     "x": 470,
+     "y": 720,
+     "size": 72,
+     "at": "stranger than any movie",
+     "rot": -4
+    }
+   ]
+  }
+ ],
+ "theme": "night"
+}

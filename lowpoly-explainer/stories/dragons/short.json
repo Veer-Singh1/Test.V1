@@ -1,0 +1,19 @@
+{
+ "parts": ["short"],
+ "preroll": 0.2,
+ "tail": 0.4,
+ "size": [1080, 1920],
+ "out": "short.json",
+ "voice_out": "narration_short.wav",
+ "shots": [
+  {"part": "short", "at": "Medieval maps did not say", "kind": "art", "src": "hereford_mappa_mundi.jpg", "fit": "cover", "start": [0.5, 0.45, 1.0], "end": [0.5, 0.5, 1.12], "credit": "HEREFORD MAPPA MUNDI · c. 1300"},
+  {"part": "short", "at": "That phrase appears on exactly", "kind": "art", "src": "hunt_lenox_globe.jpg", "fit": "cover", "start": [0.5, 0.45, 1.0], "end": [0.5, 0.42, 1.12], "credit": "HUNT–LENOX GLOBE · EARLY 1500s"},
+  {"part": "short", "at": "In 1855, an architect", "kind": "art", "src": "hunt_lenox_globe_asia.jpg", "fit": "cover", "start": [0.5, 0.5, 1.0], "end": [0.5, 0.5, 1.2], "credit": "HC SVNT DRACONES"},
+  {"part": "short", "at": "And medieval dragons", "kind": "art", "src": "harley3244_elephant_dragon_page.jpg", "fit": "cover", "start": [0.5, 0.5, 1.0], "end": [0.5, 0.55, 1.15], "credit": "BRITISH LIBRARY HARLEY MS 3244 · c. 1260"},
+  {"part": "short", "at": "It was in its tail", "kind": "art", "src": "aberdeen_bestiary_dragon_elephant.jpg", "fit": "cover", "start": [0.45, 0.6, 1.0], "end": [0.35, 0.75, 1.2], "credit": "ABERDEEN BESTIARY · c. 1200"},
+  {"part": "short", "at": "In 793, English chroniclers", "kind": "art", "src": "anglo_saxon_chronicle_d.jpg", "fit": "cover", "start": [0.5, 0.4, 1.0], "end": [0.5, 0.5, 1.12], "credit": "ANGLO-SAXON CHRONICLE"},
+  {"part": "short", "at": "Soon after, the Vikings", "kind": "clip", "src": "lindisfarne.mp4", "clip_start": 2.5, "zoom": [1.0, 1.05]},
+  {"part": "short", "at": "And around 1335", "kind": "art", "src": "klagenfurt_lindwurm_fountain.jpg", "fit": "cover", "start": [0.5, 0.5, 1.0], "end": [0.42, 0.45, 1.25], "credit": "LINDWURM · KLAGENFURT"},
+  {"part": "short", "at": "The full story", "kind": "title", "src": "mountain_fire.mp4", "clip_start": 2.6, "title": "MEDIEVAL DRAGONS", "sub": "Full video on the channel"}
+ ]
+}

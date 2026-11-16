@@ -1,0 +1,183 @@
+{
+  "slug": "antwerp",
+  "title": {"line1": "THE VAULT AND", "line2_red": "THE SANDWICH"},
+  "voice": {"provider": "elevenlabs", "voice_id": "nPczCjzI2devNBz1zQrb", "name": "Brian", "atempo": 1.18,
+            "local_sid": 16, "local_pronounce": {"Notarbartolo": "no tar bar toe low", "world's": "worlds", "sentenced": "sent tensed"}},
+  "beats": [
+    {
+      "type": "hook",
+      "sentences": [
+        {
+          "text": "Did you know one of the biggest diamond heists in history was solved by a sandwich?",
+          "shot": {"scene": "street", "camera": "track_right", "time": "dusk"}
+        },
+        {
+          "text": "In 2003, thieves empty a vault in Antwerp, Belgium.",
+          "shot": {"scene": "vault_door", "camera": "push_in", "time": "night"}
+        },
+        {
+          "text": "More than 100 million dollars in diamonds, gone.",
+          "shot": {"scene": "diamonds", "camera": "orbit_low", "time": "night"},
+          "overlay": {"kind": "badge", "value": 100, "prefix": "$", "suffix": " MILLION", "label": "IN DIAMONDS", "on_word": "100"}
+        },
+        {
+          "text": "No alarm.",
+          "shot": {"scene": "vault_room", "camera": "track_left", "time": "night", "lasers": true},
+          "overlay": {"kind": "kicker", "line1": "NO ALARM.", "red": "ALARM.", "on_word": "alarm"}
+        },
+        {"text": "No broken door."},
+        {"text": "Nobody hurt."},
+        {
+          "text": "The vault has 10 layers of security, and every one of them fails.",
+          "shot": {"scene": "vault_door", "camera": "pull_out", "time": "night", "lasers": true},
+          "overlay": {"kind": "badge", "value": 10, "label": "LAYERS OF SECURITY", "on_word": "10"}
+        },
+        {
+          "text": "But one small mistake, left at the side of a road, brings the whole crew down.",
+          "shot": {"scene": "roadside", "camera": "track_right", "time": "night", "bag": true},
+          "overlay": {"kind": "kicker", "line1": "ONE SMALL", "line2": "MISTAKE", "red": "MISTAKE", "on_word": "mistake"}
+        },
+        {
+          "text": "And the diamonds?",
+          "shot": {"scene": "skyline", "camera": "push_in", "time": "night"}
+        },
+        {"text": "Keep that question in mind."}
+      ]
+    },
+    {
+      "type": "title",
+      "sentences": [
+        {
+          "text": "This is the true story of Leonardo Notarbartolo.",
+          "shot": {"scene": "title", "camera": "push_in", "time": "night"}
+        }
+      ]
+    },
+    {
+      "type": "setup",
+      "sentences": [
+        {
+          "text": "Antwerp, Belgium.",
+          "shot": {"scene": "street", "camera": "push_in", "time": "day"}
+        },
+        {
+          "text": "Most of the world's rough diamonds pass through this city.",
+          "shot": {"scene": "diamonds", "camera": "top_down", "time": "day"}
+        },
+        {
+          "text": "Notarbartolo rents an office inside the Diamond Centre.",
+          "shot": {"scene": "office", "camera": "push_in", "time": "dusk"},
+          "overlay": {"kind": "nametag", "name": "LEONARDO NOTARBARTOLO", "place": "ANTWERP, BELGIUM", "on_word": "Notarbartolo"}
+        },
+        {
+          "text": "He looks like any other gem trader.",
+          "shot": {"scene": "lineup", "camera": "track_right", "time": "day", "count": 5, "highlight": 2}
+        },
+        {"text": "He is not."},
+        {
+          "text": "For years, he studies the vault, deep under the building.",
+          "shot": {"scene": "desk", "camera": "top_down", "time": "dusk", "prop": "blueprint"}
+        }
+      ]
+    },
+    {
+      "type": "stage",
+      "sentences": [
+        {
+          "text": "February 15th.",
+          "shot": {"scene": "street", "camera": "pull_out", "time": "night"},
+          "overlay": {"kind": "kicker", "line1": "SATURDAY", "line2": "NIGHT", "red": "NIGHT", "on_word": "Saturday"}
+        },
+        {"text": "Saturday night."},
+        {"text": "The building is empty."},
+        {
+          "text": "The crew slips inside.",
+          "shot": {"scene": "vault_door", "camera": "orbit_low", "time": "night", "crew": 3}
+        },
+        {
+          "text": "They beat the sensors, the magnets and the lock.",
+          "shot": {"scene": "vault_door", "camera": "push_in", "time": "night", "lasers": true, "crew": 1}
+        },
+        {
+          "text": "They open the steel door.",
+          "shot": {"scene": "vault_door", "camera": "pull_out", "time": "night", "open": true, "crew": 3}
+        },
+        {
+          "text": "By morning, more than 100 boxes are empty.",
+          "shot": {"scene": "vault_room", "camera": "track_right", "time": "day", "open": true},
+          "overlay": {"kind": "badge", "value": 100, "suffix": "+", "label": "BOXES EMPTIED", "on_word": "100"}
+        }
+      ]
+    },
+    {
+      "type": "turn",
+      "sentences": [
+        {
+          "text": "It looks like the perfect crime.",
+          "shot": {"scene": "skyline", "camera": "track_left", "time": "dusk"}
+        },
+        {
+          "text": "Until the drive home.",
+          "shot": {"scene": "roadside", "camera": "track_left", "time": "night", "car": true}
+        },
+        {
+          "text": "One of the crew dumps a bag of trash in the woods by the highway.",
+          "shot": {"scene": "roadside", "camera": "orbit_low", "time": "night", "car": true, "bag": true, "crew": 1}
+        },
+        {
+          "text": "A local man finds it and calls the police.",
+          "shot": {"scene": "roadside", "camera": "push_in", "time": "day", "bag": true, "local": true}
+        },
+        {
+          "text": "Inside: envelopes from the Diamond Centre.",
+          "shot": {"scene": "desk", "camera": "top_down", "time": "day", "prop": "envelopes"}
+        },
+        {
+          "text": "And a half-eaten salami sandwich.",
+          "shot": {"scene": "desk", "camera": "orbit_low", "time": "day", "prop": "sandwich"},
+          "overlay": {"kind": "kicker", "line1": "HALF-EATEN.", "red": "HALF-EATEN.", "on_word": "half-eaten"}
+        },
+        {
+          "text": "The DNA on it leads to Notarbartolo.",
+          "shot": {"scene": "board", "camera": "push_in", "time": "night"}
+        }
+      ]
+    },
+    {
+      "type": "aftermath",
+      "sentences": [
+        {
+          "text": "Days later, he is arrested.",
+          "shot": {"scene": "cell", "camera": "push_in", "time": "night"}
+        },
+        {
+          "text": "He is sentenced to 10 years in prison.",
+          "shot": {"scene": "cell", "camera": "track_right", "time": "night"},
+          "overlay": {"kind": "badge", "value": 10, "label": "YEARS IN PRISON", "on_word": "10"}
+        },
+        {
+          "text": "Three of his crew get 5 years each.",
+          "shot": {"scene": "lineup", "camera": "orbit_low", "time": "night", "count": 3, "prison": true}
+        }
+      ]
+    },
+    {
+      "type": "closer",
+      "sentences": [
+        {
+          "text": "One of the biggest diamond heists in history, undone by lunch.",
+          "shot": {"scene": "desk", "camera": "push_in", "time": "dusk", "prop": "sandwich"}
+        },
+        {
+          "text": "And the diamonds?",
+          "shot": {"scene": "diamonds", "camera": "pull_out", "time": "night"}
+        },
+        {
+          "text": "They have never been found.",
+          "shot": {"scene": "vault_room", "camera": "pull_out", "time": "night", "open": true},
+          "overlay": {"kind": "kicker", "line1": "NEVER", "line2": "FOUND.", "red": "FOUND.", "on_word": "never"}
+        }
+      ]
+    }
+  ]
+}
