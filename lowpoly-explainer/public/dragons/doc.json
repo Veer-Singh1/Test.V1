@@ -21,6 +21,8 @@
    ],
    "credit": "ANGLO-SAXON CHRONICLE \u00b7 11TH-CENTURY COPY",
    "from": 0,
+   "w": 1670,
+   "h": 2492,
    "to": 99
   },
   {
@@ -47,6 +49,8 @@
    ],
    "credit": "VIKING ANIMAL-HEAD POST \u00b7 OSEBERG SHIP, 9TH CENTURY",
    "from": 257,
+   "w": 1920,
+   "h": 1280,
    "to": 491
   },
   {
@@ -93,6 +97,8 @@
    ],
    "credit": "DRAGON'S HEAD \u00b7 ROMANESQUE, 12TH CENTURY",
    "from": 937,
+   "w": 1920,
+   "h": 2335,
    "to": 1041
   },
   {
@@ -111,6 +117,8 @@
    ],
    "credit": "CONRAD GESSNER \u00b7 16TH CENTURY",
    "from": 1026,
+   "w": 1183,
+   "h": 948,
    "to": 1228
   },
   {
@@ -129,6 +137,8 @@
    ],
    "credit": "BRITISH LIBRARY HARLEY MS 3244 \u00b7 c. 1260",
    "from": 1213,
+   "w": 1492,
+   "h": 744,
    "to": 1472
   },
   {
@@ -147,6 +157,8 @@
    ],
    "credit": "BRITISH LIBRARY HARLEY MS 3244 \u00b7 c. 1260",
    "from": 1457,
+   "w": 1920,
+   "h": 2883,
    "to": 1608
   },
   {
@@ -185,6 +197,8 @@
    ],
    "credit": "ABERDEEN BESTIARY \u00b7 c. 1200",
    "from": 1800,
+   "w": 1753,
+   "h": 831,
    "to": 2053
   },
   {
@@ -203,6 +217,8 @@
    ],
    "credit": "ULISSE ALDROVANDI \u00b7 1640",
    "from": 2038,
+   "w": 1920,
+   "h": 1218,
    "to": 2182
   },
   {
@@ -240,17 +256,60 @@
    ],
    "credit": "BEOWULF \u00b7 NOWELL CODEX, c. 1000",
    "from": 2327,
+   "w": 1920,
+   "h": 3218,
    "to": 2551
   },
   {
    "kind": "clip",
    "src": "mountain_fire.mp4",
    "clip_start": 6.4,
+   "rate": 0.72,
    "zoom": [
     1.02,
     1.08
    ],
    "from": 2536,
+   "to": 2678
+  },
+  {
+   "kind": "art",
+   "src": "durer_st_george_woodcut.jpg",
+   "fit": "contain",
+   "start": [
+    0.5,
+    0.5,
+    1.0
+   ],
+   "end": [
+    0.5,
+    0.5,
+    1.08
+   ],
+   "credit": "ALBRECHT D\u00dcRER \u00b7 KNIGHT AND DRAGON, c. 1502",
+   "from": 2663,
+   "w": 1920,
+   "h": 2810,
+   "to": 2882
+  },
+  {
+   "kind": "art",
+   "src": "beowulf_first_page.jpg",
+   "fit": "cover",
+   "start": [
+    0.3,
+    0.12,
+    2.2
+   ],
+   "end": [
+    0.4,
+    0.14,
+    2.0
+   ],
+   "credit": "BEOWULF \u00b7 \"HW\u00c6T\"",
+   "from": 2867,
+   "w": 1920,
+   "h": 3218,
    "to": 3007
   },
   {
@@ -269,6 +328,8 @@
    ],
    "credit": "BRITISH LIBRARY \u00b7 COTTON MS VITELLIUS A XV",
    "from": 2992,
+   "w": 1920,
+   "h": 3218,
    "to": 3206
   },
   {
@@ -286,6 +347,8 @@
     1.6
    ],
    "from": 3191,
+   "w": 1920,
+   "h": 3218,
    "to": 3378
   },
   {
@@ -304,6 +367,8 @@
    ],
    "credit": "RAMSUND CARVING \u00b7 SWEDEN, c. 1030",
    "from": 3363,
+   "w": 1920,
+   "h": 646,
    "to": 3587
   },
   {
@@ -322,6 +387,8 @@
    ],
    "credit": "RAMSUND CARVING \u00b7 DRAWING, 1877",
    "from": 3572,
+   "w": 1920,
+   "h": 966,
    "to": 3709
   },
   {
@@ -340,6 +407,8 @@
    ],
    "credit": "HYLESTAD STAVE CHURCH PORTAL \u00b7 12TH CENTURY",
    "from": 3694,
+   "w": 1800,
+   "h": 2400,
    "to": 3874
   },
   {
@@ -366,6 +435,8 @@
    ],
    "credit": "BAMBERG APOCALYPSE \u00b7 c. 1010",
    "from": 3963,
+   "w": 1920,
+   "h": 2375,
    "to": 4065
   },
   {
@@ -384,6 +455,8 @@
    ],
    "credit": "ALBRECHT D\u00dcRER \u00b7 APOCALYPSE, 1498",
    "from": 4050,
+   "w": 1920,
+   "h": 2711,
    "to": 4175
   },
   {
@@ -402,6 +475,8 @@
    ],
    "credit": "ALBRECHT D\u00dcRER \u00b7 APOCALYPSE, 1498",
    "from": 4160,
+   "w": 1920,
+   "h": 2664,
    "to": 4257
   },
   {
@@ -420,6 +495,8 @@
    ],
    "credit": "ICON \u00b7 NOVGOROD",
    "from": 4242,
+   "w": 1920,
+   "h": 2685,
    "to": 4521
   },
   {
@@ -438,6 +515,8 @@
    ],
    "credit": "PAOLO UCCELLO \u00b7 c. 1470",
    "from": 4506,
+   "w": 1920,
+   "h": 1448,
    "to": 4834
   },
   {
@@ -456,6 +535,8 @@
    ],
    "credit": "VITTORE CARPACCIO \u00b7 c. 1502",
    "from": 4819,
+   "w": 1920,
+   "h": 745,
    "to": 4896
   },
   {
@@ -474,6 +555,8 @@
    ],
    "credit": "RAPHAEL \u00b7 c. 1506",
    "from": 4881,
+   "w": 1920,
+   "h": 2502,
    "to": 4963
   },
   {
@@ -492,6 +575,8 @@
    ],
    "credit": "PAOLO UCCELLO \u00b7 c. 1470",
    "from": 4948,
+   "w": 1920,
+   "h": 1448,
    "to": 5093
   },
   {
@@ -510,6 +595,8 @@
    ],
    "credit": "BERNAT MARTORELL \u00b7 c. 1435",
    "from": 5078,
+   "w": 1920,
+   "h": 3046,
    "to": 5194
   },
   {
@@ -528,6 +615,8 @@
    ],
    "credit": "WILLEM VRELANT \u00b7 SAINT MARGARET, 1460s",
    "from": 5179,
+   "w": 1920,
+   "h": 3066,
    "to": 5393
   },
   {
@@ -566,6 +655,8 @@
    ],
    "credit": "BAYEUX TAPESTRY \u00b7 1070s",
    "from": 5677,
+   "w": 1920,
+   "h": 1355,
    "to": 5831
   },
   {
@@ -584,6 +675,8 @@
    ],
    "credit": "ST ALBANS CHRONICLE \u00b7 15TH CENTURY",
    "from": 5816,
+   "w": 898,
+   "h": 750,
    "to": 6147
   },
   {
@@ -601,6 +694,8 @@
     1.6
    ],
    "from": 6132,
+   "w": 898,
+   "h": 750,
    "to": 6209
   },
   {
@@ -619,6 +714,8 @@
    ],
    "credit": "FLAG OF WALES \u00b7 OFFICIAL SINCE 1959",
    "from": 6194,
+   "w": 1920,
+   "h": 1152,
    "to": 6403
   },
   {
@@ -637,6 +734,8 @@
    ],
    "credit": "WAWEL DRAGON STATUE \u00b7 KRAK\u00d3W",
    "from": 6388,
+   "w": 1920,
+   "h": 2560,
    "to": 6731
   },
   {
@@ -663,6 +762,8 @@
    ],
    "credit": "ATHANASIUS KIRCHER \u00b7 MUNDUS SUBTERRANEUS, 1678",
    "from": 6823,
+   "w": 1218,
+   "h": 2020,
    "to": 6898
   },
   {
@@ -681,6 +782,8 @@
    ],
    "credit": "LINDWURM FOUNTAIN \u00b7 KLAGENFURT",
    "from": 6883,
+   "w": 1920,
+   "h": 1280,
    "to": 7102
   },
   {
@@ -698,6 +801,8 @@
     1.7
    ],
    "from": 7087,
+   "w": 1920,
+   "h": 1280,
    "to": 7218
   },
   {
@@ -716,6 +821,8 @@
    ],
    "credit": "CARVED 1590s",
    "from": 7203,
+   "w": 1920,
+   "h": 1280,
    "to": 7350
   },
   {
@@ -733,6 +840,8 @@
     1.35
    ],
    "from": 7335,
+   "w": 1183,
+   "h": 948,
    "to": 7547
   },
   {
@@ -751,6 +860,8 @@
    ],
    "credit": "DRAGON BONES \u00b7 WAWEL CATHEDRAL, KRAK\u00d3W",
    "from": 7532,
+   "w": 1920,
+   "h": 1272,
    "to": 7661
   },
   {
@@ -777,6 +888,8 @@
    ],
    "credit": "HEREFORD MAPPA MUNDI \u00b7 c. 1300",
    "from": 7748,
+   "w": 1920,
+   "h": 2281,
    "to": 7919
   },
   {
@@ -795,6 +908,8 @@
    ],
    "credit": "CARTA MARINA \u00b7 1539",
    "from": 7904,
+   "w": 1920,
+   "h": 729,
    "to": 8037
   },
   {
@@ -813,6 +928,8 @@
    ],
    "credit": "HUNT\u2013LENOX GLOBE \u00b7 EARLY 1500s",
    "from": 8022,
+   "w": 1920,
+   "h": 2889,
    "to": 8159
   },
   {
@@ -831,6 +948,8 @@
    ],
    "credit": "HC SVNT DRACONES",
    "from": 8144,
+   "w": 1920,
+   "h": 1919,
    "to": 8298
   },
   {
@@ -849,12 +968,15 @@
    ],
    "credit": "NEW YORK PUBLIC LIBRARY",
    "from": 8283,
+   "w": 1920,
+   "h": 2889,
    "to": 8477
   },
   {
    "kind": "clip",
    "src": "mountain_fire.mp4",
-   "clip_start": 0.0,
+   "clip_start": 5.4,
+   "rate": 0.85,
    "zoom": [
     1.08,
     1.0
@@ -877,6 +999,8 @@
     1.4
    ],
    "from": 8579,
+   "w": 1920,
+   "h": 1280,
    "to": 8637
   },
   {
@@ -894,6 +1018,8 @@
     1.2
    ],
    "from": 8622,
+   "w": 1920,
+   "h": 1218,
    "to": 8700
   },
   {
@@ -911,12 +1037,14 @@
     1.3
    ],
    "from": 8685,
+   "w": 1920,
+   "h": 2664,
    "to": 8738
   },
   {
    "kind": "clip",
    "src": "mountain_fire.mp4",
-   "clip_start": 6.0,
+   "clip_start": 0.2,
    "zoom": [
     1.0,
     1.06
@@ -941,23 +1069,28 @@
  "captions": [
   {
    "from": 23,
-   "to": 72,
-   "text": "In the year 793, England's chroniclers recorded something"
+   "to": 40,
+   "text": "In the year 793, England's chroniclers"
   },
   {
-   "from": 73,
+   "from": 42,
    "to": 88,
-   "text": "terrifying."
+   "text": "recorded something terrifying."
   },
   {
    "from": 90,
-   "to": 168,
-   "text": "\"Immense sheets of light rushing through the air, and"
+   "to": 165,
+   "text": "\"Immense sheets of light rushing through the air,"
   },
   {
-   "from": 169,
+   "from": 167,
+   "to": 208,
+   "text": "and whirlwinds, and fiery dragons"
+  },
+  {
+   "from": 210,
    "to": 261,
-   "text": "whirlwinds, and fiery dragons flying across the firmament.\""
+   "text": "flying across the firmament.\""
   },
   {
    "from": 263,
@@ -966,13 +1099,13 @@
   },
   {
    "from": 328,
-   "to": 398,
-   "text": "They struck the holy island of Lindisfarne, and"
+   "to": 394,
+   "text": "They struck the holy island of Lindisfarne,"
   },
   {
-   "from": 399,
+   "from": 395,
    "to": 480,
-   "text": "the chronicle remembered those dragons as a warning."
+   "text": "and the chronicle remembered those dragons as a warning."
   },
   {
    "from": 482,
@@ -991,18 +1124,13 @@
   },
   {
    "from": 1032,
-   "to": 1054,
-   "text": "Around the year 600,"
+   "to": 1122,
+   "text": "Around the year 600, Isidore of Seville wrote the encyclopedia"
   },
   {
-   "from": 1056,
-   "to": 1148,
-   "text": "Isidore of Seville wrote the encyclopedia that medieval"
-  },
-  {
-   "from": 1150,
+   "from": 1123,
    "to": 1218,
-   "text": "Europe trusted most after the Bible."
+   "text": "that medieval Europe trusted most after the Bible."
   },
   {
    "from": 1219,
@@ -1011,13 +1139,13 @@
   },
   {
    "from": 1299,
-   "to": 1365,
-   "text": "It had a crest and a small mouth, and"
+   "to": 1360,
+   "text": "It had a crest and a small mouth,"
   },
   {
-   "from": 1366,
+   "from": 1361,
    "to": 1429,
-   "text": "its power was not in its teeth."
+   "text": "and its power was not in its teeth."
   },
   {
    "from": 1431,
@@ -1026,28 +1154,23 @@
   },
   {
    "from": 1463,
-   "to": 1557,
-   "text": "The bestiaries, the illustrated animal books of the twelfth and"
+   "to": 1552,
+   "text": "The bestiaries, the illustrated animal books of the twelfth"
   },
   {
-   "from": 1558,
+   "from": 1553,
    "to": 1597,
-   "text": "thirteenth centuries, added the details."
+   "text": "and thirteenth centuries, added the details."
   },
   {
    "from": 1599,
-   "to": 1675,
-   "text": "A dragon waited on the paths elephants used,"
+   "to": 1689,
+   "text": "A dragon waited on the paths elephants used, knotted its"
   },
   {
-   "from": 1676,
-   "to": 1740,
-   "text": "knotted its tail around their legs, and"
-  },
-  {
-   "from": 1741,
+   "from": 1691,
    "to": 1804,
-   "text": "squeezed until they suffocated."
+   "text": "tail around their legs, and squeezed until they suffocated."
   },
   {
    "from": 1806,
@@ -1126,13 +1249,13 @@
   },
   {
    "from": 2998,
-   "to": 3074,
-   "text": "It's often called medieval Europe's first fire-breathing"
+   "to": 3095,
+   "text": "It's often called medieval Europe's first fire-breathing dragon,"
   },
   {
-   "from": 3075,
+   "from": 3097,
    "to": 3196,
-   "text": "dragon, and the poem survives in exactly one manuscript."
+   "text": "and the poem survives in exactly one manuscript."
   },
   {
    "from": 3197,
@@ -1151,23 +1274,23 @@
   },
   {
    "from": 3434,
-   "to": 3526,
-   "text": "so greedy for cursed gold that he killed his own father and"
+   "to": 3521,
+   "text": "so greedy for cursed gold that he killed his own father"
   },
   {
-   "from": 3527,
+   "from": 3523,
    "to": 3576,
-   "text": "became a serpent coiled on it."
+   "text": "and became a serpent coiled on it."
   },
   {
    "from": 3578,
-   "to": 3632,
-   "text": "The hero Sigurd hid in a pit and"
+   "to": 3627,
+   "text": "The hero Sigurd hid in a pit"
   },
   {
-   "from": 3633,
+   "from": 3628,
    "to": 3699,
-   "text": "stabbed upward as the dragon passed."
+   "text": "and stabbed upward as the dragon passed."
   },
   {
    "from": 3700,
@@ -1186,13 +1309,13 @@
   },
   {
    "from": 4056,
-   "to": 4136,
-   "text": "The Book of Revelation describes a great red dragon with"
+   "to": 4165,
+   "text": "The Book of Revelation describes a great red dragon with seven heads,"
   },
   {
-   "from": 4137,
+   "from": 4166,
    "to": 4247,
-   "text": "seven heads, thrown out of heaven by the archangel Michael."
+   "text": "thrown out of heaven by the archangel Michael."
   },
   {
    "from": 4248,
@@ -1201,43 +1324,43 @@
   },
   {
    "from": 4291,
-   "to": 4388,
-   "text": "The real George was a Roman soldier who died around the"
+   "to": 4357,
+   "text": "The real George was a Roman soldier"
   },
   {
-   "from": 4390,
+   "from": 4359,
    "to": 4400,
-   "text": "year 303."
+   "text": "who died around the year 303."
   },
   {
    "from": 4402,
-   "to": 4494,
-   "text": "His dragon didn't join the story for roughly seven hundred"
+   "to": 4451,
+   "text": "His dragon didn't join the story"
   },
   {
-   "from": 4495,
+   "from": 4452,
    "to": 4511,
-   "text": "years."
+   "text": "for roughly seven hundred years."
   },
   {
    "from": 4512,
-   "to": 4597,
-   "text": "The famous version comes from the Golden Legend,"
+   "to": 4564,
+   "text": "The famous version comes from the"
   },
   {
-   "from": 4599,
+   "from": 4565,
    "to": 4634,
-   "text": "written in the 1260s."
+   "text": "Golden Legend, written in the 1260s."
   },
   {
    "from": 4635,
-   "to": 4747,
-   "text": "Outside a city called Silene, a dragon was fed sheep, then"
+   "to": 4737,
+   "text": "Outside a city called Silene, a dragon was fed sheep,"
   },
   {
-   "from": 4748,
+   "from": 4738,
    "to": 4823,
-   "text": "people, then children chosen by lottery,"
+   "text": "then people, then children chosen by lottery,"
   },
   {
    "from": 4825,
@@ -1246,13 +1369,13 @@
   },
   {
    "from": 4887,
-   "to": 4958,
-   "text": "George wounded the beast with his lance, and"
+   "to": 4977,
+   "text": "George wounded the beast with his lance, and the princess"
   },
   {
-   "from": 4959,
+   "from": 4978,
    "to": 5083,
-   "text": "the princess led it into the city on her belt, like a tame dog."
+   "text": "led it into the city on her belt, like a tame dog."
   },
   {
    "from": 5084,
@@ -1261,13 +1384,13 @@
   },
   {
    "from": 5185,
-   "to": 5271,
-   "text": "The same book tells of a saint who escaped from inside a"
+   "to": 5236,
+   "text": "The same book tells of a saint who"
   },
   {
-   "from": 5273,
+   "from": 5238,
    "to": 5296,
-   "text": "dragon's belly."
+   "text": "escaped from inside a dragon's belly."
   },
   {
    "from": 5298,
@@ -1281,23 +1404,23 @@
   },
   {
    "from": 5558,
-   "to": 5657,
-   "text": "Roman cavalry rode behind dragon-shaped banners that hissed"
+   "to": 5628,
+   "text": "Roman cavalry rode behind dragon-shaped"
   },
   {
-   "from": 5659,
+   "from": 5630,
    "to": 5681,
-   "text": "in the wind."
+   "text": "banners that hissed in the wind."
   },
   {
    "from": 5683,
-   "to": 5711,
-   "text": "On the Bayeux Tapestry,"
+   "to": 5744,
+   "text": "On the Bayeux Tapestry, a dragon standard"
   },
   {
-   "from": 5712,
+   "from": 5745,
    "to": 5821,
-   "text": "a dragon standard falls beside King Harold at Hastings, in 1066."
+   "text": "falls beside King Harold at Hastings, in 1066."
   },
   {
    "from": 5822,
@@ -1306,18 +1429,18 @@
   },
   {
    "from": 5892,
-   "to": 5946,
-   "text": "a king's tower keeps collapsing,"
+   "to": 5979,
+   "text": "a king's tower keeps collapsing, because two dragons"
   },
   {
-   "from": 5947,
-   "to": 6037,
-   "text": "because two dragons are fighting in a pool beneath it:"
+   "from": 5981,
+   "to": 6066,
+   "text": "are fighting in a pool beneath it: a red one for"
   },
   {
-   "from": 6038,
+   "from": 6067,
    "to": 6137,
-   "text": "a red one for the Britons, and a white one for the Saxons."
+   "text": "the Britons, and a white one for the Saxons."
   },
   {
    "from": 6138,
@@ -1341,13 +1464,13 @@
   },
   {
    "from": 6471,
-   "to": 6549,
-   "text": "from around 1200, has two princes kill it with a cattle"
+   "to": 6532,
+   "text": "from around 1200, has two princes kill it with"
   },
   {
-   "from": 6550,
+   "from": 6533,
    "to": 6611,
-   "text": "hide stuffed with burning sulphur."
+   "text": "a cattle hide stuffed with burning sulphur."
   },
   {
    "from": 6613,
@@ -1361,18 +1484,18 @@
   },
   {
    "from": 6889,
-   "to": 6976,
-   "text": "Around 1335, a huge skull was dug out of a gravel pit near"
+   "to": 6964,
+   "text": "Around 1335, a huge skull was dug out of a gravel"
   },
   {
-   "from": 6977,
-   "to": 7012,
-   "text": "Klagenfurt, in Austria, and"
+   "from": 6966,
+   "to": 7022,
+   "text": "pit near Klagenfurt, in Austria, and put on"
   },
   {
-   "from": 7014,
+   "from": 7023,
    "to": 7091,
-   "text": "put on display in the town hall as a dragon's skull."
+   "text": "display in the town hall as a dragon's skull."
   },
   {
    "from": 7093,
@@ -1411,13 +1534,13 @@
   },
   {
    "from": 7538,
-   "to": 7613,
-   "text": "And in Krak\u00f3w, giant bones hang on a chain outside the"
+   "to": 7582,
+   "text": "And in Krak\u00f3w, giant bones hang on"
   },
   {
-   "from": 7615,
+   "from": 7584,
    "to": 7655,
-   "text": "cathedral door."
+   "text": "a chain outside the cathedral door."
   },
   {
    "from": 7754,
@@ -1431,23 +1554,28 @@
   },
   {
    "from": 7910,
-   "to": 7988,
-   "text": "But the famous phrase \"here be dragons\" appears on exactly"
+   "to": 7969,
+   "text": "But the famous phrase \"here be dragons\" appears"
   },
   {
-   "from": 7989,
-   "to": 8087,
-   "text": "one known object: a copper globe about the size of a"
+   "from": 7970,
+   "to": 8062,
+   "text": "on exactly one known object: a copper globe about"
   },
   {
-   "from": 8088,
+   "from": 8064,
    "to": 8149,
-   "text": "grapefruit, from the early 1500s."
+   "text": "the size of a grapefruit, from the early 1500s."
   },
   {
    "from": 8150,
+   "to": 8216,
+   "text": "Off the coast of Asia, it reads,"
+  },
+  {
+   "from": 8217,
    "to": 8259,
-   "text": "Off the coast of Asia, it reads, in Latin, \"Hic sunt dracones\"."
+   "text": "in Latin, \"Hic sunt dracones\"."
   },
   {
    "from": 8260,
@@ -1491,13 +1619,13 @@
   },
   {
    "from": 8729,
-   "to": 8819,
-   "text": "Most of all, it was the shape people gave to everything"
+   "to": 8800,
+   "text": "Most of all, it was the shape people gave"
   },
   {
-   "from": 8820,
+   "from": 8801,
    "to": 8859,
-   "text": "they couldn't explain."
+   "text": "to everything they couldn't explain."
   },
   {
    "from": 8861,

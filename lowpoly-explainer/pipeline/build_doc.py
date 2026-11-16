@@ -95,7 +95,8 @@ def main():
     for part in board["parts"]:
         t += before.get(part, board.get("gap", 0.6) if layout else 0)
         wav = work / f"{part}.wav"
-        dur = trimmed(find_voice(pub / args.voice_dir, part), wav)
+        src = find_voice(pub / args.voice_dir, part)
+        dur = duration(wav) if wav.exists() and wav.stat().st_mtime > src.stat().st_mtime else trimmed(src, wav)
         layout[part] = (t, dur)
         pieces.append((t, wav))
         t += dur
@@ -118,7 +119,15 @@ def main():
     words = {}
     for part, (start, dur) in layout.items():
         sw = split_words(texts[part])
-        heard = recognise(work / f"{part}.wav")
+        wav = work / f"{part}.wav"
+        cache = work / f"{part}.heard.json"
+        stamp = [wav.stat().st_size, round(wav.stat().st_mtime)]
+        cached = json.loads(cache.read_text()) if cache.exists() else {}
+        if cached.get("stamp") == stamp:
+            heard = [tuple(h) for h in cached["heard"]]
+        else:
+            heard = recognise(wav)
+            cache.write_text(json.dumps({"stamp": stamp, "heard": heard}))
         starts = snap(sw, heard, dur)
         hit = len(set(map(norm, sw)) & set(norm(w) for w, _ in heard))
         print(f"part {part}: {len(sw)} words, {len(heard)} heard, {hit} distinct in common, {dur:.1f} s")

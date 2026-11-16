@@ -78,10 +78,14 @@ export const ClipShot = ({shot, story}: {shot: DocShot; story: string}) => {
   );
 };
 
-const fadeInOut = (frame: number, shot: DocShot, inF = 20, outF = 20) =>
-  interpolate(frame, [shot.from, shot.from + inF, shot.to - outF, shot.to], [0, 1, 1, 0], {
+/* Fade in over inF frames and out over outF, shortened to fit a short shot. */
+const fadeInOut = (frame: number, shot: DocShot, inF = 20, outF = 20) => {
+  const len = shot.to - shot.from;
+  const k = Math.min(1, (len - 2) / (inF + outF));
+  return interpolate(frame, [shot.from, shot.from + inF * k, shot.to - outF * k - 1, shot.to], [0, 1, 1, 0], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
+};
 
 const Rule = ({width}: {width: number}) => (
   <div style={{display: 'flex', alignItems: 'center', gap: 18, justifyContent: 'center'}}>
@@ -212,10 +216,10 @@ export const Credit = ({shot}: {shot: DocShot}) => {
   const frame = useCurrentFrame();
   const {width: W, height: H} = useVideoConfig();
   const u = Math.min(W, H) / 1080;
+  if (!shot.credit || shot.to - shot.from < 75) return null; // too short to read
   const o = interpolate(frame, [shot.from + 20, shot.from + 40, shot.to - 30, shot.to - 12], [0, 0.85, 0.85, 0], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
-  if (!shot.credit) return null;
   const wide = W > H;
   return (
     <div style={{position: 'absolute', left: wide ? 60 * u : 0, right: wide ? undefined : 0, textAlign: wide ? 'left' : 'center',
