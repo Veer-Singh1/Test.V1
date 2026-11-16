@@ -45,40 +45,49 @@ def text(meta, key):
 
 
 def main():
-    picks = json.loads(Path(sys.argv[1]).read_text())
+    picks = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
     out = Path(sys.argv[2])
     out.mkdir(parents=True, exist_ok=True)
     cred_path = out / "credits.json"
-    credits = json.loads(cred_path.read_text()) if cred_path.exists() else []
+    credits = json.loads(cred_path.read_text(encoding="utf-8")) if cred_path.exists() else []
     have = {c["slug"] for c in credits}
     for p in picks:
+        try:
+            fetch_one(p, out, cred_path, credits, have)
+        except Exception as e:  # one bad file should not stop the rest
+            print(f"FAILED {p['slug']}: {e}", flush=True)
+    print(f"{len(list(out.glob('*.jpg')))} images in {out}", flush=True)
+
+
+def fetch_one(p, out, cred_path, credits, have):
+    if True:
         slug, title = p["slug"], p["title"]
         if slug in have and (out / f"{slug}.jpg").exists():
-            continue
+            return
         info = get(API, params={"action": "query", "format": "json", "titles": title, "prop": "imageinfo",
                                 "iiprop": "url|size|mime|extmetadata", "iiurlwidth": 1920}).json()
         page = next(iter(info["query"]["pages"].values()))
         if "imageinfo" not in page:
             print(f"MISSING {slug}: {title}", flush=True)
-            continue
+            return
         ii = page["imageinfo"][0]
         meta = ii.get("extmetadata", {})
         lic = text(meta, "LicenseShortName") or text(meta, "License")
         if not OK_LICENCE.search(lic):
             print(f"SKIP {slug}: licence {lic!r}", flush=True)
-            continue
+            return
         url = ii.get("thumburl") if ii.get("width", 0) > 1920 or ii.get("mime") != "image/jpeg" else ii["url"]
         time.sleep(3)
         img = Image.open(io.BytesIO(get(url).content)).convert("RGB")
         img.save(out / f"{slug}.jpg", quality=92)
         artist = text(meta, "Artist") or "Unknown"
-        credits = [c for c in credits if c["slug"] != slug] + [{
+        credits[:] = [c for c in credits if c["slug"] != slug] + [{
             "slug": slug, "file": f"{slug}.jpg", "title": title.removeprefix("File:"),
             "creator": artist[:160], "date": text(meta, "DateTimeOriginal")[:80],
             "description": text(meta, "ImageDescription")[:300], "licence": lic,
             "attribution": f"{artist[:120]}, {lic}, via Wikimedia Commons",
             "commons_page": ii.get("descriptionurl", ""), "width": img.width, "height": img.height}]
-        cred_path.write_text(json.dumps(credits, indent=1, ensure_ascii=False))
+        cred_path.write_text(json.dumps(credits, indent=1, ensure_ascii=False), encoding="utf-8")
         print(f"OK {slug} {img.size} {lic}", flush=True)
         time.sleep(3)
 
