@@ -1,0 +1,9 @@
+node_modules/
+.venv/
+__pycache__/
+out/frames/
+out/*.wav
+out/video_noaudio.mp4
+build/
+# the repository root ignores *.png; this project needs its PNG assets and outputs
+!*.png

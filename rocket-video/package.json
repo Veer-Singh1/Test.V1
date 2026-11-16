@@ -1,0 +1,22 @@
+{
+  "name": "rocket-orbit-60s",
+  "version": "1.0.0",
+  "private": true,
+  "description": "60-second paper stop-motion explainer: how a rocket gets to orbit",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts RocketOrbit out/video_noaudio.mp4",
+    "still": "remotion still src/index.ts RocketOrbit"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.544",
+    "@remotion/fonts": "^4.0.544",
+    "@remotion/paths": "^4.0.544",
+    "@remotion/renderer": "^4.0.544",
+    "@types/react": "^18.3.12",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.544",
+    "typescript": "^5.6.3"
+  }
+}
