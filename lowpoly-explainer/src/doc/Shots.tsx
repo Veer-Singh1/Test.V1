@@ -162,7 +162,8 @@ export const QuoteCard = ({shot, story}: {shot: DocShot; story: string}) => {
   const o = fadeInOut(frame, shot, 18, 18);
   const zoom = 1.02 + 0.06 * progress(frame, shot);
   return (
-    <AbsoluteFill style={{backgroundColor: '#0a0806', alignItems: 'center', justifyContent: 'center'}}>
+    <AbsoluteFill style={{backgroundColor: shot.src ? 'rgba(6,5,4,0.5)' : '#0a0806', alignItems: 'center',
+      justifyContent: 'center'}}>
       {shot.bg ? (
         <Img
           src={staticFile(`${story}/art/${shot.bg}`)}

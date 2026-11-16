@@ -7,9 +7,10 @@
  "out": "doc.json",
  "voice_out": "narration.wav",
  "shots": [
-  {"part": "01", "at": "In the year 793", "kind": "art", "src": "anglo_saxon_chronicle_d.jpg", "fit": "cover", "start": [0.5, 0.35, 1.15], "end": [0.5, 0.5, 1.35], "credit": "ANGLO-SAXON CHRONICLE · 11TH-CENTURY COPY"},
-  {"part": "01", "at": "Immense sheets of light", "kind": "quote", "text": "Immense sheets of light rushing through the air, and whirlwinds, and fiery dragons flying across the firmament.", "by": "ANGLO-SAXON CHRONICLE · AD 793", "bg": "anglo_saxon_chronicle_d.jpg"},
+  {"part": "01", "at": "In the year 793", "kind": "clip", "src": "lindisfarne.mp4", "clip_start": 0.0, "credit": "LINDISFARNE · AD 793"},
+  {"part": "01", "at": "Immense sheets of light", "kind": "quote", "src": "lindisfarne.mp4", "clip_start": 1.6, "rate": 0.9, "text": "Immense sheets of light rushing through the air, and whirlwinds, and fiery dragons flying across the firmament.", "by": "ANGLO-SAXON CHRONICLE · AD 793"},
   {"part": "01", "at": "Soon after, the Vikings came", "kind": "art", "src": "oseberg_animal_head_post.jpg", "fit": "cover", "start": [0.5, 0.45, 1.0], "end": [0.5, 0.42, 1.15], "credit": "VIKING ANIMAL-HEAD POST · OSEBERG SHIP, 9TH CENTURY"},
+  {"part": "01", "at": "They struck the holy island", "kind": "clip", "src": "lindisfarne.mp4", "clip_start": 0.2, "rate": 0.8},
   {"part": "01", "at": "So what did medieval people", "kind": "clip", "src": "mountain_fire.mp4", "clip_start": 0.0, "zoom": [1.0, 1.04]},
 
   {"part": "02", "before": 5.5, "kind": "title", "src": "mountain_fire.mp4", "clip_start": 3.6, "title": "MEDIEVAL DRAGONS", "sub": "What people really believed"},

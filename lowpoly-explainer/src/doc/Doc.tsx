@@ -13,7 +13,12 @@ const Shot = ({shot, story}: {shot: DocShot; story: string}) => {
     case 'chapter':
       return <ChapterCard shot={shot} story={story} />;
     case 'quote':
-      return <QuoteCard shot={shot} story={story} />;
+      return shot.src ? (
+        <>
+          <ClipShot shot={shot} story={story} />
+          <QuoteCard shot={shot} story={story} />
+        </>
+      ) : <QuoteCard shot={shot} story={story} />;
     case 'title':
       return shot.src ? (
         <>
