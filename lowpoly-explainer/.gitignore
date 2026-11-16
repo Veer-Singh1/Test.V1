@@ -21,3 +21,7 @@ out/gpu_check.png
 out/test/
 out/dragon/
 blender/assets/polyhaven/
+public/dragons/clips/
+public/dragons/voice_tts/
+public/dragons/voice/trimmed/
+public/dragons/narration*.wav
