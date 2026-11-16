@@ -1,11 +1,22 @@
 import '@fontsource/outfit/600.css';
 import {useEffect, useState} from 'react';
-import {AbsoluteFill, Audio, continueRender, delayRender, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Audio, continueRender, delayRender, Easing, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import {ChapterScene, DocumentScene, MapScene, Scene, TimelineScene, type MapData} from './Collage';
 import {ArtShot, ChapterCard, ClipShot, Credit, EndCard, QuoteCard, TitleShot} from './Shots';
 import {FADE, type DocShot, type DocTimeline} from './types';
 
-const Shot = ({shot, story}: {shot: DocShot; story: string}) => {
-  switch (shot.kind) {
+const Shot = ({shot, story, map}: {shot: DocShot; story: string; map: MapData | null}) => {
+  switch (shot.kind as string) {
+    case 'scene':
+      return <Scene shot={shot} story={story} />;
+    case 'map':
+      return <MapScene shot={shot} story={story} map={map} />;
+    case 'timeline':
+      return <TimelineScene shot={shot} story={story} />;
+    case 'document':
+      return <DocumentScene shot={shot} story={story} />;
+    case 'chapter2':
+      return <ChapterScene shot={shot} story={story} />;
     case 'art':
       return <ArtShot shot={shot} story={story} />;
     case 'clip':
@@ -55,10 +66,17 @@ export const Doc = ({story, timeline}: {story: string; file?: string; timeline: 
   const {fps} = useVideoConfig();
 
   const [handle] = useState(() => delayRender('fonts'));
+  const [map, setMap] = useState<MapData | null>(null);
+  const [mapHandle] = useState(() => delayRender('map'));
+  useEffect(() => {
+    fetch(staticFile(`${story}/fx/map.json`)).then((r) => (r.ok ? r.json() : null)).catch(() => null)
+      .then((m) => { setMap(m); continueRender(mapHandle); });
+  }, [story, mapHandle]);
   useEffect(() => {
     Promise.all([
       document.fonts.load('600 40px Cinzel'), document.fonts.load('800 40px Cinzel'),
       document.fonts.load('italic 40px "EB Garamond"'), document.fonts.load('600 40px Outfit'),
+      document.fonts.load('700 40px Oswald'), document.fonts.load('500 40px Oswald'), document.fonts.load('700 40px Caveat'),
     ]).then(() => continueRender(handle));
   }, [handle]);
 
@@ -69,16 +87,27 @@ export const Doc = ({story, timeline}: {story: string; file?: string; timeline: 
   const words = timeline.durationInFrames;
   return (
     <AbsoluteFill style={{backgroundColor: 'black'}}>
-      {live.map((s) => (
-        <AbsoluteFill key={`${s.kind}-${s.from}`}
-          style={{opacity: interpolate(frame, [s.from, s.from + FADE], [s === live[0] ? 1 : 0, 1], {
-            extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}}>
-          <Shot shot={s} story={story} />
-        </AbsoluteFill>
-      ))}
+      {live.map((s, i) => {
+        // how far the shot after this one has come in, and how this one came in itself
+        const next = live[i + 1];
+        const pin = i === 0 && live.length > 1 ? 1 : interpolate(frame, [s.from, s.from + FADE], [0, 1], {
+          extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.bezier(0.6, 0, 0.2, 1)});
+        const pout = next ? interpolate(frame, [next.from, next.from + FADE], [0, 1], {
+          extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.bezier(0.6, 0, 0.2, 1)}) : 0;
+        const trans = (x: DocShot | undefined) => x?.trans ?? (['art', 'clip', 'quote', 'title', 'end', 'chapter'].includes(x?.kind ?? '') ? 'fade' : 'slide');
+        let style: React.CSSProperties = {};
+        if (trans(s) === 'fade') style = {opacity: i === 0 ? 1 : pin};
+        else if (trans(s) === 'slide' && i > 0) style = {transform: `translateX(${(1 - pin) * 100}%)`};
+        if (next && trans(next) === 'slide') style = {...style, transform: `translateX(${-pout * 40}%)`};
+        return (
+          <AbsoluteFill key={`${s.kind}-${s.from}`} style={style}>
+            <Shot shot={s} story={story} map={map} />
+          </AbsoluteFill>
+        );
+      })}
       <AbsoluteFill style={{background: 'radial-gradient(ellipse 90% 80% at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45) 100%)'}} />
       {top?.kind === 'art' || top?.kind === 'clip' ? <Credit shot={top} /> : null}
-      {caption && top?.kind !== 'quote' && top?.kind !== 'title' ? <Subtitle text={caption.text} /> : null}
+      {timeline.subtitles !== false && caption && top?.kind !== 'quote' && top?.kind !== 'title' ? <Subtitle text={caption.text} /> : null}
       <Audio src={staticFile(`${story}/${timeline.audio}`)} />
       {timeline.music ? (
         <Audio src={staticFile(`${story}/${timeline.music.src}`)} loop

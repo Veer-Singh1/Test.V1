@@ -161,6 +161,12 @@ def main():
         last_t = t0
         s["_part"] = part
         s["from"] = round(t0 * FPS)
+        # things inside a scene (labels, circles, map pins, timeline events, highlights) cued on their own words
+        for key in ("items", "pins", "events", "highlights", "routes"):
+            for el in s.get(key, []):
+                if isinstance(el, dict) and "at" in el:
+                    t_el = cue(el.pop("cue_part", part), el.pop("at"), t0)
+                    el["f"] = max(0, round((t_el - 0.1) * FPS) - s["from"])
         if s["kind"] == "art" and s.get("src"):
             if (pub / "art" / s["src"]).exists():
                 with Image.open(pub / "art" / s["src"]) as im:
@@ -204,7 +210,7 @@ def main():
 
     w, h = board.get("size", [1920, 1080])
     tl = {"fps": FPS, "width": w, "height": h, "durationInFrames": n, "audio": voice_out, "shots": shots,
-          "captions": captions, "sfx": sfx}
+          "captions": captions, "sfx": sfx, "subtitles": board.get("subtitles", True)}
     if board.get("music"):
         tl["music"] = board["music"]
     out = pub / board.get("out", "doc.json")

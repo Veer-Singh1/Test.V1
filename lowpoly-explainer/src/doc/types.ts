@@ -3,7 +3,9 @@
 export type DocShot = {
   from: number; // first frame; the shot fades in over FADE frames from here, on top of the one before
   to: number; // last frame + 1 (the builder overlaps it with the next shot by FADE frames)
-  kind: 'art' | 'clip' | 'chapter' | 'quote' | 'title' | 'end' | 'black';
+  kind: 'art' | 'clip' | 'chapter' | 'quote' | 'title' | 'end' | 'black' | 'scene' | 'map' | 'timeline' | 'document' | 'chapter2';
+  trans?: 'slide' | 'fade' | 'cut'; // how this shot comes in (collage kinds slide by default)
+  [extra: string]: unknown; // scene items, map pins, timeline events, highlights: see Collage.tsx
   // art: an image in public/<story>/art, moved slowly from `start` to `end`
   src?: string;
   w?: number; // the image's size in pixels
@@ -40,6 +42,7 @@ export type DocTimeline = {
   sfx?: DocSfx[];
   shots: DocShot[];
   captions: DocCaption[];
+  subtitles?: boolean; // burn subtitles in (default true)
 };
 
 export const FADE = 15;

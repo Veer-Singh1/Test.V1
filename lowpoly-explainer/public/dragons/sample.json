@@ -1,0 +1,581 @@
+{
+ "fps": 30,
+ "width": 1920,
+ "height": 1080,
+ "durationInFrames": 1265,
+ "audio": "narration_sample.wav",
+ "shots": [
+  {
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     960.0,
+     540.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "romanesque_dragon_head_carving_cut.png",
+     "look": "sticker",
+     "x": 1420,
+     "y": 560,
+     "w": 470,
+     "rot": 5,
+     "enter": "right"
+    },
+    {
+     "type": "note",
+     "text": "Latin:",
+     "x": 470,
+     "y": 300,
+     "size": 80,
+     "rot": -6,
+     "f": 47
+    },
+    {
+     "type": "big",
+     "text": "DRACO",
+     "x": 700,
+     "y": 470,
+     "size": 270,
+     "bg": "yellow",
+     "f": 55
+    },
+    {
+     "type": "label",
+     "text": "= A GIANT SERPENT",
+     "x": 700,
+     "y": 720,
+     "size": 70,
+     "f": 74
+    }
+   ],
+   "from": 0,
+   "to": 115
+  },
+  {
+   "kind": "map",
+   "view": {
+    "from": [
+     10,
+     46,
+     1.0
+    ],
+    "to": [
+     -4,
+     40,
+     2.3
+    ]
+   },
+   "pins": [
+    {
+     "name": "Seville",
+     "lat": 37.39,
+     "lon": -5.98,
+     "f": 26
+    }
+   ],
+   "items": [
+    {
+     "type": "label",
+     "text": "c. AD 600",
+     "x": 330,
+     "y": 170,
+     "size": 72,
+     "bg": "yellow",
+     "f": 3
+    },
+    {
+     "type": "label",
+     "text": "ISIDORE OF SEVILLE",
+     "x": 1380,
+     "y": 170,
+     "size": 64,
+     "f": 26
+    },
+    {
+     "type": "label",
+     "text": "THE ETYMOLOGIES",
+     "x": 1420,
+     "y": 820,
+     "size": 64,
+     "bg": "red",
+     "rot": -2,
+     "f": 60
+    },
+    {
+     "type": "note",
+     "text": "most trusted book\nafter the Bible",
+     "x": 1420,
+     "y": 950,
+     "size": 58,
+     "rot": -3,
+     "f": 159
+    }
+   ],
+   "from": 100,
+   "to": 302
+  },
+  {
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     918.0,
+     558.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "aldrovandi_dragon.jpg",
+     "look": "ink",
+     "x": 960,
+     "y": 560,
+     "w": 1500,
+     "enter": "fade"
+    },
+    {
+     "type": "label",
+     "text": "LARGEST CREATURE ON EARTH",
+     "x": 760,
+     "y": 150,
+     "size": 70,
+     "bg": "yellow",
+     "f": 32
+    },
+    {
+     "type": "callout",
+     "text": "CREST",
+     "x": 1660,
+     "y": 210,
+     "to": [
+      1525,
+      365
+     ],
+     "size": 56,
+     "f": 90
+    },
+    {
+     "type": "callout",
+     "text": "SMALL MOUTH",
+     "x": 1660,
+     "y": 820,
+     "to": [
+      1575,
+      615
+     ],
+     "size": 56,
+     "f": 116
+    },
+    {
+     "type": "label",
+     "text": "TEETH",
+     "x": 1240,
+     "y": 950,
+     "size": 74,
+     "bg": "none",
+     "f": 174
+    },
+    {
+     "type": "strike",
+     "x": 1240,
+     "y": 950,
+     "w": 260,
+     "f": 174
+    },
+    {
+     "type": "circle",
+     "x": 560,
+     "y": 640,
+     "rx": 250,
+     "ry": 210,
+     "f": 215
+    },
+    {
+     "type": "label",
+     "text": "POWER: THE TAIL",
+     "x": 470,
+     "y": 330,
+     "size": 66,
+     "bg": "red",
+     "f": 215
+    }
+   ],
+   "from": 287,
+   "to": 546
+  },
+  {
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     972.0,
+     540.0,
+     1.05
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "harley3244_elephant_dragon_page.jpg",
+     "look": "print",
+     "x": 520,
+     "y": 560,
+     "w": 500,
+     "rot": -5,
+     "enter": "up",
+     "f": 3
+    },
+    {
+     "type": "img",
+     "src": "aberdeen_bestiary_panther_dragon.jpg",
+     "look": "print",
+     "x": 1290,
+     "y": 400,
+     "w": 840,
+     "rot": 3,
+     "enter": "right",
+     "f": 31
+    },
+    {
+     "type": "label",
+     "text": "BESTIARIES",
+     "x": 1290,
+     "y": 730,
+     "size": 80,
+     "f": 3
+    },
+    {
+     "type": "big",
+     "text": "1100s\u20131200s",
+     "x": 1290,
+     "y": 880,
+     "size": 110,
+     "bg": "yellow",
+     "f": 79
+    }
+   ],
+   "from": 531,
+   "to": 682
+  },
+  {
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     545,
+     1.0
+    ],
+    "to": [
+     921.0,
+     570.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "aberdeen_bestiary_dragon_elephant.jpg",
+     "look": "print",
+     "x": 960,
+     "y": 545,
+     "w": 1000,
+     "rot": -1.5,
+     "enter": "drop"
+    },
+    {
+     "type": "callout",
+     "text": "THE DRAGON",
+     "x": 1660,
+     "y": 900,
+     "to": [
+      1160,
+      830
+     ],
+     "size": 56,
+     "f": 3
+    },
+    {
+     "type": "callout",
+     "text": "THE ELEPHANT",
+     "x": 1660,
+     "y": 250,
+     "to": [
+      1330,
+      440
+     ],
+     "size": 56,
+     "f": 41
+    },
+    {
+     "type": "circle",
+     "x": 770,
+     "y": 690,
+     "rx": 240,
+     "ry": 120,
+     "f": 80
+    },
+    {
+     "type": "label",
+     "text": "SQUEEZE",
+     "x": 300,
+     "y": 470,
+     "size": 90,
+     "bg": "red",
+     "rot": -4,
+     "f": 145
+    },
+    {
+     "type": "note",
+     "text": "...until it\nsuffocates",
+     "x": 300,
+     "y": 640,
+     "size": 64,
+     "rot": -4,
+     "f": 181
+    }
+   ],
+   "from": 667,
+   "to": 889
+  },
+  {
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     560,
+     1.0
+    ],
+    "to": [
+     990.0,
+     546.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "aberdeen_bestiary_panther_dragon.jpg",
+     "look": "print",
+     "x": 960,
+     "y": 600,
+     "w": 1500,
+     "rot": 1,
+     "enter": "left"
+    },
+    {
+     "type": "callout",
+     "text": "THE PANTHER",
+     "x": 960,
+     "y": 150,
+     "to": [
+      1100,
+      520
+     ],
+     "size": 62,
+     "f": 67
+    },
+    {
+     "type": "note",
+     "text": "sweet breath",
+     "x": 1390,
+     "y": 250,
+     "size": 64,
+     "f": 96
+    },
+    {
+     "type": "arrow",
+     "x": 1340,
+     "y": 290,
+     "to": [
+      1215,
+      455
+     ],
+     "f": 96
+    },
+    {
+     "type": "circle",
+     "x": 510,
+     "y": 600,
+     "rx": 290,
+     "ry": 240,
+     "color": "#1d1a17",
+     "f": 118
+    },
+    {
+     "type": "circle",
+     "x": 1505,
+     "y": 570,
+     "rx": 170,
+     "ry": 240,
+     "f": 163
+    },
+    {
+     "type": "label",
+     "text": "HIDING",
+     "x": 1640,
+     "y": 950,
+     "size": 66,
+     "bg": "red",
+     "f": 202
+    }
+   ],
+   "from": 874,
+   "to": 1126
+  },
+  {
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     960.0,
+     540.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "gessner_dragons.jpg",
+     "look": "ink",
+     "x": 1480,
+     "y": 560,
+     "w": 700,
+     "rot": 3,
+     "enter": "fade"
+    },
+    {
+     "type": "big",
+     "text": "FIRE",
+     "x": 650,
+     "y": 470,
+     "size": 330,
+     "f": 3
+    },
+    {
+     "type": "strike",
+     "x": 650,
+     "y": 470,
+     "w": 640,
+     "f": 58
+    },
+    {
+     "type": "label",
+     "text": "NOT NEEDED",
+     "x": 650,
+     "y": 760,
+     "size": 80,
+     "bg": "yellow",
+     "f": 90
+    }
+   ],
+   "from": 1111,
+   "to": 1265
+  }
+ ],
+ "captions": [
+  {
+   "from": 17,
+   "to": 104,
+   "text": "The word comes from the Latin \"draco\", a giant serpent."
+  },
+  {
+   "from": 106,
+   "to": 195,
+   "text": "Around the year 600, Isidore of Seville wrote the encyclopedia"
+  },
+  {
+   "from": 197,
+   "to": 291,
+   "text": "that medieval Europe trusted most after the Bible."
+  },
+  {
+   "from": 293,
+   "to": 371,
+   "text": "His dragon was the largest creature on Earth."
+  },
+  {
+   "from": 373,
+   "to": 433,
+   "text": "It had a crest and a small mouth,"
+  },
+  {
+   "from": 435,
+   "to": 503,
+   "text": "and its power was not in its teeth."
+  },
+  {
+   "from": 505,
+   "to": 536,
+   "text": "It was in its tail."
+  },
+  {
+   "from": 537,
+   "to": 625,
+   "text": "The bestiaries, the illustrated animal books of the twelfth"
+  },
+  {
+   "from": 627,
+   "to": 671,
+   "text": "and thirteenth centuries, added the details."
+  },
+  {
+   "from": 673,
+   "to": 763,
+   "text": "A dragon waited on the paths elephants used, knotted its"
+  },
+  {
+   "from": 764,
+   "to": 878,
+   "text": "tail around their legs, and squeezed until they suffocated."
+  },
+  {
+   "from": 880,
+   "to": 964,
+   "text": "It feared one animal above all: the panther,"
+  },
+  {
+   "from": 966,
+   "to": 1039,
+   "text": "whose sweet breath drew every creature to it,"
+  },
+  {
+   "from": 1040,
+   "to": 1116,
+   "text": "except the dragon, which fled into hiding."
+  },
+  {
+   "from": 1117,
+   "to": 1202,
+   "text": "And in these books, the dragon did not breathe fire."
+  },
+  {
+   "from": 1204,
+   "to": 1250,
+   "text": "It didn't need to."
+  }
+ ],
+ "sfx": [],
+ "subtitles": false
+}
