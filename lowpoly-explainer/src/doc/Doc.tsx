@@ -37,7 +37,8 @@ const Subtitle = ({text}: {text: string}) => {
     <div style={{position: 'absolute', left: 0, right: 0, bottom: wide ? 70 * u : 520 * u, display: 'flex',
       justifyContent: 'center', padding: `0 ${wide ? 200 * u : 70 * u}px`}}>
       <div style={{fontFamily: 'Outfit', fontWeight: 600, fontSize: (wide ? 40 : 52) * u, lineHeight: 1.3, color: '#fbf6ea',
-        textAlign: 'center', textShadow: '0 2px 6px rgba(0,0,0,0.95), 0 0 24px rgba(0,0,0,0.75)'}}>
+        textAlign: 'center', textShadow: '0 2px 6px rgba(0,0,0,0.9)', background: 'rgba(8,6,4,0.55)',
+        padding: `${6 * u}px ${18 * u}px`, borderRadius: 8 * u}}>
         {text}
       </div>
     </div>
