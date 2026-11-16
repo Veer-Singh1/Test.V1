@@ -25,3 +25,4 @@ public/dragons/clips/
 public/dragons/voice_tts/
 public/dragons/voice/trimmed/
 public/dragons/narration*.wav
+out/dragons/
