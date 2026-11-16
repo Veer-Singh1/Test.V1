@@ -39,7 +39,10 @@ npm run sheet -- brinks --scenes=street,cell   # only some scenes, after changin
 npm run studio
 ```
 
-On a machine without a GPU, add `GL=swangle` in front of the render and sheet commands.
+On a machine without a GPU, add `GL=swangle` in front of the render and sheet commands of the 3D
+explainers (they need WebGL). Leave it off for the `Documentary` composition: it has no WebGL, and
+software GL emulation renders its collage frames about 4× slower than Chrome's own CPU rasteriser
+(1.1 vs ~4.5 frames a second on a 4-core machine).
 To use a Chrome that is already installed, set `CHROME_PATH` to its binary.
 
 ## Models
