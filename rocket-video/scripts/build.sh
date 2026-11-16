@@ -11,7 +11,7 @@ video()  { npx remotion render src/index.ts RocketOrbit out/video_noaudio.mp4 \
              --codec=h264 --crf=16 --pixel-format=yuv420p --concurrency=4; }
 mux()    { ffmpeg -y -v error -i out/video_noaudio.mp4 -i out/final_mix.wav -map 0:v -map 1:a \
              -c:v libx264 -preset slow -crf 21 -pix_fmt yuv420p -profile:v high -r 24 \
-             -c:a aac -b:a 192k -ar 48000 -shortest -movflags +faststart out/rocket_orbit_60s.mp4
+             -c:a aac -b:a 256k -cutoff 17000 -ar 48000 -shortest -movflags +faststart out/rocket_orbit_60s.mp4
            ffprobe -v error -show_entries format=duration:stream=codec_name,pix_fmt,width,height,r_frame_rate \
              -of compact out/rocket_orbit_60s.mp4; }
 review() { mkdir -p out/review

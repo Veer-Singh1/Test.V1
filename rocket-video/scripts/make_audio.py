@@ -6,7 +6,7 @@ no third-party licences to track for the audio. Outputs (out/):
   music_bed.flac   music alone, -20 LUFS (the level it sits at under a voice)
   sfx.flac         sound effects alone
   voiceover.flac   only if assets/raw/voice/voiceover.wav exists
-  final_mix.wav    music + SFX (+ voice), -14 LUFS integrated, true peak <= -3 dBTP
+  final_mix.wav    music + SFX (+ voice), -14 LUFS integrated, true peak <= -3.5 dBTP
                    (headroom so the AAC encode in the MP4 stays below 0 dBTP)
 Run:  node scripts/export_timeline.mts && .venv/bin/python scripts/make_audio.py
 """
@@ -243,7 +243,7 @@ def music() -> np.ndarray:
                 continue
             # drums
             if b8 in (0, 4) and not breakdown:
-                place(drums, kick(0.95 if not in_orbit else 0.6), t)
+                place(drums, kick(0.8 if not in_orbit else 0.55), t)
             if b8 in (2, 6) and not breakdown:
                 place(drums, (clap(0.55) if t >= t_of(TL['beats']['fuel']['from']) else snare(0.45)), t, pan=0.05)
             if not in_orbit or b8 % 2 == 1:
@@ -264,8 +264,9 @@ def music() -> np.ndarray:
     for lift in (launch, sep):
         rs = riser(1.2 if lift > 2 else 0.9, 0.8)
         place(drums, rs, lift - len(rs) / SR, pan=0.0)
-        place(drums, crash(1.0), lift, pan=-0.1)
-        place(drums, kick(1.2), lift)
+        # at separation the clunk SFX carries the impact, so the music hit is lighter
+        place(drums, crash(0.8 if lift < 2 else 0.6), lift, pan=-0.1)
+        place(drums, kick(0.75 if lift < 2 else 0.45), lift)
     place(drums, crash(0.7), number_from)
     # final chord ring-out
     for nt in (48, 60, 64, 67, 72):
@@ -366,7 +367,7 @@ def sfx() -> np.ndarray:
     buf = np.zeros((N, 2))
     makers = {'rustle': sfx_rustle, 'rumble': sfx_rumble, 'clunk': sfx_clunk, 'stamp': sfx_stamp,
               'whoosh': sfx_whoosh, 'pop': sfx_pop}
-    levels = {'rustle': 0.55, 'rumble': 0.9, 'clunk': 1.0, 'stamp': 0.9, 'whoosh': 0.45, 'pop': 0.6}
+    levels = {'rustle': 0.55, 'rumble': 0.9, 'clunk': 0.75, 'stamp': 0.6, 'whoosh': 0.45, 'pop': 0.55}
     for c in TL['sfx']:
         x = makers[c['kind']]()
         pan = float(rng.uniform(-0.3, 0.3))
@@ -385,7 +386,7 @@ def to_lufs(x, target):
     return x * 10 ** ((target - lufs(x)) / 20)
 
 
-def limiter(x, ceiling_db=-1.0, look_ms=5.0):
+def limiter(x, ceiling_db=-1.0, look_ms=12.0):
     """Look-ahead peak limiter: gain = min over a window, smoothed (vectorised)."""
     from scipy.ndimage import minimum_filter1d, uniform_filter1d
     ceil = 10 ** (ceiling_db / 20)
@@ -399,6 +400,23 @@ def limiter(x, ceiling_db=-1.0, look_ms=5.0):
     g = uniform_filter1d(g, size=la, mode='nearest')
     g = np.minimum(g, minimum_filter1d(gain, size=3, mode='nearest'))
     return x * g[:, None]
+
+
+def compress(x, thr_db=-8.0, ratio=3.0, att=0.004, rel=0.15):
+    """Feed-forward peak compressor (smooth envelope) to tame the crest factor before
+    the brick-wall limiter, so the limiter only shaves the last few dB."""
+    lvl = np.max(np.abs(x), axis=1)
+    a_att = np.exp(-1 / (att * SR))
+    a_rel = np.exp(-1 / (rel * SR))
+    env = np.empty_like(lvl)
+    e = 0.0
+    for i, v in enumerate(lvl):
+        c = a_att if v > e else a_rel
+        e = c * e + (1 - c) * v
+        env[i] = e
+    over = 20 * np.log10(env + 1e-9) - thr_db
+    gr = np.where(over > 0, over * (1 / ratio - 1), 0.0)
+    return x * (10 ** (gr / 20))[:, None]
 
 
 def true_peak_db(x):
@@ -431,10 +449,11 @@ def main():
     sf.write(os.path.join(ROOT, 'out', 'sfx.flac'), s, SR, subtype='PCM_24')
     mix = m + s + vv
     mix = to_lufs(mix, -14.0)
+    mix = to_lufs(compress(mix, -10.0, 3.0, att=0.002), -14.0)
     for _ in range(3):
-        mix = limiter(mix, -3.0)
+        mix = limiter(mix, -3.5)
         mix = to_lufs(mix, -14.0)
-    mix = limiter(mix, -3.0)
+    mix = limiter(mix, -3.5)
     sf.write(os.path.join(ROOT, 'out', 'final_mix.wav'), mix, SR, subtype='PCM_24')
     report = {
         'music_bed_lufs': round(lufs(m), 2),

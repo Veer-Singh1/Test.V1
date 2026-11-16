@@ -5,8 +5,9 @@ handmade paper-cut-out collage style. It is built entirely in code with Remotion
 (React + TypeScript) plus a Python asset/audio pipeline.
 
 **Deliverables**
-- `out/rocket_orbit_60s.mp4`: H.264 High, yuv420p, 1080×1920, 24 fps, 60.0 s, AAC 192 kb/s 48 kHz,
-  −14.1 LUFS integrated, true peak −2.1 dBTP (measured on the MP4 with ffmpeg ebur128).
+- `out/rocket_orbit_60s.mp4`: H.264 High, yuv420p, 1080×1920, 24 fps, 60.0 s (1,440 frames),
+  AAC-LC 256 kb/s 48 kHz, −14.1 LUFS integrated, true peak −2.7 dBTP (measured on the MP4 with
+  ffmpeg ebur128), 46 MB.
 - `out/contact_sheet.png`: five frames (0.5, 18, 28.5, 44, 59 s).
 - `out/review/`: the seven review stills (0.5, 8, 18, 28, 40, 50, 58 s).
 - `out/music_bed.flac` (−20 LUFS) and `out/sfx.flac`: audio stems for remixing with a voice.
@@ -69,7 +70,8 @@ bash scripts/build.sh twos       # verify on-twos timing on rendered PNG frames
 npm run studio                   # interactive Remotion Studio preview
 ```
 
-Everything is seeded, so a re-render gives the same frames. To change timing, edit
+Everything is seeded, so a re-render gives visually identical frames (apart from occasional
+sub-pixel anti-aliasing differences at strip edges). To change timing, edit
 `src/timeline.ts` only, then re-run `audio`, `video` and `mux`.
 
 **Adding a voiceover:** see `voiceover_script.md` (put `assets/raw/voice/voiceover.wav` in
@@ -80,12 +82,16 @@ place, then run `audio` and `mux`).
 
 ## Review results (final render)
 
-- **Duration:** 60.000 s, 1,440 frames at 24 fps, 1080×1920, H.264 High, yuv420p, AAC 48 kHz.
-- **Loudness:** −14.1 LUFS integrated, true peak −2.1 dBTP, so no clipping (the WAV master is −14.0 LUFS / −3.0 dBTP).
+- **Duration:** 60.000 s, 1,440 frames at 24 fps, 1080×1920, H.264 High, yuv420p, AAC-LC 256 kb/s 48 kHz.
+- **Loudness:** −14.1 LUFS integrated, true peak −2.7 dBTP, so no clipping (the WAV master is −14.0 LUFS / −3.5 dBTP).
+- **Dynamics:** a gentle bus compressor plus a 12 ms look-ahead limiter. The limiter takes
+  ≤ 2.1 dB 95% of the time and ≤ 4.0 dB 99% of the time; the deepest moment is about 9 dB on
+  the stage-separation impact.
 - **On twos:** `bash scripts/build.sh twos` renders PNG frames 24–55 (liftoff), 660–699
   (separation) and 976–1007 (orbit loop).
-  - Every 2k / 2k+1 pair is identical. A few pairs differ by ≤ 76 pixels of 1-level antialiasing
-    at a strip edge, which is renderer noise.
+  - Every 2k / 2k+1 pair is identical to within 2/255, except a few pairs where ≤ 76 pixels at a
+    jagged text-strip edge differ by up to 18/255. That is rasterisation noise, attributed to
+    Chromium anti-aliasing a clip-path edge differently between render tabs; nothing moves.
   - Every 2k+1 → 2k+2 step changes.
 - **Stills:** the seven review stills are in `out/review/`.
   - Each cut-out has a border, a drop shadow and boil.
@@ -102,8 +108,9 @@ place, then run `audio` and `mux`).
 - **No genuine archival photos.** The sandbox could not reach any photo library (see
   DECISIONS.md §2). The halftone "photos" are procedural plates processed the same way a
   real photo would be.
-- **Music and SFX are synthesised.** They are serviceable and timed to the picture, but
-  simpler than a produced library track.
+- **Music and SFX are synthesised and were never listened to.** The build ran unattended with no
+  audio monitoring. Levels, loudness and limiting were checked numerically only. Give it a listen;
+  it is simpler than a produced library track.
 - **Simplified continents.** They are hand-traced from approximate coordinates (fine for a
   paper Earth, not a map).
 - **The cannon mountain is hugely exaggerated**, as in Newton's original diagram.

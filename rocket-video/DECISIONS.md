@@ -28,6 +28,9 @@ archive.org, ESA and the Library of Congress were all refused by the egress prox
   a luma key or a mask file) so real public-domain photos can be dropped into
   `assets/raw/` and listed in `assets/manifest.json` later.
 - rembg was not installed, since all generated art already has exact alpha.
+- The two font licence texts (`assets/raw/fonts/OFL_*.txt`) came from the google/fonts GitHub
+  repository via raw.githubusercontent.com. That is the canonical licence file Google Fonts links
+  to. It is the only file taken from GitHub.
 
 ## 3. Music and SFX synthesised in code
 For the same network reason, no CC0 / CC BY music could be downloaded and licence-checked.
@@ -48,16 +51,20 @@ per-line timings. The audio pipeline mixes a voice in automatically if
 The brief asks for music at about −20 LUFS under the voice and a final mix at about −14
 LUFS. With no voice, normalising the final mix to −14 LUFS lifts the music bed above −20.
 So the deliverables are:
-- `out/rocket_orbit_60s.mp4`: music + SFX at −14.1 LUFS integrated, true peak −2.1 dBTP.
-  The master is limited to −3 dBTP because the AAC encode adds about 1 dB of overshoot. A
-  −1.6 dBTP master measured +0.2 dBTP after encoding.
+- `out/rocket_orbit_60s.mp4`: music + SFX at −14.1 LUFS integrated, true peak −2.7 dBTP.
+  The master is limited to −3.5 dBTP. ffmpeg's built-in AAC encoder overshot by up to 6 dB on
+  one glockenspiel transient (+2.3 dBTP at 256 kb/s with no cutoff). Encoding at 256 kb/s with a
+  17 kHz cutoff removes that, giving −2.7 dBTP. Several settings were compared numerically. Before limiting, a gentle bus compressor
+  (3:1, threshold −10 dBFS) tames the drum and impact transients. The lift hits at launch and
+  separation were also trimmed, so the 12 ms look-ahead limiter only shaves the last few dB
+  (p95 2.1 dB, p99 4.0 dB, about 9 dB once on the separation impact).
 - `out/music_bed.flac` (−20 LUFS) and `out/sfx.flac` as separate stems, so a recorded voice
   can be laid on top and remixed to spec with `scripts/make_audio.py`.
 
 ## 5b. Delivery encode
 Remotion renders a high-quality master (`out/video_noaudio.mp4`, CRF 16, about 130 MB, not
 committed). The mux step re-encodes it with x264 at CRF 21 (preset slow) into the
-deliverable (about 45 MB). That keeps it under GitHub's 100 MB file limit; the paper grain
+deliverable (46 MB). That keeps it under GitHub's 100 MB file limit; the paper grain
 changes on every held step, which is expensive to encode.
 
 ## 6. Remotion, with assets/ as the public folder
@@ -73,8 +80,9 @@ into `public/`. Rendering uses the sandbox's pre-installed Chromium headless she
 - No `spring()`, CSS transitions or raw-frame interpolation are used in scenes.
 - `scripts/check_twos.py` verifies it on rendered PNG frames: frames 2k and 2k+1 must be
   identical, and motion must change on 2k+1 → 2k+2. Result on the final build: all held pairs
-  are identical apart from ≤ 76 px of 1-level antialiasing noise at text-strip edges (Chromium
-  rasterises a clip-path edge slightly differently in parallel tabs). That is not motion; the
+  are identical to within 2/255. A few have ≤ 76 px at a jagged text-strip edge that differ by
+  up to 18/255. That is attributed to Chromium anti-aliasing a clip-path edge differently between
+  parallel render tabs (not confirmed with a single-tab render). It is not motion, and the
   checker reports these pairs separately.
 
 ## 8. Story and staging choices

@@ -77,7 +77,7 @@ export const FuelProblem: React.FC = () => {
       <BarSegment y0={BAR_TOP} y1={propTop} strip="strip_cream" reveal={tween(f, L(EV.barGrow) + 20, L(EV.barGrow) + 28, 0, 1)} seed="bar2" />
       <PaperStrip text="LAUNCH MASS" x={BAR_X} y={BAR_TOP - 48} size={40} from={L(EV.barGrow)} mode="type" rotate={2} />
       <PaperStrip text={'everything\nelse ~10%'} x={BAR_X - 20} y={BAR_TOP + 46} size={40} from={L(EV.barGrow) + 30} mode="slide" rotate={-3} />
-      <PaperStrip text="~90%" x={BAR_X} y={980} size={130} font="head" bg={C.yellow} from={L(EV.barStamp)} mode="stamp" rotate={-6} />
+      <PaperStrip text="~90%" x={BAR_X + 22} y={970} size={130} font="head" bg={C.yellow} from={L(EV.barStamp)} mode="stamp" rotate={-6} />
       <PaperStrip text="PROPELLANT" x={BAR_X - 30} y={1190} size={60} font="head" from={L(EV.barStamp) + 8} mode="stamp" rotate={3} />
       <PaperStrip text="fuel + oxidiser" x={BAR_X - 10} y={1290} size={40} from={L(EV.barStamp) + 16} mode="type" rotate={-1} />
 

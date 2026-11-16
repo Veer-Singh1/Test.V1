@@ -55,10 +55,10 @@ export const Staging: React.FC = () => {
       {/* labels */}
       <PaperStrip text="stage 2" x={X + 200} y={SEP_Y - 160} size={42} from={14} until={sep} mode="type" rotate={2} />
       <PaperStrip text="stage 1" x={X + 210} y={SEP_Y + 200} size={42} from={26} until={sep} mode="type" rotate={-2} />
-      <PaperStrip text="empty tank: dropped" x={300} y={1270} size={42} from={L(MARKS.stagingArrow)} mode="type" rotate={-3} bg={C.yellow} />
-      <MarkerStroke d={handPath([[290, 1320], [330, 1380], [410, 1420]], 'dropArrow', 5)} from={L(MARKS.stagingArrow) + 4} steps={6} color={C.yellow} width={12} arrow />
-      <PaperStrip text="lighter = more speed" x={X + 230} y={SEP_Y - 380} size={42} from={L(MARKS.stagingLight)} mode="type" rotate={2.5} />
-      <MarkerStroke d={handPath([[X + 120, SEP_Y - 330], [X + 70, SEP_Y - 270]], 'litArrow', 3)} from={L(MARKS.stagingLight) + 6} steps={5} color={C.orange} width={11} arrow arrowSize={26} />
+      <PaperStrip text="empty tank: dropped" x={300} y={1270} size={42} from={L(MARKS.stagingArrow)} until={sep + 56} mode="type" rotate={-3} bg={C.yellow} />
+      <MarkerStroke d={handPath([[290, 1320], [330, 1380], [410, 1420]], 'dropArrow', 5)} from={L(MARKS.stagingArrow) + 4} until={sep + 56} steps={6} color={C.yellow} width={12} arrow />
+      <PaperStrip text="lighter = more speed" x={X + 280} y={SEP_Y - 360} size={42} from={L(MARKS.stagingLight)} mode="type" rotate={2.5} />
+      <MarkerStroke d={handPath([[X + 150, SEP_Y - 310], [X + 62, SEP_Y - 250]], 'litArrow', 3)} from={L(MARKS.stagingLight) + 6} steps={5} color={C.orange} width={11} arrow arrowSize={26} />
 
       <PaperStrip text="ROCKETS COME IN STAGES" x={540} y={300} size={82} font="head" from={4} until={sep + 6} mode="type" cps={2} rotate={-1} />
       <PaperStrip text="DROP THE DEAD WEIGHT" x={540} y={300} size={90} font="head" bg={C.orange} from={sep + 6} mode="stamp" rotate={1.5} />

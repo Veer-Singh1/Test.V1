@@ -63,7 +63,7 @@ in the end beat, the launch pad, the cannonball trails.
 |---|---|
 | `music_bed.flac` | Original 120 BPM playful percussive track: synthesised marimba arpeggios, Karplus-Strong plucked bass, kick, snare/clap, hats, shaker, offbeat chord plucks, glockenspiel melody. Rises into a hit at launch (1.0 s) and stage separation (28.0 s); fades out over the last 2 s. −20 LUFS. |
 | `sfx.flac` | All sound effects, placed from `SFX` and `MARKS` in `src/timeline.ts`: paper rustles on every sheet transition; launch rumble (brown noise, roar, crackle); stage-separation clunk (inharmonic metal partials, thump, pop); rubber-stamp thuds; marker squeaks on every annotation; cannon pops; whooshes for the balloon, the orbiting cannonball and the final coast. |
-| `final_mix.wav` (not committed; rebuilt by `build.sh audio`) | Music + SFX, −14.0 LUFS integrated, true peak −3.0 dBTP, leaving headroom for the AAC encode (the final MP4 measures −14.1 LUFS / −2.1 dBTP). |
+| `final_mix.wav` (not committed; rebuilt by `build.sh audio`) | Music + SFX, −14.0 LUFS integrated, true peak −3.5 dBTP, leaving headroom for the AAC encode (the final MP4 measures −14.1 LUFS / −2.7 dBTP). |
 
 ### Voice
 
