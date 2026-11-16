@@ -28,7 +28,9 @@
      "y": 560,
      "w": 470,
      "rot": 5,
-     "enter": "right"
+     "enter": "right",
+     "ar": 1.507,
+     "h": 708
     },
     {
      "type": "note",
@@ -140,12 +142,14 @@
    "items": [
     {
      "type": "img",
-     "src": "aldrovandi_dragon.jpg",
+     "src": "aldrovandi_dragon_ink.png",
      "look": "ink",
      "x": 960,
      "y": 560,
      "w": 1500,
-     "enter": "fade"
+     "enter": "fade",
+     "ar": 0.6344,
+     "h": 952
     },
     {
      "type": "label",
@@ -235,23 +239,27 @@
     {
      "type": "img",
      "src": "harley3244_elephant_dragon_page.jpg",
-     "look": "print",
+     "look": "torn",
      "x": 520,
      "y": 560,
      "w": 500,
      "rot": -5,
      "enter": "up",
+     "ar": 1.5016,
+     "h": 751,
      "f": 3
     },
     {
      "type": "img",
      "src": "aberdeen_bestiary_panther_dragon.jpg",
-     "look": "print",
+     "look": "torn",
      "x": 1290,
      "y": 400,
      "w": 840,
      "rot": 3,
      "enter": "right",
+     "ar": 0.474,
+     "h": 398,
      "f": 31
     },
     {
@@ -298,7 +306,9 @@
      "y": 545,
      "w": 1000,
      "rot": -1.5,
-     "enter": "drop"
+     "enter": "drop",
+     "ar": 0.8387,
+     "h": 839
     },
     {
      "type": "callout",
@@ -373,12 +383,14 @@
     {
      "type": "img",
      "src": "aberdeen_bestiary_panther_dragon.jpg",
-     "look": "print",
+     "look": "torn",
      "x": 960,
      "y": 600,
      "w": 1500,
      "rot": 1,
-     "enter": "left"
+     "enter": "left",
+     "ar": 0.474,
+     "h": 711
     },
     {
      "type": "callout",
@@ -457,13 +469,15 @@
    "items": [
     {
      "type": "img",
-     "src": "gessner_dragons.jpg",
+     "src": "gessner_dragons_ink.png",
      "look": "ink",
      "x": 1480,
      "y": 560,
      "w": 700,
      "rot": 3,
-     "enter": "fade"
+     "enter": "fade",
+     "ar": 0.8014,
+     "h": 561
     },
     {
      "type": "big",
@@ -577,5 +591,6 @@
   }
  ],
  "sfx": [],
- "subtitles": false
+ "subtitles": false,
+ "theme": "forest"
 }

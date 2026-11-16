@@ -43,6 +43,7 @@ export type DocTimeline = {
   shots: DocShot[];
   captions: DocCaption[];
   subtitles?: boolean; // burn subtitles in (default true)
+  theme?: string; // colour theme for collage scenes (see THEMES in Collage.tsx); a shot can set its own
 };
 
 export const FADE = 15;

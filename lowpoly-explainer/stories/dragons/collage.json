@@ -1,0 +1,2399 @@
+{
+ "parts": [
+  "01",
+  "02",
+  "03",
+  "04",
+  "05",
+  "06",
+  "07",
+  "08"
+ ],
+ "gap": 0.5,
+ "preroll": 0.4,
+ "tail": 0.8,
+ "size": [
+  1920,
+  1080
+ ],
+ "out": "collage.json",
+ "voice_out": "narration.wav",
+ "subtitles": false,
+ "theme": "night",
+ "shots": [
+  {
+   "part": "01",
+   "at": "In the year 793",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     940,
+     540,
+     1.05
+    ]
+   },
+   "items": [
+    {
+     "type": "clip",
+     "src": "lindisfarne.mp4",
+     "clip_start": 0.0,
+     "x": 1220,
+     "y": 520,
+     "w": 1060,
+     "h": 596,
+     "rot": 2,
+     "enter": "right"
+    },
+    {
+     "type": "big",
+     "text": "793",
+     "x": 430,
+     "y": 400,
+     "size": 300,
+     "bg": "yellow",
+     "at": "In the year"
+    },
+    {
+     "type": "note",
+     "text": "Northumbria,\nEngland",
+     "x": 430,
+     "y": 640,
+     "size": 70,
+     "at": "England's chroniclers",
+     "rot": -4
+    },
+    {
+     "type": "label",
+     "text": "SOMETHING TERRIFYING",
+     "x": 640,
+     "y": 900,
+     "size": 66,
+     "bg": "red",
+     "at": "something terrifying",
+     "rot": -2
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "01",
+   "at": "Immense sheets of light",
+   "kind": "document",
+   "text": "“Immense sheets of light rushing through the air, and whirlwinds, and fiery dragons flying across the firmament.”",
+   "by": "ANGLO-SAXON CHRONICLE · AD 793",
+   "highlights": [
+    {
+     "words": "“Immense sheets of light",
+     "at": "Immense sheets"
+    },
+    {
+     "words": "fiery dragons flying across the firmament.”",
+     "at": "fiery dragons"
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "01",
+   "at": "Soon after, the Vikings came",
+   "kind": "map",
+   "view": {
+    "from": [
+     6,
+     57.5,
+     1.7
+    ],
+    "to": [
+     1,
+     56.8,
+     2.5
+    ]
+   },
+   "pins": [
+    {
+     "name": "Norway",
+     "lat": 60.4,
+     "lon": 5.3,
+     "at": "the Vikings came"
+    },
+    {
+     "name": "Lindisfarne",
+     "lat": 55.68,
+     "lon": -1.8,
+     "side": "left",
+     "at": "holy island of Lindisfarne"
+    }
+   ],
+   "routes": [
+    {
+     "from": 0,
+     "to": 1,
+     "at": "the Vikings came"
+    }
+   ],
+   "items": [
+    {
+     "type": "img",
+     "src": "oseberg_animal_head_post.jpg",
+     "look": "torn",
+     "crop": [
+      0.15,
+      0.05,
+      0.85,
+      0.75
+     ],
+     "x": 1520,
+     "y": 760,
+     "w": 400,
+     "h": 400,
+     "rot": -4,
+     "at": "the Vikings came"
+    },
+    {
+     "type": "label",
+     "text": "VIKING RAID",
+     "x": 1520,
+     "y": 990,
+     "size": 56,
+     "bg": "red",
+     "at": "They struck"
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "01",
+   "at": "and the chronicle remembered",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "clip",
+     "src": "lindisfarne.mp4",
+     "clip_start": 3.4,
+     "look": "plain",
+     "x": 960,
+     "y": 540,
+     "w": 1920,
+     "h": 1080,
+     "enter": "fade"
+    },
+    {
+     "type": "label",
+     "text": "A WARNING?",
+     "x": 960,
+     "y": 900,
+     "size": 96,
+     "bg": "yellow",
+     "at": "as a warning"
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "01",
+   "at": "So what did medieval people",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     960,
+     540,
+     1.05
+    ]
+   },
+   "items": [
+    {
+     "type": "clip",
+     "src": "mountain_fire.mp4",
+     "clip_start": 2.6,
+     "x": 1250,
+     "y": 540,
+     "w": 1000,
+     "h": 562,
+     "rot": -2,
+     "enter": "up"
+    },
+    {
+     "type": "label",
+     "text": "WHAT WAS\nA DRAGON?",
+     "x": 470,
+     "y": 430,
+     "size": 110,
+     "at": "believe a dragon was"
+    },
+    {
+     "type": "note",
+     "text": "stranger than\nany movie",
+     "x": 470,
+     "y": 720,
+     "size": 72,
+     "at": "stranger than any movie",
+     "rot": -4
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "02",
+   "before": 4.5,
+   "kind": "scene",
+   "decor": true,
+   "items": [
+    {
+     "type": "clip",
+     "src": "mountain_fire.mp4",
+     "clip_start": 3.4,
+     "x": 1180,
+     "y": 520,
+     "w": 1200,
+     "h": 675,
+     "look": "print",
+     "rot": -2,
+     "enter": "right"
+    },
+    {
+     "type": "big",
+     "text": "MEDIEVAL\nDRAGONS",
+     "x": 430,
+     "y": 430,
+     "size": 150,
+     "bg": "yellow"
+    },
+    {
+     "type": "note",
+     "text": "what people\nreally believed",
+     "x": 430,
+     "y": 760,
+     "size": 72,
+     "rot": -3,
+     "f": 20
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "02",
+   "before": 3.2,
+   "kind": "chapter2",
+   "num": "01",
+   "title": "What a dragon was",
+   "theme": "forest"
+  },
+  {
+   "part": "02",
+   "at": "The word comes from",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     960.0,
+     540.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "romanesque_dragon_head_carving_cut.png",
+     "look": "sticker",
+     "x": 1420,
+     "y": 560,
+     "w": 470,
+     "rot": 5,
+     "enter": "right"
+    },
+    {
+     "type": "note",
+     "text": "Latin:",
+     "x": 470,
+     "y": 300,
+     "size": 80,
+     "at": "Latin",
+     "rot": -6
+    },
+    {
+     "type": "big",
+     "text": "DRACO",
+     "x": 700,
+     "y": 470,
+     "size": 270,
+     "bg": "yellow",
+     "at": "draco"
+    },
+    {
+     "type": "label",
+     "text": "= A GIANT SERPENT",
+     "x": 700,
+     "y": 720,
+     "size": 70,
+     "at": "giant serpent"
+    }
+   ],
+   "theme": "forest"
+  },
+  {
+   "part": "02",
+   "at": "Around the year 600",
+   "kind": "map",
+   "view": {
+    "from": [
+     10,
+     46,
+     1.0
+    ],
+    "to": [
+     -4,
+     40,
+     2.3
+    ]
+   },
+   "pins": [
+    {
+     "name": "Seville",
+     "lat": 37.39,
+     "lon": -5.98,
+     "at": "Isidore of Seville"
+    }
+   ],
+   "items": [
+    {
+     "type": "label",
+     "text": "c. AD 600",
+     "x": 330,
+     "y": 170,
+     "size": 72,
+     "bg": "yellow",
+     "at": "Around the year 600"
+    },
+    {
+     "type": "label",
+     "text": "ISIDORE OF SEVILLE",
+     "x": 1380,
+     "y": 170,
+     "size": 64,
+     "at": "Isidore of Seville"
+    },
+    {
+     "type": "label",
+     "text": "THE ETYMOLOGIES",
+     "x": 1420,
+     "y": 820,
+     "size": 64,
+     "bg": "red",
+     "at": "the encyclopedia",
+     "rot": -2
+    },
+    {
+     "type": "note",
+     "text": "most trusted book\nafter the Bible",
+     "x": 1420,
+     "y": 950,
+     "size": 58,
+     "at": "after the Bible",
+     "rot": -3
+    }
+   ],
+   "theme": "forest"
+  },
+  {
+   "part": "02",
+   "at": "His dragon was the largest",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     918.0,
+     558.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "aldrovandi_dragon_ink.png",
+     "look": "ink",
+     "x": 960,
+     "y": 560,
+     "w": 1500,
+     "enter": "fade"
+    },
+    {
+     "type": "label",
+     "text": "LARGEST CREATURE ON EARTH",
+     "x": 760,
+     "y": 150,
+     "size": 70,
+     "bg": "yellow",
+     "at": "largest creature"
+    },
+    {
+     "type": "callout",
+     "text": "CREST",
+     "x": 1660,
+     "y": 210,
+     "to": [
+      1525,
+      365
+     ],
+     "size": 56,
+     "at": "a crest"
+    },
+    {
+     "type": "callout",
+     "text": "SMALL MOUTH",
+     "x": 1660,
+     "y": 820,
+     "to": [
+      1575,
+      615
+     ],
+     "size": 56,
+     "at": "small mouth"
+    },
+    {
+     "type": "label",
+     "text": "TEETH",
+     "x": 1240,
+     "y": 950,
+     "size": 74,
+     "bg": "none",
+     "at": "not in its teeth"
+    },
+    {
+     "type": "strike",
+     "x": 1240,
+     "y": 950,
+     "w": 260,
+     "at": "not in its teeth"
+    },
+    {
+     "type": "circle",
+     "x": 560,
+     "y": 640,
+     "rx": 250,
+     "ry": 210,
+     "at": "It was in its tail"
+    },
+    {
+     "type": "label",
+     "text": "POWER: THE TAIL",
+     "x": 470,
+     "y": 330,
+     "size": 66,
+     "bg": "red",
+     "at": "It was in its tail"
+    }
+   ],
+   "theme": "forest"
+  },
+  {
+   "part": "02",
+   "at": "The bestiaries, the illustrated",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     972.0,
+     540.0,
+     1.05
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "harley3244_elephant_dragon_page.jpg",
+     "look": "torn",
+     "x": 520,
+     "y": 560,
+     "w": 500,
+     "rot": -5,
+     "enter": "up",
+     "at": "The bestiaries"
+    },
+    {
+     "type": "img",
+     "src": "aberdeen_bestiary_panther_dragon.jpg",
+     "look": "torn",
+     "x": 1290,
+     "y": 400,
+     "w": 840,
+     "rot": 3,
+     "enter": "right",
+     "at": "illustrated animal books"
+    },
+    {
+     "type": "label",
+     "text": "BESTIARIES",
+     "x": 1290,
+     "y": 730,
+     "size": 80,
+     "at": "The bestiaries"
+    },
+    {
+     "type": "big",
+     "text": "1100s–1200s",
+     "x": 1290,
+     "y": 880,
+     "size": 110,
+     "bg": "yellow",
+     "at": "twelfth and thirteenth centuries"
+    }
+   ],
+   "theme": "forest"
+  },
+  {
+   "part": "02",
+   "at": "A dragon waited on the paths",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     545,
+     1.0
+    ],
+    "to": [
+     921.0,
+     570.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "aberdeen_bestiary_dragon_elephant.jpg",
+     "look": "print",
+     "x": 960,
+     "y": 545,
+     "w": 1000,
+     "rot": -1.5,
+     "enter": "drop"
+    },
+    {
+     "type": "callout",
+     "text": "THE DRAGON",
+     "x": 1660,
+     "y": 900,
+     "to": [
+      1160,
+      830
+     ],
+     "size": 56,
+     "at": "A dragon waited"
+    },
+    {
+     "type": "callout",
+     "text": "THE ELEPHANT",
+     "x": 1660,
+     "y": 250,
+     "to": [
+      1330,
+      440
+     ],
+     "size": 56,
+     "at": "elephants used"
+    },
+    {
+     "type": "circle",
+     "x": 770,
+     "y": 690,
+     "rx": 240,
+     "ry": 120,
+     "at": "knotted its tail"
+    },
+    {
+     "type": "label",
+     "text": "SQUEEZE",
+     "x": 300,
+     "y": 470,
+     "size": 90,
+     "bg": "red",
+     "at": "squeezed",
+     "rot": -4
+    },
+    {
+     "type": "note",
+     "text": "...until it\nsuffocates",
+     "x": 300,
+     "y": 640,
+     "size": 64,
+     "at": "suffocated",
+     "rot": -4
+    }
+   ],
+   "theme": "forest"
+  },
+  {
+   "part": "02",
+   "at": "It feared one animal",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     560,
+     1.0
+    ],
+    "to": [
+     990.0,
+     546.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "aberdeen_bestiary_panther_dragon.jpg",
+     "look": "torn",
+     "x": 960,
+     "y": 600,
+     "w": 1500,
+     "rot": 1,
+     "enter": "left"
+    },
+    {
+     "type": "callout",
+     "text": "THE PANTHER",
+     "x": 960,
+     "y": 150,
+     "to": [
+      1100,
+      520
+     ],
+     "size": 62,
+     "at": "the panther"
+    },
+    {
+     "type": "note",
+     "text": "sweet breath",
+     "x": 1390,
+     "y": 250,
+     "size": 64,
+     "at": "sweet breath"
+    },
+    {
+     "type": "arrow",
+     "x": 1340,
+     "y": 290,
+     "to": [
+      1215,
+      455
+     ],
+     "at": "sweet breath"
+    },
+    {
+     "type": "circle",
+     "x": 510,
+     "y": 600,
+     "rx": 290,
+     "ry": 240,
+     "color": "#1d1a17",
+     "at": "drew every creature"
+    },
+    {
+     "type": "circle",
+     "x": 1505,
+     "y": 570,
+     "rx": 170,
+     "ry": 240,
+     "at": "except the dragon"
+    },
+    {
+     "type": "label",
+     "text": "HIDING",
+     "x": 1640,
+     "y": 950,
+     "size": 66,
+     "bg": "red",
+     "at": "fled into hiding"
+    }
+   ],
+   "theme": "forest"
+  },
+  {
+   "part": "02",
+   "at": "And in these books",
+   "kind": "scene",
+   "cam": {
+    "from": [
+     960,
+     540,
+     1.0
+    ],
+    "to": [
+     960.0,
+     540.0,
+     1.06
+    ]
+   },
+   "items": [
+    {
+     "type": "img",
+     "src": "gessner_dragons_ink.png",
+     "look": "ink",
+     "x": 1480,
+     "y": 560,
+     "w": 700,
+     "rot": 3,
+     "enter": "fade"
+    },
+    {
+     "type": "big",
+     "text": "FIRE",
+     "x": 650,
+     "y": 470,
+     "size": 330,
+     "at": "And in these books"
+    },
+    {
+     "type": "strike",
+     "x": 650,
+     "y": 470,
+     "w": 640,
+     "at": "breathe fire"
+    },
+    {
+     "type": "label",
+     "text": "NOT NEEDED",
+     "x": 650,
+     "y": 760,
+     "size": 80,
+     "bg": "yellow",
+     "at": "It didn't need to"
+    }
+   ],
+   "theme": "forest"
+  },
+  {
+   "part": "03",
+   "before": 3.2,
+   "kind": "chapter2",
+   "num": "02",
+   "title": "The hoard",
+   "theme": "crimson"
+  },
+  {
+   "part": "03",
+   "at": "The fire came from the poets",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "clip",
+     "src": "mountain_fire.mp4",
+     "clip_start": 2.6,
+     "x": 960,
+     "y": 540,
+     "w": 1920,
+     "h": 1080,
+     "look": "plain",
+     "enter": "fade"
+    },
+    {
+     "type": "label",
+     "text": "THE POETS",
+     "x": 960,
+     "y": 930,
+     "bg": "yellow",
+     "size": 90,
+     "rot": 0,
+     "at": "the poets"
+    }
+   ],
+   "decor": false,
+   "theme": "crimson"
+  },
+  {
+   "part": "03",
+   "at": "In Beowulf, a thief",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "beowulf_first_page.jpg",
+     "look": "torn",
+     "x": 480,
+     "y": 560,
+     "w": 500,
+     "rot": -4,
+     "enter": "up"
+    },
+    {
+     "type": "big",
+     "text": "BEOWULF",
+     "x": 1260,
+     "y": 280,
+     "size": 170,
+     "bg": "yellow",
+     "at": "In Beowulf"
+    },
+    {
+     "type": "note",
+     "text": "steals a jewelled cup",
+     "x": 1260,
+     "y": 480,
+     "size": 60,
+     "rot": -3,
+     "at": "jewelled cup"
+    },
+    {
+     "type": "label",
+     "text": "A DRAGON'S HOARD",
+     "x": 1260,
+     "y": 640,
+     "bg": "red",
+     "size": 60,
+     "rot": 0,
+     "at": "on its treasure"
+    },
+    {
+     "type": "label",
+     "text": "IN A BURIAL MOUND",
+     "x": 1260,
+     "y": 760,
+     "bg": "black",
+     "size": 60,
+     "rot": 0,
+     "at": "burial mound"
+    }
+   ],
+   "theme": "crimson"
+  },
+  {
+   "part": "03",
+   "at": "The dragon wakes",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "clip",
+     "src": "mountain_fire.mp4",
+     "clip_start": 6.4,
+     "x": 1170,
+     "y": 520,
+     "w": 1150,
+     "h": 647,
+     "look": "print",
+     "rot": 2,
+     "enter": "up"
+    },
+    {
+     "type": "label",
+     "text": "IT BURNS THE LAND",
+     "x": 430,
+     "y": 330,
+     "bg": "red",
+     "size": 64,
+     "rot": 0,
+     "at": "burns the land"
+    },
+    {
+     "type": "note",
+     "text": "even the\nking's own hall",
+     "x": 430,
+     "y": 520,
+     "size": 60,
+     "rot": -3,
+     "at": "the king's own hall"
+    }
+   ],
+   "theme": "crimson"
+  },
+  {
+   "part": "03",
+   "at": "The old king goes out",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "durer_st_george_woodcut_ink.png",
+     "look": "ink",
+     "x": 560,
+     "y": 540,
+     "w": 640,
+     "rot": 0,
+     "enter": "fade"
+    },
+    {
+     "type": "label",
+     "text": "HIS SWORD SHATTERS",
+     "x": 1360,
+     "y": 260,
+     "bg": "red",
+     "size": 60,
+     "rot": 0,
+     "at": "His sword shatters"
+    },
+    {
+     "type": "label",
+     "text": "HIS MEN RUN",
+     "x": 1360,
+     "y": 400,
+     "bg": "black",
+     "size": 60,
+     "rot": 0,
+     "at": "His men run"
+    },
+    {
+     "type": "label",
+     "text": "ONLY WIGLAF STAYS",
+     "x": 1360,
+     "y": 540,
+     "bg": "yellow",
+     "size": 60,
+     "rot": 0,
+     "at": "Only young Wiglaf"
+    },
+    {
+     "type": "label",
+     "text": "THEY KILL IT",
+     "x": 1360,
+     "y": 680,
+     "bg": "black",
+     "size": 60,
+     "rot": 0,
+     "at": "Together they kill"
+    },
+    {
+     "type": "label",
+     "text": "BEOWULF DIES",
+     "x": 1360,
+     "y": 820,
+     "bg": "red",
+     "size": 60,
+     "rot": 0,
+     "at": "Beowulf dies"
+    },
+    {
+     "type": "note",
+     "text": "woodcut: Dürer, c. 1502",
+     "x": 560,
+     "y": 1010,
+     "size": 36,
+     "rot": 0
+    }
+   ],
+   "theme": "crimson"
+  },
+  {
+   "part": "03",
+   "at": "It's often called medieval",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "label",
+     "text": "THE FIRST FIRE-BREATHING DRAGON",
+     "x": 960,
+     "y": 170,
+     "bg": "yellow",
+     "size": 66,
+     "rot": 0,
+     "at": "first fire-breathing dragon"
+    },
+    {
+     "type": "img",
+     "src": "beowulf_first_page.jpg",
+     "look": "torn",
+     "x": 700,
+     "y": 610,
+     "w": 470,
+     "rot": 3,
+     "at": "exactly one manuscript"
+    },
+    {
+     "type": "big",
+     "text": "1",
+     "x": 1280,
+     "y": 520,
+     "size": 300,
+     "bg": "none",
+     "at": "exactly one manuscript"
+    },
+    {
+     "type": "note",
+     "text": "manuscript",
+     "x": 1280,
+     "y": 720,
+     "size": 60,
+     "rot": -3,
+     "at": "exactly one manuscript"
+    },
+    {
+     "type": "label",
+     "text": "1731: LIBRARY FIRE",
+     "x": 1330,
+     "y": 870,
+     "bg": "red",
+     "size": 60,
+     "rot": 0,
+     "at": "In 1731"
+    },
+    {
+     "type": "circle",
+     "x": 490,
+     "y": 930,
+     "rx": 120,
+     "ry": 90,
+     "at": "where its edges burned"
+    }
+   ],
+   "theme": "crimson"
+  },
+  {
+   "part": "03",
+   "at": "Further north, the Norse",
+   "kind": "map",
+   "view": {
+    "from": [
+     12,
+     58,
+     1.5
+    ],
+    "to": [
+     14,
+     59.5,
+     2.1
+    ]
+   },
+   "pins": [
+    {
+     "name": "Ramsund, Sweden",
+     "lat": 59.35,
+     "lon": 16.36,
+     "at": "Further north"
+    }
+   ],
+   "items": [
+    {
+     "type": "big",
+     "text": "FÁFNIR",
+     "x": 380,
+     "y": 820,
+     "size": 150,
+     "bg": "yellow",
+     "at": "the Norse told of"
+    },
+    {
+     "type": "note",
+     "text": "killed his own father\nfor cursed gold",
+     "x": 380,
+     "y": 980,
+     "size": 52,
+     "rot": -3,
+     "at": "killed his own father"
+    }
+   ],
+   "theme": "crimson"
+  },
+  {
+   "part": "03",
+   "at": "The hero Sigurd hid",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "ramsund_carving_drawing_ink.png",
+     "look": "ink",
+     "x": 960,
+     "y": 500,
+     "w": 1600,
+     "rot": 0,
+     "enter": "fade"
+    },
+    {
+     "type": "label",
+     "text": "RAMSUND CARVING · c. 1030",
+     "x": 520,
+     "y": 110,
+     "bg": "black",
+     "size": 60,
+     "rot": 0,
+     "at": "The hero Sigurd"
+    },
+    {
+     "type": "label",
+     "text": "SIGURD STABS FROM BELOW",
+     "x": 960,
+     "y": 960,
+     "bg": "yellow",
+     "size": 66,
+     "rot": 0,
+     "at": "stabbed upward"
+    }
+   ],
+   "theme": "crimson"
+  },
+  {
+   "part": "03",
+   "at": "When he roasted its heart",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "hylestad_sigurd_roasting_heart.jpg",
+     "look": "torn",
+     "x": 600,
+     "y": 540,
+     "w": 500,
+     "rot": -3,
+     "enter": "left"
+    },
+    {
+     "type": "label",
+     "text": "ROASTS THE HEART",
+     "x": 1350,
+     "y": 300,
+     "bg": "red",
+     "size": 60,
+     "rot": 0,
+     "at": "roasted its heart"
+    },
+    {
+     "type": "note",
+     "text": "licks his\nburned finger...",
+     "x": 1350,
+     "y": 500,
+     "size": 60,
+     "rot": -3,
+     "at": "licked his burned finger"
+    },
+    {
+     "type": "label",
+     "text": "UNDERSTANDS THE BIRDS",
+     "x": 1350,
+     "y": 720,
+     "bg": "yellow",
+     "size": 66,
+     "rot": 0,
+     "at": "understand the birds"
+    },
+    {
+     "type": "note",
+     "text": "Hylestad church, 12th c.",
+     "x": 600,
+     "y": 1010,
+     "size": 36,
+     "rot": 0
+    }
+   ],
+   "theme": "crimson"
+  },
+  {
+   "part": "04",
+   "before": 3.2,
+   "kind": "chapter2",
+   "num": "03",
+   "title": "Saints against serpents",
+   "theme": "night"
+  },
+  {
+   "part": "04",
+   "at": "For the Church, the dragon",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "bamberg_apocalypse_woman_dragon.jpg",
+     "look": "torn",
+     "x": 560,
+     "y": 540,
+     "w": 500,
+     "rot": -3,
+     "enter": "up"
+    },
+    {
+     "type": "big",
+     "text": "THE DEVIL",
+     "x": 1320,
+     "y": 420,
+     "size": 190,
+     "bg": "yellow",
+     "at": "the Devil himself"
+    },
+    {
+     "type": "note",
+     "text": "Bamberg Apocalypse, c. 1010",
+     "x": 560,
+     "y": 1010,
+     "size": 36,
+     "rot": 0
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "04",
+   "at": "The Book of Revelation",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "durer_apocalypse_woman_dragon_ink.png",
+     "look": "ink",
+     "x": 660,
+     "y": 540,
+     "w": 680,
+     "rot": 0,
+     "enter": "fade"
+    },
+    {
+     "type": "label",
+     "text": "REVELATION 12",
+     "x": 1460,
+     "y": 220,
+     "bg": "black",
+     "size": 60,
+     "rot": 0,
+     "at": "The Book of Revelation"
+    },
+    {
+     "type": "big",
+     "text": "7 HEADS",
+     "x": 1460,
+     "y": 470,
+     "size": 170,
+     "bg": "yellow",
+     "at": "seven heads"
+    },
+    {
+     "type": "circle",
+     "x": 830,
+     "y": 580,
+     "rx": 170,
+     "ry": 200,
+     "at": "seven heads"
+    },
+    {
+     "type": "label",
+     "text": "THROWN OUT BY MICHAEL",
+     "x": 1460,
+     "y": 760,
+     "bg": "red",
+     "size": 60,
+     "rot": 0,
+     "at": "archangel Michael"
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "04",
+   "at": "Then there's Saint George",
+   "kind": "timeline",
+   "range": [
+    200,
+    1400
+   ],
+   "events": [
+    {
+     "year": 303,
+     "label": "George dies",
+     "at": "the year 303",
+     "up": true
+    },
+    {
+     "year": 1050,
+     "label": "Dragon added",
+     "at": "seven hundred years",
+     "up": false
+    },
+    {
+     "year": 1260,
+     "label": "Golden Legend",
+     "at": "written in the 1260s",
+     "up": true
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "04",
+   "at": "Outside a city called Silene",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "uccello_st_george_london.jpg",
+     "look": "torn",
+     "x": 900,
+     "y": 520,
+     "w": 1100,
+     "rot": -1,
+     "enter": "drop"
+    },
+    {
+     "type": "label",
+     "text": "SHEEP",
+     "x": 1660,
+     "y": 200,
+     "bg": "black",
+     "size": 60,
+     "rot": 0,
+     "at": "fed sheep"
+    },
+    {
+     "type": "label",
+     "text": "THEN PEOPLE",
+     "x": 1660,
+     "y": 320,
+     "bg": "black",
+     "size": 60,
+     "rot": 0,
+     "at": "then people"
+    },
+    {
+     "type": "label",
+     "text": "THEN CHILDREN",
+     "x": 1660,
+     "y": 440,
+     "bg": "red",
+     "size": 60,
+     "rot": 0,
+     "at": "then children"
+    },
+    {
+     "type": "circle",
+     "x": 493,
+     "y": 640,
+     "rx": 90,
+     "ry": 190,
+     "at": "the king's daughter"
+    },
+    {
+     "type": "label",
+     "text": "THE PRINCESS",
+     "x": 300,
+     "y": 940,
+     "bg": "yellow",
+     "size": 60,
+     "rot": 0,
+     "at": "the king's daughter"
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "04",
+   "at": "George wounded the beast",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "raphael_st_george_washington.jpg",
+     "look": "torn",
+     "x": 560,
+     "y": 540,
+     "w": 580,
+     "rot": -3,
+     "enter": "left"
+    },
+    {
+     "type": "circle",
+     "x": 475,
+     "y": 800,
+     "rx": 170,
+     "ry": 100,
+     "at": "wounded the beast"
+    },
+    {
+     "type": "img",
+     "src": "uccello_st_george_london.jpg",
+     "look": "torn",
+     "x": 1400,
+     "y": 500,
+     "w": 560,
+     "rot": 3,
+     "at": "the princess led it",
+     "crop": [
+      0.0,
+      0.3,
+      0.45,
+      1.0
+     ],
+     "enter": "right"
+    },
+    {
+     "type": "label",
+     "text": "LIKE A TAME DOG",
+     "x": 1400,
+     "y": 950,
+     "bg": "yellow",
+     "size": 60,
+     "rot": 0,
+     "at": "like a tame dog"
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "04",
+   "at": "Afterwards, it took four",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "martorell_st_george.jpg",
+     "look": "torn",
+     "x": 560,
+     "y": 540,
+     "w": 520,
+     "rot": -2,
+     "enter": "up"
+    },
+    {
+     "type": "big",
+     "text": "4 OX-CARTS",
+     "x": 1320,
+     "y": 440,
+     "size": 150,
+     "bg": "yellow",
+     "at": "four ox-carts"
+    },
+    {
+     "type": "note",
+     "text": "to drag the\nbody away",
+     "x": 1320,
+     "y": 660,
+     "size": 60,
+     "rot": -3,
+     "at": "drag the body away"
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "04",
+   "at": "The same book tells",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "st_margaret_vrelant.jpg",
+     "look": "torn",
+     "x": 580,
+     "y": 540,
+     "w": 470,
+     "rot": -3,
+     "enter": "left"
+    },
+    {
+     "type": "label",
+     "text": "ST MARGARET",
+     "x": 1320,
+     "y": 260,
+     "bg": "black",
+     "size": 60,
+     "rot": 0,
+     "at": "a saint who escaped"
+    },
+    {
+     "type": "note",
+     "text": "escaped from inside\na dragon's belly",
+     "x": 1320,
+     "y": 450,
+     "size": 60,
+     "rot": -3,
+     "at": "dragon's belly"
+    },
+    {
+     "type": "label",
+     "text": "NONSENSE",
+     "x": 1320,
+     "y": 700,
+     "bg": "red",
+     "size": 110,
+     "rot": 0,
+     "at": "story nonsense"
+    },
+    {
+     "type": "note",
+     "text": "— its own author",
+     "x": 1320,
+     "y": 860,
+     "size": 60,
+     "rot": -3,
+     "at": "Its own author"
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "05",
+   "before": 3.2,
+   "kind": "chapter2",
+   "num": "04",
+   "title": "Dragons of nations",
+   "theme": "forest"
+  },
+  {
+   "part": "05",
+   "at": "Dragons flew over battlefields",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "clip",
+     "src": "mountain_fire.mp4",
+     "clip_start": 0.5,
+     "x": 1250,
+     "y": 500,
+     "w": 1000,
+     "h": 562,
+     "look": "print",
+     "rot": 2,
+     "enter": "right"
+    },
+    {
+     "type": "label",
+     "text": "ROMAN CAVALRY",
+     "x": 430,
+     "y": 330,
+     "bg": "black",
+     "size": 60,
+     "rot": 0,
+     "at": "Roman cavalry"
+    },
+    {
+     "type": "note",
+     "text": "dragon banners\nthat hissed\nin the wind",
+     "x": 430,
+     "y": 580,
+     "size": 60,
+     "rot": -3,
+     "at": "hissed in the wind"
+    }
+   ],
+   "theme": "forest"
+  },
+  {
+   "part": "05",
+   "at": "On the Bayeux Tapestry",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "bayeux_draco_standard.jpg",
+     "look": "torn",
+     "x": 960,
+     "y": 470,
+     "w": 1300,
+     "rot": -1,
+     "enter": "drop"
+    },
+    {
+     "type": "label",
+     "text": "KING HAROLD",
+     "x": 380,
+     "y": 140,
+     "bg": "black",
+     "size": 60,
+     "rot": 0,
+     "at": "King Harold"
+    },
+    {
+     "type": "label",
+     "text": "DRAGON STANDARD",
+     "x": 1560,
+     "y": 140,
+     "bg": "red",
+     "size": 60,
+     "rot": 0,
+     "at": "a dragon standard"
+    },
+    {
+     "type": "label",
+     "text": "HASTINGS · 1066",
+     "x": 960,
+     "y": 980,
+     "bg": "yellow",
+     "size": 70,
+     "rot": 0,
+     "at": "Hastings, in 1066"
+    }
+   ],
+   "theme": "forest"
+  },
+  {
+   "part": "05",
+   "at": "In a history written in Wales",
+   "kind": "map",
+   "view": {
+    "from": [
+     -3,
+     53.5,
+     2.4
+    ],
+    "to": [
+     -4,
+     53,
+     3.2
+    ]
+   },
+   "pins": [
+    {
+     "name": "Dinas Emrys",
+     "lat": 53.02,
+     "lon": -4.08,
+     "at": "a king's tower"
+    }
+   ],
+   "items": [
+    {
+     "type": "label",
+     "text": "c. AD 830",
+     "x": 330,
+     "y": 170,
+     "bg": "yellow",
+     "size": 70,
+     "rot": 0,
+     "at": "around 830"
+    },
+    {
+     "type": "note",
+     "text": "a tower that\nkeeps collapsing",
+     "x": 1450,
+     "y": 860,
+     "size": 60,
+     "rot": -3,
+     "at": "keeps collapsing"
+    }
+   ],
+   "theme": "forest"
+  },
+  {
+   "part": "05",
+   "at": "two dragons are fighting",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "vortigern_dragons_lambeth.jpg",
+     "look": "torn",
+     "x": 700,
+     "y": 540,
+     "w": 800,
+     "rot": -2,
+     "enter": "up"
+    },
+    {
+     "type": "circle",
+     "x": 740,
+     "y": 775,
+     "rx": 120,
+     "ry": 90,
+     "at": "a red one"
+    },
+    {
+     "type": "circle",
+     "x": 980,
+     "y": 742,
+     "rx": 100,
+     "ry": 80,
+     "at": "a white one"
+    },
+    {
+     "type": "label",
+     "text": "RED = BRITONS",
+     "x": 1500,
+     "y": 360,
+     "bg": "red",
+     "size": 60,
+     "rot": 0,
+     "at": "a red one for the Britons"
+    },
+    {
+     "type": "label",
+     "text": "WHITE = SAXONS",
+     "x": 1500,
+     "y": 500,
+     "bg": "black",
+     "size": 60,
+     "rot": 0,
+     "at": "a white one for the Saxons"
+    },
+    {
+     "type": "note",
+     "text": "the red will win",
+     "x": 1500,
+     "y": 680,
+     "size": 60,
+     "rot": -3,
+     "at": "the red will win"
+    }
+   ],
+   "theme": "forest"
+  },
+  {
+   "part": "05",
+   "at": "Henry Tudor carried",
+   "kind": "timeline",
+   "range": [
+    700,
+    2050
+   ],
+   "events": [
+    {
+     "year": 830,
+     "label": "The prophecy",
+     "up": true
+    },
+    {
+     "year": 1485,
+     "label": "Bosworth",
+     "at": "Bosworth in 1485",
+     "up": false
+    },
+    {
+     "year": 1959,
+     "label": "Official flag",
+     "at": "official flag of Wales",
+     "up": true
+    }
+   ],
+   "theme": "forest"
+  },
+  {
+   "part": "05",
+   "at": "In Poland, the oldest tale",
+   "kind": "map",
+   "view": {
+    "from": [
+     15,
+     51,
+     2.0
+    ],
+    "to": [
+     19.5,
+     50.3,
+     3.0
+    ]
+   },
+   "pins": [
+    {
+     "name": "Kraków",
+     "lat": 50.06,
+     "lon": 19.94,
+     "at": "the Wawel Dragon"
+    }
+   ],
+   "items": [
+    {
+     "type": "label",
+     "text": "c. 1200",
+     "x": 330,
+     "y": 170,
+     "bg": "yellow",
+     "size": 70,
+     "rot": 0,
+     "at": "from around 1200"
+    },
+    {
+     "type": "img",
+     "src": "wawel_dragon_statue.jpg",
+     "look": "torn",
+     "x": 1520,
+     "y": 640,
+     "w": 380,
+     "rot": 4,
+     "at": "two princes kill it",
+     "enter": "right"
+    },
+    {
+     "type": "note",
+     "text": "a hide stuffed with\nburning sulphur",
+     "x": 480,
+     "y": 840,
+     "size": 60,
+     "rot": -3,
+     "at": "burning sulphur"
+    },
+    {
+     "type": "label",
+     "text": "THEN: MURDER",
+     "x": 480,
+     "y": 980,
+     "bg": "red",
+     "size": 60,
+     "rot": 0,
+     "at": "murders his brother"
+    }
+   ],
+   "theme": "forest"
+  },
+  {
+   "part": "06",
+   "before": 3.2,
+   "kind": "chapter2",
+   "num": "05",
+   "title": "The evidence",
+   "theme": "crimson"
+  },
+  {
+   "part": "06",
+   "at": "People also thought",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "kircher_dragon_ink.png",
+     "look": "ink",
+     "x": 560,
+     "y": 540,
+     "w": 600,
+     "rot": 0,
+     "enter": "fade"
+    },
+    {
+     "type": "big",
+     "text": "PROOF?",
+     "x": 1320,
+     "y": 480,
+     "size": 220,
+     "bg": "yellow",
+     "at": "they had proof"
+    }
+   ],
+   "theme": "crimson"
+  },
+  {
+   "part": "06",
+   "at": "Around 1335, a huge skull",
+   "kind": "map",
+   "view": {
+    "from": [
+     10,
+     50,
+     1.8
+    ],
+    "to": [
+     14.3,
+     46.8,
+     3.0
+    ]
+   },
+   "pins": [
+    {
+     "name": "Klagenfurt",
+     "lat": 46.62,
+     "lon": 14.31,
+     "at": "near Klagenfurt"
+    }
+   ],
+   "items": [
+    {
+     "type": "label",
+     "text": "1335",
+     "x": 330,
+     "y": 170,
+     "bg": "yellow",
+     "size": 80,
+     "rot": 0,
+     "at": "Around 1335"
+    },
+    {
+     "type": "note",
+     "text": "shown as a\ndragon's skull",
+     "x": 1450,
+     "y": 860,
+     "size": 60,
+     "rot": -3,
+     "at": "a dragon's skull"
+    }
+   ],
+   "theme": "crimson"
+  },
+  {
+   "part": "06",
+   "at": "In 1840 it was identified",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "klagenfurt_lindwurm_fountain.jpg",
+     "look": "torn",
+     "x": 960,
+     "y": 470,
+     "w": 1300,
+     "rot": -1,
+     "enter": "drop"
+    },
+    {
+     "type": "note",
+     "text": "1840:",
+     "x": 300,
+     "y": 975,
+     "size": 80,
+     "rot": -3,
+     "at": "In 1840"
+    },
+    {
+     "type": "label",
+     "text": "A WOOLLY RHINOCEROS",
+     "x": 960,
+     "y": 975,
+     "bg": "red",
+     "size": 80,
+     "rot": 0,
+     "at": "woolly rhinoceros"
+    },
+    {
+     "type": "label",
+     "text": "CARVED 1590s",
+     "x": 1600,
+     "y": 140,
+     "bg": "black",
+     "size": 60,
+     "rot": 0,
+     "at": "carved in the 1590s"
+    },
+    {
+     "type": "circle",
+     "x": 1285,
+     "y": 410,
+     "rx": 170,
+     "ry": 140,
+     "at": "modelled on it"
+    }
+   ],
+   "theme": "crimson"
+  },
+  {
+   "part": "06",
+   "at": "In the Czech city of Brno",
+   "kind": "map",
+   "view": {
+    "from": [
+     16,
+     49.6,
+     2.6
+    ],
+    "to": [
+     17.6,
+     49.6,
+     3.2
+    ]
+   },
+   "pins": [
+    {
+     "name": "Brno",
+     "lat": 49.19,
+     "lon": 16.61,
+     "at": "Brno"
+    },
+    {
+     "name": "Kraków",
+     "lat": 50.06,
+     "lon": 19.94,
+     "at": "And in Kraków"
+    }
+   ],
+   "items": [
+    {
+     "type": "label",
+     "text": "A STUFFED NILE CROCODILE",
+     "x": 760,
+     "y": 930,
+     "bg": "yellow",
+     "size": 66,
+     "rot": 0,
+     "at": "stuffed Nile crocodile"
+    },
+    {
+     "type": "img",
+     "src": "wawel_dragon_bones.jpg",
+     "look": "torn",
+     "x": 1560,
+     "y": 420,
+     "w": 400,
+     "rot": 3,
+     "at": "giant bones",
+     "enter": "right"
+    },
+    {
+     "type": "note",
+     "text": "bones on a chain",
+     "x": 1560,
+     "y": 700,
+     "size": 60,
+     "rot": -3,
+     "at": "on a chain"
+    }
+   ],
+   "theme": "crimson"
+  },
+  {
+   "part": "07",
+   "before": 3.2,
+   "kind": "chapter2",
+   "num": "06",
+   "title": "The edge of the map",
+   "theme": "night"
+  },
+  {
+   "part": "07",
+   "at": "Medieval maps did show",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "hereford_mappa_mundi.jpg",
+     "look": "torn",
+     "x": 560,
+     "y": 540,
+     "w": 600,
+     "rot": -2,
+     "enter": "up"
+    },
+    {
+     "type": "img",
+     "src": "carta_marina_sea_serpent.jpg",
+     "look": "torn",
+     "x": 1370,
+     "y": 380,
+     "w": 780,
+     "rot": 3,
+     "at": "coiled beneath",
+     "enter": "right"
+    },
+    {
+     "type": "big",
+     "text": "HERE BE\nDRAGONS?",
+     "x": 1370,
+     "y": 760,
+     "size": 110,
+     "bg": "yellow",
+     "at": "the famous phrase"
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "07",
+   "at": "appears on exactly one",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "hunt_lenox_globe_cut.png",
+     "look": "sticker",
+     "x": 620,
+     "y": 560,
+     "w": 600,
+     "rot": 0,
+     "enter": "drop"
+    },
+    {
+     "type": "label",
+     "text": "EXACTLY ONE",
+     "x": 1350,
+     "y": 280,
+     "bg": "red",
+     "size": 70,
+     "rot": 0,
+     "at": "exactly one"
+    },
+    {
+     "type": "note",
+     "text": "copper, the size\nof a grapefruit",
+     "x": 1350,
+     "y": 480,
+     "size": 60,
+     "rot": -3,
+     "at": "size of a grapefruit"
+    },
+    {
+     "type": "label",
+     "text": "EARLY 1500s",
+     "x": 1350,
+     "y": 690,
+     "bg": "black",
+     "size": 60,
+     "rot": 0,
+     "at": "early 1500s"
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "07",
+   "at": "Off the coast of Asia",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "img",
+     "src": "hunt_lenox_globe_asia.jpg",
+     "look": "torn",
+     "x": 720,
+     "y": 540,
+     "w": 780,
+     "rot": -2,
+     "enter": "fade"
+    },
+    {
+     "type": "label",
+     "text": "HC SVNT DRACONES",
+     "x": 1450,
+     "y": 420,
+     "bg": "yellow",
+     "size": 72,
+     "rot": 0,
+     "at": "Hic sunt dracones"
+    },
+    {
+     "type": "note",
+     "text": "= here are dragons",
+     "x": 1450,
+     "y": 560,
+     "size": 60,
+     "rot": -3,
+     "at": "Here are dragons"
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "07",
+   "at": "In 1855, an architect",
+   "kind": "map",
+   "view": {
+    "from": [
+     4,
+     49,
+     2.6
+    ],
+    "to": [
+     2.35,
+     48.86,
+     3.3
+    ]
+   },
+   "pins": [
+    {
+     "name": "Paris",
+     "lat": 48.86,
+     "lon": 2.35,
+     "at": "in Paris"
+    }
+   ],
+   "items": [
+    {
+     "type": "label",
+     "text": "1855",
+     "x": 330,
+     "y": 170,
+     "bg": "yellow",
+     "size": 80,
+     "rot": 0,
+     "at": "In 1855"
+    },
+    {
+     "type": "img",
+     "src": "hunt_lenox_globe_cut.png",
+     "look": "sticker",
+     "x": 1550,
+     "y": 640,
+     "w": 330,
+     "rot": 0,
+     "at": "bought it"
+    },
+    {
+     "type": "note",
+     "text": "bought for almost nothing...\nand given to the kids",
+     "x": 760,
+     "y": 920,
+     "size": 60,
+     "rot": -3,
+     "at": "his children play"
+    }
+   ],
+   "theme": "night"
+  },
+  {
+   "part": "08",
+   "at": "So a medieval dragon",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "big",
+     "text": "MANY THINGS",
+     "x": 960,
+     "y": 540,
+     "size": 150,
+     "bg": "yellow",
+     "at": "many things"
+    },
+    {
+     "type": "clip",
+     "src": "lindisfarne.mp4",
+     "clip_start": 2.0,
+     "x": 420,
+     "y": 280,
+     "w": 620,
+     "h": 349,
+     "look": "print",
+     "rot": -4,
+     "at": "A light in the sky"
+    },
+    {
+     "type": "img",
+     "src": "klagenfurt_lindwurm_fountain.jpg",
+     "look": "torn",
+     "x": 1480,
+     "y": 270,
+     "w": 600,
+     "rot": 3,
+     "at": "A skull in the gravel"
+    },
+    {
+     "type": "img",
+     "src": "gessner_dragons_ink.png",
+     "look": "ink",
+     "x": 440,
+     "y": 820,
+     "w": 520,
+     "rot": 0,
+     "at": "A crocodile from far away"
+    },
+    {
+     "type": "img",
+     "src": "durer_apocalypse_st_michael_ink.png",
+     "look": "ink",
+     "x": 1500,
+     "y": 810,
+     "w": 380,
+     "rot": 0,
+     "at": "The Devil himself"
+    }
+   ],
+   "theme": "crimson"
+  },
+  {
+   "part": "08",
+   "at": "Most of all",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "clip",
+     "src": "mountain_fire.mp4",
+     "clip_start": 0.2,
+     "x": 960,
+     "y": 540,
+     "w": 1920,
+     "h": 1080,
+     "look": "plain",
+     "enter": "fade"
+    },
+    {
+     "type": "label",
+     "text": "THE SHAPE OF THE UNEXPLAINED",
+     "x": 960,
+     "y": 930,
+     "bg": "yellow",
+     "size": 70,
+     "rot": 0,
+     "at": "couldn't explain"
+    }
+   ],
+   "decor": false,
+   "theme": "crimson"
+  },
+  {
+   "part": "08",
+   "at": "If you enjoyed this",
+   "kind": "scene",
+   "items": [
+    {
+     "type": "big",
+     "text": "SUBSCRIBE",
+     "x": 960,
+     "y": 470,
+     "size": 200,
+     "bg": "yellow",
+     "at": "subscribe"
+    },
+    {
+     "type": "note",
+     "text": "more legends to come",
+     "x": 960,
+     "y": 690,
+     "size": 60,
+     "rot": -3,
+     "at": "more legends"
+    }
+   ],
+   "theme": "crimson"
+  },
+  {
+   "part": "08",
+   "after": 12,
+   "kind": "scene",
+   "items": [
+    {
+     "type": "big",
+     "text": "MEDIEVAL DRAGONS",
+     "x": 960,
+     "y": 250,
+     "size": 110,
+     "bg": "yellow"
+    },
+    {
+     "type": "label",
+     "text": "Dragon 3D model: “Animated Dragon Three Motion Loops” by LasquetiSpice · CC BY 4.0",
+     "x": 960,
+     "y": 470,
+     "bg": "none",
+     "size": 34,
+     "rot": 0,
+     "f": 15
+    },
+    {
+     "type": "label",
+     "text": "Skies, textures and trees: Poly Haven · CC0",
+     "x": 960,
+     "y": 540,
+     "bg": "none",
+     "size": 34,
+     "rot": 0,
+     "f": 25
+    },
+    {
+     "type": "label",
+     "text": "Map: Natural Earth · public domain",
+     "x": 960,
+     "y": 610,
+     "bg": "none",
+     "size": 34,
+     "rot": 0,
+     "f": 35
+    },
+    {
+     "type": "label",
+     "text": "Artwork: Wikimedia Commons · full credits and sources in the description",
+     "x": 960,
+     "y": 680,
+     "bg": "none",
+     "size": 34,
+     "rot": 0,
+     "f": 45
+    }
+   ],
+   "theme": "crimson"
+  }
+ ]
+}

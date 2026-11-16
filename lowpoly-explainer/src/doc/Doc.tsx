@@ -1,7 +1,7 @@
 import '@fontsource/outfit/600.css';
 import {useEffect, useState} from 'react';
 import {AbsoluteFill, Audio, continueRender, delayRender, Easing, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
-import {ChapterScene, DocumentScene, MapScene, Scene, TimelineScene, type MapData} from './Collage';
+import {ChapterScene, DocumentScene, MapScene, Scene, THEMES, ThemeCtx, TimelineScene, type MapData} from './Collage';
 import {ArtShot, ChapterCard, ClipShot, Credit, EndCard, QuoteCard, TitleShot} from './Shots';
 import {FADE, type DocShot, type DocTimeline} from './types';
 
@@ -61,7 +61,7 @@ const Subtitle = ({text}: {text: string}) => {
   );
 };
 
-export const Doc = ({story, timeline}: {story: string; file?: string; timeline: DocTimeline}) => {
+export const Doc = ({story, timeline, theme}: {story: string; file?: string; theme?: string; timeline: DocTimeline}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
 
@@ -101,7 +101,9 @@ export const Doc = ({story, timeline}: {story: string; file?: string; timeline: 
         if (next && trans(next) === 'slide') style = {...style, transform: `translateX(${-pout * 40}%)`};
         return (
           <AbsoluteFill key={`${s.kind}-${s.from}`} style={style}>
-            <Shot shot={s} story={story} map={map} />
+            <ThemeCtx.Provider value={THEMES[(s.theme as string) ?? theme ?? (timeline.theme as string) ?? 'night'] ?? THEMES.night}>
+              <Shot shot={s} story={story} map={map} />
+            </ThemeCtx.Provider>
           </AbsoluteFill>
         );
       })}

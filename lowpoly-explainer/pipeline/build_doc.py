@@ -161,6 +161,14 @@ def main():
         last_t = t0
         s["_part"] = part
         s["from"] = round(t0 * FPS)
+        # pictures inside a scene: record their shape, so cards and torn edges can be cut to size
+        for el in s.get("items", []):
+            if isinstance(el, dict) and el.get("type") == "img" and (pub / "art" / el.get("src", "")).is_file():
+                with Image.open(pub / "art" / el["src"]) as im:
+                    ar = im.height / im.width
+                x0, y0, x1, y1 = el.get("crop", [0, 0, 1, 1])
+                el["ar"] = round(ar, 4)
+                el.setdefault("h", round(el.get("w", 600) * (y1 - y0) * ar / (x1 - x0)))
         # things inside a scene (labels, circles, map pins, timeline events, highlights) cued on their own words
         for key in ("items", "pins", "events", "highlights", "routes"):
             for el in s.get(key, []):
@@ -210,7 +218,7 @@ def main():
 
     w, h = board.get("size", [1920, 1080])
     tl = {"fps": FPS, "width": w, "height": h, "durationInFrames": n, "audio": voice_out, "shots": shots,
-          "captions": captions, "sfx": sfx, "subtitles": board.get("subtitles", True)}
+          "captions": captions, "sfx": sfx, "subtitles": board.get("subtitles", True), "theme": board.get("theme", "night")}
     if board.get("music"):
         tl["music"] = board["music"]
     out = pub / board.get("out", "doc.json")

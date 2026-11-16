@@ -120,7 +120,7 @@
     {
      "type": "img",
      "src": "oseberg_animal_head_post.jpg",
-     "look": "print",
+     "look": "torn",
      "crop": [
       0.15,
       0.05,
@@ -132,6 +132,7 @@
      "w": 400,
      "h": 400,
      "rot": -4,
+     "ar": 0.6667,
      "f": 22
     },
     {
@@ -275,5 +276,6 @@
   }
  ],
  "sfx": [],
- "subtitles": false
+ "subtitles": false,
+ "theme": "night"
 }

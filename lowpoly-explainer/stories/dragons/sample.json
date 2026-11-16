@@ -149,7 +149,7 @@
    "items": [
     {
      "type": "img",
-     "src": "aldrovandi_dragon.jpg",
+     "src": "aldrovandi_dragon_ink.png",
      "look": "ink",
      "x": 960,
      "y": 560,
@@ -244,7 +244,7 @@
     {
      "type": "img",
      "src": "harley3244_elephant_dragon_page.jpg",
-     "look": "print",
+     "look": "torn",
      "x": 520,
      "y": 560,
      "w": 500,
@@ -255,7 +255,7 @@
     {
      "type": "img",
      "src": "aberdeen_bestiary_panther_dragon.jpg",
-     "look": "print",
+     "look": "torn",
      "x": 1290,
      "y": 400,
      "w": 840,
@@ -382,7 +382,7 @@
     {
      "type": "img",
      "src": "aberdeen_bestiary_panther_dragon.jpg",
-     "look": "print",
+     "look": "torn",
      "x": 960,
      "y": 600,
      "w": 1500,
@@ -466,7 +466,7 @@
    "items": [
     {
      "type": "img",
-     "src": "gessner_dragons.jpg",
+     "src": "gessner_dragons_ink.png",
      "look": "ink",
      "x": 1480,
      "y": 560,
@@ -500,5 +500,6 @@
     }
    ]
   }
- ]
+ ],
+ "theme": "forest"
 }
