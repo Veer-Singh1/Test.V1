@@ -36,7 +36,7 @@ export const Staging: React.FC = () => {
     <Sheet bg="navy" dir="right">
       <Stars n={40} seed="stage" drift={drift} />
       {f >= ign && <Stars n={14} seed="stage-fast" drift={13} driftFrom={ign} />}
-      <Cutout name="plate_clouds" x={540} y={1960 + clouds} scale={1} anchor={[0.5, 1]} seed="clouds" shadow={false} />
+      <Cutout name="plate_clouds" x={540} y={1960 + clouds} scale={1} anchor={[0.5, 1]} seed="clouds" />
 
       {/* first stage (with its flame until engine cut-off) */}
       <Group x={X + fallX} y={NOZZLE_Y + fallY} rotate={tumble}>

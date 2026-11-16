@@ -32,7 +32,7 @@ export const Stars: React.FC<{n?: number; seed?: string; drift?: number; driftFr
         const y0 = random(`${seed}${i}y`) * 2100 - 90;
         const y = ((y0 + move * (0.6 + sc * 0.5)) % 2100 + 2100) % 2100 - 90;
         return (
-          <Cutout key={i} name={name} x={x} y={y} scale={sc} seed={`${seed}${i}`} rotate={random(`${seed}${i}r`) * 70} shadow={false} boil={0.8} />
+          <Cutout key={i} name={name} x={x} y={y} scale={sc} seed={`${seed}${i}`} rotate={random(`${seed}${i}r`) * 70} boil={0.8} />
         );
       })}
     </>

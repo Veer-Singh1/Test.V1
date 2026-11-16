@@ -58,7 +58,9 @@ def tear(alpha: np.ndarray, rng: np.random.Generator, rough: float = 1.0) -> np.
     h, w = alpha.shape
     a = soften(alpha, 2.2 * rough + 0.6)
     n = (value_noise(h, w, 3.0, rng) - 0.5) * 0.55 + (value_noise(h, w, 18.0, rng) - 0.5) * 0.5
-    out = (a + n * rough) > 0.5
+    # noise only acts in the soft edge band, so big sheets don't get pin-holes
+    band = np.clip(4 * a * (1 - a), 0, 1) ** 0.35
+    out = (a + n * rough * band) > 0.5
     out = clean_mask(out)
     return np.clip(soften(out, 0.6), 0, 1)
 
