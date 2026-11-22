@@ -254,6 +254,14 @@
       return !msg;
     }
 
+    // Pre-tick the enquiry type when arriving from a "Book a spot" style link
+    var wanted = new URLSearchParams(window.location.search).get('enquiry');
+    if (wanted) {
+      Array.prototype.forEach.call(form.querySelectorAll('input[name="enquiry"]'), function (box) {
+        if (box.value === wanted) box.checked = true;
+      });
+    }
+
     Object.keys(rules).forEach(function (name) {
       var field = form.elements[name];
       if (!field) return;

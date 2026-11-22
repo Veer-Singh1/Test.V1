@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact & visit · Manifest Coffee Roasters · Durban</title>
+  <meta name="description" content="Find the roastery off Maydon Wharf Road, check opening hours, or send us a message about wholesale, classes or Standing Orders.">
+  <meta name="theme-color" content="#F3EADB">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23B03A0A'/%3E%3Cpath d='M12 50V14h9l11 17 11-17h9v36h-9V30l-11 16-11-16v20z' fill='%23F3EADB'/%3E%3C/svg%3E">
+  <link rel="preload" href="fonts/big-shoulders-stencil-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <!-- Shared SVG filters: rough rubber-stamp ink -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="4" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.6" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+      <feTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="1" seed="11" result="speck"/>
+      <feColorMatrix in="speck" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -3.2 0 0 0 2.75" result="speckMask"/>
+      <feComposite in="rough" in2="speckMask" operator="in"/>
+    </filter>
+  </svg>
+
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="masthead">
+    <div class="masthead__inner wrap">
+      <a class="brand" href="index.html">
+        <span class="brand__word">Manifest</span>
+        <span class="brand__sub">Coffee Roasters · Durban</span>
+      </a>
+      <p class="status" data-status><span class="status__dot" aria-hidden="true"></span><span data-status-text>Open Tue–Sat · Maydon Wharf</span></p>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html"><span class="nav__no" aria-hidden="true">01</span>Home</a></li>
+          <li><a href="about.html"><span class="nav__no" aria-hidden="true">02</span>About</a></li>
+          <li><a href="services.html"><span class="nav__no" aria-hidden="true">03</span>Services</a></li>
+          <li><a href="contact.html" aria-current="page"><span class="nav__no" aria-hidden="true">04</span>Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero page-hero--tight" aria-labelledby="page-title">
+      <div class="wrap">
+        <p class="eyebrow">Contact &amp; visit</p>
+        <h1 id="page-title" class="display page-hero__title">Declare <span class="accent">yourself.</span></h1>
+        <p class="lead">Questions, wholesale enquiries, class bookings, or just a howzit. Fill in the declaration and a real person (usually Ayesha) will reply within one working day. If you'd rather use WhatsApp, so would we: <a href="https://wa.me/27310000000">+27&nbsp;31&nbsp;000&nbsp;0000</a>.</p>
+      </div>
+    </section>
+
+    <section class="section section--contact" aria-label="Send a message or visit">
+      <div class="wrap contact-grid">
+        <form class="declaration" data-declaration action="#" method="post" novalidate aria-labelledby="form-title">
+          <div class="declaration__head">
+            <h2 id="form-title">Declaration form</h2>
+            <p>Form MNF-C1 · No duty payable</p>
+          </div>
+          <div class="fields">
+            <div class="field field--half">
+              <label for="name"><span class="field__box" aria-hidden="true">1.</span>Your name <span class="field__req">(required)</span></label>
+              <input id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-error">
+              <p class="field__error" id="name-error"></p>
+            </div>
+            <div class="field field--half">
+              <label for="email"><span class="field__box" aria-hidden="true">2.</span>Email <span class="field__req">(required)</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="email-error">
+              <p class="field__error" id="email-error"></p>
+            </div>
+            <div class="field field--half">
+              <label for="phone"><span class="field__box" aria-hidden="true">3.</span>Phone or WhatsApp</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" aria-describedby="phone-hint">
+              <p class="field__hint" id="phone-hint">Optional. We'll only use it if email doesn't work.</p>
+            </div>
+            <div class="field field--half">
+              <label for="business"><span class="field__box" aria-hidden="true">4.</span>Business name</label>
+              <input id="business" name="business" type="text" autocomplete="organization" aria-describedby="business-hint">
+              <p class="field__hint" id="business-hint">Only if you're asking about wholesale.</p>
+            </div>
+            <fieldset class="field field--full">
+              <legend><span class="field__box" aria-hidden="true">5.</span>Nature of goods <span class="field__req">(tick any)</span></legend>
+              <div class="checks">
+                <label class="check"><input type="checkbox" name="enquiry" value="standing-order"> Standing Order</label>
+                <label class="check"><input type="checkbox" name="enquiry" value="wholesale"> Wholesale</label>
+                <label class="check"><input type="checkbox" name="enquiry" value="contract"> Contract roasting</label>
+                <label class="check"><input type="checkbox" name="enquiry" value="classes"> Classes &amp; cuppings</label>
+                <label class="check"><input type="checkbox" name="enquiry" value="howzit"> Just saying howzit</label>
+              </div>
+            </fieldset>
+            <div class="field field--full">
+              <label for="message"><span class="field__box" aria-hidden="true">6.</span>Description of contents <span class="field__req">(required)</span></label>
+              <textarea id="message" name="message" rows="5" required aria-describedby="message-hint message-error"></textarea>
+              <p class="field__hint" id="message-hint">Tell us what you need. For wholesale, a rough weekly volume helps.</p>
+              <p class="field__error" id="message-error"></p>
+            </div>
+          </div>
+          <div class="declaration__foot">
+            <p>By sending this you declare that the above is true, and that you like coffee at least a little.</p>
+            <button class="btn" type="submit">Stamp &amp; send</button>
+          </div>
+          <p class="form-status" data-form-status role="status"></p>
+          <p class="stamp stamp--rust declaration__stamp" data-stamp data-stamp-manual data-received hidden aria-hidden="true">Received<small>Manifest · ZADUR</small></p>
+        </form>
+
+        <aside class="port-card" aria-label="Visiting the roastery">
+          <div class="port-card__block">
+            <h2>Port of call</h2>
+            <p class="port-card__big">Unit 4, The Bond Store</p>
+            <p>Off Maydon Wharf Road, Durban<br><span class="mono">29°52′S 31°01′E</span></p>
+            <p>Coming from town, follow the signs for the harbour and Maydon Wharf, then look for the rust-coloured roller door with a big stencilled M. There are two bays out front and plenty of parking on the street. Bheki, the car guard, will look after you, so say hi.</p>
+          </div>
+          <div class="port-card__block">
+            <h2>Opening hours</h2>
+            <dl class="hours">
+              <div><dt>Tue – Fri</dt><dd>7:00 – 15:00</dd></div>
+              <div><dt>Saturday</dt><dd>8:00 – 13:00</dd></div>
+              <div><dt>Sun – Mon</dt><dd>Closed</dd></div>
+            </dl>
+          </div>
+          <div class="port-card__block">
+            <h2>Other channels</h2>
+            <ul class="channels">
+              <li><span class="label">WhatsApp</span><a href="https://wa.me/27310000000">+27 31 000 0000</a></li>
+              <li><span class="label">Email</span><a href="mailto:hello@manifestroasters.example">hello@manifestroasters.example</a></li>
+              <li><span class="label">Instagram</span>@manifest.roasters</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+      <div class="wrap">
+        <figure class="harbour-map">
+          <svg class="harbour" viewBox="0 0 900 300" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="hmap-title">
+            <title id="hmap-title">Sketch map of Durban harbour. The roastery is on Maydon Wharf Road, on the western shore of Durban Bay. The city centre is to the north, the Point and the harbour mouth are to the east, and the Bluff is across the water to the south-east.</title>
+            <defs>
+              <filter id="hand" x="-2%" y="-2%" width="104%" height="104%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="3" result="t"/>
+                <feDisplacementMap in="SourceGraphic" in2="t" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+              </filter>
+            </defs>
+            <rect width="900" height="300" fill="#DCC39A"/>
+            <g filter="url(#hand)">
+              <rect class="block" x="440" y="26" width="46" height="34"/><rect class="block" x="498" y="18" width="34" height="44"/><rect class="block" x="546" y="30" width="52" height="30"/>
+              <rect class="block" x="612" y="24" width="38" height="40"/><rect class="block" x="664" y="36" width="44" height="26"/>
+              <rect class="block" x="250" y="146" width="44" height="28"/><rect class="block" x="242" y="190" width="50" height="32"/><rect class="block" x="254" y="238" width="38" height="30"/>
+              <rect class="block" x="150" y="150" width="56" height="34"/><rect class="block" x="160" y="214" width="40" height="40"/>
+              <path class="water" d="M902 -2 L770 -2 C 760 70, 790 160, 802 302 L902 302 Z"/>
+              <path class="water" d="M410 302 C 398 240, 430 170, 520 150 C 600 132, 680 132, 730 116 C 755 108, 772 98, 782 92 L 792 136 C 762 146, 744 168, 712 184 C 650 212, 590 252, 560 302 Z"/>
+              <path class="road-edge" d="M356 -4 C 392 90, 406 176, 390 304"/>
+              <path class="road" d="M356 -4 C 392 90, 406 176, 390 304"/>
+              <path class="road-edge road-edge--minor" d="M-4 96 C 120 92, 280 100, 380 102 C 500 108, 600 96, 712 94"/>
+              <path class="road road--minor" d="M-4 96 C 120 92, 280 100, 380 102 C 500 108, 600 96, 712 94"/>
+            </g>
+            <path class="crane-arm" d="M498 152 L498 118 L534 118 M498 124 L520 118 M524 118 L524 134"/>
+            <path class="crane-arm" d="M552 142 L552 108 L588 108 M552 114 L574 108 M578 108 L578 124"/>
+            <g transform="translate(650 196) rotate(-24)"><path class="ship-hull" d="M-30 -9 H18 L32 0 L18 9 H-30 Z"/><rect x="-18" y="-6" width="10" height="12" fill="#2446A6"/><rect x="-6" y="-6" width="10" height="12" fill="#B03A0A"/><rect x="6" y="-6" width="10" height="12" fill="#F4B400"/><rect x="-28" y="-7" width="6" height="14" fill="#14202B"/></g>
+            <text x="470" y="84">CITY CENTRE ↑</text>
+            <text x="640" y="80">THE POINT</text>
+            <text class="water-label" x="436" y="266" style="letter-spacing:.2em;font-size:14px">DURBAN BAY</text>
+            <text x="676" y="268">THE BLUFF</text>
+            <text class="water-label" transform="translate(852 70) rotate(90)">INDIAN OCEAN</text>
+            <text transform="translate(328 128) rotate(-90)" text-anchor="middle">MAYDON WHARF RD</text>
+            <text x="24" y="130">← BEREA &amp; GLENWOOD</text>
+            <g transform="translate(414 214)">
+              <path class="pin-body" d="M0 0 C -17 -19, -17 -42, 0 -42 C 17 -42, 17 -19, 0 0 Z"/>
+              <circle class="pin-dot" cx="0" cy="-28" r="6"/>
+            </g>
+            <text class="here" x="414" y="158" text-anchor="middle">MANIFEST</text>
+          </svg>
+          <figcaption><span>Not to scale, and a few cranes short.</span><span>The rust-coloured roller door is hard to miss.</span></figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer on-dark">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__lede">
+          <p>Speciality coffee, landed at Durban harbour and roasted a few hundred metres from the quay. Roasting since 2019. The popcorn machine retired in 2020.</p>
+        </div>
+        <div class="footer__col">
+          <h2>Find us</h2>
+          <ul>
+            <li>Unit 4, The Bond Store</li>
+            <li>Off Maydon Wharf Road, Durban</li>
+            <li class="mono">29°52′S 31°01′E</li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h2>Pages</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer__col footer__col--wide">
+          <h2>Say howzit</h2>
+          <ul>
+            <li><a href="mailto:hello@manifestroasters.example">hello@manifestroasters.example</a></li>
+            <li><a href="https://wa.me/27310000000">WhatsApp +27 31 000 0000</a></li>
+            <li>Instagram @manifest.roasters</li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer__word" aria-hidden="true">Manifest</p>
+      <div class="footer__small">
+        <p>© <span data-year>2026</span> Manifest Coffee Roasters · Durban, KwaZulu-Natal</p>
+        <p aria-hidden="true">MNFU 204611 7 · Contents: good news</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>
