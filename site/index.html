@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manifest Coffee Roasters · Off the ship, into the drum · Durban</title>
+  <meta name="description" content="Speciality coffee from East Africa, landed at Durban harbour and roasted a few hundred metres from the quay. Bags, subscriptions, wholesale and Saturday cuppings.">
+  <meta name="theme-color" content="#F3EADB">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23B03A0A'/%3E%3Cpath d='M12 50V14h9l11 17 11-17h9v36h-9V30l-11 16-11-16v20z' fill='%23F3EADB'/%3E%3C/svg%3E">
+  <link rel="preload" href="fonts/big-shoulders-stencil-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <!-- Shared SVG filters: rough rubber-stamp ink -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="4" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.6" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+      <feTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="1" seed="11" result="speck"/>
+      <feColorMatrix in="speck" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -3.2 0 0 0 2.75" result="speckMask"/>
+      <feComposite in="rough" in2="speckMask" operator="in"/>
+    </filter>
+  </svg>
+
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="masthead">
+    <div class="masthead__inner wrap">
+      <a class="brand" href="index.html">
+        <span class="brand__word">Manifest</span>
+        <span class="brand__sub">Coffee Roasters · Durban</span>
+      </a>
+      <p class="status" data-status><span class="status__dot" aria-hidden="true"></span><span data-status-text>Open Tue–Sat · Maydon Wharf</span></p>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html" aria-current="page"><span class="nav__no" aria-hidden="true">01</span>Home</a></li>
+          <li><a href="about.html"><span class="nav__no" aria-hidden="true">02</span>About</a></li>
+          <li><a href="services.html"><span class="nav__no" aria-hidden="true">03</span>Services</a></li>
+          <li><a href="contact.html"><span class="nav__no" aria-hidden="true">04</span>Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- HERO ---------------------------------------------------------------->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <p class="eyebrow">Speciality roasters · Durban harbour · Since 2019</p>
+          <h1 id="hero-title" class="display hero__title">
+            <span class="line">Off the ship.</span>
+            <span class="line">Into the <span class="tilt">drum.</span></span>
+          </h1>
+          <p class="lead hero__lead">East African coffee lands at Durban harbour, and we roast it a few hundred metres from the quay, usually within ten days of the container doors opening. It reaches your cup a lot sooner than coffee that has spent a season in a warehouse.</p>
+          <div class="hero__actions">
+            <a class="btn" href="#cargo">See this week's cargo <span class="btn__arrow" aria-hidden="true">↓</span></a>
+            <a class="btn btn--ghost" href="contact.html">Visit the roastery</a>
+          </div>
+        </div>
+
+        <div class="hero__tag">
+          <svg class="hero__string" viewBox="0 0 140 80" aria-hidden="true" focusable="false">
+            <path d="M40 78 C 50 40, 90 50, 96 18 S 120 2, 138 6" fill="none" stroke="#14202B" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <div class="tag-wrap">
+            <div class="tag-wrap__shadow" aria-hidden="true"></div>
+            <article class="tag consignment" aria-label="Consignment note for this week's coffee">
+              <span class="tag__eyelet" aria-hidden="true"></span>
+              <div class="consignment__head">
+                <h2 class="consignment__title">Consignment note</h2>
+                <span class="consignment__no">No. MNF-0412</span>
+              </div>
+              <dl>
+                <div class="consignment__row"><dt>Consignee</dt><dd>You (and whoever you're making coffee for)</dd></div>
+                <div class="consignment__row"><dt>Contents</dt><dd>Speciality coffee, roasted this week</dd></div>
+                <div class="consignment__row"><dt>Port of loading</dt><dd>Djibouti · Mombasa · Dar es&nbsp;Salaam</dd></div>
+                <div class="consignment__row"><dt>Port of discharge</dt><dd>Durban, <abbr title="UN location code for Durban">ZADUR</abbr></dd></div>
+                <div class="consignment__row"><dt>Roast days</dt><dd>Tuesday &amp; Thursday, from 6am</dd></div>
+                <div class="consignment__row"><dt>Handle with</dt><dd>Enthusiasm</dd></div>
+              </dl>
+              <div class="barcode" aria-hidden="true">
+                <span class="barcode__bars"></span>
+                <span class="barcode__digits">6 009812 404127</span>
+              </div>
+            </article>
+          </div>
+          <p class="stamp stamp--round hero__stamp" data-stamp data-stamp-delay="650"><small>Roasted in</small>Durban<small>Fresh</small></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTAINER STRIP ----------------------------------------------------->
+    <section class="cargo-strip corrugated" aria-label="The short version">
+      <div class="wrap">
+        <ul class="cargo-strip__inner" role="list">
+          <li class="cargo-strip__item"><span class="cargo-strip__num" aria-hidden="true">10</span><p class="cargo-strip__text">Days from container to roaster, give or take<span>Most coffee in SA waits months.</span></p></li>
+          <li class="cargo-strip__item"><span class="cargo-strip__num" aria-hidden="true">15</span><p class="cargo-strip__text">Kilograms per batch in our gas-fired drum<span>Small enough to taste every roast.</span></p></li>
+          <li class="cargo-strip__item"><span class="cargo-strip__num" aria-hidden="true">R0</span><p class="cargo-strip__text">Delivery anywhere in eThekwini over R400<span>Umhlanga to Amanzimtoti, Westville to the Bluff.</span></p></li>
+          <li class="cargo-strip__item"><span class="cargo-strip__num" aria-hidden="true">9</span><p class="cargo-strip__text">O'clock, Saturday: free public cupping<span>Bring a friend who says all coffee tastes the same.</span></p></li>
+        </ul>
+        <p class="cargo-strip__code" aria-hidden="true"><b>MNFU 204611 7</b><span>MAX GROSS 30,480 KG</span><span>TARE 2,200 KG</span><span>CONTENTS: GOOD NEWS</span></p>
+      </div>
+    </section>
+
+    <!-- VOYAGE (signature #1) ----------------------------------------------->
+    <section class="section voyage on-dark" id="voyage" aria-labelledby="voyage-title" data-voyage>
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">The voyage</p>
+            <h2 id="voyage-title" class="h2">Every bean on our shelf crossed the Indian Ocean.</h2>
+          </div>
+          <p class="lead">Coffee grows in a belt across East Africa, and most of it reaches South Africa through Durban. Keep scrolling to follow one season's cargo down the coast to our roaster.</p>
+        </div>
+
+        <div class="voyage__grid">
+          <figure class="chart" aria-labelledby="chart-cap">
+            <div class="chart__hud" aria-hidden="true">
+              <p class="chart__day"><b data-day>00</b>days at sea</p>
+              <p class="chart__port" data-port-name>Loading · Djibouti</p>
+            </div>
+            <div class="chart__frame">
+              <svg viewBox="-10 -10 580 1000" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="chart-title chart-desc" data-chart>
+                <title id="chart-title">Illustrated chart of the East African coast</title>
+                <desc id="chart-desc">A dashed shipping route runs south from Djibouti past Mombasa, Dar es Salaam and Beira, ending at Durban.</desc>
+                <defs>
+                  <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="7" result="t"/>
+                    <feDisplacementMap in="SourceGraphic" in2="t" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+                  </filter>
+                  <mask id="route-mask" maskUnits="userSpaceOnUse" x="-20" y="-20" width="620" height="1040">
+                    <path class="route-reveal" d="M343 68C347.8 66.5 355.8 61.8 372 59C388.2 56.2 415.7 51.7 440 51C464.3 50.3 503.3 48.8 518 55C532.7 61.2 530 72.5 528 88C526 103.5 515.3 128 506 148C496.7 168 486.3 188 472 208C457.7 228 438 248 420 268C402 288 382.7 310.7 364 328C345.3 345.3 323.1 363.2 308 372C292.9 380.8 275.7 376.7 273.4 381C271.1 385.3 292.2 389.8 294 398C295.8 406.2 288.7 423.6 284 430C279.3 436.4 265.5 431.4 265.8 436.4C266.1 441.4 279 447.4 286 460C293 472.6 302.7 494 308 512C313.3 530 318.3 550 318 568C317.7 586 317 602.7 306 620C295 637.3 269.7 659 252 672C234.3 685 212.5 693.9 200 698C187.5 702.1 177.1 692.9 176.8 696.6C176.5 700.3 193.1 707.4 198 720C202.9 732.6 209.3 755.3 206 772C202.7 788.7 187.3 804.3 178 820C168.7 835.7 159 854 150 866C141 878 132.2 886.8 124 892C115.8 897.2 104.8 896.5 101 897.4" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"/>
+                  </mask>
+                  <clipPath id="chart-clip"><rect x="-10" y="-10" width="580" height="1000"/></clipPath>
+                </defs>
+                <g clip-path="url(#chart-clip)">
+                  <rect x="-10" y="-10" width="580" height="1000" fill="#0A3D44"/>
+                  <g aria-hidden="true">
+                    <line class="grid-line" x1="-10" x2="570" y1="100" y2="100"/>
+                    <line class="grid-line" x1="-10" x2="570" y1="300" y2="300"/>
+                    <line class="grid-line" x1="-10" x2="570" y1="500" y2="500"/>
+                    <line class="grid-line" x1="-10" x2="570" y1="700" y2="700"/>
+                    <line class="grid-line" x1="-10" x2="570" y1="900" y2="900"/>
+                    <line class="grid-line" y1="-10" y2="990" x1="80" x2="80"/>
+                    <line class="grid-line" y1="-10" y2="990" x1="280" x2="280"/>
+                    <line class="grid-line" y1="-10" y2="990" x1="480" x2="480"/>
+                    <text class="sea-label sea-label--sm" x="452" y="294">EQUATOR</text>
+                  </g>
+                  <g filter="url(#wobble)">
+                    <path class="land" d="M282 0C285.7 3 295.3 11.3 304 18C312.7 24.7 327 34.7 334 40C341 45.3 345.7 46 346 50C346.3 54 336.5 61 336 64C335.5 67 340.8 66.5 343 68C345.2 69.5 343.2 69.1 349.4 73C355.6 76.9 368.2 89.7 380 91.2C391.8 92.7 406.1 84.8 420 82C433.9 79.2 449.3 77.5 463.6 74.4C477.9 71.3 498.2 60.6 505.6 63.4C513 66.2 510.3 81.6 508 91C505.7 100.4 497.2 111.8 492 120C486.8 128.2 483.9 128.2 477 140.4C470.1 152.6 460.1 178.1 450.6 193C441.1 207.9 430.6 219 420 230C409.4 241 396.8 250.9 386.8 259.2C376.8 267.5 369.3 272 360 280C350.7 288 339 298.4 331 307.2C323 316 317.5 326.6 312 333C306.5 339.4 302.9 340.2 298 345.4C293.1 350.6 286.5 358.5 282.4 364.4C278.3 370.3 276.8 374.8 273.4 381C270 387.2 264.6 393.4 262 401.4C259.4 409.4 257.4 423 258 428.8C258.6 434.6 263.8 428.1 265.8 436.4C267.8 444.7 268.6 468 270 478.6C271.4 489.2 272.1 495.5 274.4 500C276.7 504.5 280.7 503.1 283.8 505.4C286.9 507.7 291.7 504.6 292.8 513.6C293.9 522.6 290.3 546.5 290.4 559.4C290.5 572.3 292.7 583.9 293.4 590.8C294.1 597.7 297.1 595 294.6 600.6C292.1 606.2 286.6 617.4 278.2 624.6C269.8 631.8 254.1 638.5 244 644C233.9 649.5 223.6 653 217.8 657.6C212 662.2 216.2 665.1 209.4 671.6C202.6 678.1 181.4 688.6 176.8 696.6C172.2 704.6 180.4 712.4 182 719.6C183.6 726.8 184.9 730.6 186.4 740C187.9 749.4 191.2 767.5 190.8 775.8C190.4 784.1 190.3 785.8 184 790C177.7 794.2 160.5 796 153 801C145.5 806 141.5 814 139 820C136.5 826 139.6 829.1 137.8 837C136 844.9 131.1 861.1 128.4 867.6C125.7 874.1 126.2 871 121.6 876C117 881 106.4 890.9 101 897.4C95.6 903.9 94 908.9 89 914.8C84 920.7 79.5 925 71 932.6C62.5 940.2 47.1 953.8 38.2 960.4C29.3 967 24.2 969.6 17.8 972C11.4 974.4 3 974.5 0 975L0 990L-20 990L-20 -20L282 -20Z"/>
+                    <path class="coast" d="M282 0C285.7 3 295.3 11.3 304 18C312.7 24.7 327 34.7 334 40C341 45.3 345.7 46 346 50C346.3 54 336.5 61 336 64C335.5 67 340.8 66.5 343 68C345.2 69.5 343.2 69.1 349.4 73C355.6 76.9 368.2 89.7 380 91.2C391.8 92.7 406.1 84.8 420 82C433.9 79.2 449.3 77.5 463.6 74.4C477.9 71.3 498.2 60.6 505.6 63.4C513 66.2 510.3 81.6 508 91C505.7 100.4 497.2 111.8 492 120C486.8 128.2 483.9 128.2 477 140.4C470.1 152.6 460.1 178.1 450.6 193C441.1 207.9 430.6 219 420 230C409.4 241 396.8 250.9 386.8 259.2C376.8 267.5 369.3 272 360 280C350.7 288 339 298.4 331 307.2C323 316 317.5 326.6 312 333C306.5 339.4 302.9 340.2 298 345.4C293.1 350.6 286.5 358.5 282.4 364.4C278.3 370.3 276.8 374.8 273.4 381C270 387.2 264.6 393.4 262 401.4C259.4 409.4 257.4 423 258 428.8C258.6 434.6 263.8 428.1 265.8 436.4C267.8 444.7 268.6 468 270 478.6C271.4 489.2 272.1 495.5 274.4 500C276.7 504.5 280.7 503.1 283.8 505.4C286.9 507.7 291.7 504.6 292.8 513.6C293.9 522.6 290.3 546.5 290.4 559.4C290.5 572.3 292.7 583.9 293.4 590.8C294.1 597.7 297.1 595 294.6 600.6C292.1 606.2 286.6 617.4 278.2 624.6C269.8 631.8 254.1 638.5 244 644C233.9 649.5 223.6 653 217.8 657.6C212 662.2 216.2 665.1 209.4 671.6C202.6 678.1 181.4 688.6 176.8 696.6C172.2 704.6 180.4 712.4 182 719.6C183.6 726.8 184.9 730.6 186.4 740C187.9 749.4 191.2 767.5 190.8 775.8C190.4 784.1 190.3 785.8 184 790C177.7 794.2 160.5 796 153 801C145.5 806 141.5 814 139 820C136.5 826 139.6 829.1 137.8 837C136 844.9 131.1 861.1 128.4 867.6C125.7 874.1 126.2 871 121.6 876C117 881 106.4 890.9 101 897.4C95.6 903.9 94 908.9 89 914.8C84 920.7 79.5 925 71 932.6C62.5 940.2 47.1 953.8 38.2 960.4C29.3 967 24.2 969.6 17.8 972C11.4 974.4 3 974.5 0 975"/>
+                    <path class="land" d="M337 0C338.3 5.6 343 25.8 345 33.6C347 41.4 343.1 45.2 349 47C354.9 48.8 373.1 46.7 380.6 44.4C388.1 42.1 385.8 36.7 394 33C402.2 29.3 418.6 25.9 430 22C441.4 18.1 452.9 13.1 462.6 9.4C472.3 5.7 483.8 1.6 488 0L488 -20L337 -20Z"/>
+                    <path class="coast" d="M337 0C338.3 5.6 343 25.8 345 33.6C347 41.4 343.1 45.2 349 47C354.9 48.8 373.1 46.7 380.6 44.4C388.1 42.1 385.8 36.7 394 33C402.2 29.3 418.6 25.9 430 22C441.4 18.1 452.9 13.1 462.6 9.4C472.3 5.7 483.8 1.6 488 0"/>
+                    <path class="land coast" style="fill:#DCC39A" d="M465.2 539C467.6 542.6 476.6 557.6 480 567.4C483.4 577.2 484.9 589.3 485.6 598C486.3 606.7 486.9 608.6 484 619.4C481.1 630.2 474.2 645.5 468 663C461.8 680.5 452.2 709 447 724.6C441.8 740.2 441.1 743.7 436.6 756.4C432.1 769.1 428.7 791.3 419.8 800.6C410.9 809.9 393 813.4 383 812C373 810.6 364.9 799.5 360 792C355.1 784.5 355.5 776.5 353.4 767C351.3 757.5 345.4 745.2 347.4 735C349.4 724.8 363.4 717.9 365.6 705.6C367.8 693.3 360 674.9 360.6 661.2C361.2 647.5 361.4 631.4 369 623.6C376.6 615.8 395.4 619.6 406.4 614.4C417.4 609.2 428.6 600.3 435.2 592.6C441.8 584.9 440.9 575.8 446 568C451.1 560.2 462.6 550.4 465.8 545.6C469 540.8 462.8 535.4 465.2 539Z"/>
+                    <path class="land coast" style="fill:#DCC39A;stroke-width:1.5" d="M264 415C264.7 414.3 267.8 418 269 420C270.2 422 271 425.5 271 427C271 428.5 270 429.5 269 429C268 428.5 265.8 426.3 265 424C264.2 421.7 263.3 415.7 264 415Z"/>
+                    <path class="land coast" style="fill:#DCC39A;stroke-width:1.5" d="M275 398C275.8 398 277.2 402.2 277 404C276.8 405.8 274.8 409 274 409C273.2 409 272.2 405.8 272.4 404C272.6 402.2 274.2 398 275 398Z"/>
+                    <path class="land coast" style="fill:#DCC39A;stroke-width:1.5" d="M546 47C547.3 46 554 45.7 558 46C562 46.3 569.7 47.7 570 49C570.3 50.3 563.3 53.5 560 54C556.7 54.5 552.3 53.2 550 52C547.7 50.8 544.7 48 546 47Z"/>
+                    <circle class="land coast" style="fill:#DCC39A;stroke-width:1.5" cx="347" cy="533" r="4"/>
+                    <circle class="land coast" style="fill:#DCC39A;stroke-width:1.5" cx="368" cy="544" r="3"/>
+                    <circle class="land coast" style="fill:#DCC39A;stroke-width:1.5" cx="383" cy="556" r="3.5"/>
+                  </g>
+                  <g aria-hidden="true">
+                    <text class="land-label" x="22" y="262">AFRICA</text>
+                    <text class="land-label land-label--sm" transform="translate(418 760) rotate(-71)">MADAGASCAR</text>
+                    <text class="sea-label" x="372" y="452">INDIAN</text>
+                    <text class="sea-label" x="372" y="476">OCEAN</text>
+                    <text class="sea-label sea-label--sm" transform="translate(262 668) rotate(-58)">MOZAMBIQUE CHANNEL</text>
+                  </g>
+                </g>
+
+                <path class="route-plan" d="M343 68C347.8 66.5 355.8 61.8 372 59C388.2 56.2 415.7 51.7 440 51C464.3 50.3 503.3 48.8 518 55C532.7 61.2 530 72.5 528 88C526 103.5 515.3 128 506 148C496.7 168 486.3 188 472 208C457.7 228 438 248 420 268C402 288 382.7 310.7 364 328C345.3 345.3 323.1 363.2 308 372C292.9 380.8 275.7 376.7 273.4 381C271.1 385.3 292.2 389.8 294 398C295.8 406.2 288.7 423.6 284 430C279.3 436.4 265.5 431.4 265.8 436.4C266.1 441.4 279 447.4 286 460C293 472.6 302.7 494 308 512C313.3 530 318.3 550 318 568C317.7 586 317 602.7 306 620C295 637.3 269.7 659 252 672C234.3 685 212.5 693.9 200 698C187.5 702.1 177.1 692.9 176.8 696.6C176.5 700.3 193.1 707.4 198 720C202.9 732.6 209.3 755.3 206 772C202.7 788.7 187.3 804.3 178 820C168.7 835.7 159 854 150 866C141 878 132.2 886.8 124 892C115.8 897.2 104.8 896.5 101 897.4"/>
+                <path class="route" d="M343 68C347.8 66.5 355.8 61.8 372 59C388.2 56.2 415.7 51.7 440 51C464.3 50.3 503.3 48.8 518 55C532.7 61.2 530 72.5 528 88C526 103.5 515.3 128 506 148C496.7 168 486.3 188 472 208C457.7 228 438 248 420 268C402 288 382.7 310.7 364 328C345.3 345.3 323.1 363.2 308 372C292.9 380.8 275.7 376.7 273.4 381C271.1 385.3 292.2 389.8 294 398C295.8 406.2 288.7 423.6 284 430C279.3 436.4 265.5 431.4 265.8 436.4C266.1 441.4 279 447.4 286 460C293 472.6 302.7 494 308 512C313.3 530 318.3 550 318 568C317.7 586 317 602.7 306 620C295 637.3 269.7 659 252 672C234.3 685 212.5 693.9 200 698C187.5 702.1 177.1 692.9 176.8 696.6C176.5 700.3 193.1 707.4 198 720C202.9 732.6 209.3 755.3 206 772C202.7 788.7 187.3 804.3 178 820C168.7 835.7 159 854 150 866C141 878 132.2 886.8 124 892C115.8 897.2 104.8 896.5 101 897.4" mask="url(#route-mask)" data-route/>
+
+                <g class="port" data-port="djibouti" data-x="343" data-y="68" transform="translate(343 68)">
+                  <circle r="7"/><text x="-14" y="26" text-anchor="end">DJIBOUTI</text>
+                </g>
+                <g class="port" data-port="mombasa" data-x="273.4" data-y="381" transform="translate(273.4 381)">
+                  <circle r="7"/><text x="-14" y="2" text-anchor="end">MOMBASA</text>
+                </g>
+                <g class="port" data-port="dar" data-x="265.8" data-y="436.4" transform="translate(265.8 436.4)">
+                  <circle r="7"/><text x="-14" y="14" text-anchor="end">DAR ES SALAAM</text>
+                </g>
+                <g class="port" data-port="beira" data-x="176.8" data-y="696.6" transform="translate(176.8 696.6)">
+                  <circle r="7"/><text x="-14" y="2" text-anchor="end">BEIRA</text>
+                </g>
+                <g class="port port--home" data-port="durban" data-x="101" data-y="897.4" transform="translate(101 897.4)">
+                  <circle class="ring" r="17"/><circle r="9"/><text x="-16" y="-14" text-anchor="end">DURBAN</text>
+                </g>
+
+                <g class="ship" data-ship transform="translate(343 68)"><g transform="scale(1.45)">
+                  <path class="wake" d="M-23 -4 L-36 -9 M-23 4 L-36 9"/>
+                  <path class="hull" d="M-21 -7 H12 L22 0 L12 7 H-21 Z"/>
+                  <rect class="box-c" x="-14" y="-4.5" width="7" height="9"/>
+                  <rect class="box-a" x="-6" y="-4.5" width="7" height="9"/>
+                  <rect class="box-b" x="2" y="-4.5" width="7" height="9"/>
+                  <rect class="bridge" x="-20" y="-5" width="4.5" height="10"/>
+                </g></g>
+
+                <g class="compass" aria-hidden="true" transform="translate(520 830)">
+                  <path d="M0 -26 L7 6 L0 0 L-7 6 Z"/>
+                  <text x="0" y="-32" text-anchor="middle">N</text>
+                </g>
+                <g class="scale" aria-hidden="true" transform="translate(370 952)">
+                  <line x1="0" x2="180" y1="0" y2="0"/>
+                  <line x1="0" x2="0" y1="-6" y2="6"/><line x1="90" x2="90" y1="-4" y2="4"/><line x1="180" x2="180" y1="-6" y2="6"/>
+                  <text x="0" y="-12">0</text><text x="180" y="-12" text-anchor="end">1 000 km</text>
+                </g>
+                <g aria-hidden="true">
+                  <rect class="neatline" x="-10" y="-10" width="580" height="1000"/>
+                  <rect class="neatline neatline--inner" x="-4" y="-4" width="568" height="988"/>
+                </g>
+              </svg>
+            </div>
+            <figcaption id="chart-cap">Illustrative route. Real lots come on different ships, but the ocean's the same.</figcaption>
+          </figure>
+
+          <ol class="log" aria-label="Ship's log">
+            <li class="log__entry" data-step="0">
+              <p class="log__meta"><b>Day 00</b><span>Djibouti</span><span>11°36′N 43°09′E</span></p>
+              <h3>Ethiopia comes aboard</h3>
+              <p>Ethiopia has no coastline, so its coffee travels by rail from Addis to Djibouti before it goes to sea. Every season we buy from the south: Guji, Sidama, sometimes Yirgacheffe when the cupping table agrees.</p>
+              <ul class="log__cargo" aria-label="Loaded here"><li>Guji · washed</li><li>Sidama · natural</li></ul>
+            </li>
+            <li class="log__entry" data-step="1">
+              <p class="log__meta"><b>Day 06</b><span>Mombasa</span><span>4°03′S 39°40′E</span></p>
+              <h3>Kenya, and a little Uganda</h3>
+              <p>Juicy SL28 and SL34 from Nyeri's red volcanic soil. A truck also brings naturals down from Mount Elgon in Uganda, which go into our house espresso.</p>
+              <ul class="log__cargo" aria-label="Loaded here"><li>Nyeri AA · washed</li><li>Mt Elgon · natural</li></ul>
+            </li>
+            <li class="log__entry" data-step="2">
+              <p class="log__meta"><b>Day 09</b><span>Dar es Salaam</span><span>6°49′S 39°17′E</span></p>
+              <h3>Peaberry and the long road from Kivu</h3>
+              <p>Tanzanian peaberry from Mbeya, plus Rwandan lots that have already travelled 1,400 km by road from the shores of Lake Kivu just to reach the sea.</p>
+              <ul class="log__cargo" aria-label="Loaded here"><li>Mbeya peaberry</li><li>Kivu · red bourbon</li></ul>
+            </li>
+            <li class="log__entry" data-step="3">
+              <p class="log__meta"><b>Day 14</b><span>Beira</span><span>19°50′S 34°50′E</span></p>
+              <h3>The wildcard</h3>
+              <p>Malawi's Misuku Hills grow tiny, wonderful lots that hardly anyone in South Africa roasts. Some seasons we get a few sacks and some seasons we don't. If you see it on the list, don't wait.</p>
+              <ul class="log__cargo" aria-label="Loaded here"><li>Misuku · washed geisha (seasonal)</li></ul>
+            </li>
+            <li class="log__entry log__entry--home" data-step="4">
+              <p class="log__meta"><b>Day 19</b><span>Durban · ZADUR</span><span>29°52′S 31°01′E</span></p>
+              <h3>Customs cleared. Drum's hot.</h3>
+              <p>The container is cleared at the port, the sacks are trucked a few hundred metres to Maydon Wharf, and by day 21 the first batch is in the drum. Most coffee in South Africa sits for months before roasting. Ours is roasted within days of landing.</p>
+              <ul class="log__cargo" aria-label="What happens next"><li>Roasted Tue &amp; Thu</li><li>Delivered Wed &amp; Fri</li></ul>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- MANIFEST LEDGER (signature #2) -------------------------------------->
+    <section class="section cargo" id="cargo" aria-labelledby="cargo-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Ship's manifest · Week 47</p>
+            <h2 id="cargo-title" class="h2">This week's cargo</h2>
+          </div>
+          <div>
+            <p>Five lots, all cupped, cleared and roasting now. Bags are 250&nbsp;g of whole bean, or we'll grind it for your plunger, moka pot, AeroPress or espresso machine.</p>
+            <p class="cargo__meta"><span>Roasted: Tue 17 &amp; Thu 19 Nov</span><span>Next roast: Tue 24 Nov</span></p>
+          </div>
+        </div>
+
+        <div class="ledger__head" aria-hidden="true">
+          <span class="label">Lot</span><span class="label">Origin &amp; producer</span><span class="label">Process</span><span class="label">Tastes like</span><span class="label">Roast</span><span class="label">250 g</span>
+        </div>
+        <ol class="ledger" aria-label="Coffees available this week">
+          <li class="lot">
+            <p class="lot__no"><small>Lot</small>0412</p>
+            <div class="lot__origin lot__cell"><h3>Ethiopia</h3><p>Guji · Hambela smallholders</p></div>
+            <div class="lot__cell"><span class="label">Process</span>Washed heirloom<p class="stamp" data-stamp style="--rot:-7deg">Cleared<small>ZADUR · 03 Nov</small></p></div>
+            <div class="lot__cell"><span class="label">Tastes like</span><p class="lot__notes">Jasmine, naartjie peel, black tea</p></div>
+            <div class="lot__cell"><span class="label">Roast</span><span class="beans" role="img" aria-label="Light roast, 1 of 5"><span class="bean is-full"></span><span class="bean"></span><span class="bean"></span><span class="bean"></span><span class="bean"></span></span></div>
+            <div class="lot__cell lot__price"><span class="label visually-hidden">Price per 250 g</span><strong>R225</strong></div>
+          </li>
+          <li class="lot">
+            <p class="lot__no"><small>Lot</small>0409</p>
+            <div class="lot__origin lot__cell"><h3>Kenya</h3><p>Nyeri · smallholder co-op, AA</p></div>
+            <div class="lot__cell"><span class="label">Process</span>Washed SL28 / SL34<p class="stamp stamp--rust" data-stamp style="--rot:5deg">Cupped<small>88 points</small></p></div>
+            <div class="lot__cell"><span class="label">Tastes like</span><p class="lot__notes">Blackcurrant, pink grapefruit, brown sugar</p></div>
+            <div class="lot__cell"><span class="label">Roast</span><span class="beans" role="img" aria-label="Light to medium roast, 2 of 5"><span class="bean is-full"></span><span class="bean is-full"></span><span class="bean"></span><span class="bean"></span><span class="bean"></span></span></div>
+            <div class="lot__cell lot__price"><span class="label visually-hidden">Price per 250 g</span><strong>R245</strong></div>
+          </li>
+          <li class="lot">
+            <p class="lot__no"><small>Lot</small>0415</p>
+            <div class="lot__origin lot__cell"><h3>Rwanda</h3><p>Nyamasheke · Lake Kivu</p></div>
+            <div class="lot__cell"><span class="label">Process</span>Natural red bourbon<p class="stamp stamp--rust" data-stamp style="--rot:-10deg">Limited<small>32 bags left</small></p></div>
+            <div class="lot__cell"><span class="label">Tastes like</span><p class="lot__notes">Strawberry jam, hibiscus, cacao nib</p></div>
+            <div class="lot__cell"><span class="label">Roast</span><span class="beans" role="img" aria-label="Light to medium roast, 2 of 5"><span class="bean is-full"></span><span class="bean is-full"></span><span class="bean"></span><span class="bean"></span><span class="bean"></span></span></div>
+            <div class="lot__cell lot__price"><span class="label visually-hidden">Price per 250 g</span><strong>R260</strong></div>
+          </li>
+          <li class="lot">
+            <p class="lot__no"><small>Lot</small>0402</p>
+            <div class="lot__origin lot__cell"><h3>Tanzania</h3><p>Mbeya · peaberry</p></div>
+            <div class="lot__cell"><span class="label">Process</span>Washed, sun-dried<p class="stamp" data-stamp style="--rot:4deg">New arrival<small>Landed 14 Nov</small></p></div>
+            <div class="lot__cell"><span class="label">Tastes like</span><p class="lot__notes">Ripe apricot, golden syrup, a pinch of spice</p></div>
+            <div class="lot__cell"><span class="label">Roast</span><span class="beans" role="img" aria-label="Medium roast, 3 of 5"><span class="bean is-full"></span><span class="bean is-full"></span><span class="bean is-full"></span><span class="bean"></span><span class="bean"></span></span></div>
+            <div class="lot__cell lot__price"><span class="label visually-hidden">Price per 250 g</span><strong>R205</strong></div>
+          </li>
+          <li class="lot">
+            <p class="lot__no"><small>Blend</small>0398</p>
+            <div class="lot__origin lot__cell"><h3>Harbour Lights</h3><p>Uganda Mt Elgon + Tanzania</p></div>
+            <div class="lot__cell"><span class="label">Process</span>Natural + washed<p class="stamp" data-stamp style="--rot:-5deg">House blend<small>Since 2020</small></p></div>
+            <div class="lot__cell"><span class="label">Tastes like</span><p class="lot__notes">Milk chocolate, roasted macadamia, molasses. Built for flat whites</p></div>
+            <div class="lot__cell"><span class="label">Roast</span><span class="beans" role="img" aria-label="Medium to dark roast, 4 of 5"><span class="bean is-full"></span><span class="bean is-full"></span><span class="bean is-full"></span><span class="bean is-full"></span><span class="bean"></span></span></div>
+            <div class="lot__cell lot__price"><span class="label visually-hidden">Price per 250 g</span><strong>R185</strong></div>
+          </li>
+        </ol>
+
+        <div class="ledger__foot">
+          <a class="btn" href="https://wa.me/27310000000?text=Howzit%20Manifest%2C%20I%27d%20like%20to%20order%20some%20coffee">Order on WhatsApp <span class="btn__arrow" aria-hidden="true">→</span></a>
+          <p>You can also pop in to the roastery, or set up a <a href="services.html#standing-order">Standing Order</a> so you never run out on a Monday morning.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISIT + WHOLESALE --------------------------------------------------->
+    <section class="split" aria-label="Visit us, or buy wholesale">
+      <div class="split__visit">
+        <div class="split__visit-inner">
+          <div>
+            <p class="eyebrow">Port of call</p>
+            <h2 class="h2">Come say howzit</h2>
+            <p class="lead">There's a small counter at the front of the warehouse with the roaster just behind it. Watch a batch drop, taste whatever's on filter, and leave smelling like a Tuesday morning.</p>
+            <dl class="hours">
+              <div><dt>Tue – Fri</dt><dd>7:00 – 15:00</dd></div>
+              <div><dt>Saturday</dt><dd>8:00 – 13:00 · cupping at 9</dd></div>
+              <div><dt>Sun – Mon</dt><dd>Closed (the drum needs a rest)</dd></div>
+            </dl>
+            <a class="btn btn--ghost" href="contact.html">Directions &amp; parking <span class="btn__arrow" aria-hidden="true">→</span></a>
+          </div>
+          <svg class="split__bag" viewBox="0 0 160 230" aria-hidden="true" focusable="false">
+            <path d="M18 34 L142 34 L152 222 L8 222 Z" fill="#DCC39A" stroke="#14202B" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M18 34 L142 34 L139 10 L21 10 Z" fill="#C9AA78" stroke="#14202B" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="12" y="28" width="136" height="7" fill="#14202B"/>
+            <circle cx="80" cy="62" r="8" fill="#F3EADB" stroke="#14202B" stroke-width="2.5"/>
+            <circle cx="80" cy="62" r="3" fill="#14202B"/>
+            <rect x="22" y="84" width="116" height="112" fill="#F3EADB" stroke="#14202B" stroke-width="2.5"/>
+            <text x="80" y="120" text-anchor="middle" font-family="Big Shoulders Stencil, Impact, sans-serif" font-weight="900" font-size="25" fill="#14202B">MANIFEST</text>
+            <line x1="32" x2="128" y1="130" y2="130" stroke="#B03A0A" stroke-width="3"/>
+            <text x="80" y="150" text-anchor="middle" font-family="Courier Prime, monospace" font-weight="700" font-size="12" fill="#14202B">LOT 0412</text>
+            <text x="80" y="166" text-anchor="middle" font-family="Courier Prime, monospace" font-size="9.5" fill="#14202B">ETHIOPIA · GUJI</text>
+            <text x="80" y="183" text-anchor="middle" font-family="Courier Prime, monospace" font-size="9.5" fill="#14202B">250 G · WHOLE BEAN</text>
+          </svg>
+        </div>
+      </div>
+      <div class="split__trade on-dark">
+        <p class="eyebrow">Wholesale</p>
+        <h2 class="h2">Running a café?</h2>
+        <p class="lead">We roast for around thirty counters between Umhlanga and Pietermaritzburg. Weekly roasting, next-day delivery, and a trainer who'll come and dial in your grinder when the humidity throws it off.</p>
+        <ul>
+          <li>Roasted Tuesday, on your counter Wednesday</li>
+          <li>Free barista training for new teams</li>
+          <li>Seasonal single origins for your filter menu</li>
+        </ul>
+        <a class="btn btn--crane" href="services.html#wholesale">Wholesale details <span class="btn__arrow" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer on-dark">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__lede">
+          <p>Speciality coffee, landed at Durban harbour and roasted a few hundred metres from the quay. Roasting since 2019. The popcorn machine retired in 2020.</p>
+        </div>
+        <div class="footer__col">
+          <h2>Find us</h2>
+          <ul>
+            <li>Unit 4, The Bond Store</li>
+            <li>Off Maydon Wharf Road, Durban</li>
+            <li class="mono">29°52′S 31°01′E</li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h2>Pages</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer__col footer__col--wide">
+          <h2>Say howzit</h2>
+          <ul>
+            <li><a href="mailto:hello@manifestroasters.example">hello@manifestroasters.example</a></li>
+            <li><a href="https://wa.me/27310000000">WhatsApp +27 31 000 0000</a></li>
+            <li>Instagram @manifest.roasters</li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer__word" aria-hidden="true">Manifest</p>
+      <div class="footer__small">
+        <p>© <span data-year>2026</span> Manifest Coffee Roasters · Durban, KwaZulu-Natal</p>
+        <p aria-hidden="true">MNFU 204611 7 · Contents: good news</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>

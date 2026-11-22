@@ -6,3 +6,6 @@ venv/
 .env
 *.csv
 *.png
+
+# Website review screenshots are committed on purpose
+!site/screenshots/*.png
