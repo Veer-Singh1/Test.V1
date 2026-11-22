@@ -1,0 +1,3159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#140d1c">
+<title>Dead Facets</title>
+<style>
+  :root {
+    --gold: #ffc94a; --orange: #ff8a3d; --red: #ff4d5a; --green: #5fd068; --blue: #4aa8ff;
+    --panel: rgba(20, 13, 28, .9); --line: rgba(255, 255, 255, .1); --text: #fff4e6; --dim: #b4a3bf; --off: #6d6278;
+    --cut: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    --cut-sm: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; height: 100%; overflow: hidden; background: #140d1c; color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; touch-action: none;
+  }
+  #game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  #game.aiming { cursor: crosshair; }
+  .hidden { display: none !important; }
+  body.touch .kb { display: none; }   /* no keyboard hints on touch screens */
+
+  /* ---------- low-poly icons drawn with clip-path ---------- */
+  .heart  { display: inline-block; width: 18px; height: 16px; background: linear-gradient(160deg, #ff8a8a, #e0303e);
+            clip-path: polygon(50% 100%, 0 42%, 0 14%, 14% 0, 36% 0, 50% 16%, 64% 0, 86% 0, 100% 14%, 100% 42%); }
+  .shield { display: inline-block; width: 16px; height: 18px; background: linear-gradient(160deg, #a8d8ff, #3a7ae0);
+            clip-path: polygon(50% 0, 100% 16%, 94% 60%, 50% 100%, 6% 60%, 0 16%); }
+  .gem    { display: inline-block; width: 14px; height: 18px; vertical-align: -3px;
+            background: linear-gradient(135deg, #fff3b0, #ffc94a 45%, #c97a10); clip-path: polygon(50% 0, 100% 38%, 50% 100%, 0 38%); }
+  .gem.sm { width: 10px; height: 13px; vertical-align: -1px; }
+  .medkit { display: inline-block; background:
+            linear-gradient(#e0303e, #e0303e) center / 22% 64% no-repeat,
+            linear-gradient(#e0303e, #e0303e) center / 64% 22% no-repeat, linear-gradient(#ffffff, #cfc6d8); clip-path: var(--cut-sm); }
+  .crate  { display: inline-block; background:
+            repeating-linear-gradient(90deg, rgba(0,0,0,.25) 0 2px, transparent 2px 33%), linear-gradient(#c9934a, #8a5a2a); clip-path: var(--cut-sm); }
+
+  /* ---------- buttons ---------- */
+  .btn {
+    appearance: none; border: 0; cursor: pointer; font: inherit; font-weight: 900; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--text); padding: 12px 22px; white-space: nowrap;
+    background: linear-gradient(#45325a, #2c1f3b); clip-path: var(--cut-sm); transition: filter .15s, transform .06s;
+  }
+  .btn:hover { filter: brightness(1.25); }
+  .btn:active { transform: translateY(1px) scale(.98); }
+  .btn.primary { background: linear-gradient(#ffb15a, #ee5a24); color: #2a1206; }
+  .btn.danger  { background: linear-gradient(#ff6b78, #b8283a); }
+  .btn.sel     { background: linear-gradient(#ffd36b, #e0a020); color: #2a1606; }
+  .btn.disabled, .btn.disabled:hover { background: #2a2433; color: var(--off); filter: none; cursor: not-allowed; }
+  .btn.disabled .gem { filter: grayscale(1) brightness(.6); }
+  .btn.big { padding: 16px; font-size: 18px; }
+  .btn.small { padding: 8px 14px; font-size: 13px; }
+
+  /* ---------- HUD ---------- */
+  #hud { position: fixed; inset: 0; pointer-events: none; z-index: 10; text-shadow: 0 2px 0 rgba(0,0,0,.55); }
+  #hud button { pointer-events: auto; }
+  #hud-tl { position: absolute; left: max(12px, env(safe-area-inset-left)); top: max(10px, env(safe-area-inset-top)); width: min(250px, 44vw); }
+  .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-weight: 900; font-size: 14px; }
+  .bar-row b { min-width: 30px; }
+  .bar { flex: 1; height: 14px; background: rgba(0,0,0,.5); position: relative; overflow: hidden;
+         clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); }
+  .bar > i { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: linear-gradient(#ff8070, #d8283a); transition: width .12s; }
+  .bar.thin { height: 9px; }
+  #ar-fill { background: linear-gradient(#8fd0ff, #3a7ae0); }
+  #hud-tr { position: absolute; right: max(12px, env(safe-area-inset-right)); top: max(10px, env(safe-area-inset-top)); text-align: right; }
+  .coins { display: flex; align-items: center; gap: 7px; justify-content: flex-end; font-weight: 900; font-size: 22px; color: var(--gold); }
+  .icon-btn { width: 36px; height: 34px; padding: 0; font-size: 14px; margin-left: 8px; }
+  #wave-num { font-weight: 900; font-size: 20px; color: #ffd36b; letter-spacing: .06em; margin-top: 4px; }
+  #kills-num, #left-num { font-size: 12px; color: var(--dim); font-weight: 800; letter-spacing: .12em; }
+  #boss { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: min(460px, 46vw); text-align: center; }
+  .boss-name { font-weight: 900; letter-spacing: .2em; color: #ff7a9a; font-size: 13px; margin-bottom: 4px; }
+  #boss .bar { height: 16px; }
+  #boss-fill { background: linear-gradient(#ff6b9a, #a01848) !important; }
+  #banner { position: absolute; top: 26%; left: 0; right: 0; text-align: center; opacity: 0; transform: translateY(-12px); transition: opacity .3s, transform .3s; }
+  #banner.show { opacity: 1; transform: none; }
+  #banner-title { font-size: clamp(38px, 8vw, 76px); font-weight: 900; letter-spacing: .06em; text-shadow: 0 5px 0 rgba(0,0,0,.45); }
+  #banner-sub { font-size: clamp(13px, 2.6vw, 20px); font-weight: 800; letter-spacing: .16em; }
+  #break { position: absolute; top: 74px; left: 50%; transform: translateX(-50%); text-align: center; }
+  #break-text { font-weight: 900; font-size: 20px; color: var(--gold); margin-bottom: 8px; letter-spacing: .06em; }
+  #break .row { display: flex; gap: 8px; justify-content: center; }
+  #bottom { position: absolute; left: 50%; bottom: max(12px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  #gun-info { font-weight: 900; font-size: 18px; letter-spacing: .05em; white-space: nowrap; }
+  #gun-ammo { color: var(--gold); margin-left: 8px; }
+  #gun-ammo.low { color: #ff9a50; } #gun-ammo.out { color: var(--red); }
+  #gun-res { color: var(--dim); font-size: 15px; margin-left: 6px; }
+  #reload { width: 150px; } #reload .bar > i { background: linear-gradient(#ffe08a, #e0a020); transition: none; }
+  #slots { display: flex; gap: 6px; }
+  .slot { pointer-events: auto; width: 60px; height: 44px; position: relative; padding: 0; cursor: pointer; border: 0;
+          background: rgba(20,13,28,.78); clip-path: var(--cut-sm); outline: 2px solid transparent; outline-offset: -2px; }
+  .slot img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .slot .n { position: absolute; left: 5px; top: 2px; font-size: 11px; font-weight: 900; color: var(--dim); }
+  .slot.sel { outline-color: var(--gold); background: rgba(90, 64, 18, .85); }
+  .slot.sel .n { color: var(--gold); }
+  .slot.locked img { filter: grayscale(1) brightness(.3); }
+  .slot.locked::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 14px; margin: -6px 0 0 -6px;
+          background: #8a7f96; clip-path: polygon(20% 40%, 20% 15%, 35% 0, 65% 0, 80% 15%, 80% 40%, 100% 40%, 100% 100%, 0 100%, 0 40%, 32% 40%, 32% 20%, 68% 20%, 68% 40%); }
+  .slot.empty { background: rgba(130, 24, 36, .8); }
+  #reload-btn { position: absolute; right: max(16px, env(safe-area-inset-right)); bottom: 250px; }   /* sits above the aim stick */
+  #toast { position: fixed; left: 50%; bottom: 128px; transform: translateX(-50%); z-index: 30; padding: 8px 16px; font-weight: 900;
+           letter-spacing: .06em; background: rgba(14,8,20,.85); clip-path: var(--cut-sm); opacity: 0; transition: opacity .25s; pointer-events: none; white-space: nowrap; }
+  #toast.show { opacity: 1; }
+  #popups { position: fixed; inset: 0; pointer-events: none; z-index: 9; overflow: hidden; }
+  .pop { position: absolute; left: 0; top: 0; font-weight: 900; font-size: 20px; color: var(--gold); text-shadow: 0 2px 0 #000; will-change: transform, opacity; }
+  @media (max-width: 640px) {
+    #boss { top: 92px; width: 86vw; } #break { top: 112px; }
+    .slot { width: 48px; height: 36px; } #gun-info { font-size: 15px; }
+  }
+
+  /* ---------- touch joysticks (octagons, to match the low-poly look) ---------- */
+  #touch { position: fixed; inset: 0; z-index: 5; touch-action: none; }
+  .stick { position: absolute; width: 120px; height: 120px; margin: -60px 0 0 -60px; background: rgba(255,255,255,.08); opacity: .45;
+           clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%); pointer-events: none; }
+  .stick.active { opacity: 1; }
+  .stick .knob { position: absolute; left: 50%; top: 50%; width: 54px; height: 54px; margin: -27px 0 0 -27px; background: rgba(255,255,255,.4);
+           clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%); }
+  #stick-aim .knob { background: rgba(255,130,80,.7); }
+  .stick-label { position: absolute; bottom: -22px; left: 0; right: 0; text-align: center; font-size: 11px; font-weight: 900; letter-spacing: .14em; color: rgba(255,255,255,.6); }
+
+  /* ---------- screens & panels ---------- */
+  .screen { position: fixed; inset: 0; z-index: 20; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px; }
+  .screen.dim { background: rgba(14, 8, 20, .62); }
+  .panel { background: var(--panel); clip-path: var(--cut); padding: 22px 24px; max-width: 96vw; max-height: 92vh; overflow: auto; }
+  .panel h2 { margin: 0 0 14px; font-size: 28px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); text-align: center; }
+  #screen-title { background: radial-gradient(ellipse at center, rgba(0,0,0,0) 35%, rgba(10,5,15,.6)); }
+  .logo { margin: 0; text-align: center; font-size: clamp(52px, 12vw, 124px); font-weight: 900; line-height: .88; letter-spacing: .02em;
+          color: #fff1de; text-shadow: 0 6px 0 #7a2333, 0 14px 30px rgba(0,0,0,.5); }
+  .logo span { display: block; color: var(--orange); text-shadow: 0 6px 0 #5a1a0e, 0 14px 30px rgba(0,0,0,.5); }
+  .tag { letter-spacing: .32em; text-transform: uppercase; font-weight: 800; color: #ffe0c4; margin: 16px 0 26px;
+         font-size: clamp(11px, 2.4vw, 15px); text-shadow: 0 2px 0 rgba(0,0,0,.6); text-align: center; }
+  .menu { display: flex; flex-direction: column; gap: 10px; width: min(290px, 80vw); }
+  .title-foot { position: absolute; bottom: max(14px, env(safe-area-inset-bottom)); left: 16px; right: 16px; display: flex; align-items: center; gap: 10px;
+                font-weight: 900; text-shadow: 0 2px 0 rgba(0,0,0,.6); flex-wrap: wrap; }
+  .title-foot .coins { font-size: 20px; }
+  .title-foot .best { color: var(--dim); letter-spacing: .1em; font-size: 13px; }
+  .title-foot .btn { margin-left: auto; }
+  .howto { width: min(820px, 96vw); }
+  .howto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px; }
+  @media (max-width: 640px) { .howto-grid { grid-template-columns: 1fr; } }
+  .howto h3 { margin: 0 0 8px; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; }
+  .keys { display: grid; grid-template-columns: auto 1fr; gap: 5px 12px; font-size: 14px; font-weight: 700; }
+  .keys kbd { font: inherit; font-weight: 900; color: var(--gold); }
+  .zlist div { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 14px; font-weight: 700; }
+  .zlist b { font-weight: 900; } .zlist small { color: var(--dim); font-weight: 700; }
+  .note { color: var(--dim); font-size: 13px; font-weight: 600; line-height: 1.45; margin: 14px 0 0; }
+  .center-row { display: flex; justify-content: center; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .stack { display: flex; flex-direction: column; gap: 10px; width: min(300px, 80vw); margin: 0 auto; }
+  .over-title { font-size: clamp(48px, 10vw, 96px); font-weight: 900; color: var(--red); margin: 0 0 10px; text-align: center; text-shadow: 0 6px 0 #4a0a12; letter-spacing: .04em; }
+  .results { display: grid; grid-template-columns: 1fr auto; gap: 6px 28px; font-weight: 800; font-size: 16px; margin: 0 auto 8px; width: min(320px, 80vw); }
+  .results span { color: var(--dim); } .results b { color: var(--gold); text-align: right; }
+  #new-best { text-align: center; color: var(--green); font-weight: 900; letter-spacing: .14em; margin-bottom: 12px; }
+
+  /* ---------- shop ---------- */
+  .shop { width: min(1000px, 97vw); height: min(660px, 94vh); display: flex; flex-direction: column; background: rgba(20,13,28,.95); clip-path: var(--cut); }
+  .shop header { display: flex; align-items: center; gap: 14px; padding: 12px 18px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .shop h2 { margin: 0; font-size: 26px; font-weight: 900; color: var(--gold); letter-spacing: .08em; text-transform: uppercase; }
+  .tabs { display: flex; gap: 6px; }
+  .shop header .coins { margin-left: auto; }
+  .shop-body { flex: 1; min-height: 0; overflow: auto; padding: 14px 18px; }
+  .armory { display: grid; grid-template-columns: 270px 1fr; gap: 16px; min-height: 100%; }
+  #gun-list { display: flex; flex-direction: column; gap: 6px; }
+  .gun-item { display: flex; align-items: center; gap: 10px; padding: 6px 10px; cursor: pointer; background: rgba(255,255,255,.04);
+              clip-path: var(--cut-sm); outline: 2px solid transparent; outline-offset: -2px; }
+  .gun-item:hover { background: rgba(255,255,255,.08); }
+  .gun-item.sel { outline-color: var(--gold); background: rgba(255,200,80,.1); }
+  .gun-item img { width: 70px; height: 42px; object-fit: contain; flex: none; }
+  .gun-item .nm { font-weight: 900; font-size: 14px; letter-spacing: .04em; }
+  .gun-item .st { font-size: 12px; font-weight: 900; margin-top: 2px; }
+  .gun-item.cant .nm { color: var(--off); }
+  .price { color: var(--gold); } .price.no { color: var(--off); } .owned { color: var(--green); } .equipped { color: var(--gold); }
+  #gun-detail { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .preview-wrap { height: 180px; flex: none; background: radial-gradient(ellipse at center, rgba(255,150,70,.25), rgba(0,0,0,0) 70%); }
+  #preview { width: 100%; height: 100%; display: block; }
+  .detail-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .detail-head h3 { margin: 0; font-size: 22px; font-weight: 900; letter-spacing: .04em; }
+  .detail-head .btn { margin-left: auto; }
+  .desc { color: var(--dim); font-size: 13px; font-weight: 700; margin-top: 2px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stats { display: grid; grid-template-columns: 78px 1fr 74px; gap: 6px 10px; font-size: 12px; font-weight: 900; align-items: center; letter-spacing: .04em; }
+  .stats span { color: var(--dim); } .stats b { text-align: right; }
+  .stat-bar { height: 8px; background: rgba(255,255,255,.08); clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%); }
+  .stat-bar i { display: block; height: 100%; background: linear-gradient(90deg, #ffb04a, #ff6a3d); }
+  .upgs { display: flex; flex-direction: column; gap: 8px; }
+  .upg { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 900; letter-spacing: .06em; }
+  .upg .lbl { width: 76px; } .upg .btn { margin-left: auto; min-width: 116px; }
+  .pips { display: flex; gap: 3px; } .pip { width: 12px; height: 12px; background: rgba(255,255,255,.14); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+  .pip.on { background: var(--gold); }
+  .bonus { color: var(--green); min-width: 40px; }
+  .ammo-row { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 900; color: var(--dim); min-height: 34px; }
+  .ammo-row .btn { margin-left: auto; }
+  .supplies { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+  .supply { display: flex; align-items: center; gap: 14px; padding: 14px; background: rgba(255,255,255,.04); clip-path: var(--cut-sm); }
+  .supply .icon { width: 42px; height: 40px; flex: none; }
+  .supply .nm { font-weight: 900; font-size: 16px; } .supply .ds { color: var(--dim); font-size: 12px; font-weight: 700; margin-top: 2px; }
+  .supply .stt { color: #8fc8ff; font-size: 12px; font-weight: 900; margin-top: 4px; } .supply .stt.full { color: var(--green); }
+  .supply .btn { margin-left: auto; }
+  .supply-note { grid-column: 1 / -1; text-align: center; color: var(--dim); font-weight: 800; }
+  .shop footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 18px; border-top: 1px solid var(--line); }
+  #shop-timer { font-weight: 900; letter-spacing: .06em; } #shop-timer.urgent { color: var(--red); }
+  @media (max-width: 760px) {
+    .armory { grid-template-columns: 1fr; }
+    #gun-list { display: grid; grid-template-columns: 1fr 1fr; }
+    .gun-item img { width: 52px; height: 32px; }
+    .cols { grid-template-columns: 1fr; }
+    .preview-wrap { height: 140px; }
+    .shop h2 { font-size: 22px; }
+  }
+
+  #loading, #error { z-index: 50; background: #140d1c; font-weight: 900; letter-spacing: .2em; text-align: center; }
+  #error p { font-weight: 600; letter-spacing: normal; color: var(--dim); max-width: 440px; }
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+
+<!-- ======================= HUD ======================= -->
+<div id="hud" class="hidden">
+  <div id="hud-tl">
+    <div class="bar-row"><span class="heart"></span><div class="bar"><i id="hp-fill"></i></div><b id="hp-num">100</b></div>
+    <div class="bar-row"><span class="shield"></span><div class="bar thin"><i id="ar-fill"></i></div><b id="ar-num">0</b></div>
+  </div>
+  <div id="hud-tr">
+    <div class="coins"><span class="gem"></span><b id="coin-num">0</b><button id="pause-btn" class="btn icon-btn" aria-label="Pause">II</button></div>
+    <div id="wave-num">WAVE 1</div>
+    <div id="kills-num">KILLS 0</div>
+    <div id="left-num">LEFT 0</div>
+  </div>
+  <div id="boss" class="hidden"><div class="boss-name" id="boss-name">THE ROT KING</div><div class="bar"><i id="boss-fill"></i></div></div>
+  <div id="break" class="hidden">
+    <div id="break-text">NEXT WAVE IN 30</div>
+    <div class="row"><button class="btn small" id="break-shop">Shop <span class="kb">[B]</span></button><button class="btn small primary" id="break-next">Start <span class="kb">[N]</span></button></div>
+  </div>
+  <div id="banner"><div id="banner-title"></div><div id="banner-sub"></div></div>
+  <div id="bottom">
+    <div id="gun-info"><span id="gun-name">PISTOL</span><span id="gun-ammo">12/12</span><span id="gun-res">∞</span></div>
+    <div id="reload" class="hidden"><div class="bar thin"><i id="reload-fill"></i></div></div>
+    <div id="slots"></div>
+  </div>
+  <button id="reload-btn" class="btn small hidden">Reload</button>
+</div>
+<div id="touch" class="hidden">
+  <div class="stick" id="stick-move"><div class="knob"></div><div class="stick-label">MOVE</div></div>
+  <div class="stick" id="stick-aim"><div class="knob"></div><div class="stick-label">AIM + FIRE</div></div>
+</div>
+<div id="popups"></div>
+<div id="toast"></div>
+
+<!-- ======================= SCREENS ======================= -->
+<div id="screen-title" class="screen hidden">
+  <h1 class="logo">DEAD<span>FACETS</span></h1>
+  <p class="tag">A low-poly zombie shooter</p>
+  <div class="menu">
+    <button class="btn primary big" id="btn-play">Play</button>
+    <button class="btn big" id="btn-shop">Shop</button>
+    <button class="btn big" id="btn-howto">How to Play</button>
+  </div>
+  <div class="title-foot">
+    <div class="coins"><span class="gem"></span><b id="title-coins">0</b></div>
+    <span class="best" id="title-best">BEST WAVE 0</span>
+    <button class="btn small" id="btn-mute">Sound: On</button>
+  </div>
+</div>
+
+<div id="screen-howto" class="screen dim hidden">
+  <div class="panel howto">
+    <h2>How to Play</h2>
+    <div class="howto-grid">
+      <div>
+        <h3 style="color:var(--green)">Controls</h3>
+        <div class="keys">
+          <kbd>WASD / Arrows</kbd><span>Move</span>
+          <kbd>Mouse</kbd><span>Aim (you face the cursor)</span>
+          <kbd>Click / Hold</kbd><span>Shoot</span>
+          <kbd>R / Right-click</kbd><span>Reload</span>
+          <kbd>1–6 / Wheel</kbd><span>Switch gun</span>
+          <kbd>B / N</kbd><span>Shop / next wave (between waves)</span>
+          <kbd>P / Esc</kbd><span>Pause</span>
+          <kbd>M</kbd><span>Mute</span>
+        </div>
+        <p class="note"><b>Touch:</b> left stick moves, right stick aims and fires. Tap the gun slots to switch.</p>
+      </div>
+      <div>
+        <h3 style="color:var(--red)">The Horde</h3>
+        <div class="zlist" id="howto-zombies"></div>
+        <p class="note">Coin gems drop from every kill — walk over them. Coins, guns and upgrades are saved between runs.
+          The shop opens between waves. The sun sets as the waves climb… and the night turns red.</p>
+      </div>
+    </div>
+    <div class="center-row"><button class="btn" id="howto-back">Back</button></div>
+  </div>
+</div>
+
+<div id="screen-shop" class="screen dim hidden">
+  <div class="shop">
+    <header>
+      <h2>Shop</h2>
+      <div class="tabs"><button class="btn small" data-act="tab" data-id="armory">Armory</button><button class="btn small" data-act="tab" data-id="supplies">Supplies</button></div>
+      <div class="coins"><span class="gem"></span><b id="shop-coins">0</b></div>
+    </header>
+    <div class="shop-body">
+      <div id="tab-armory" class="armory">
+        <div id="gun-list"></div>
+        <div id="gun-detail">
+          <div class="preview-wrap"><canvas id="preview"></canvas></div>
+          <div id="gun-detail-body"></div>
+        </div>
+      </div>
+      <div id="tab-supplies" class="supplies hidden"></div>
+    </div>
+    <footer>
+      <button class="btn" data-act="close" id="shop-close">Close</button>
+      <div id="shop-timer"></div>
+      <button class="btn primary" data-act="next" id="shop-next">Next Wave</button>
+    </footer>
+  </div>
+</div>
+
+<div id="screen-pause" class="screen dim hidden">
+  <div class="panel">
+    <h2>Paused</h2>
+    <div class="stack">
+      <button class="btn primary big" id="pause-resume">Resume</button>
+      <button class="btn big" id="pause-restart">Restart</button>
+      <button class="btn big" id="pause-sound">Sound: On</button>
+      <button class="btn danger big" id="pause-quit">Quit to Menu</button>
+    </div>
+    <p class="note" style="text-align:center">P / Esc to resume</p>
+  </div>
+</div>
+
+<div id="screen-over" class="screen dim hidden">
+  <div class="panel">
+    <div class="over-title">YOU DIED</div>
+    <div class="results">
+      <span>Wave reached</span><b id="res-wave">0</b>
+      <span>Zombies killed</span><b id="res-kills">0</b>
+      <span>Coins earned</span><b id="res-coins">0</b>
+      <span>Best wave</span><b id="res-best">0</b>
+    </div>
+    <div id="new-best" class="hidden">NEW BEST!</div>
+    <div class="stack">
+      <button class="btn primary big" id="over-restart">Restart</button>
+      <button class="btn big" id="over-shop">Shop</button>
+      <button class="btn big" id="over-menu">Main Menu</button>
+    </div>
+  </div>
+</div>
+
+<div id="loading" class="screen">LOADING…</div>
+<div id="error" class="screen hidden"><div>COULDN'T START THE GAME</div><p id="error-msg"></p></div>
+
+<script type="module">
+/* =========================================================================
+   DEAD FACETS — a low-poly zombie shooter (Three.js, single file)
+   -------------------------------------------------------------------------
+   Everything is built from primitive geometry (boxes, cylinders, cones,
+   icosahedrons…) with flat shading. No models, no textures, no images.
+   Sounds are synthesised with the Web Audio API.
+
+   Layout of this script
+     1.  CONFIG ............ every balance number: player, waves, zombies,
+                             guns, upgrades, shop. Tweak the game here!
+     2.  Three.js loader, utilities, save data, audio
+     3.  Renderer, camera, lights, sky & day→night cycle
+     4.  Geometry baking helpers, shared materials
+     5.  World (ground, props, colliders), player & gun models
+     6.  Zombie rigs (instanced), effect pools (tracers, shards, coins…)
+     7.  Input (keyboard, mouse, twin virtual joysticks)
+     8.  Game flow (runs, waves, shop open/close)
+     9.  Gameplay (player, guns, bullets, zombies, boss, explosions, coins)
+     10. UI (HUD, shop with 3D gun previews, screens)
+     11. Main loop & boot
+   ========================================================================= */
+
+// =========================================================================
+// 1. CONFIG — all gameplay & balance numbers live here
+// =========================================================================
+const CONFIG = {
+  graphics: {
+    maxPixelRatio: 2,        // desktop render resolution cap
+    mobilePixelRatio: 1.5,   // phones render at a lower resolution for speed
+    shadows: true,
+    shadowMapSize: 2048,
+    mobileShadowMapSize: 1024,
+  },
+  camera: {
+    fov: 42,
+    height: 18,              // camera height above the player
+    distance: 14,            // horizontal distance behind the player
+    yaw: Math.PI / 4,        // 45° = classic isometric angle
+    followSharpness: 6,      // higher = snappier follow
+    lookAhead: 0.18,         // camera leans towards where you aim
+    portraitZoomOut: 1.0,    // pulls the camera back on tall/narrow screens
+  },
+  world: {
+    arenaSize: 26,           // half-width of the square play area (world units)
+    nightAtWave: 10,         // full night (blood moon) is reached by this wave
+    propSeed: 7,             // change for a different prop layout
+  },
+  audio: { volume: 0.45 },
+
+  player: {
+    maxHealth: 100,
+    maxArmor: 100,
+    armorAbsorb: 0.75,       // share of each hit soaked up by armour
+    speed: 7,                // units / second
+    radius: 0.5,
+    invulnTime: 0.35,        // mercy invulnerability after a hit
+  },
+
+  economy: {
+    pickupRadius: 1.1,       // walk this close to a coin gem to grab it
+    magnetRadius: 2.4,       // gems this close drift towards you
+    magnetSpeed: 24,         // speed gems fly at you once a wave is cleared
+  },
+
+  waves: {
+    breakTime: 30,           // seconds between waves (shop opens automatically)
+    firstSpawnDelay: 1.5,
+    baseCount: 6,            // zombies in wave 1 ...
+    countPerWave: 4,         // ... plus this many per extra wave
+    baseMaxAlive: 10,        // max zombies alive at once in wave 1 ...
+    maxAlivePerWave: 2,      // ... grows per wave ...
+    maxAliveCap: 40,         // ... up to this cap (desktop)
+    mobileMaxAliveCap: 26,   // lower cap on phones to keep the frame rate up
+    spawnInterval: 1.3,
+    spawnIntervalPerWave: -0.07,
+    minSpawnInterval: 0.25,
+    healthPerWave: 0.12,     // +12% zombie health per wave
+    speedPerWave: 0.03,      // +3% zombie speed per wave ...
+    maxSpeedMult: 1.4,       // ... capped so runners never outrun you
+    damagePerWave: 0.05,
+    bossEvery: 5,            // boss wave every N waves
+    bossWaveCountMult: 0.5,  // boss waves bring half the usual horde
+    bossHealthPerBoss: 0.6,  // each later boss has +60% health
+  },
+
+  // radius = collision size, scale = model size multiplier
+  zombies: {
+    walker: { name: 'WALKER', desc: 'Slow, normal health', health: 50, speed: 1.7, damage: 10, attackRate: 0.8,
+              radius: 0.5, coins: 5, knockbackResist: 0, unlockWave: 1, weight: 1, weightPerWave: 0, maxWeight: 1 },
+    runner: { name: 'RUNNER', desc: 'Fast, low health', health: 25, speed: 4.4, damage: 6, attackRate: 0.6,
+              radius: 0.42, coins: 8, knockbackResist: 0, unlockWave: 2, weight: 0.25, weightPerWave: 0.04, maxWeight: 0.6 },
+    tank:   { name: 'TANK', desc: 'Slow, very high health', health: 320, speed: 1.3, damage: 25, attackRate: 1.1,
+              radius: 0.95, coins: 20, knockbackResist: 0.8, unlockWave: 3, weight: 0.08, weightPerWave: 0.02, maxWeight: 0.3 },
+    boss:   { name: 'THE ROT KING', desc: 'Every 5 waves. Charges!', health: 2600, speed: 1.6, damage: 35, attackRate: 1.0,
+              radius: 1.9, coins: 100, knockbackResist: 0.97,
+              chargeEvery: 5,      // seconds of walking between charges
+              chargeWindup: 0.9,   // telegraph (glows red, raises arms)
+              chargeTime: 1.0,
+              chargeSpeed: 11,
+              summonEvery: 12,     // seconds between summoning walkers
+              summonCount: 3 },
+  },
+
+  // fireRate = shots/sec · spread = radians (whole cone for multi-pellet guns)
+  // range & bulletSpeed in world units · pierce = extra zombies a bullet passes through
+  guns: [
+    { id: 'pistol', name: 'PISTOL', price: 0, desc: 'Trusty sidearm with infinite ammo.',
+      damage: 20, pellets: 1, fireRate: 3.5, magSize: 12, reloadTime: 1.0, bulletSpeed: 45, spread: 0.05,
+      range: 24, pierce: 0, knockback: 3, shake: 0.05, tracerColor: 0xffd36b, tracerLength: 1.2,
+      startReserve: Infinity, maxReserve: Infinity, ammoPack: 0, ammoPrice: 0, upgradeCost: [40, 90, 160] },
+    { id: 'shotgun', name: 'SHOTGUN', price: 150, desc: '5-pellet spread. Brutal up close, short range.',
+      damage: 14, pellets: 5, fireRate: 1.2, magSize: 6, reloadTime: 1.6, bulletSpeed: 40, spread: 0.5,
+      range: 9, pierce: 0, knockback: 6, shake: 0.25, tracerColor: 0xffa24a, tracerLength: 0.8,
+      startReserve: 30, maxReserve: 90, ammoPack: 18, ammoPrice: 25, upgradeCost: [80, 160, 280] },
+    { id: 'smg', name: 'SMG', price: 300, desc: 'Bullet hose. Very fast fire rate, low damage.',
+      damage: 8, pellets: 1, fireRate: 13, magSize: 35, reloadTime: 1.4, bulletSpeed: 50, spread: 0.16,
+      range: 20, pierce: 0, knockback: 1, shake: 0.06, tracerColor: 0xfff07a, tracerLength: 1.0,
+      startReserve: 175, maxReserve: 420, ammoPack: 105, ammoPrice: 35, upgradeCost: [120, 240, 400] },
+    { id: 'rifle', name: 'ASSAULT RIFLE', price: 500, desc: 'Balanced and accurate.',
+      damage: 22, pellets: 1, fireRate: 7.5, magSize: 30, reloadTime: 1.7, bulletSpeed: 60, spread: 0.035,
+      range: 30, pierce: 0, knockback: 2.5, shake: 0.1, tracerColor: 0xfff4b0, tracerLength: 1.6,
+      startReserve: 150, maxReserve: 360, ammoPack: 90, ammoPrice: 45, upgradeCost: [180, 340, 540] },
+    { id: 'sniper', name: 'SNIPER', price: 800, desc: 'Huge damage. Bullets pierce through zombies.',
+      damage: 150, pellets: 1, fireRate: 0.9, magSize: 5, reloadTime: 2.3, bulletSpeed: 110, spread: 0,
+      range: 60, pierce: 6, knockback: 8, shake: 0.35, tracerColor: 0x9fe8ff, tracerLength: 4,
+      startReserve: 25, maxReserve: 60, ammoPack: 10, ammoPrice: 50, upgradeCost: [250, 460, 720] },
+    { id: 'rocket', name: 'ROCKET LAUNCHER', price: 1500, desc: 'Slow. Explodes for heavy area damage.',
+      damage: 60, pellets: 1, fireRate: 0.75, magSize: 3, reloadTime: 2.6, bulletSpeed: 22, spread: 0.02,
+      range: 35, pierce: 0, knockback: 0, shake: 0.3, tracerColor: 0xff6a3d, tracerLength: 0,
+      explosionRadius: 4.2, explosionDamage: 140, explosionKnockback: 14,
+      startReserve: 9, maxReserve: 24, ammoPack: 3, ammoPrice: 80, upgradeCost: [400, 700, 1100] },
+  ],
+
+  upgrades: {
+    maxLevel: 3,
+    damage:   { label: 'DAMAGE',    perLevel: 0.25 },   // +25% damage per level
+    fireRate: { label: 'FIRE RATE', perLevel: 0.15 },   // +15% shots/sec per level
+    magazine: { label: 'MAGAZINE',  perLevel: 0.30 },   // +30% magazine per level (min +1)
+  },
+
+  shop: {
+    healthPack: { name: 'HEALTH PACK', price: 40, amount: 40 },
+    medkit:     { name: 'MEDKIT',      price: 90, amount: 100 },
+    armor:      { name: 'ARMOUR',      price: 60, amount: 50 },
+    ammoCrateDiscount: 0.8,  // "refill every gun" costs 80% of the packs bought separately
+  },
+};
+
+// =========================================================================
+// 2. THREE.JS LOADER, UTILITIES, SAVE DATA, AUDIO
+// =========================================================================
+// Three.js is loaded from a CDN (with a second CDN as fallback).
+const THREE_VERSION = '0.160.0';
+const THREE_URLS = [
+  `https://cdn.jsdelivr.net/npm/three@${THREE_VERSION}/build/three.module.js`,
+  `https://unpkg.com/three@${THREE_VERSION}/build/three.module.js`,
+];
+let THREE = null;
+for (const url of THREE_URLS) {
+  try { THREE = await import(url); break; } catch (e) { console.warn('Could not load Three.js from', url, e); }
+}
+function fatal(msg) {
+  document.getElementById('loading').classList.add('hidden');
+  document.getElementById('error').classList.remove('hidden');
+  document.getElementById('error-msg').textContent = msg;
+}
+if (!THREE) {
+  fatal('Three.js could not be downloaded from the CDN. Check your internet connection and reload the page.');
+  throw new Error('Three.js unavailable');
+}
+
+// ---------- small helpers ----------
+const rand = (a, b) => a + Math.random() * (b - a);
+const randInt = (a, b) => Math.floor(a + Math.random() * (b - a + 1));
+const clamp = (v, lo, hi) => (v < lo ? lo : v > hi ? hi : v);
+const lerp = (a, b, t) => a + (b - a) * t;
+const choice = arr => arr[(Math.random() * arr.length) | 0];
+const dist2 = (ax, az, bx, bz) => (ax - bx) * (ax - bx) + (az - bz) * (az - bz);
+const damp = (rate, dt) => 1 - Math.exp(-rate * dt);         // frame-rate independent smoothing factor
+const $ = id => document.getElementById(id);
+
+/** Shortest-path angle interpolation. */
+function lerpAngle(a, b, t) {
+  let d = (b - a) % (Math.PI * 2);
+  if (d > Math.PI) d -= Math.PI * 2;
+  if (d < -Math.PI) d += Math.PI * 2;
+  return a + d * t;
+}
+
+/** Does the 2D segment (x1,z1)-(x2,z2) touch the circle (cx,cz,r)? Stops fast bullets tunnelling. */
+function segCircle(x1, z1, x2, z2, cx, cz, r) {
+  const dx = x2 - x1, dz = z2 - z1, len2 = dx * dx + dz * dz;
+  const t = len2 > 0 ? clamp(((cx - x1) * dx + (cz - z1) * dz) / len2, 0, 1) : 0;
+  return dist2(x1 + dx * t, z1 + dz * t, cx, cz) <= r * r;
+}
+
+/** Seeded RNG so the arena layout is the same every time. */
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const IS_TOUCH = (window.matchMedia && matchMedia('(pointer: coarse)').matches) || 'ontouchstart' in window;
+const IS_MOBILE = IS_TOUCH && Math.min(screen.width, screen.height) < 900;
+
+// ---------- save data: coins, unlocked guns & upgrades persist between runs ----------
+const SAVE_KEY = 'dead-facets/save/v1';
+const save = { coins: 0, owned: { pistol: true }, upgrades: {}, equipped: 'pistol', bestWave: 0, muted: false };
+let saveDirty = false, saveTimer = 0;
+
+function sanitizeSave() {
+  const max = CONFIG.upgrades.maxLevel;
+  for (const g of CONFIG.guns) {
+    const u = save.upgrades[g.id] || {};
+    save.upgrades[g.id] = {
+      damage: clamp(u.damage | 0, 0, max), fireRate: clamp(u.fireRate | 0, 0, max), magazine: clamp(u.magazine | 0, 0, max),
+    };
+  }
+  save.owned.pistol = true;
+  if (!save.owned[save.equipped]) save.equipped = 'pistol';
+}
+function loadSave() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (raw) {
+      const d = JSON.parse(raw);
+      if (d && typeof d === 'object') {
+        if (Number.isFinite(d.coins)) save.coins = Math.max(0, Math.floor(d.coins));
+        if (d.owned && typeof d.owned === 'object') for (const g of CONFIG.guns) if (d.owned[g.id]) save.owned[g.id] = true;
+        if (d.upgrades && typeof d.upgrades === 'object') save.upgrades = d.upgrades;
+        if (typeof d.equipped === 'string') save.equipped = d.equipped;
+        if (Number.isFinite(d.bestWave)) save.bestWave = Math.max(0, Math.floor(d.bestWave));
+        save.muted = !!d.muted;
+      }
+    }
+  } catch (e) { /* storage blocked or corrupt: start fresh */ }
+  sanitizeSave();
+}
+function writeSave() {
+  saveDirty = false;
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch (e) { /* private mode etc. */ }
+}
+
+// ---------- audio: a tiny synth (oscillator blips + filtered noise) ----------
+const Sound = {
+  ctx: null, master: null, noiseBuf: null, muted: false, last: Object.create(null),
+  /** Browsers only allow audio after a user gesture, so this is called from input handlers. */
+  init() {
+    if (this.ctx) { if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {}); return; }
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      this.ctx = new AC();
+      this.master = this.ctx.createGain();
+      this.master.gain.value = this.muted ? 0 : CONFIG.audio.volume;
+      this.master.connect(this.ctx.destination);
+      const len = this.ctx.sampleRate;
+      this.noiseBuf = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
+      const d = this.noiseBuf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    } catch (e) { this.ctx = null; }
+  },
+  setMuted(m) { this.muted = m; if (this.master) this.master.gain.value = m ? 0 : CONFIG.audio.volume; },
+  tone(f0, f1, dur, type = 'square', vol = 0.15, delay = 0) {
+    const c = this.ctx; if (!c || this.muted) return;
+    const t = c.currentTime + delay, o = c.createOscillator(), g = c.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(f0, t);
+    if (f1 !== f0) o.frequency.exponentialRampToValueAtTime(Math.max(1, f1), t + dur);
+    g.gain.setValueAtTime(vol, t);
+    g.gain.exponentialRampToValueAtTime(0.0008, t + dur);
+    o.connect(g); g.connect(this.master);
+    o.start(t); o.stop(t + dur + 0.05);
+  },
+  noise(dur, vol = 0.15, type = 'lowpass', f0 = 2000, f1 = f0, delay = 0) {
+    const c = this.ctx; if (!c || this.muted || !this.noiseBuf) return;
+    const t = c.currentTime + delay, src = c.createBufferSource(), filt = c.createBiquadFilter(), g = c.createGain();
+    src.buffer = this.noiseBuf;
+    filt.type = type;
+    filt.frequency.setValueAtTime(f0, t);
+    if (f1 !== f0) filt.frequency.exponentialRampToValueAtTime(Math.max(20, f1), t + dur);
+    g.gain.setValueAtTime(vol, t);
+    g.gain.exponentialRampToValueAtTime(0.0008, t + dur);
+    src.connect(filt); filt.connect(g); g.connect(this.master);
+    src.start(t, Math.random() * 0.4); src.stop(t + dur + 0.05);
+  },
+  play(name) {
+    if (!this.ctx || this.muted) return;
+    const now = this.ctx.currentTime, gap = SFX_GAP[name] || 0.012;
+    if (this.last[name] !== undefined && now - this.last[name] < gap) return;   // throttle spammy sounds
+    this.last[name] = now;
+    const fn = SFX[name];
+    if (fn) { try { fn(this); } catch (e) { /* audio must never crash the game */ } }
+  },
+};
+const SFX_GAP = { hit: 0.04, smg: 0.03, coin: 0.045, zdie: 0.05, hurt: 0.1, tick: 0.5, explosion: 0.05, rise: 0.15 };
+const SFX = {
+  // one distinct sound per gun
+  pistol:  s => { s.tone(820, 170, 0.1, 'square', 0.15); s.noise(0.07, 0.17, 'bandpass', 2400, 800); },
+  shotgun: s => { s.noise(0.32, 0.36, 'lowpass', 2600, 160); s.tone(160, 38, 0.2, 'square', 0.2); },
+  smg:     s => { s.tone(1150, 320, 0.045, 'square', 0.08); s.noise(0.045, 0.13, 'highpass', 2600, 1500); },
+  rifle:   s => { s.tone(600, 105, 0.09, 'sawtooth', 0.14); s.noise(0.09, 0.2, 'bandpass', 1800, 600); },
+  sniper:  s => { s.noise(0.55, 0.34, 'lowpass', 6000, 110); s.tone(1500, 42, 0.42, 'square', 0.17); },
+  rocket:  s => { s.noise(0.6, 0.24, 'bandpass', 450, 2600); s.tone(100, 420, 0.38, 'sawtooth', 0.12); },
+  // world
+  explosion: s => { s.noise(1.0, 0.5, 'lowpass', 1400, 45); s.tone(95, 24, 0.75, 'sine', 0.45); s.tone(58, 20, 0.45, 'square', 0.12); },
+  hit:     s => s.tone(250, 105, 0.05, 'square', 0.07),
+  zdie:    s => { s.tone(330, 48, 0.3, 'sawtooth', 0.1); s.noise(0.22, 0.12, 'bandpass', 1200, 300); s.tone(1400, 600, 0.06, 'triangle', 0.05, 0.02); },
+  rise:    s => s.noise(0.5, 0.08, 'lowpass', 500, 120),
+  coin:    s => { s.tone(988, 988, 0.06, 'square', 0.09); s.tone(1319, 1319, 0.12, 'square', 0.09, 0.06); },
+  reload:  s => { s.noise(0.03, 0.15, 'highpass', 3000); s.tone(420, 300, 0.04, 'square', 0.06); },
+  reloadDone: s => { s.noise(0.04, 0.2, 'highpass', 2500); s.tone(700, 520, 0.05, 'square', 0.08, 0.03); },
+  empty:   s => s.tone(1800, 1600, 0.025, 'square', 0.08),
+  switch:  s => { s.tone(500, 800, 0.04, 'square', 0.07); s.noise(0.03, 0.1, 'highpass', 3000); },
+  hurt:    s => { s.tone(240, 80, 0.2, 'square', 0.2); s.noise(0.12, 0.12, 'lowpass', 800, 200); },
+  ricochet: s => s.tone(2200, 900, 0.05, 'triangle', 0.04),
+  // UI & events
+  click:   s => s.tone(660, 660, 0.03, 'square', 0.07),
+  buy:     s => [523, 659, 784, 1047].forEach((f, i) => s.tone(f, f, 0.08, 'square', 0.1, i * 0.06)),
+  deny:    s => { s.tone(160, 160, 0.08, 'square', 0.13); s.tone(120, 120, 0.12, 'square', 0.13, 0.09); },
+  tick:    s => s.tone(880, 880, 0.05, 'square', 0.06),
+  wave:    s => [392, 523, 659].forEach((f, i) => s.tone(f, f * 0.98, 0.14, 'square', 0.12, i * 0.12)),
+  waveClear: s => [523, 659, 784, 1047, 1319].forEach((f, i) => s.tone(f, f, 0.1, 'triangle', 0.16, i * 0.07)),
+  boss:    s => { s.tone(72, 38, 1.3, 'sawtooth', 0.28); s.tone(75, 36, 1.3, 'square', 0.12); s.noise(1.1, 0.14, 'lowpass', 420, 70); },
+  roar:    s => { s.tone(120, 55, 0.6, 'sawtooth', 0.22); s.noise(0.5, 0.12, 'lowpass', 600, 100); },
+  slam:    s => { s.noise(0.45, 0.38, 'lowpass', 700, 50); s.tone(70, 28, 0.4, 'sine', 0.4); },
+  gameover: s => [392, 330, 262, 196].forEach((f, i) => s.tone(f, f * 0.97, 0.28, 'square', 0.14, i * 0.24)),
+};
+
+// =========================================================================
+// 3. RENDERER, CAMERA, LIGHTS, SKY & DAY → NIGHT CYCLE
+// =========================================================================
+const GFX = CONFIG.graphics;
+const canvas = $('game');
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: !IS_MOBILE, powerPreference: 'high-performance' });
+} catch (e) {
+  fatal('WebGL is not available in this browser or device.');
+  throw e;
+}
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, IS_MOBILE ? GFX.mobilePixelRatio : GFX.maxPixelRatio));
+renderer.shadowMap.enabled = GFX.shadows;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;          // soft shadows
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.Fog(0xe89a6a, 36, 95);
+const camera = new THREE.PerspectiveCamera(CONFIG.camera.fov, 1, 0.5, 260);
+
+const hemi = new THREE.HemisphereLight(0xffd6a8, 0x4a3a50, 1.3);
+scene.add(hemi);
+const sun = new THREE.DirectionalLight(0xffc27a, 2.8);
+sun.castShadow = GFX.shadows;
+const shadowSize = IS_MOBILE ? GFX.mobileShadowMapSize : GFX.shadowMapSize;
+sun.shadow.mapSize.set(shadowSize, shadowSize);
+Object.assign(sun.shadow.camera, { left: -26, right: 26, top: 26, bottom: -26, near: 1, far: 100 });
+sun.shadow.camera.updateProjectionMatrix();
+sun.shadow.bias = -0.0004;
+sun.shadow.normalBias = 0.05;
+scene.add(sun, sun.target);
+
+// A couple of reusable point lights (never added/removed at runtime, which would recompile shaders)
+const muzzleLight = new THREE.PointLight(0xffc070, 0, 10, 2);
+const blastLight = new THREE.PointLight(0xff8040, 0, 26, 2);
+scene.add(muzzleLight, blastLight);
+
+// Sky dome: a vertical colour gradient drawn on the inside of a big sphere
+const skyUniforms = { top: { value: new THREE.Color() }, horizon: { value: new THREE.Color() }, bottom: { value: new THREE.Color() } };
+const sky = new THREE.Mesh(new THREE.SphereGeometry(200, 32, 16), new THREE.ShaderMaterial({
+  uniforms: skyUniforms, side: THREE.BackSide, depthWrite: false, fog: false,
+  vertexShader: `varying vec3 vDir;
+    void main() { vDir = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+  fragmentShader: `uniform vec3 top; uniform vec3 horizon; uniform vec3 bottom; varying vec3 vDir;
+    void main() {
+      float h = vDir.y;
+      vec3 c = h > 0.0 ? mix(horizon, top, pow(clamp(h * 1.8, 0.0, 1.0), 0.6)) : mix(horizon, bottom, clamp(-h * 5.0, 0.0, 1.0));
+      gl_FragColor = vec4(c, 1.0);
+      #include <tonemapping_fragment>
+      #include <colorspace_fragment>
+    }`,
+}));
+sky.frustumCulled = false;
+sky.renderOrder = -10;
+scene.add(sky);
+
+// The sun (later a blood moon) is itself a faceted icosahedron in the sky
+const sunDisc = new THREE.Mesh(new THREE.IcosahedronGeometry(9, 1), new THREE.MeshBasicMaterial({ color: 0xffd08a, fog: false }));
+sunDisc.frustumCulled = false;
+scene.add(sunDisc);
+
+// Lighting keyframes: t=0 golden sunset → t=0.5 dusk → t=1 blood-red night
+const ENV_KEYS = [
+  { t: 0,   top: 0x3d5fa0, horizon: 0xffa65c, bottom: 0x6a4a5a, fog: 0xe8a070, sun: 0xffc27a, sunI: 2.9, hemiSky: 0xffd6a8, hemiGround: 0x5a4458, hemiI: 1.35, elev: 0.42, disc: 0xffd08a, exposure: 1.0 },
+  { t: 0.5, top: 0x231d4a, horizon: 0xd2584e, bottom: 0x3a2030, fog: 0x8a4652, sun: 0xff8a60, sunI: 1.9, hemiSky: 0xb084a8, hemiGround: 0x2e1e36, hemiI: 1.1, elev: 0.28, disc: 0xff8a5a, exposure: 1.0 },
+  { t: 1,   top: 0x07061a, horizon: 0x5c1426, bottom: 0x150810, fog: 0x2e1420, sun: 0xd8707e, sunI: 1.25, hemiSky: 0x6a5a92, hemiGround: 0x24141e, hemiI: 1.15, elev: 0.6,  disc: 0xff3030, exposure: 1.1 },
+];
+for (const k of ENV_KEYS) for (const p in k) if (p !== 't' && p !== 'sunI' && p !== 'hemiI' && p !== 'elev' && p !== 'exposure') k[p] = new THREE.Color(k[p]);
+const env = { t: 0.12, target: 0.12, boss: 0, bossTarget: 0 };
+const BOSS_RED = new THREE.Color(0x8a0a1a);
+const SUN_AZIMUTH = -0.7;
+const _sunDir = new THREE.Vector3();
+
+function envSample(key, out) {
+  let i = 0;
+  while (i < ENV_KEYS.length - 2 && env.t > ENV_KEYS[i + 1].t) i++;
+  const a = ENV_KEYS[i], b = ENV_KEYS[i + 1], k = clamp((env.t - a.t) / (b.t - a.t), 0, 1);
+  if (out) return out.copy(a[key]).lerp(b[key], k);
+  return lerp(a[key], b[key], k);
+}
+
+/** Smoothly blends lighting towards the current wave's time of day. */
+function updateEnvironment(dt, fx, fz) {
+  env.t += (env.target - env.t) * damp(0.5, dt);
+  env.boss += (env.bossTarget - env.boss) * damp(1.5, dt);
+  envSample('top', skyUniforms.top.value);
+  envSample('horizon', skyUniforms.horizon.value).lerp(BOSS_RED, env.boss * 0.35);
+  envSample('bottom', skyUniforms.bottom.value);
+  envSample('fog', scene.fog.color).lerp(BOSS_RED, env.boss * 0.3);
+  renderer.setClearColor(scene.fog.color);
+  envSample('sun', sun.color);
+  sun.intensity = envSample('sunI');
+  envSample('hemiSky', hemi.color).lerp(BOSS_RED, env.boss * 0.25);
+  envSample('hemiGround', hemi.groundColor);
+  hemi.intensity = envSample('hemiI');
+  envSample('disc', sunDisc.material.color);
+  renderer.toneMappingExposure = envSample('exposure');
+  const elev = envSample('elev');
+  _sunDir.set(Math.cos(elev) * Math.sin(SUN_AZIMUTH), Math.sin(elev), Math.cos(elev) * Math.cos(SUN_AZIMUTH));
+  sun.position.set(fx + _sunDir.x * 45, _sunDir.y * 45, fz + _sunDir.z * 45);
+  sun.target.position.set(fx, 0, fz);
+  sky.position.copy(camera.position);
+  sunDisc.position.copy(camera.position).addScaledVector(_sunDir, 175);
+}
+
+let viewZoom = 1;
+function resize() {
+  const w = window.innerWidth, h = window.innerHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  const aspect = w / h;
+  viewZoom = aspect < 1 ? 1 + (1 - aspect) * CONFIG.camera.portraitZoomOut * 1.6 : 1;   // see more on tall screens
+}
+
+
+// =========================================================================
+// 4. GEOMETRY BAKING & SHARED MATERIALS
+//    Models are assembled from primitives, then "baked" into ONE geometry
+//    with per-face vertex colours → one draw call per model, one shared
+//    material for almost everything.
+// =========================================================================
+const _m4 = new THREE.Matrix4(), _q = new THREE.Quaternion(), _eu = new THREE.Euler();
+const _v3 = new THREE.Vector3(), _s3 = new THREE.Vector3(), _col = new THREE.Color();
+
+const GEO = {
+  box: (w, h, d) => new THREE.BoxGeometry(w, h, d),
+  cyl: (rt, rb, h, seg = 6) => new THREE.CylinderGeometry(rt, rb, h, seg),
+  cone: (r, h, seg = 6) => new THREE.ConeGeometry(r, h, seg),
+  ico: (r, detail = 0) => new THREE.IcosahedronGeometry(r, detail),
+  oct: r => new THREE.OctahedronGeometry(r, 0),
+  dodeca: r => new THREE.DodecahedronGeometry(r, 0),
+  tetra: r => new THREE.TetrahedronGeometry(r, 0),
+};
+
+/** One coloured, transformed piece of a model. t = { x,y,z, rx,ry,rz, sx,sy,sz, s, jitter } */
+function part(geo, color, t = {}) {
+  _eu.set(t.rx || 0, t.ry || 0, t.rz || 0);
+  _q.setFromEuler(_eu);
+  const s = t.s ?? 1;
+  _m4.compose(_v3.set(t.x || 0, t.y || 0, t.z || 0), _q, _s3.set((t.sx ?? 1) * s, (t.sy ?? 1) * s, (t.sz ?? 1) * s));
+  const g = geo.index ? geo.toNonIndexed() : geo.clone();
+  geo.dispose();
+  g.applyMatrix4(_m4);
+  return { g, color: new THREE.Color(color), jitter: t.jitter ?? 0.06 };
+}
+
+/** Move/rotate/scale a whole list of parts (used to place props in the world). */
+function transformParts(parts, t) {
+  _eu.set(t.rx || 0, t.ry || 0, t.rz || 0);
+  _q.setFromEuler(_eu);
+  const s = t.s ?? 1;
+  _m4.compose(_v3.set(t.x || 0, t.y || 0, t.z || 0), _q, _s3.set(s, s, s));
+  for (const p of parts) p.g.applyMatrix4(_m4);
+  return parts;
+}
+
+/** Merge parts into one non-indexed geometry with flat per-face colours (+ tiny brightness jitter per facet). */
+function bake(parts) {
+  let n = 0;
+  for (const p of parts) n += p.g.attributes.position.count;
+  const pos = new Float32Array(n * 3), col = new Float32Array(n * 3);
+  let o = 0;
+  for (const p of parts) {
+    const a = p.g.attributes.position.array, cnt = p.g.attributes.position.count;
+    pos.set(a, o * 3);
+    for (let i = 0; i < cnt; i += 3) {
+      const k = 1 + (Math.random() * 2 - 1) * p.jitter;
+      for (let j = 0; j < 3; j++) {
+        const idx = (o + i + j) * 3;
+        col[idx] = p.color.r * k; col[idx + 1] = p.color.g * k; col[idx + 2] = p.color.b * k;
+      }
+    }
+    o += cnt;
+    p.g.dispose();
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  geo.computeVertexNormals();      // non-indexed → face normals → faceted look
+  geo.computeBoundingSphere();
+  return geo;
+}
+
+const MAT = {
+  vc: new THREE.MeshLambertMaterial({ vertexColors: true, flatShading: true }),          // nearly everything
+  white: new THREE.MeshBasicMaterial({ color: 0xffffff }),                                // player hit flash
+  glow: new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, blending: THREE.AdditiveBlending,
+                                       depthWrite: false, toneMapped: false, side: THREE.DoubleSide }),  // tracers, fire
+  eye: new THREE.MeshBasicMaterial({ color: 0xffffff, toneMapped: false }),               // glowing zombie eyes
+  shard: new THREE.MeshLambertMaterial({ color: 0xffffff, flatShading: true }),           // death shards & smoke
+  coin: new THREE.MeshStandardMaterial({ color: 0xffc83a, emissive: 0x8a5200, emissiveIntensity: 0.75,
+                                         metalness: 0.55, roughness: 0.3, flatShading: true }),
+};
+
+
+// =========================================================================
+// 5. WORLD — faceted ground, props (one merged static mesh) & colliders
+// =========================================================================
+const ARENA = CONFIG.world.arenaSize;
+const colliders = [];                        // circles & rotated boxes in the XZ plane
+const worldRng = mulberry32(CONFIG.world.propSeed);
+const wr = (a, b) => a + worldRng() * (b - a);
+const wpick = arr => arr[Math.floor(worldRng() * arr.length)];
+const PI = Math.PI;
+
+function addCircleCollider(x, z, r, blocksBullets = true) {
+  colliders.push({ type: 'circle', x, z, r, bound: r, blocksBullets });
+}
+function addBoxCollider(x, z, hw, hd, ry, blocksBullets = true) {
+  // stored so world→local is: lx = dx*cos + dz*sin, lz = -dx*sin + dz*cos (matches mesh rotation.y = ry)
+  colliders.push({ type: 'box', x, z, hw, hd, cos: Math.cos(ry), sin: -Math.sin(ry), bound: Math.hypot(hw, hd), blocksBullets });
+}
+
+/** Push a circle (entity with x,z) out of every collider it overlaps. Returns true if it touched something. */
+function collideCircle(e, r) {
+  let hit = false;
+  for (let i = 0; i < colliders.length; i++) {
+    const c = colliders[i], dx = e.x - c.x, dz = e.z - c.z, reach = c.bound + r;
+    if (dx * dx + dz * dz > reach * reach) continue;
+    if (c.type === 'circle') {
+      const rr = c.r + r, d2 = dx * dx + dz * dz;
+      if (d2 >= rr * rr) continue;
+      const d = Math.sqrt(d2) || 0.001;
+      e.x = c.x + dx / d * rr; e.z = c.z + dz / d * rr; hit = true;
+    } else {
+      const lx = dx * c.cos + dz * c.sin, lz = -dx * c.sin + dz * c.cos;
+      const ox = lx - clamp(lx, -c.hw, c.hw), oz = lz - clamp(lz, -c.hd, c.hd), d2 = ox * ox + oz * oz;
+      if (d2 >= r * r) continue;
+      let nx, nz, push;
+      if (d2 > 1e-8) { const d = Math.sqrt(d2); nx = ox / d; nz = oz / d; push = r - d; }
+      else {   // centre is inside the box: leave through the closest face
+        const px = c.hw - Math.abs(lx), pz = c.hd - Math.abs(lz);
+        if (px < pz) { nx = Math.sign(lx) || 1; nz = 0; push = px + r; } else { nx = 0; nz = Math.sign(lz) || 1; push = pz + r; }
+      }
+      e.x += (nx * c.cos - nz * c.sin) * push;
+      e.z += (nx * c.sin + nz * c.cos) * push;
+      hit = true;
+    }
+  }
+  return hit;
+}
+
+/** Is this point inside a bullet-blocking collider? */
+function bulletBlocked(x, z) {
+  for (let i = 0; i < colliders.length; i++) {
+    const c = colliders[i];
+    if (!c.blocksBullets) continue;
+    const dx = x - c.x, dz = z - c.z;
+    if (dx * dx + dz * dz > c.bound * c.bound) continue;
+    if (c.type === 'circle') return true;
+    const lx = dx * c.cos + dz * c.sin, lz = -dx * c.sin + dz * c.cos;
+    if (Math.abs(lx) <= c.hw && Math.abs(lz) <= c.hd) return true;
+  }
+  return false;
+}
+
+function groundHeight(x, z) {
+  const d = Math.max(Math.abs(x), Math.abs(z));
+  const hills = clamp((d - ARENA - 3) / 22, 0, 1);   // flat arena, rolling hills beyond
+  return 0.05 * Math.sin(x * 0.45 + z * 0.2) * Math.cos(z * 0.38 - x * 0.15) +
+         hills * hills * 6 * (0.6 + 0.4 * Math.sin(x * 0.13) * Math.cos(z * 0.11));
+}
+
+function buildGround() {
+  let g = new THREE.PlaneGeometry(170, 170, 100, 100);
+  g.rotateX(-PI / 2);
+  g.deleteAttribute('uv');
+  const p = g.attributes.position;
+  for (let i = 0; i < p.count; i++) p.setY(i, groundHeight(p.getX(i), p.getZ(i)) + (worldRng() - 0.5) * 0.04);
+  g = g.toNonIndexed();
+  const pos = g.attributes.position, col = new Float32Array(pos.count * 3);
+  const grass = [0x6f9a3a, 0x7aa843, 0x638c35, 0x86b04a].map(c => new THREE.Color(c));
+  const dirt = [0x9a7a4a, 0x8a6a40, 0xa58552].map(c => new THREE.Color(c));
+  const wild = [0x5a7a32, 0x4f6e2c, 0x667f3a, 0x587030].map(c => new THREE.Color(c));
+  for (let i = 0; i < pos.count; i += 3) {
+    const cx = (pos.getX(i) + pos.getX(i + 1) + pos.getX(i + 2)) / 3;
+    const cz = (pos.getZ(i) + pos.getZ(i + 1) + pos.getZ(i + 2)) / 3;
+    const inside = Math.max(Math.abs(cx), Math.abs(cz)) < ARENA + 0.5;
+    const patch = Math.sin(cx * 0.21) * Math.cos(cz * 0.17) + Math.sin((cx + cz) * 0.11) * 0.8;
+    const c = inside ? (patch > 0.95 ? wpick(dirt) : wpick(grass)) : wpick(wild);
+    const k = 0.9 + worldRng() * 0.18;
+    for (let j = 0; j < 3; j++) { const o = (i + j) * 3; col[o] = c.r * k; col[o + 1] = c.g * k; col[o + 2] = c.b * k; }
+  }
+  g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  g.computeVertexNormals();
+  const mesh = new THREE.Mesh(g, MAT.vc);
+  mesh.receiveShadow = true;
+  scene.add(mesh);
+}
+
+// ---------- prop builders (local space, +Y up) ----------
+const PROPS = {
+  pine: () => [
+    part(GEO.cyl(0.16, 0.24, 1.4, 5), 0x6b4a2e, { y: 0.7 }),
+    part(GEO.cone(1.25, 1.8, 7), 0x3f7a3a, { y: 1.9 }),
+    part(GEO.cone(0.95, 1.5, 7), 0x4a8a40, { y: 2.7, ry: 0.4 }),
+    part(GEO.cone(0.6, 1.2, 7), 0x5a9a48, { y: 3.4, ry: 0.9 }),
+  ],
+  roundTree: () => {
+    const leaf = wpick([0x7a9a3a, 0x8aa040, 0xb08a30, 0x6a8a34]);
+    return [
+      part(GEO.cyl(0.14, 0.22, 1.6, 5), 0x6b4a2e, { y: 0.8 }),
+      part(GEO.ico(1.1), leaf, { y: 2.2, sy: 0.9, ry: wr(0, 3) }),
+      part(GEO.ico(0.8), leaf, { x: 0.6, y: 2.6, z: 0.2, ry: wr(0, 3) }),
+      part(GEO.ico(0.7), leaf, { x: -0.5, y: 2.7, z: -0.3, ry: wr(0, 3) }),
+    ];
+  },
+  deadTree: () => [
+    part(GEO.cyl(0.1, 0.2, 2.6, 5), 0x5a4a3e, { y: 1.3 }),
+    part(GEO.cyl(0.05, 0.08, 1.2, 4), 0x5a4a3e, { x: 0.35, y: 2.0, rz: -0.8 }),
+    part(GEO.cyl(0.04, 0.07, 0.9, 4), 0x5a4a3e, { x: -0.3, y: 2.3, rz: 0.9 }),
+    part(GEO.cyl(0.03, 0.05, 0.7, 4), 0x5a4a3e, { z: 0.25, y: 2.6, rx: 0.8 }),
+  ],
+  rock: s => [
+    part(GEO.ico(1), wpick([0x8a8690, 0x7a7680, 0x96929c]), { y: 0.35 * s, sx: s * wr(0.9, 1.3), sy: s * wr(0.55, 0.85), sz: s * wr(0.85, 1.2), ry: wr(0, 6), rx: wr(-0.2, 0.2), jitter: 0.12 }),
+    part(GEO.ico(0.45), 0x6e6a74, { x: s * 0.9, y: 0.15, z: s * 0.3, ry: wr(0, 6), jitter: 0.12 }),
+  ],
+  crate: () => {
+    const wood = 0xb07a40, dark = 0x7a5028, parts = [part(GEO.box(1.1, 1.1, 1.1), wood, { y: 0.55 })];
+    for (const sz of [-0.56, 0.56]) {           // dark frame strips on front & back faces
+      parts.push(part(GEO.box(1.14, 0.14, 0.04), dark, { y: 1.05, z: sz }), part(GEO.box(1.14, 0.14, 0.04), dark, { y: 0.05, z: sz }));
+      parts.push(part(GEO.box(1.4, 0.12, 0.04), dark, { y: 0.55, z: sz, rz: 0.78 }));
+    }
+    return parts;
+  },
+  barrel: () => {
+    const c = wpick([0xa03a2a, 0x3a6a8a, 0x8a7a2a]);
+    return [
+      part(GEO.cyl(0.42, 0.42, 1.1, 8), c, { y: 0.55 }),
+      part(GEO.cyl(0.44, 0.44, 0.07, 8), 0x3a3a40, { y: 0.3 }),
+      part(GEO.cyl(0.44, 0.44, 0.07, 8), 0x3a3a40, { y: 0.8 }),
+      part(GEO.cyl(0.36, 0.36, 0.02, 8), 0x2a2a2e, { y: 1.11 }),
+    ];
+  },
+  car: () => {
+    const paint = wpick([0x8a4a3a, 0x4a6a8a, 0x7a7a4a, 0x6a4a6a]), rust = 0x7a4a2a, glass = 0x2a3a48, tyre = 0x1e1e22;
+    const parts = [
+      part(GEO.box(4.2, 0.85, 1.9), paint, { y: 0.75 }),
+      part(GEO.box(2.1, 0.75, 1.7), paint, { x: -0.35, y: 1.55 }),
+      part(GEO.box(2.12, 0.5, 1.5), glass, { x: -0.35, y: 1.58 }),           // windows
+      part(GEO.box(0.9, 0.35, 1.0), rust, { x: 1.4, y: 1.19, rz: 0.12 }),     // rusty dented bonnet
+      part(GEO.box(0.12, 0.25, 1.7), 0x9a9aa4, { x: 2.12, y: 0.6 }),          // bumper
+      part(GEO.box(0.06, 0.16, 0.3), 0xffe6a0, { x: 2.12, y: 0.95, z: 0.62 }),
+      part(GEO.box(0.06, 0.16, 0.3), 0x4a4a40, { x: 2.12, y: 0.95, z: -0.62 }),   // smashed headlight
+    ];
+    for (const [wx, wz] of [[1.3, 0.95], [-1.3, 0.95], [1.3, -0.95]]) {      // one wheel is missing
+      parts.push(part(GEO.cyl(0.42, 0.42, 0.3, 8), tyre, { x: wx, y: 0.42, z: wz, rx: PI / 2 }));
+    }
+    parts.push(part(GEO.box(0.5, 0.2, 0.5), 0x2a2a2e, { x: -1.3, y: 0.22, z: -0.95 }));   // jacked up on a block
+    return parts;
+  },
+  fence: len => {
+    const wood = wpick([0x8a7a62, 0x7a6a52]), parts = [];
+    const posts = Math.max(2, Math.round(len / 1.3) + 1);
+    for (let i = 0; i < posts; i++) {
+      const x = -len / 2 + (len * i) / (posts - 1);
+      parts.push(part(GEO.box(0.16, 1.15, 0.16), 0x6a5a44, { x, y: 0.57, rz: wr(-0.08, 0.08) }));
+    }
+    parts.push(part(GEO.box(len, 0.13, 0.07), wood, { y: 0.85 }));
+    parts.push(part(GEO.box(len * 0.6, 0.13, 0.07), wood, { x: -len * 0.2, y: 0.42 }));
+    parts.push(part(GEO.box(len * 0.35, 0.13, 0.07), wood, { x: len * 0.3, y: 0.3, rz: 0.35 }));   // broken rail
+    return parts;
+  },
+  post: () => [part(GEO.box(0.18, wr(0.7, 1.3), 0.18), 0x6a5a44, { y: 0.45, rz: wr(-0.25, 0.25), rx: wr(-0.15, 0.15) })],
+  bush: () => {
+    const c = wpick([0x5a8a34, 0x6a9a3a, 0x4f7a2e]);
+    return [part(GEO.ico(0.6), c, { y: 0.35, sy: 0.7 }), part(GEO.ico(0.45), c, { x: 0.5, y: 0.3, sy: 0.7 })];
+  },
+};
+
+function buildWorld() {
+  buildGround();
+  const statics = [];
+  const placed = [];
+  const place = (r, minR, maxC) => {
+    for (let t = 0; t < 300; t++) {
+      const x = wr(-maxC, maxC), z = wr(-maxC, maxC);
+      if (Math.hypot(x, z) < minR) continue;
+      if (placed.some(p => dist2(p.x, p.z, x, z) < (p.r + r + 1.8) ** 2)) continue;
+      placed.push({ x, z, r });
+      return { x, z };
+    }
+    return null;
+  };
+  const add = (parts, t) => statics.push(...transformParts(parts, t));
+  const inner = ARENA - 3;
+
+  // --- cover inside the arena (with colliders) ---
+  for (let i = 0; i < 3; i++) {
+    const s = place(2.4, 8, inner - 1); if (!s) continue;
+    const ry = wr(0, PI);
+    add(PROPS.car(), { x: s.x, z: s.z, ry, rz: wr(-0.04, 0.04) });
+    addBoxCollider(s.x, s.z, 2.15, 1.0, ry);
+  }
+  for (let i = 0; i < 5; i++) {
+    const len = wpick([3.9, 5.2]), s = place(len / 2, 7, inner); if (!s) continue;
+    const ry = wr(0, PI);
+    add(PROPS.fence(len), { x: s.x, z: s.z, ry });
+    addBoxCollider(s.x, s.z, len / 2, 0.16, ry, false);        // bullets fly through the gaps
+  }
+  for (let i = 0; i < 6; i++) {
+    const s = place(1, 6, inner); if (!s) continue;
+    const ry = wr(0, PI);
+    add(PROPS.crate(), { x: s.x, z: s.z, ry });
+    if (worldRng() < 0.5) add(PROPS.crate(), { x: s.x, y: 1.1, z: s.z, ry: ry + wr(-0.4, 0.4), s: 0.85 });
+    addBoxCollider(s.x, s.z, 0.6, 0.6, ry);
+  }
+  for (let i = 0; i < 4; i++) {
+    const s = place(0.6, 6, inner); if (!s) continue;
+    add(PROPS.barrel(), { x: s.x, z: s.z });
+    addCircleCollider(s.x, s.z, 0.48);
+    if (worldRng() < 0.6) { add(PROPS.barrel(), { x: s.x + 0.85, z: s.z + 0.2, rz: PI / 2, y: 0.42, ry: wr(0, PI) }); addCircleCollider(s.x + 0.85, s.z + 0.2, 0.5); }
+  }
+  for (let i = 0; i < 9; i++) {
+    const s = place(0.7, 7, inner); if (!s) continue;
+    const kind = wpick(['pine', 'roundTree', 'roundTree', 'deadTree']), sc = wr(0.85, 1.25);
+    add(PROPS[kind](), { x: s.x, z: s.z, ry: wr(0, 6), s: sc });
+    addCircleCollider(s.x, s.z, 0.35 * sc + 0.15);
+  }
+  for (let i = 0; i < 7; i++) {
+    const sc = wr(0.6, 1.4), s = place(sc, 6, inner); if (!s) continue;
+    add(PROPS.rock(sc), { x: s.x, z: s.z });
+    addCircleCollider(s.x, s.z, sc * 1.05, sc > 0.9);
+  }
+  for (let i = 0; i < 10; i++) {        // bushes: decoration only
+    const s = place(0.3, 5, inner + 1); if (!s) continue;
+    add(PROPS.bush(), { x: s.x, z: s.z, ry: wr(0, 6), s: wr(0.7, 1.2) });
+  }
+
+  // --- broken fence posts marking the arena edge ---
+  for (let side = 0; side < 4; side++) {
+    for (let k = -ARENA; k <= ARENA; k += 2.2) {
+      if (worldRng() < 0.3) continue;
+      const x = side < 2 ? k : (side === 2 ? -ARENA - 0.6 : ARENA + 0.6);
+      const z = side < 2 ? (side === 0 ? -ARENA - 0.6 : ARENA + 0.6) : k;
+      add(PROPS.post(), { x, z, ry: wr(0, PI) });
+    }
+  }
+  // --- forest & rocks on the hills beyond the arena (no colliders needed) ---
+  for (let i = 0; i < 95; i++) {
+    let x, z;
+    do { x = wr(-62, 62); z = wr(-62, 62); } while (Math.max(Math.abs(x), Math.abs(z)) < ARENA + 2.5);
+    const kind = worldRng() < 0.55 ? 'pine' : worldRng() < 0.8 ? 'roundTree' : 'deadTree';
+    add(PROPS[kind](), { x, y: groundHeight(x, z) - 0.1, z, ry: wr(0, 6), s: wr(1.0, 1.8) });
+  }
+  for (let i = 0; i < 30; i++) {
+    let x, z;
+    do { x = wr(-55, 55); z = wr(-55, 55); } while (Math.max(Math.abs(x), Math.abs(z)) < ARENA + 1.5);
+    add(PROPS.rock(wr(0.8, 2.2)), { x, y: groundHeight(x, z) - 0.2, z });
+  }
+
+  const mesh = new THREE.Mesh(bake(statics), MAT.vc);   // ONE draw call for every static prop
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  scene.add(mesh);
+}
+
+
+// =========================================================================
+// 5b. PLAYER & GUN MODELS (+Z is "forward" for every character and gun)
+// =========================================================================
+const GUN_MODELS = {
+  pistol: () => ({ muzzle: 0.42, parts: [
+    part(GEO.box(0.11, 0.12, 0.42), 0x3a3a44, { y: 0.06, z: 0.16 }),
+    part(GEO.box(0.09, 0.05, 0.4), 0x6a6a76, { y: 0.14, z: 0.16 }),
+    part(GEO.box(0.1, 0.24, 0.13), 0x2a2420, { y: -0.08, z: -0.02, rx: -0.25 }),
+  ] }),
+  shotgun: () => ({ muzzle: 1.05, parts: [
+    part(GEO.cyl(0.05, 0.05, 0.95, 6), 0x2e2e36, { y: 0.09, z: 0.55, rx: PI / 2 }),
+    part(GEO.cyl(0.045, 0.045, 0.75, 6), 0x44444e, { y: 0.0, z: 0.5, rx: PI / 2 }),
+    part(GEO.box(0.13, 0.12, 0.3), 0x8a5a2e, { y: 0.0, z: 0.58 }),
+    part(GEO.box(0.13, 0.17, 0.34), 0x3a3a44, { y: 0.05, z: 0.05 }),
+    part(GEO.box(0.11, 0.18, 0.5), 0x7a4a26, { y: -0.02, z: -0.36, rx: 0.12 }),
+  ] }),
+  smg: () => ({ muzzle: 0.68, parts: [
+    part(GEO.box(0.13, 0.16, 0.55), 0x34343e, { y: 0.06, z: 0.15 }),
+    part(GEO.cyl(0.04, 0.04, 0.28, 6), 0x22222a, { y: 0.08, z: 0.55, rx: PI / 2 }),
+    part(GEO.box(0.08, 0.3, 0.1), 0x22222a, { y: -0.16, z: 0.24, rx: 0.15 }),
+    part(GEO.box(0.09, 0.2, 0.11), 0x2a2420, { y: -0.1, z: -0.02, rx: -0.2 }),
+    part(GEO.box(0.06, 0.1, 0.3), 0x55555f, { y: 0.06, z: -0.26 }),
+  ] }),
+  rifle: () => ({ muzzle: 1.1, parts: [
+    part(GEO.box(0.13, 0.17, 0.75), 0x4a4a3a, { y: 0.06, z: 0.2 }),
+    part(GEO.cyl(0.035, 0.035, 0.45, 6), 0x22222a, { y: 0.08, z: 0.85, rx: PI / 2 }),
+    part(GEO.box(0.1, 0.06, 0.3), 0x2a2a30, { y: 0.18, z: 0.15 }),
+    part(GEO.box(0.09, 0.3, 0.12), 0x2a2a30, { y: -0.16, z: 0.3, rx: 0.3 }),
+    part(GEO.box(0.09, 0.2, 0.11), 0x2a2420, { y: -0.1, z: -0.02, rx: -0.2 }),
+    part(GEO.box(0.11, 0.2, 0.42), 0x3a3a2e, { y: 0.02, z: -0.36 }),
+  ] }),
+  sniper: () => ({ muzzle: 1.6, parts: [
+    part(GEO.box(0.12, 0.15, 0.7), 0x5a4028, { y: 0.04, z: 0.1 }),
+    part(GEO.cyl(0.04, 0.045, 1.1, 6), 0x22222a, { y: 0.08, z: 1.02, rx: PI / 2 }),
+    part(GEO.cyl(0.07, 0.07, 0.5, 8), 0x1a1a22, { y: 0.25, z: 0.2, rx: PI / 2 }),
+    part(GEO.cyl(0.08, 0.08, 0.04, 8), 0x7fd8ff, { y: 0.25, z: 0.46, rx: PI / 2 }),
+    part(GEO.box(0.04, 0.1, 0.04), 0x1a1a22, { y: 0.16, z: 0.06 }),
+    part(GEO.box(0.04, 0.1, 0.04), 0x1a1a22, { y: 0.16, z: 0.34 }),
+    part(GEO.box(0.1, 0.22, 0.12), 0x4a3020, { y: -0.1, z: -0.05, rx: -0.2 }),
+    part(GEO.box(0.11, 0.2, 0.5), 0x5a4028, { y: 0.0, z: -0.45 }),
+  ] }),
+  rocket: () => ({ muzzle: 1.05, parts: [
+    part(GEO.cyl(0.14, 0.14, 1.4, 8), 0x5f6e34, { y: 0.12, z: 0.3, rx: PI / 2 }),
+    part(GEO.cyl(0.17, 0.17, 0.12, 8), 0x3f4a22, { y: 0.12, z: 0.95, rx: PI / 2 }),
+    part(GEO.cyl(0.17, 0.15, 0.12, 8), 0x3f4a22, { y: 0.12, z: -0.35, rx: PI / 2 }),
+    part(GEO.cone(0.11, 0.25, 6), 0xd04a2a, { y: 0.12, z: 1.08, rx: PI / 2 }),
+    part(GEO.box(0.08, 0.22, 0.1), 0x2a2420, { y: -0.08, z: 0.05, rx: -0.2 }),
+    part(GEO.box(0.06, 0.12, 0.08), 0x2a2a30, { y: 0.31, z: 0.4 }),
+  ] }),
+};
+const GUN_GEO = {};
+let ROCKET_GEO = null;
+function buildGunGeometries() {
+  for (const id in GUN_MODELS) { const m = GUN_MODELS[id](); GUN_GEO[id] = { geo: bake(m.parts), muzzle: m.muzzle }; }
+  ROCKET_GEO = bake([
+    part(GEO.cyl(0.09, 0.09, 0.55, 6), 0x6f7d3c, { rx: PI / 2 }),
+    part(GEO.cone(0.09, 0.22, 6), 0xd04a2a, { z: 0.38, rx: PI / 2 }),
+    part(GEO.box(0.3, 0.02, 0.14), 0x3f4a22, { z: -0.22 }),
+    part(GEO.box(0.02, 0.3, 0.14), 0x3f4a22, { z: -0.22 }),
+  ]);
+}
+
+function buildPlayerModel() {
+  const C = { skin: 0xe8b48a, shirt: 0x3a6ea5, vest: 0x4d5a3a, pants: 0x3a3a4a, boots: 0x2a2020, hair: 0x3a2418, band: 0xd03a3a, pack: 0x6a5a3a };
+  const body = bake([
+    part(GEO.box(0.78, 0.78, 0.46), C.shirt, { y: 1.2 }),
+    part(GEO.box(0.84, 0.5, 0.5), C.vest, { y: 1.32 }),
+    part(GEO.box(0.8, 0.1, 0.48), 0x2a2018, { y: 0.86 }),
+    part(GEO.box(0.5, 0.5, 0.48), C.skin, { y: 1.86 }),
+    part(GEO.box(0.54, 0.2, 0.52), C.hair, { y: 2.12 }),
+    part(GEO.box(0.56, 0.09, 0.54), C.band, { y: 2.0 }),
+    part(GEO.box(0.08, 0.2, 0.06), C.band, { x: 0.1, y: 1.9, z: -0.28, rx: 0.3 }),
+    part(GEO.box(0.1, 0.06, 0.02), 0x1a1010, { x: -0.11, y: 1.9, z: 0.245 }),
+    part(GEO.box(0.1, 0.06, 0.02), 0x1a1010, { x: 0.11, y: 1.9, z: 0.245 }),
+    part(GEO.box(0.58, 0.6, 0.26), C.pack, { y: 1.28, z: -0.36 }),
+    part(GEO.box(0.2, 0.2, 0.5), C.shirt, { x: -0.38, y: 1.38, z: 0.16, ry: 0.3 }),
+    part(GEO.box(0.2, 0.2, 0.5), C.shirt, { x: 0.38, y: 1.38, z: 0.16, ry: -0.3 }),
+    part(GEO.box(0.16, 0.16, 0.36), C.skin, { x: -0.19, y: 1.31, z: 0.5, ry: 0.6 }),
+    part(GEO.box(0.16, 0.16, 0.36), C.skin, { x: 0.19, y: 1.31, z: 0.5, ry: -0.6 }),
+  ]);
+  const legGeo = bake([
+    part(GEO.box(0.26, 0.72, 0.3), C.pants, { y: -0.36 }),
+    part(GEO.box(0.28, 0.16, 0.42), C.boots, { y: -0.74, z: 0.05 }),
+  ]);
+  const group = new THREE.Group();
+  const bodyMesh = new THREE.Mesh(body, MAT.vc);
+  const legL = new THREE.Mesh(legGeo, MAT.vc), legR = new THREE.Mesh(legGeo, MAT.vc);
+  legL.position.set(-0.18, 0.82, 0);
+  legR.position.set(0.18, 0.82, 0);
+  const gunMount = new THREE.Group();
+  gunMount.position.set(0, 1.3, 0.64);
+  group.add(bodyMesh, legL, legR, gunMount);
+  const guns = {};
+  for (const id in GUN_GEO) {
+    const m = new THREE.Mesh(GUN_GEO[id].geo, MAT.vc);
+    m.castShadow = true; m.visible = false;
+    gunMount.add(m);
+    guns[id] = m;
+  }
+  for (const m of [bodyMesh, legL, legR]) m.castShadow = true;
+  scene.add(group);
+  return { group, legL, legR, gunMount, guns, meshes: [bodyMesh, legL, legR] };
+}
+
+
+// =========================================================================
+// 6. ZOMBIE RIGS — each zombie type is drawn by 4 InstancedMeshes
+//    (body, arms, legs, glowing eyes): ~16 draw calls for the whole horde.
+//    A hidden "dummy" bone hierarchy per type is posed for each zombie and
+//    its world matrices are copied into the instance buffers.
+// =========================================================================
+const ZOMBIE_TYPES = ['walker', 'runner', 'tank', 'boss'];
+const RIG_CAPACITY = { walker: 60, runner: 45, tank: 24, boss: 2 };
+const B = GEO.box, CN = GEO.cone, CY = GEO.cyl;
+
+const RIG_DEFS = {
+  walker: () => {
+    const skin = 0x7fae5a, skinD = 0x5f8a42, shirt = 0x9c8a62, shirtD = 0x7a6a48, pants = 0x3a4a6a, shoe = 0x2a2a2a;
+    return {
+      hip: 0.82, armPivot: [0.4, 0.66], legPivot: 0.15,
+      anim: { leg: 0.35, sway: 0.13, bob: 0.05, lean: 0.15, armBase: -1.35, arm: 0.18, freq: 2.6 },
+      body: [
+        part(B(0.62, 0.72, 0.36), shirt, { y: 0.36 }),
+        part(B(0.2, 0.26, 0.37), skin, { x: 0.12, y: 0.2 }),
+        part(B(0.18, 0.14, 0.38), shirtD, { x: -0.16, y: 0.55 }),
+        part(B(0.16, 0.12, 0.16), skin, { y: 0.78 }),
+        part(B(0.46, 0.46, 0.44), skin, { y: 1.04, rz: 0.12, rx: 0.1 }),
+        part(B(0.36, 0.1, 0.1), skinD, { y: 0.86, z: 0.2, rz: 0.12 }),
+        part(B(0.2, 0.08, 0.3), 0x3a2a1a, { x: -0.1, y: 1.29, rz: 0.12 }),
+      ],
+      arm: [part(B(0.17, 0.62, 0.17), shirt, { y: -0.3 }), part(B(0.15, 0.16, 0.15), skin, { y: -0.68 })],
+      leg: [part(B(0.22, 0.72, 0.24), pants, { y: -0.36 }), part(B(0.24, 0.12, 0.34), shoe, { y: -0.76, z: 0.04 })],
+      eyes: { x: 0.1, y: 1.06, z: 0.23, w: 0.09, h: 0.06, color: 0xffdd44 },
+      shardColors: [skin, shirt, pants, 0x7a1a1a, skinD],
+    };
+  },
+  runner: () => {
+    const skin = 0xb8cf8e, skinD = 0x8aa068, shirt = 0xa83a3a, pants = 0x4a4a52;
+    return {
+      hip: 0.88, armPivot: [0.3, 0.56], legPivot: 0.11,
+      anim: { leg: 0.95, sway: 0.05, bob: 0.08, lean: 0.42, armBase: -0.5, arm: 0.9, freq: 4.2, pump: true },
+      body: [
+        part(B(0.44, 0.62, 0.26), shirt, { y: 0.31 }),
+        part(B(0.16, 0.2, 0.27), skin, { x: -0.08, y: 0.18 }),
+        part(B(0.12, 0.12, 0.12), skin, { y: 0.66 }),
+        part(B(0.36, 0.42, 0.38), skin, { y: 0.88 }),
+        part(B(0.3, 0.08, 0.08), skinD, { y: 0.7, z: 0.17 }),
+        part(CN(0.06, 0.16, 4), 0x2a2a20, { x: -0.08, y: 1.14 }),
+        part(CN(0.06, 0.14, 4), 0x2a2a20, { x: 0.09, y: 1.13, rz: -0.3 }),
+      ],
+      arm: [part(B(0.14, 0.18, 0.14), shirt, { y: -0.08 }), part(B(0.11, 0.5, 0.11), skin, { y: -0.38 })],
+      leg: [part(B(0.16, 0.8, 0.18), pants, { y: -0.4 }), part(B(0.18, 0.1, 0.28), 0x2a2a2a, { y: -0.84, z: 0.04 })],
+      eyes: { x: 0.08, y: 0.92, z: 0.195, w: 0.07, h: 0.05, color: 0xff3b3b },
+      shardColors: [skin, shirt, pants, 0x7a1a1a, skinD],
+    };
+  },
+  tank: () => {
+    const skin = 0x4f7a3a, skinD = 0x3d5f2c, vest = 0x5a5a66, strap = 0x34343a, pants = 0x3a3328;
+    return {
+      hip: 0.98, armPivot: [0.9, 1.02], legPivot: 0.3,
+      anim: { leg: 0.3, sway: 0.16, bob: 0.06, lean: 0.12, armBase: -0.35, arm: 0.35, freq: 2.0 },
+      body: [
+        part(B(1.3, 1.05, 0.85), skin, { y: 0.55 }),
+        part(B(1.36, 0.62, 0.9), vest, { y: 0.78 }),
+        part(B(0.12, 0.64, 0.92), strap, { x: 0.3, y: 0.78 }),
+        part(B(0.12, 0.64, 0.92), strap, { x: -0.3, y: 0.78 }),
+        part(B(0.55, 0.48, 0.62), skinD, { x: 0.74, y: 1.02 }),
+        part(B(0.55, 0.48, 0.62), skinD, { x: -0.74, y: 1.02 }),
+        part(B(0.48, 0.46, 0.48), skin, { y: 1.32 }),
+        part(B(0.42, 0.14, 0.16), skinD, { y: 1.12, z: 0.22 }),
+        part(B(0.52, 0.1, 0.52), 0x6a6a74, { y: 1.58 }),
+      ],
+      arm: [part(B(0.38, 1.0, 0.4), skin, { y: -0.48 }), part(B(0.48, 0.42, 0.48), skinD, { y: -1.06 })],
+      leg: [part(B(0.42, 0.9, 0.46), pants, { y: -0.45 }), part(B(0.46, 0.16, 0.56), 0x222222, { y: -0.92, z: 0.06 })],
+      eyes: { x: 0.1, y: 1.36, z: 0.245, w: 0.09, h: 0.06, color: 0xff9a2a },
+      shardColors: [skin, vest, pants, 0x7a1a1a, skinD],
+    };
+  },
+  boss: () => {
+    const skin = 0x8a4aa8, skinD = 0x5e3672, bone = 0xe8dcc0, crown = 0xffc83a, pants = 0x2a2a44;
+    const body = [
+      part(B(2.3, 1.9, 1.4), skin, { y: 0.95 }),
+      part(B(1.7, 1.0, 1.46), skinD, { y: 0.5 }),
+      part(B(0.5, 0.4, 0.5), skin, { y: 2.0 }),
+      part(B(1.0, 0.9, 0.95), skin, { y: 2.42 }),
+      part(B(0.92, 0.24, 0.5), skinD, { y: 2.0, z: 0.32 }),
+      part(CY(0.56, 0.56, 0.2, 6), crown, { y: 2.92 }),
+    ];
+    for (const y of [0.9, 1.18, 1.46]) body.push(part(B(1.3, 0.1, 0.06), bone, { y, z: 0.71 }));
+    for (const s of [-1, 1]) body.push(part(CN(0.25, 0.9, 5), bone, { x: s * 1.0, y: 2.05, rz: -s * 0.5 }));
+    for (const y of [0.8, 1.3, 1.8]) body.push(part(CN(0.2, 0.7, 5), bone, { y, z: -0.75, rx: -1.0 }));
+    for (let i = 0; i < 5; i++) { const a = (i / 5) * PI * 2; body.push(part(CN(0.12, 0.42, 4), crown, { x: Math.sin(a) * 0.42, y: 3.2, z: Math.cos(a) * 0.42 })); }
+    for (const x of [-0.3, -0.1, 0.1, 0.3]) body.push(part(CN(0.06, 0.18, 4), bone, { x, y: 2.18, z: 0.55 }));
+    return {
+      hip: 1.7, armPivot: [1.45, 1.65], legPivot: 0.55,
+      anim: { leg: 0.3, sway: 0.1, bob: 0.1, lean: 0.08, armBase: -0.6, arm: 0.3, freq: 1.7 },
+      body,
+      arm: [
+        part(B(0.62, 1.4, 0.62), skin, { y: -0.7 }),
+        part(B(0.74, 0.7, 0.74), skinD, { y: -1.55 }),
+        part(CN(0.1, 0.4, 4), bone, { x: -0.22, y: -2.05, rx: PI }),
+        part(CN(0.1, 0.4, 4), bone, { y: -2.05, rx: PI }),
+        part(CN(0.1, 0.4, 4), bone, { x: 0.22, y: -2.05, rx: PI }),
+      ],
+      leg: [part(B(0.8, 1.55, 0.85), pants, { y: -0.78 }), part(B(0.9, 0.25, 1.1), skinD, { y: -1.58, z: 0.1 })],
+      eyes: { x: 0.22, y: 2.5, z: 0.48, w: 0.2, h: 0.13, color: 0xff2020 },
+      shardColors: [skin, skinD, bone, crown, 0x7a1a1a],
+    };
+  },
+};
+
+const RIGS = {};
+const _flashColor = new THREE.Color(7, 7, 7);        // over-bright instance colour = white flash
+const _windupColor = new THREE.Color(4, 0.7, 0.7);
+const _tint = new THREE.Color();
+
+function buildRigs() {
+  for (const type of ZOMBIE_TYPES) {
+    const d = RIG_DEFS[type](), cap = RIG_CAPACITY[type];
+    const e = d.eyes;
+    const eyesGeo = bake([part(B(e.w, e.h, 0.04), 0xffffff, { x: -e.x, y: e.y, z: e.z }), part(B(e.w, e.h, 0.04), 0xffffff, { x: e.x, y: e.y, z: e.z })]);
+    const mk = (geo, mat, n, shadow) => {
+      const im = new THREE.InstancedMesh(geo, mat, n);
+      im.frustumCulled = false; im.castShadow = shadow; im.count = 0;
+      for (let i = 0; i < n; i++) im.setColorAt(i, _tint.setRGB(1, 1, 1));
+      scene.add(im);
+      return im;
+    };
+    const rig = {
+      def: d, cap, n: 0, anim: d.anim, hip: d.hip,
+      body: mk(bake(d.body), MAT.vc, cap, true),
+      arms: mk(bake(d.arm), MAT.vc, cap * 2, true),
+      legs: mk(bake(d.leg), MAT.vc, cap * 2, true),
+      eyes: mk(eyesGeo, MAT.eye, cap, false),
+      root: new THREE.Object3D(), torso: new THREE.Object3D(),
+      armL: new THREE.Object3D(), armR: new THREE.Object3D(), legL: new THREE.Object3D(), legR: new THREE.Object3D(),
+      eyeColor: new THREE.Color(e.color),
+      shardColors: d.shardColors.map(c => new THREE.Color(c)),
+    };
+    for (let i = 0; i < cap; i++) rig.eyes.setColorAt(i, rig.eyeColor);
+    rig.root.add(rig.torso, rig.legL, rig.legR);
+    rig.torso.add(rig.armL, rig.armR);
+    rig.armL.position.set(-d.armPivot[0], d.armPivot[1], 0);
+    rig.armR.position.set(d.armPivot[0], d.armPivot[1], 0);
+    rig.legL.position.set(-d.legPivot, d.hip, 0);
+    rig.legR.position.set(d.legPivot, d.hip, 0);
+    RIGS[type] = rig;
+  }
+}
+
+/** Pose the dummy skeleton for one zombie (shuffling walk, sway, attack poses). */
+function poseRig(rig, z) {
+  const A = rig.anim, ph = z.walkT, sw = Math.sin(ph);
+  rig.root.position.set(z.x, z.y, z.z);
+  rig.root.rotation.set(0, z.yaw, 0);
+  rig.root.scale.setScalar(z.scale);
+  rig.legL.rotation.x = sw * A.leg;
+  rig.legR.rotation.x = -sw * A.leg;
+  rig.torso.position.y = rig.hip + Math.abs(Math.cos(ph)) * A.bob;
+  rig.torso.rotation.set(A.lean + (z.lean || 0), 0, sw * A.sway);
+  let base = A.armBase;
+  if (z.type === 'boss' && z.state === 'windup') base = -2.7;           // arms raised before a charge
+  if (A.pump) {
+    rig.armL.rotation.x = base + sw * A.arm;
+    rig.armR.rotation.x = base - sw * A.arm;
+  } else {
+    rig.armL.rotation.x = base + Math.sin(ph * 0.7 + 0.6) * A.arm;
+    rig.armR.rotation.x = base + Math.sin(ph * 0.7 + 2.1) * A.arm;
+  }
+  rig.root.updateMatrixWorld(true);
+}
+
+/** Copy every live zombie's pose into the instance buffers. */
+function drawZombies(list) {
+  for (const type of ZOMBIE_TYPES) RIGS[type].n = 0;
+  for (const z of list) {
+    if (z.dead) continue;
+    const rig = RIGS[z.type];
+    if (rig.n >= rig.cap) continue;
+    poseRig(rig, z);
+    const i = rig.n++;
+    rig.body.setMatrixAt(i, rig.torso.matrixWorld);
+    rig.eyes.setMatrixAt(i, rig.torso.matrixWorld);
+    rig.arms.setMatrixAt(i * 2, rig.armL.matrixWorld);
+    rig.arms.setMatrixAt(i * 2 + 1, rig.armR.matrixWorld);
+    rig.legs.setMatrixAt(i * 2, rig.legL.matrixWorld);
+    rig.legs.setMatrixAt(i * 2 + 1, rig.legR.matrixWorld);
+    const c = z.flash > 0 ? _flashColor
+      : (z.type === 'boss' && z.state === 'windup' && Math.floor(game.time * 14) % 2 === 0) ? _windupColor
+      : _tint.setScalar(z.tint);
+    rig.body.setColorAt(i, c);
+    rig.arms.setColorAt(i * 2, c); rig.arms.setColorAt(i * 2 + 1, c);
+    rig.legs.setColorAt(i * 2, c); rig.legs.setColorAt(i * 2 + 1, c);
+  }
+  for (const type of ZOMBIE_TYPES) {
+    const r = RIGS[type];
+    r.body.count = r.eyes.count = r.n;
+    r.arms.count = r.legs.count = r.n * 2;
+    for (const im of [r.body, r.eyes, r.arms, r.legs]) {
+      im.instanceMatrix.needsUpdate = true;
+      if (im.instanceColor) im.instanceColor.needsUpdate = true;
+    }
+  }
+}
+
+
+// =========================================================================
+// 6b. EFFECT POOLS — fixed-size InstancedMeshes, nothing allocated per frame
+// =========================================================================
+/** A pool of tumbling instanced particles: lit polygon shards, or glowing fire triangles. */
+class ParticlePool {
+  constructor(geo, mat, cap, shadow = false) {
+    this.mesh = new THREE.InstancedMesh(geo, mat, cap);
+    this.mesh.frustumCulled = false;
+    this.mesh.castShadow = shadow;
+    this.mesh.count = 0;
+    for (let i = 0; i < cap; i++) this.mesh.setColorAt(i, _tint.setRGB(1, 1, 1));
+    this.cap = cap;
+    this.items = [];
+    this.free = [];
+    for (let i = 0; i < cap; i++) this.free.push({ color: new THREE.Color() });
+    scene.add(this.mesh);
+  }
+  /** o: { x,y,z, vx,vy,vz, size, life, color, g, bounce, drag, spin, fire, rise } */
+  spawn(o) {
+    const p = this.free.pop();
+    if (!p) return null;                      // pool exhausted: skip (cheaper than growing)
+    p.x = o.x; p.y = o.y; p.z = o.z; p.vx = o.vx || 0; p.vy = o.vy || 0; p.vz = o.vz || 0;
+    p.size = o.size; p.life = p.max = o.life; p.g = o.g ?? 18; p.bounce = o.bounce ?? 0.35; p.drag = o.drag ?? 0.5;
+    const sp = o.spin ?? 8;
+    p.rx = rand(0, 6); p.ry = rand(0, 6); p.rz = rand(0, 6);
+    p.wx = rand(-sp, sp); p.wy = rand(-sp, sp); p.wz = rand(-sp, sp);
+    p.fire = !!o.fire; p.grow = o.grow || 0;
+    if (o.color) p.color.copy(o.color);
+    this.items.push(p);
+    return p;
+  }
+  update(dt) {
+    const items = this.items;
+    let j = 0;
+    for (let i = 0; i < items.length; i++) {
+      const p = items[i];
+      p.life -= dt;
+      if (p.life <= 0) { this.free.push(p); continue; }
+      const dr = Math.max(0, 1 - p.drag * dt);
+      p.vx *= dr; p.vz *= dr;
+      p.vy -= p.g * dt;
+      p.x += p.vx * dt; p.y += p.vy * dt; p.z += p.vz * dt;
+      const floor = p.size * 0.3;
+      if (p.y < floor && p.g > 0) {
+        p.y = floor;
+        if (Math.abs(p.vy) > 1) p.vy = -p.vy * p.bounce; else p.vy = 0;
+        p.vx *= 0.6; p.vz *= 0.6; p.wx *= 0.5; p.wy *= 0.5; p.wz *= 0.5;
+      }
+      p.rx += p.wx * dt; p.ry += p.wy * dt; p.rz += p.wz * dt;
+      items[j++] = p;
+    }
+    items.length = j;
+    const m = this.mesh;
+    for (let i = 0; i < j; i++) {
+      const p = items[i], r = p.life / p.max;
+      const s = p.size * Math.min(1, p.life / 0.35) * (p.grow ? 1 + (1 - r) * p.grow : 1);   // shrink out at the end
+      _eu.set(p.rx, p.ry, p.rz); _q.setFromEuler(_eu);
+      _m4.compose(_v3.set(p.x, p.y, p.z), _q, _s3.set(s, s, s));
+      m.setMatrixAt(i, _m4);
+      if (p.fire) m.setColorAt(i, fireColor(r, _tint));
+      else m.setColorAt(i, p.color);
+    }
+    m.count = j;
+    m.instanceMatrix.needsUpdate = true;
+    if (m.instanceColor) m.instanceColor.needsUpdate = true;
+  }
+  clear() { for (const p of this.items) this.free.push(p); this.items.length = 0; this.mesh.count = 0; }
+}
+const FIRE_RAMP = [0x2a1a18, 0xb0281e, 0xff6a1a, 0xffc040, 0xffffff].map(c => new THREE.Color(c));
+function fireColor(r, out) {        // r: 1 = just spawned (white hot) → 0 = dying (dark)
+  const f = clamp(r, 0, 1) * (FIRE_RAMP.length - 1), i = Math.min(FIRE_RAMP.length - 2, Math.floor(f));
+  return out.copy(FIRE_RAMP[i]).lerp(FIRE_RAMP[i + 1], f - i);
+}
+
+// a single flat triangle for fire/sparks
+function triangleGeometry() {
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0.6, 0, -0.52, -0.3, 0, 0.52, -0.3, 0]), 3));
+  g.computeVertexNormals();
+  return g;
+}
+
+let shards, fire, tracerIM, coinIM, flashMesh;
+const rocketMeshes = [], rings = [], scorches = [], fireballs = [];
+const popups = [];
+const TRACER_CAP = 220, COIN_CAP = 160;
+
+function buildEffects() {
+  shards = new ParticlePool(new THREE.TetrahedronGeometry(1, 0), MAT.shard, IS_MOBILE ? 320 : 520, true);
+  fire = new ParticlePool(triangleGeometry(), MAT.glow, IS_MOBILE ? 260 : 420);
+  tracerIM = new THREE.InstancedMesh(new THREE.BoxGeometry(0.07, 0.07, 1), MAT.glow, TRACER_CAP);
+  tracerIM.frustumCulled = false; tracerIM.count = 0;
+  for (let i = 0; i < TRACER_CAP; i++) tracerIM.setColorAt(i, _tint.setRGB(1, 1, 1));
+  scene.add(tracerIM);
+  coinIM = new THREE.InstancedMesh(new THREE.OctahedronGeometry(0.26, 0), MAT.coin, COIN_CAP);
+  coinIM.frustumCulled = false; coinIM.castShadow = true; coinIM.count = 0;
+  scene.add(coinIM);
+  flashMesh = new THREE.Mesh(new THREE.OctahedronGeometry(0.22, 0), new THREE.MeshBasicMaterial({
+    color: 0xffd070, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
+  flashMesh.visible = false;
+  scene.add(flashMesh);
+  for (let i = 0; i < 10; i++) {
+    const m = new THREE.Mesh(ROCKET_GEO, MAT.vc);
+    m.visible = false; m.castShadow = true;
+    scene.add(m); rocketMeshes.push(m);
+  }
+  const ringGeo = new THREE.RingGeometry(0.82, 1, 20).rotateX(-PI / 2);
+  for (let i = 0; i < 4; i++) {
+    const m = new THREE.Mesh(ringGeo, new THREE.MeshBasicMaterial({ color: 0xffa040, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
+    m.visible = false; m.userData = { t: 0, max: 0.45, r: 1 };
+    scene.add(m); rings.push(m);
+  }
+  const ballGeo = new THREE.IcosahedronGeometry(1, 1);       // faceted glowing fireball
+  for (let i = 0; i < 4; i++) {
+    const m = new THREE.Mesh(ballGeo, new THREE.MeshBasicMaterial({ color: 0xffb050, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
+    m.visible = false; m.userData = { t: 0, max: 0.38, r: 1 };
+    scene.add(m); fireballs.push(m);
+  }
+  const scorchGeo = new THREE.CircleGeometry(1, 9).rotateX(-PI / 2);
+  for (let i = 0; i < 8; i++) {
+    const m = new THREE.Mesh(scorchGeo, new THREE.MeshBasicMaterial({ color: 0x2a1610, transparent: true, depthWrite: false }));
+    m.visible = false; m.renderOrder = 1; m.userData = { life: 0 };
+    scene.add(m); scorches.push(m);
+  }
+  const host = $('popups');
+  for (let i = 0; i < 24; i++) {
+    const el = document.createElement('div');
+    el.className = 'pop'; el.style.opacity = '0';
+    host.appendChild(el);
+    popups.push({ el, life: 0, max: 1, x: 0, y: 0, z: 0 });
+  }
+}
+
+/** Floating "+5" text anchored to a world position. */
+function spawnPopup(text, x, y, z, color) {
+  const p = popups.find(q => q.life <= 0) || popups[0];
+  p.el.textContent = text;
+  p.el.style.color = color || '';
+  p.x = x; p.y = y; p.z = z; p.life = p.max = 0.9;
+}
+
+function spawnRing(x, z, radius, color = 0xffa040) {
+  const m = rings.find(r => !r.visible) || rings[0];
+  m.visible = true;
+  m.position.set(x, 0.12, z);
+  m.material.color.setHex(color);
+  m.userData.t = 0; m.userData.r = radius;
+}
+
+const FIREBALL_HOT = new THREE.Color(0xfff0b0), FIREBALL_COOL = new THREE.Color(0xff3a10);
+function spawnFireball(x, y, z, radius) {
+  const m = fireballs.find(f => !f.visible) || fireballs[0];
+  m.visible = true;
+  m.position.set(x, y, z);
+  m.rotation.set(rand(0, 6), rand(0, 6), 0);
+  m.userData.t = 0; m.userData.r = radius;
+}
+
+function spawnScorch(x, z, radius) {
+  const m = scorches.reduce((a, b) => (a.userData.life < b.userData.life ? a : b));
+  m.visible = true;
+  m.position.set(x, 0.09, z);
+  m.rotation.y = rand(0, 6);
+  m.scale.setScalar(radius);
+  m.userData.life = 10;
+}
+
+/** Spray of lit polygon shards (death, hits, dirt). */
+function spawnShards(x, y, z, n, colors, speed = 5, size = 0.18, up = 4) {
+  for (let i = 0; i < n; i++) {
+    const a = rand(0, PI * 2), s = rand(0.3, 1) * speed;
+    shards.spawn({ x: x + rand(-0.2, 0.2), y: y + rand(-0.3, 0.3), z: z + rand(-0.2, 0.2),
+      vx: Math.cos(a) * s, vy: rand(0.5, 1) * up, vz: Math.sin(a) * s,
+      size: size * rand(0.6, 1.4), life: rand(1.1, 1.9), color: choice(colors), g: 16, bounce: 0.35 });
+  }
+}
+
+/** Burst of glowing fire triangles. */
+function spawnFire(x, y, z, n, speed = 6, size = 0.3, life = 0.6, up = 3) {
+  for (let i = 0; i < n; i++) {
+    const a = rand(0, PI * 2), s = rand(0.2, 1) * speed;
+    fire.spawn({ x, y, z, vx: Math.cos(a) * s, vy: rand(-0.2, 1) * up, vz: Math.sin(a) * s,
+      size: size * rand(0.6, 1.3), life: life * rand(0.6, 1.2), fire: true, g: 2, drag: 2.5, spin: 12 });
+  }
+}
+
+const SMOKE_COLORS = [0x4a4450, 0x5a5460, 0x3a3640].map(c => new THREE.Color(c));
+function spawnSmoke(x, y, z, n, size = 0.35) {
+  for (let i = 0; i < n; i++) {
+    shards.spawn({ x: x + rand(-0.3, 0.3), y, z: z + rand(-0.3, 0.3), vx: rand(-0.8, 0.8), vy: rand(1, 2.5), vz: rand(-0.8, 0.8),
+      size: size * rand(0.6, 1.2), life: rand(0.7, 1.3), color: choice(SMOKE_COLORS), g: -0.5, drag: 1.5, spin: 2, grow: 1.2 });
+  }
+}
+
+
+// =========================================================================
+// 7. INPUT — keyboard, mouse (aim = ray-cast onto the ground), twin touch sticks
+// =========================================================================
+const keys = Object.create(null);
+const input = {
+  mouseX: innerWidth / 2, mouseY: innerHeight / 2, mouseDown: false, touchMode: IS_TOUCH,
+  move: { id: null, x: 0, y: 0, bx: 0, by: 0 },   // stick deflection, -1..1 in screen space
+  aim:  { id: null, x: 0, y: 0, bx: 0, by: 0 },
+};
+const STICK_R = 55;                              // stick travel in CSS pixels
+const aimPoint = new THREE.Vector3();
+const _ray = new THREE.Raycaster(), _ndc = new THREE.Vector2();
+const _aimPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -1.3);   // gun-height plane y = 1.3
+let lastWheel = 0;
+
+const isPlaying = () => game.screen === 'play' && !game.paused && player && !player.dead;
+
+/** Screen-space direction (x right, y down) → world XZ direction for the current camera angle. */
+function screenToWorld(sx, sy, out) {
+  const c = Math.cos(CONFIG.camera.yaw), s = Math.sin(CONFIG.camera.yaw);
+  out.x = sx * c + sy * s;
+  out.z = -sx * s + sy * c;
+  return out;
+}
+
+canvas.addEventListener('pointerdown', e => {
+  Sound.init();
+  if (e.pointerType !== 'mouse') { input.touchMode = true; return; }   // touches go through the stick layer
+  input.touchMode = false;
+  input.mouseX = e.clientX; input.mouseY = e.clientY;
+  if (!isPlaying()) return;
+  if (e.button === 0) input.mouseDown = true;
+  else if (e.button === 2) requestReload(true);
+});
+window.addEventListener('pointermove', e => {
+  if (e.pointerType !== 'mouse') return;
+  input.mouseX = e.clientX; input.mouseY = e.clientY;
+  if (input.touchMode && (e.movementX || e.movementY)) input.touchMode = false;
+});
+window.addEventListener('pointerup', e => { if (e.pointerType === 'mouse' && e.button === 0) input.mouseDown = false; });
+canvas.addEventListener('contextmenu', e => e.preventDefault());
+canvas.addEventListener('wheel', e => {
+  if (!isPlaying()) return;
+  e.preventDefault();
+  const now = performance.now();
+  if (now - lastWheel < 120) return;
+  lastWheel = now;
+  cycleGun(e.deltaY > 0 ? 1 : -1);
+}, { passive: false });
+
+// ---------- twin virtual joysticks ----------
+const touchEl = $('touch'), stickMoveEl = $('stick-move'), stickAimEl = $('stick-aim');
+function stickHome(el, left) {
+  el.style.left = (left ? 90 : innerWidth - 90) + 'px';
+  el.style.top = (innerHeight - 160) + 'px';
+}
+function drawStick(el, s, left) {
+  const active = s.id !== null;
+  el.classList.toggle('active', active);
+  if (active) { el.style.left = s.bx + 'px'; el.style.top = s.by + 'px'; } else stickHome(el, left);
+  el.firstElementChild.style.transform = `translate(${s.x * STICK_R}px, ${s.y * STICK_R}px)`;
+}
+touchEl.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  Sound.init();
+  input.touchMode = true;
+  const left = e.clientX < innerWidth / 2, s = left ? input.move : input.aim;
+  if (s.id !== null) return;
+  s.id = e.pointerId; s.bx = e.clientX; s.by = e.clientY; s.x = 0; s.y = 0;
+  try { touchEl.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+  drawStick(left ? stickMoveEl : stickAimEl, s, left);
+});
+touchEl.addEventListener('pointermove', e => {
+  for (const [s, el, left] of [[input.move, stickMoveEl, true], [input.aim, stickAimEl, false]]) {
+    if (s.id !== e.pointerId) continue;
+    let dx = (e.clientX - s.bx) / STICK_R, dy = (e.clientY - s.by) / STICK_R;
+    const len = Math.hypot(dx, dy);
+    if (len > 1) { dx /= len; dy /= len; }
+    s.x = dx; s.y = dy;
+    drawStick(el, s, left);
+  }
+});
+function endTouch(e) {
+  for (const [s, el, left] of [[input.move, stickMoveEl, true], [input.aim, stickAimEl, false]]) {
+    if (s.id !== e.pointerId) continue;
+    s.id = null; s.x = 0; s.y = 0;
+    drawStick(el, s, left);
+  }
+}
+touchEl.addEventListener('pointerup', endTouch);
+touchEl.addEventListener('pointercancel', endTouch);
+function releaseSticks() {
+  for (const s of [input.move, input.aim]) { s.id = null; s.x = 0; s.y = 0; }
+  drawStick(stickMoveEl, input.move, true);
+  drawStick(stickAimEl, input.aim, false);
+}
+
+// ---------- keyboard ----------
+window.addEventListener('keydown', e => {
+  Sound.init();
+  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) e.preventDefault();
+  keys[e.code] = true;
+  if (!e.repeat) handleKey(e.code);
+});
+window.addEventListener('keyup', e => { keys[e.code] = false; });
+window.addEventListener('blur', () => { for (const k in keys) keys[k] = false; input.mouseDown = false; });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { if (isPlaying()) setPaused(true); writeSave(); }
+});
+window.addEventListener('pagehide', writeSave);
+
+function handleKey(code) {
+  if (code === 'KeyM') { toggleMute(); return; }
+  switch (game.screen) {
+    case 'title':
+      if (code === 'Enter') startRun();
+      break;
+    case 'howto':
+      if (code === 'Escape' || code === 'Enter') setScreen('title');
+      break;
+    case 'shop':
+      if (code === 'Escape' || code === 'KeyB') closeShop();
+      else if (code === 'KeyN' && game.shopReturn === 'play') { closeShop(); startNextWave(); }
+      break;
+    case 'over':
+      if (game.overT > 0.8 && (code === 'Enter' || code === 'KeyR')) startRun();
+      else if (code === 'Escape') toTitle();
+      break;
+    case 'play':
+      if (code === 'KeyP' || code === 'Escape') { setPaused(!game.paused); return; }
+      if (game.paused || !player || player.dead) return;
+      if (/^(Digit|Numpad)[1-9]$/.test(code)) { const n = +code.slice(-1); if (n <= CONFIG.guns.length) selectGun(n - 1); }
+      else if (code === 'KeyR') requestReload(true);
+      else if (code === 'KeyQ') cycleGun(-1);
+      else if (code === 'KeyE') cycleGun(1);
+      else if (code === 'KeyB' && game.phase === 'break') openShop('play');
+      else if ((code === 'KeyN' || code === 'Enter') && game.phase === 'break') startNextWave();
+      break;
+  }
+}
+
+
+// =========================================================================
+// 8. GAME STATE & FLOW
+// =========================================================================
+const game = {
+  screen: 'loading',    // 'title' | 'howto' | 'shop' | 'play' | 'over'
+  paused: false,
+  time: 0, runT: 0,
+  wave: 0, phase: 'idle', phaseT: 0,   // phase: 'spawning' | 'cleared' | 'break'
+  toSpawn: 0, spawnTimer: 0, spawnInterval: 1, maxAlive: 10,
+  bossPending: false, bossTimer: 0, boss: null,
+  breakTimer: 0,
+  kills: 0, runCoins: 0, prevBest: 0,
+  dying: 0, overT: 0, shake: 0,
+  shopReturn: 'title', shopTab: 'armory', shopGun: 'pistol',
+};
+let player = null;          // gameplay state of the survivor (null outside a run)
+let playerModel = null;     // the low-poly survivor model
+const zombies = [], titleZombies = [], bullets = [], coins = [];
+const bulletPool = [];
+
+function clearWorld() {
+  zombies.length = 0;
+  for (const b of bullets) releaseBullet(b);
+  bullets.length = 0;
+  coins.length = 0;
+  shards.clear(); fire.clear();
+  for (const r of rings) r.visible = false;
+  for (const s of scorches) { s.visible = false; s.userData.life = 0; }
+  for (const f of fireballs) f.visible = false;
+  for (const p of popups) { p.life = 0; p.el.style.opacity = '0'; }
+}
+
+function startRun() {
+  clearWorld();
+  player = createPlayer();
+  Object.assign(game, {
+    paused: false, runT: 0, wave: 0, phase: 'idle', kills: 0, runCoins: 0, prevBest: save.bestWave,
+    dying: 0, overT: 0, boss: null, bossPending: false, shake: 0,
+  });
+  env.bossTarget = 0;
+  input.mouseDown = false;
+  releaseSticks();
+  setScreen('play');
+  startWave(1);
+}
+
+function startWave(n) {
+  const WV = CONFIG.waves;
+  game.wave = n;
+  game.phase = 'spawning';
+  const isBoss = n % WV.bossEvery === 0;
+  let count = WV.baseCount + WV.countPerWave * (n - 1);
+  if (isBoss) count = Math.round(count * WV.bossWaveCountMult);
+  game.toSpawn = count;
+  const cap = IS_MOBILE ? WV.mobileMaxAliveCap : WV.maxAliveCap;
+  game.maxAlive = Math.min(cap, WV.baseMaxAlive + WV.maxAlivePerWave * (n - 1));
+  game.spawnInterval = Math.max(WV.minSpawnInterval, WV.spawnInterval + WV.spawnIntervalPerWave * (n - 1));
+  game.spawnTimer = WV.firstSpawnDelay;
+  game.bossPending = isBoss;
+  game.bossTimer = 2.5;
+  env.target = clamp((n - 1) / CONFIG.world.nightAtWave, 0, 1);     // the sun sets as waves climb
+  if (n > save.bestWave) { save.bestWave = n; saveDirty = true; }
+  if (isBoss) { showBanner('WAVE ' + n, CONFIG.zombies.boss.name + ' APPROACHES', '#ff5a6a'); Sound.play('boss'); }
+  else { showBanner('WAVE ' + n, n === 1 ? 'SURVIVE THE HORDE' : 'HERE THEY COME…', '#fff4e6'); Sound.play('wave'); }
+}
+const startNextWave = () => { if (game.phase === 'break') startWave(game.wave + 1); };
+
+function waveCleared() {
+  game.phase = 'cleared';
+  game.phaseT = 2.2;
+  showBanner('WAVE ' + game.wave + ' CLEARED', 'SHOP OPENING…', '#7ae07a');
+  Sound.play('waveClear');
+  for (const c of coins) c.magnet = true;
+  writeSave();
+}
+
+function updateWaves(dt) {
+  if (game.phase === 'spawning') {
+    game.spawnTimer -= dt;
+    if (game.toSpawn > 0 && game.spawnTimer <= 0 && zombies.length < game.maxAlive) {
+      spawnZombie(pickZombieType(game.wave));
+      game.toSpawn--;
+      game.spawnTimer = game.spawnInterval * rand(0.6, 1.3);
+    }
+    if (game.bossPending) {
+      game.bossTimer -= dt;
+      if (game.bossTimer <= 0) { game.bossPending = false; spawnZombie('boss'); }
+    }
+    if (game.toSpawn === 0 && !game.bossPending && zombies.length === 0) waveCleared();
+  } else if (game.phase === 'cleared') {
+    game.phaseT -= dt;
+    if (game.phaseT <= 0) {
+      game.phase = 'break';
+      game.breakTimer = CONFIG.waves.breakTime;
+      openShop('play');
+    }
+  } else if (game.phase === 'break') {
+    tickBreak(dt);
+  }
+}
+
+/** The between-wave countdown keeps running while the shop is open. */
+function tickBreak(dt) {
+  const before = Math.ceil(game.breakTimer);
+  game.breakTimer -= dt;
+  const after = Math.ceil(game.breakTimer);
+  if (after !== before && after <= 5 && after > 0) Sound.play('tick');
+  if (game.breakTimer <= 0) {
+    if (game.screen === 'shop') closeShop();
+    startNextWave();
+  }
+}
+
+function pickZombieType(n) {
+  const opts = []; let total = 0;
+  for (const key of ['walker', 'runner', 'tank']) {
+    const z = CONFIG.zombies[key];
+    if (n < z.unlockWave) continue;
+    const w = Math.min(z.maxWeight, z.weight + z.weightPerWave * (n - z.unlockWave));
+    opts.push([key, w]); total += w;
+  }
+  let r = Math.random() * total;
+  for (const [key, w] of opts) if ((r -= w) <= 0) return key;
+  return 'walker';
+}
+
+function openShop(ret) {
+  game.shopReturn = ret;
+  game.shopGun = save.equipped;
+  if (ret !== 'play') game.shopTab = 'armory';
+  input.mouseDown = false;
+  releaseSticks();
+  setScreen('shop');
+  renderShop();
+}
+function closeShop() {
+  writeSave();
+  setScreen(game.shopReturn === 'play' && player && !player.dead ? 'play' : 'title');
+}
+function setPaused(p) {
+  if (game.screen !== 'play' || !player || player.dead) return;
+  game.paused = p;
+  input.mouseDown = false;
+  releaseSticks();
+  $('screen-pause').classList.toggle('hidden', !p);
+  updateSoundLabels();
+}
+function toTitle() {
+  player = null;
+  clearWorld();
+  env.target = 0.12; env.bossTarget = 0;
+  writeSave();
+  setScreen('title');
+}
+function toggleMute() {
+  Sound.setMuted(!Sound.muted);
+  save.muted = Sound.muted;
+  writeSave();
+  updateSoundLabels();
+  showToast(Sound.muted ? 'SOUND OFF' : 'SOUND ON');
+}
+
+
+// =========================================================================
+// 9. GAMEPLAY
+// =========================================================================
+const _mz = { x: 0, y: 0, z: 0 }, _wd = { x: 0, z: 0 };
+const RISE_DEPTH = { walker: 2.3, runner: 2.2, tank: 3.2, boss: 5.6 };   // how far below ground zombies start
+const CHEST = { walker: 1.2, runner: 1.15, tank: 1.7, boss: 3.0 };
+const BRASS = new THREE.Color(0xd9a531), DIRT = [0x6a5032, 0x7a5a38, 0x4f3c26].map(c => new THREE.Color(c));
+const PLAYER_SHARDS = [0x3a6ea5, 0xe8b48a, 0x4d5a3a, 0x7a1a1a].map(c => new THREE.Color(c));
+const BLOOD = [0x7a1a1a, 0x9a2020].map(c => new THREE.Color(c));
+
+// ---------- guns ----------
+const currentGun = () => CONFIG.guns[player.gunIndex];
+const gunById = id => CONFIG.guns.find(g => g.id === id) || CONFIG.guns[0];
+const TRACER_COLORS = {};
+for (const g of CONFIG.guns) TRACER_COLORS[g.id] = new THREE.Color(g.tracerColor).multiplyScalar(2.2);
+
+/** Final gun stats after upgrades. */
+function gunStats(g) {
+  const u = save.upgrades[g.id], U = CONFIG.upgrades, dmg = 1 + U.damage.perLevel * u.damage;
+  return {
+    damage: g.damage * dmg,
+    explosionDamage: (g.explosionDamage || 0) * dmg,
+    fireRate: g.fireRate * (1 + U.fireRate.perLevel * u.fireRate),
+    magSize: Math.max(g.magSize + u.magazine, Math.round(g.magSize * (1 + U.magazine.perLevel * u.magazine))),
+  };
+}
+function freshGunState(g) { return { mag: gunStats(g).magSize, reserve: g.startReserve, reloading: false, reloadT: 0 }; }
+function gunState(g) { return player.guns[g.id] || (player.guns[g.id] = freshGunState(g)); }
+
+function createPlayer() {
+  const P = CONFIG.player;
+  const p = {
+    x: 0, z: 0, vx: 0, vz: 0, kx: 0, kz: 0, r: P.radius, hp: P.maxHealth, maxHp: P.maxHealth, armor: 0, maxArmor: P.maxArmor,
+    yaw: 0, gunIndex: 0, guns: {}, fireCd: 0, invuln: 0, hurt: 0, muzzle: 0, recoil: 0, walkT: 0, moving: false, dead: false, deadT: 0,
+  };
+  for (const g of CONFIG.guns) if (save.owned[g.id]) p.guns[g.id] = freshGunState(g);
+  const idx = CONFIG.guns.findIndex(g => g.id === save.equipped);
+  p.gunIndex = idx >= 0 && save.owned[save.equipped] ? idx : 0;
+  player = p;
+  playerModel.group.visible = true;
+  for (const mesh of playerModel.meshes) mesh.material = MAT.vc;
+  playerModel.group.rotation.set(0, 0, 0);
+  playerModel.group.position.set(0, 0, 0);
+  showGunModel();
+  camFocus.set(0, 0, 0);
+  return p;
+}
+function showGunModel() { for (const id in playerModel.guns) playerModel.guns[id].visible = player && id === currentGun().id; }
+
+function selectGun(i, silent) {
+  const g = CONFIG.guns[i];
+  if (!g || !player) return;
+  if (!save.owned[g.id]) { if (!silent) { showToast(g.name + ' IS LOCKED — BUY IT IN THE SHOP', 'var(--red)'); Sound.play('deny'); } return; }
+  if (player.gunIndex === i) return;
+  gunState(currentGun()).reloading = false;     // switching cancels a reload
+  player.gunIndex = i;
+  player.fireCd = Math.max(player.fireCd, 0.15);
+  save.equipped = g.id; saveDirty = true;
+  showGunModel();
+  if (!silent) Sound.play('switch');
+  const st = gunState(g);
+  if (st.mag === 0 && st.reserve > 0) requestReload(false);
+}
+function cycleGun(dir) {
+  const n = CONFIG.guns.length;
+  for (let k = 1; k < n; k++) {
+    const i = (player.gunIndex + dir * k + n * 4) % n;
+    if (save.owned[CONFIG.guns[i].id]) { selectGun(i); return; }
+  }
+}
+function requestReload(manual) {
+  if (!player || player.dead) return;
+  const g = currentGun(), st = gunState(g);
+  if (st.reloading || st.mag >= gunStats(g).magSize) return;
+  if (st.reserve <= 0) { if (manual) { showToast('NO SPARE AMMO', 'var(--red)'); Sound.play('empty'); } return; }
+  st.reloading = true; st.reloadT = 0;
+  Sound.play('reload');
+}
+function finishReload(g, st) {
+  const need = gunStats(g).magSize - st.mag;
+  const take = g.maxReserve === Infinity ? need : Math.min(need, st.reserve);
+  st.mag += take;
+  if (g.maxReserve !== Infinity) st.reserve -= take;
+  st.reloading = false;
+  Sound.play('reloadDone');
+}
+function muzzleWorld(out) {
+  const reach = 0.64 + GUN_GEO[currentGun().id].muzzle - player.recoil * 0.12;
+  out.x = player.x + Math.sin(player.yaw) * reach;
+  out.z = player.z + Math.cos(player.yaw) * reach;
+  out.y = 1.4;
+  return out;
+}
+
+// ---------- bullets (pooled data objects; drawn as instanced glowing tracers) ----------
+function acquireBullet() {
+  const b = bulletPool.pop() || { hitSet: new Set() };
+  b.hitSet.clear(); b.dead = false; b.rocket = null;
+  return b;
+}
+function releaseBullet(b) {
+  if (b.rocket) { b.rocket.visible = false; b.rocket = null; }
+  bulletPool.push(b);
+}
+
+function tryFire() {
+  const p = player, g = currentGun(), st = gunState(g);
+  if (p.fireCd > 0 || st.reloading) return;
+  if (st.mag <= 0) {
+    if (st.reserve > 0) requestReload(false);
+    else {
+      Sound.play('empty');
+      p.fireCd = 0.3;
+      showToast('OUT OF AMMO — RESTOCK IN THE SHOP', 'var(--red)');
+      if (p.gunIndex !== 0) selectGun(0, true);      // fall back to the trusty pistol
+    }
+    return;
+  }
+  const stats = gunStats(g);
+  st.mag--;
+  p.fireCd = 1 / stats.fireRate;
+  const m = muzzleWorld(_mz);
+  for (let i = 0; i < g.pellets; i++) {
+    const ang = p.yaw + (g.pellets > 1 ? (i / (g.pellets - 1) - 0.5) * g.spread + rand(-0.05, 0.05) : rand(-g.spread, g.spread) * 0.5);
+    const spd = g.bulletSpeed * (g.pellets > 1 ? rand(0.85, 1.1) : 1);
+    const b = acquireBullet();
+    b.x = m.x; b.z = m.z; b.sx = p.x; b.sz = p.z;              // first hit-test segment starts at the body: point-blank shots land
+    b.vx = Math.sin(ang) * spd; b.vz = Math.cos(ang) * spd; b.speed = spd;
+    b.dmg = stats.damage; b.range = g.range * (g.pellets > 1 ? rand(0.8, 1.1) : 1); b.traveled = 0;
+    b.pierce = g.pierce; b.gun = g; b.stats = stats;
+    if (g.explosionRadius) { const rm = rocketMeshes.find(r => !r.visible); if (rm) { rm.visible = true; b.rocket = rm; } }
+    bullets.push(b);
+  }
+  p.muzzle = 0.06; p.recoil = 1;
+  muzzleLight.position.set(m.x, m.y + 0.4, m.z);
+  muzzleLight.intensity = g.explosionRadius ? 60 : 35;
+  addShake(g.shake);
+  Sound.play(g.id);
+  spawnFire(m.x, m.y, m.z, g.pellets > 1 ? 5 : 2, 3, 0.12, 0.14, 1);
+  if (!g.explosionRadius) {                          // eject a brass casing to the right
+    shards.spawn({ x: p.x, y: 1.35, z: p.z, vx: Math.cos(p.yaw) * rand(2, 3), vy: rand(2.5, 4), vz: -Math.sin(p.yaw) * rand(2, 3),
+      size: 0.05, life: 1.0, color: BRASS, g: 18, bounce: 0.4, spin: 20 });
+  }
+  if (st.mag === 0 && st.reserve > 0) requestReload(false);
+}
+
+function updateBullets(dt) {
+  let j = 0;
+  for (let i = 0; i < bullets.length; i++) {
+    const b = bullets[i];
+    const x0 = b.sx, z0 = b.sz;
+    b.x += b.vx * dt; b.z += b.vz * dt;
+    b.traveled += b.speed * dt;
+    b.sx = b.x; b.sz = b.z;
+    const ux = b.vx / b.speed, uz = b.vz / b.speed;
+    // zombies
+    for (let k = 0; k < zombies.length && !b.dead; k++) {
+      const z = zombies[k];
+      if (z.dead || z.rise < 0.4 || b.hitSet.has(z)) continue;
+      if (!segCircle(x0, z0, b.x, b.z, z.x, z.z, z.r + 0.08)) continue;
+      if (b.gun.explosionRadius) {
+        damageZombie(z, b.dmg, ux, uz, 3);
+        explode(b.x, b.z, b.gun, b.stats);
+        b.dead = true; break;
+      }
+      damageZombie(z, b.dmg, ux, uz, b.gun.knockback);
+      if (b.pierce > 0) { b.hitSet.add(z); b.pierce--; } else b.dead = true;
+    }
+    // props (sampled along the segment)
+    if (!b.dead) {
+      const len = Math.hypot(b.x - x0, b.z - z0), n = Math.max(1, Math.ceil(len / 0.45));
+      for (let k = 1; k <= n; k++) {
+        const px = x0 + (b.x - x0) * (k / n), pz = z0 + (b.z - z0) * (k / n);
+        if (!bulletBlocked(px, pz)) continue;
+        b.dead = true;
+        if (b.gun.explosionRadius) explode(px - ux * 0.3, pz - uz * 0.3, b.gun, b.stats);
+        else { spawnFire(px - ux * 0.2, 1.4, pz - uz * 0.2, 3, 3, 0.1, 0.2, 2); Sound.play('ricochet'); }
+        break;
+      }
+    }
+    if (!b.dead && b.traveled >= b.range) { b.dead = true; if (b.gun.explosionRadius) explode(b.x, b.z, b.gun, b.stats); }
+    if (!b.dead && (Math.abs(b.x) > ARENA + 10 || Math.abs(b.z) > ARENA + 10)) b.dead = true;
+    if (!b.dead && b.rocket) {
+      b.rocket.position.set(b.x, 1.4, b.z);
+      b.rocket.rotation.set(0, Math.atan2(b.vx, b.vz), game.time * 12);
+      if (Math.random() < 0.7) spawnSmoke(b.x - ux * 0.4, 1.4, b.z - uz * 0.4, 1, 0.16);
+      if (Math.random() < 0.8) spawnFire(b.x - ux * 0.35, 1.4, b.z - uz * 0.35, 1, 0.6, 0.12, 0.16, 0.2);
+    }
+    if (b.dead) releaseBullet(b); else bullets[j++] = b;
+  }
+  bullets.length = j;
+}
+
+function explode(x, z, g, stats) {
+  const R = g.explosionRadius;
+  for (let i = 0; i < zombies.length; i++) {
+    const zz = zombies[i];
+    if (zz.dead || zz.rise < 0.4) continue;
+    const d = Math.hypot(zz.x - x, zz.z - z);
+    if (d > R + zz.r) continue;
+    const f = 1 - 0.5 * clamp(d / R, 0, 1);       // full damage in the middle, half at the edge
+    damageZombie(zz, stats.explosionDamage * f, (zz.x - x) / (d || 1), (zz.z - z) / (d || 1), g.explosionKnockback);
+  }
+  spawnFire(x, 1.0, z, IS_MOBILE ? 30 : 46, 9, 0.42, 0.7, 5);
+  spawnSmoke(x, 0.8, z, IS_MOBILE ? 8 : 14, 0.5);
+  spawnShards(x, 0.3, z, 8, DIRT, 6, 0.16, 7);
+  spawnFireball(x, 1.2, z, R * 0.6);
+  spawnRing(x, z, R * 1.15);
+  spawnScorch(x, z, R * 0.42);
+  blastLight.position.set(x, 2.2, z);
+  blastLight.intensity = 500;
+  addShake(0.9);
+  Sound.play('explosion');
+}
+
+// ---------- zombies ----------
+function colliderAt(x, z, pad) {
+  for (let i = 0; i < colliders.length; i++) {
+    const c = colliders[i], dx = x - c.x, dz = z - c.z, reach = c.bound + pad;
+    if (dx * dx + dz * dz > reach * reach) continue;
+    if (c.type === 'circle') { if (dx * dx + dz * dz < (c.r + pad) * (c.r + pad)) return true; continue; }
+    const lx = dx * c.cos + dz * c.sin, lz = -dx * c.sin + dz * c.cos;
+    if (Math.abs(lx) <= c.hw + pad && Math.abs(lz) <= c.hd + pad) return true;
+  }
+  return false;
+}
+
+function createZombie(type, x, z) {
+  const c = CONFIG.zombies[type], WV = CONFIG.waves, n = Math.max(1, game.wave);
+  const spdMult = Math.min(WV.maxSpeedMult, 1 + WV.speedPerWave * (n - 1));
+  let hp = c.health * (1 + WV.healthPerWave * (n - 1));
+  if (type === 'boss') hp = c.health * (1 + WV.bossHealthPerBoss * (Math.max(1, Math.floor(n / WV.bossEvery)) - 1));
+  return {
+    type, x, z, y: -RISE_DEPTH[type], yaw: Math.atan2(-x, -z), r: c.radius, hp, maxHp: hp,
+    speed: c.speed * spdMult * (type === 'boss' ? 1 : rand(0.9, 1.1)), damage: c.damage * (1 + WV.damagePerWave * (n - 1)),
+    attackRate: c.attackRate, attackCd: 0.4, kbResist: c.knockbackResist || 0, coins: c.coins,
+    flash: 0, walkT: rand(0, 6), seed: rand(0, 100), kx: 0, kz: 0, dead: false, lean: 0,
+    rise: 0, riseTime: type === 'boss' ? 1.6 : rand(0.7, 1.0), scale: type === 'boss' ? 1 : rand(0.94, 1.06), tint: rand(0.88, 1.08),
+    avoidSide: Math.random() < 0.5 ? -1 : 1, avoidT: 0,
+    state: 'walk', stateT: c.chargeEvery || 0, chargeYaw: 0, summonT: c.summonEvery || 0,
+  };
+}
+
+/** Zombies claw their way out of the ground along the arena edge. */
+function spawnZombie(type, x, z) {
+  if (x === undefined) {
+    const e = ARENA - 1.5, r = CONFIG.zombies[type].radius;
+    for (let t = 0; t < 14; t++) {
+      const side = randInt(0, 3), k = rand(-ARENA + 2, ARENA - 2);
+      x = side === 0 ? k : side === 1 ? k : side === 2 ? -e : e;
+      z = side === 0 ? -e : side === 1 ? e : k;
+      const far = !player || dist2(x, z, player.x, player.z) > (type === 'boss' ? 400 : 110);
+      if ((far && !colliderAt(x, z, r + 0.3)) || t === 13) break;
+    }
+  }
+  const zb = createZombie(type, x, z);
+  zombies.push(zb);
+  if (type === 'boss') { game.boss = zb; env.bossTarget = 1; }
+  Sound.play('rise');
+  return zb;
+}
+
+/** Steer around props: probe ahead, turn to a free side (sticking with that side for a while). */
+function avoidObstacles(z, ang, dt) {
+  z.avoidT -= dt;
+  const look = z.r + 1.1, pad = z.r * 0.8;
+  if (!colliderAt(z.x + Math.sin(ang) * look, z.z + Math.cos(ang) * look, pad)) return ang;
+  for (const side of [z.avoidSide, -z.avoidSide]) {
+    for (const step of [0.55, 1.05, 1.6]) {
+      const a = ang + side * step;
+      if (!colliderAt(z.x + Math.sin(a) * look, z.z + Math.cos(a) * look, pad)) {
+        if (side !== z.avoidSide && z.avoidT <= 0) { z.avoidSide = side; z.avoidT = 1.2; }
+        return a;
+      }
+    }
+  }
+  return ang;
+}
+
+function updateBoss(z, dt, angToPlayer) {
+  const C = CONFIG.zombies.boss;
+  z.stateT -= dt;
+  z.summonT -= dt;
+  if (z.summonT <= 0 && zombies.length < game.maxAlive + 6) {
+    z.summonT = C.summonEvery;
+    for (let i = 0; i < C.summonCount; i++) {
+      const a = (i / C.summonCount) * PI * 2 + rand(-0.3, 0.3);
+      const m = spawnZombie('walker', clamp(z.x + Math.sin(a) * 3.2, -ARENA + 1, ARENA - 1), clamp(z.z + Math.cos(a) * 3.2, -ARENA + 1, ARENA - 1));
+      collideCircle(m, m.r);
+    }
+    Sound.play('roar'); addShake(0.3);
+  }
+  switch (z.state) {
+    case 'walk':
+      z.lean = 0;
+      if (z.stateT <= 0 && !player.dead) { z.state = 'windup'; z.stateT = C.chargeWindup; z.chargeYaw = angToPlayer; Sound.play('roar'); }
+      return z.speed;
+    case 'windup':
+      if (z.stateT > C.chargeWindup * 0.3) z.chargeYaw = angToPlayer;   // aim locks just before the charge
+      z.lean = -0.15;
+      if (z.stateT <= 0) { z.state = 'charge'; z.stateT = C.chargeTime; addShake(0.4); Sound.play('slam'); }
+      return 0;
+    case 'charge':
+      z.lean = 0.4;
+      if (Math.random() < 0.5) spawnShards(z.x, 0.2, z.z, 1, DIRT, 2, 0.14, 3);
+      if (z.stateT <= 0) { z.state = 'recover'; z.stateT = 0.8; }
+      return C.chargeSpeed;
+    default:   // recover
+      z.lean = 0.1;
+      if (z.stateT <= 0) { z.state = 'walk'; z.stateT = C.chargeEvery * rand(0.8, 1.2); }
+      return z.speed * 0.3;
+  }
+}
+
+/** Moves a list of zombies. chase=false → aimless shambling (title screen / after you die). */
+function updateZombies(dt, list, chase) {
+  for (let i = 0; i < list.length; i++) {     // index loop: the boss can add zombies mid-loop
+    const z = list[i];
+    if (z.dead) continue;
+    z.flash = Math.max(0, z.flash - dt);
+    z.attackCd = Math.max(0, z.attackCd - dt);
+    if (z.rise < 1) {                           // still clawing out of the ground
+      z.rise = Math.min(1, z.rise + dt / z.riseTime);
+      const e = 1 - (1 - z.rise) ** 3;
+      z.y = -(1 - e) * RISE_DEPTH[z.type] * z.scale;
+      if (Math.random() < dt * 14) spawnShards(z.x, 0.1, z.z, 1, DIRT, 2.5, z.type === 'boss' ? 0.3 : 0.14, 4);
+      z.walkT += dt * 5;
+      continue;
+    }
+    z.y = 0;
+    const hunting = chase && player && !player.dead;
+    let tx, tz;
+    if (hunting) { tx = player.x; tz = player.z; }
+    else { tx = Math.sin(game.time * 0.11 + z.seed) * ARENA * 0.6; tz = Math.cos(game.time * 0.09 + z.seed * 1.3) * ARENA * 0.6; }
+    let ang = Math.atan2(tx - z.x, tz - z.z);
+    let spd = hunting ? z.speed : Math.min(z.speed, 1.5) * 0.7;
+    if (z.type === 'walker') ang += Math.sin(game.time * 1.7 + z.seed) * 0.35;
+    else if (z.type === 'runner') ang += Math.sin(game.time * 7 + z.seed) * 0.2;
+    if (z.type === 'boss' && hunting) {
+      spd = updateBoss(z, dt, ang);
+      if (z.state === 'windup' || z.state === 'charge') ang = z.chargeYaw;
+    }
+    if (!(z.type === 'boss' && z.state === 'charge')) ang = avoidObstacles(z, ang, dt);
+    z.x += (Math.sin(ang) * spd + z.kx) * dt;
+    z.z += (Math.cos(ang) * spd + z.kz) * dt;
+    const kd = Math.max(0, 1 - dt * 8); z.kx *= kd; z.kz *= kd;
+    let hitWall = collideCircle(z, z.r);
+    const lim = ARENA - z.r;
+    if (Math.abs(z.x) > lim || Math.abs(z.z) > lim) { z.x = clamp(z.x, -lim, lim); z.z = clamp(z.z, -lim, lim); hitWall = true; }
+    if (z.type === 'boss' && z.state === 'charge' && hitWall) {       // charged into something: stagger
+      z.state = 'recover'; z.stateT = 1.0; addShake(0.6); Sound.play('slam');
+      spawnShards(z.x, 0.5, z.z, 10, DIRT, 5, 0.2, 5);
+    }
+    if (spd > 0.05) z.yaw = lerpAngle(z.yaw, ang, damp(z.type === 'runner' ? 10 : 5, dt));
+    const base = CONFIG.zombies[z.type].speed;
+    z.walkT += dt * RIGS[z.type].anim.freq * clamp(spd / base, 0.3, 2.5);
+  }
+}
+
+/** Zombies shove each other apart (heavier ones win) and bite the player on contact. */
+function resolveZombies(list) {
+  const n = list.length;
+  for (let i = 0; i < n; i++) {
+    const a = list[i];
+    if (a.dead || a.rise < 1) continue;
+    for (let j = i + 1; j < n; j++) {
+      const b = list[j];
+      if (b.dead || b.rise < 1) continue;
+      const dx = b.x - a.x, dz = b.z - a.z, rr = (a.r + b.r) * 0.92, d2 = dx * dx + dz * dz;
+      if (d2 >= rr * rr || d2 < 1e-6) continue;
+      const d = Math.sqrt(d2), push = rr - d, nx = dx / d, nz = dz / d;
+      const ma = a.r * a.r, mb = b.r * b.r, ta = mb / (ma + mb), tb = ma / (ma + mb);
+      a.x -= nx * push * ta; a.z -= nz * push * ta;
+      b.x += nx * push * tb; b.z += nz * push * tb;
+    }
+  }
+  const p = player;
+  if (list !== zombies || !p || p.dead) return;
+  for (const z of list) {
+    if (z.dead || z.rise < 1) continue;
+    const dx = z.x - p.x, dz = z.z - p.z, rr = z.r + p.r, d2 = dx * dx + dz * dz;
+    if (d2 >= rr * rr) continue;
+    const d = Math.sqrt(d2) || 1;
+    z.x = p.x + dx / d * rr; z.z = p.z + dz / d * rr;
+    if (z.attackCd <= 0) { z.attackCd = z.attackRate; hurtPlayer(z.damage, z); }
+  }
+}
+
+function damageZombie(z, dmg, dx, dz, kb) {
+  if (z.dead) return;
+  z.hp -= dmg;
+  z.flash = z.type === 'boss' ? 0.05 : 0.08;
+  const k = kb * (1 - z.kbResist);
+  z.kx += dx * k; z.kz += dz * k;
+  const rig = RIGS[z.type];
+  spawnShards(z.x - dx * z.r * 0.5, CHEST[z.type], z.z - dz * z.r * 0.5, dmg > 40 ? 5 : 2, [rig.shardColors[0], BLOOD[0], BLOOD[1]], 3, 0.09, 3);
+  Sound.play('hit');
+  if (z.hp <= 0) killZombie(z, dx, dz);
+}
+
+/** Zombies shatter into tumbling polygon shards. */
+function killZombie(z, dx, dz) {
+  z.dead = true;
+  game.kills++;
+  const rig = RIGS[z.type];
+  const n = { walker: 22, runner: 18, tank: 34, boss: 80 }[z.type];
+  const size = { walker: 0.2, runner: 0.17, tank: 0.3, boss: 0.48 }[z.type];
+  const sp = { walker: 5, runner: 5, tank: 6, boss: 8 }[z.type];
+  const h = CHEST[z.type];
+  for (let i = 0; i < n; i++) {
+    const a = rand(0, PI * 2), s = rand(0.2, 1) * sp;
+    shards.spawn({ x: z.x + rand(-0.3, 0.3) * z.r, y: rand(0.2, h * 1.5), z: z.z + rand(-0.3, 0.3) * z.r,
+      vx: Math.cos(a) * s + dx * 3, vy: rand(2, 6), vz: Math.sin(a) * s + dz * 3,
+      size: size * rand(0.6, 1.4), life: rand(1.2, 2.2), color: choice(rig.shardColors), g: 16, bounce: 0.35, spin: 10 });
+  }
+  dropCoin(z.x, z.z, z.coins);
+  Sound.play('zdie');
+  if (z.type === 'boss') {
+    game.boss = null;
+    env.bossTarget = 0;
+    spawnFire(z.x, 2, z.z, 40, 9, 0.5, 0.8, 6);
+    spawnRing(z.x, z.z, 7, 0xff4060);
+    spawnFireball(z.x, 2.5, z.z, 3.5);
+    blastLight.position.set(z.x, 3, z.z); blastLight.intensity = 700;
+    addShake(1.2);
+    Sound.play('explosion');
+    showBanner('BOSS DEFEATED', 'THE ROT KING HAS FALLEN', '#ffc94a');
+  }
+}
+
+function pruneDead() {
+  let j = 0;
+  for (let i = 0; i < zombies.length; i++) if (!zombies[i].dead) zombies[j++] = zombies[i];
+  zombies.length = j;
+}
+
+// ---------- player ----------
+function updatePlayer(dt) {
+  const p = player;
+  if (p.dead) return;
+  p.fireCd = Math.max(0, p.fireCd - dt);
+  p.invuln = Math.max(0, p.invuln - dt);
+  p.hurt = Math.max(0, p.hurt - dt);
+  p.muzzle = Math.max(0, p.muzzle - dt);
+  p.recoil = Math.max(0, p.recoil - dt * 12);
+
+  // movement: keys + left stick are screen-relative, converted to world using the camera angle
+  let sx = 0, sy = 0;
+  if (keys.KeyA || keys.ArrowLeft) sx -= 1;
+  if (keys.KeyD || keys.ArrowRight) sx += 1;
+  if (keys.KeyW || keys.ArrowUp) sy -= 1;
+  if (keys.KeyS || keys.ArrowDown) sy += 1;
+  sx += input.move.x; sy += input.move.y;
+  const ml = Math.hypot(sx, sy);
+  if (ml > 1) { sx /= ml; sy /= ml; }
+  screenToWorld(sx, sy, _wd);
+  const sp = CONFIG.player.speed, k = damp(14, dt);
+  p.vx += (_wd.x * sp - p.vx) * k;
+  p.vz += (_wd.z * sp - p.vz) * k;
+  p.x += (p.vx + p.kx) * dt;
+  p.z += (p.vz + p.kz) * dt;
+  const kd = Math.max(0, 1 - dt * 8); p.kx *= kd; p.kz *= kd;
+  collideCircle(p, p.r);
+  const lim = ARENA - p.r;
+  p.x = clamp(p.x, -lim, lim); p.z = clamp(p.z, -lim, lim);
+  const speed = Math.hypot(p.vx, p.vz);
+  p.moving = speed > 0.6;
+  p.walkT += dt * speed * 1.6;
+
+  // aiming: mouse ray-cast, or right stick, or face the way you walk
+  let firing = false;
+  if (input.touchMode) {
+    const al = Math.hypot(input.aim.x, input.aim.y);
+    if (al > 0.2) {
+      screenToWorld(input.aim.x, input.aim.y, _wd);
+      p.yaw = Math.atan2(_wd.x, _wd.z);
+      firing = al > 0.35;
+    } else if (ml > 0.2) p.yaw = lerpAngle(p.yaw, Math.atan2(p.vx, p.vz), damp(10, dt));
+  } else {
+    _ndc.set((input.mouseX / innerWidth) * 2 - 1, -(input.mouseY / innerHeight) * 2 + 1);
+    _ray.setFromCamera(_ndc, camera);
+    if (_ray.ray.intersectPlane(_aimPlane, aimPoint)) p.yaw = Math.atan2(aimPoint.x - p.x, aimPoint.z - p.z);
+    firing = input.mouseDown;
+  }
+
+  const g = currentGun(), st = gunState(g);
+  if (st.reloading) { st.reloadT += dt; if (st.reloadT >= g.reloadTime) finishReload(g, st); }
+  if (firing) tryFire();
+}
+
+function hurtPlayer(dmg, src) {
+  const p = player;
+  if (p.invuln > 0 || p.dead) return;
+  if (p.armor > 0) { const soak = Math.min(p.armor, dmg * CONFIG.player.armorAbsorb); p.armor -= soak; dmg -= soak; }
+  p.hp -= dmg;
+  p.invuln = CONFIG.player.invulnTime;
+  p.hurt = 0.1;
+  if (src) {
+    const d = Math.hypot(p.x - src.x, p.z - src.z) || 1, push = src.type === 'boss' ? 16 : 5;
+    p.kx += (p.x - src.x) / d * push; p.kz += (p.z - src.z) / d * push;
+  }
+  addShake(src && src.type === 'boss' ? 0.7 : 0.3);
+  flashDamage();
+  Sound.play('hurt');
+  spawnShards(p.x, 1.3, p.z, 4, BLOOD, 3, 0.08, 3);
+  if (p.hp <= 0) killPlayer();
+}
+
+function killPlayer() {
+  const p = player;
+  p.dead = true; p.hp = 0; p.deadT = 0;
+  game.dying = 1.8;
+  input.mouseDown = false;
+  releaseSticks();
+  spawnShards(p.x, 1.2, p.z, 26, PLAYER_SHARDS, 5, 0.14, 5);
+  addShake(0.8);
+  Sound.play('gameover');
+  if (game.wave > save.bestWave) save.bestWave = game.wave;
+  writeSave();
+}
+
+// ---------- coin gems ----------
+function dropCoin(x, z, value) {
+  coins.push({ x, y: 1.2, z, vx: rand(-2.5, 2.5), vy: rand(5, 7), vz: rand(-2.5, 2.5), value, t: rand(0, 6),
+    s: value >= 100 ? 2.4 : value >= 20 ? 1.6 : 1, magnet: game.phase !== 'spawning' });
+}
+function updateCoins(dt) {
+  const p = player, E = CONFIG.economy;
+  let j = 0;
+  for (let i = 0; i < coins.length; i++) {
+    const c = coins[i];
+    c.t += dt;
+    const floor = 0.42 * c.s;
+    c.vy -= 22 * dt; c.y += c.vy * dt;
+    if (c.y < floor) { c.y = floor; c.vy = Math.abs(c.vy) > 2 ? -c.vy * 0.4 : 0; }
+    const dr = Math.max(0, 1 - dt * 3); c.vx *= dr; c.vz *= dr;
+    c.x += c.vx * dt; c.z += c.vz * dt;
+    if (p && !p.dead) {
+      const dx = p.x - c.x, dz = p.z - c.z, d = Math.hypot(dx, dz) || 1;
+      if (c.magnet || d < E.magnetRadius) {
+        const step = Math.min(d, (c.magnet ? E.magnetSpeed : 6) * dt);
+        c.x += dx / d * step; c.z += dz / d * step;
+      }
+      if (d < p.r + E.pickupRadius) {
+        save.coins += c.value; game.runCoins += c.value; saveDirty = true;
+        spawnPopup('+' + c.value, c.x, 1.8, c.z);
+        spawnFire(c.x, c.y, c.z, 4, 2, 0.12, 0.3, 2);
+        Sound.play('coin');
+        continue;
+      }
+    }
+    c.x = clamp(c.x, -ARENA + 0.5, ARENA - 0.5); c.z = clamp(c.z, -ARENA + 0.5, ARENA - 0.5);
+    coins[j++] = c;
+  }
+  coins.length = j;
+}
+function drawCoins() {
+  const n = Math.min(coins.length, COIN_CAP);
+  for (let i = 0; i < n; i++) {
+    const c = coins[i], hover = c.vy === 0 ? 0.12 + Math.sin(c.t * 3) * 0.1 : 0;
+    _eu.set(0, c.t * 3, 0.0); _q.setFromEuler(_eu);
+    _m4.compose(_v3.set(c.x, c.y + hover, c.z), _q, _s3.set(c.s, c.s * 1.4, c.s));
+    coinIM.setMatrixAt(i, _m4);
+  }
+  coinIM.count = n;
+  coinIM.instanceMatrix.needsUpdate = true;
+}
+
+// ---------- camera ----------
+const camFocus = new THREE.Vector3();
+let titleOrbit = 0.6;
+function addShake(a) { game.shake = Math.min(1.4, Math.max(game.shake, a)); }
+
+function updateCamera(dt) {
+  const C = CONFIG.camera;
+  const menu = game.screen === 'title' || game.screen === 'howto' || (game.screen === 'shop' && game.shopReturn !== 'play');
+  if (menu) {             // slow orbit around the arena, low enough to see the sky
+    titleOrbit += dt * 0.06;
+    const r = 30 * Math.max(1, viewZoom * 0.85);
+    camera.position.set(Math.sin(titleOrbit) * r, 9 * Math.max(1, viewZoom * 0.85), Math.cos(titleOrbit) * r);
+    camera.lookAt(0, 3, 0);
+    camFocus.set(0, 0, 0);
+    return;
+  }
+  if (player) {
+    let lx = 0, lz = 0;
+    if (!input.touchMode && !player.dead) {
+      lx = (aimPoint.x - player.x) * C.lookAhead; lz = (aimPoint.z - player.z) * C.lookAhead;
+      const l = Math.hypot(lx, lz);
+      if (l > 3.5) { lx *= 3.5 / l; lz *= 3.5 / l; }
+    }
+    _v3.set(player.x + lx, 0, player.z + lz);
+    camFocus.lerp(_v3, damp(C.followSharpness, dt));
+  }
+  const d = C.distance * viewZoom, h = C.height * viewZoom;
+  camera.position.set(camFocus.x + Math.sin(C.yaw) * d, h, camFocus.z + Math.cos(C.yaw) * d);
+  if (game.shake > 0.002) {
+    camera.position.x += rand(-1, 1) * game.shake;
+    camera.position.y += rand(-1, 1) * game.shake * 0.6;
+    camera.position.z += rand(-1, 1) * game.shake;
+  }
+  camera.lookAt(camFocus.x, 0.8, camFocus.z);
+}
+
+// ---------- syncing state → visuals ----------
+function updatePlayerModel(dt) {
+  const m = playerModel;
+  if (!player) { m.group.visible = false; flashMesh.visible = false; return; }
+  const p = player;
+  m.group.visible = true;
+  m.group.position.set(p.x, 0, p.z);
+  if (p.dead) {                                  // topple over backwards
+    p.deadT += dt;
+    m.group.rotation.set(-Math.min(1, p.deadT / 0.5) * 1.45, p.yaw, 0);
+    flashMesh.visible = false;
+    return;
+  }
+  m.group.rotation.set(0, p.yaw, 0);
+  const swing = p.moving ? Math.sin(p.walkT) * 0.6 : 0;
+  m.legL.rotation.x += (swing - m.legL.rotation.x) * damp(20, dt);
+  m.legR.rotation.x += (-swing - m.legR.rotation.x) * damp(20, dt);
+  m.gunMount.position.z = 0.64 - p.recoil * 0.12;
+  const blink = p.invuln > 0 && p.hurt <= 0 && Math.floor(game.time * 20) % 2 === 0;
+  m.group.visible = !blink;
+  // muzzle flash
+  flashMesh.visible = p.muzzle > 0;
+  if (flashMesh.visible) {
+    muzzleWorld(_mz);
+    flashMesh.position.set(_mz.x, _mz.y, _mz.z);
+    flashMesh.rotation.set(0, p.yaw, rand(0, PI));
+    const s = currentGun().pellets > 1 || currentGun().explosionRadius ? 1.8 : 1.1;
+    flashMesh.scale.set(s, s, s * 2.2);
+  }
+}
+function flashDamage() { for (const mesh of playerModel.meshes) mesh.material = MAT.white; }
+function updateDamageFlash() {
+  if (!player || player.hurt > 0) return;
+  for (const mesh of playerModel.meshes) if (mesh.material !== MAT.vc) mesh.material = MAT.vc;
+}
+
+const _tq = new THREE.Quaternion(), _ty = new THREE.Vector3(0, 1, 0);
+function drawTracers() {
+  let n = 0;
+  for (let i = 0; i < bullets.length && n < TRACER_CAP; i++) {
+    const b = bullets[i];
+    if (b.rocket || !b.gun.tracerLength) continue;
+    const L = Math.min(b.gun.tracerLength, b.traveled + 0.3);
+    const ux = b.vx / b.speed, uz = b.vz / b.speed;
+    _tq.setFromAxisAngle(_ty, Math.atan2(ux, uz));
+    _m4.compose(_v3.set(b.x - ux * L / 2, 1.4, b.z - uz * L / 2), _tq, _s3.set(1, 1, L));
+    tracerIM.setMatrixAt(n, _m4);
+    tracerIM.setColorAt(n, TRACER_COLORS[b.gun.id]);
+    n++;
+  }
+  tracerIM.count = n;
+  tracerIM.instanceMatrix.needsUpdate = true;
+  if (tracerIM.instanceColor) tracerIM.instanceColor.needsUpdate = true;
+}
+
+const _pv = new THREE.Vector3();
+function updateFx(dt) {
+  muzzleLight.intensity = Math.max(0, muzzleLight.intensity - dt * 500);
+  blastLight.intensity = Math.max(0, blastLight.intensity * Math.pow(0.004, dt) - dt * 10);
+  for (const r of rings) {
+    if (!r.visible) continue;
+    const u = r.userData;
+    u.t += dt;
+    const k = u.t / u.max;
+    if (k >= 1) { r.visible = false; continue; }
+    r.scale.setScalar(u.r * (0.2 + 0.8 * Math.sqrt(k)));
+    r.material.opacity = 1 - k;
+  }
+  for (const f of fireballs) {
+    if (!f.visible) continue;
+    const u = f.userData;
+    u.t += dt;
+    const k = u.t / u.max;
+    if (k >= 1) { f.visible = false; continue; }
+    f.scale.setScalar(u.r * (0.35 + 0.65 * Math.sqrt(k)));
+    f.material.color.copy(FIREBALL_HOT).lerp(FIREBALL_COOL, k);
+    f.material.opacity = 1 - k * k;
+  }
+  for (const s of scorches) {
+    if (!s.visible) continue;
+    s.userData.life -= dt;
+    if (s.userData.life <= 0) { s.visible = false; continue; }
+    s.material.opacity = Math.min(0.5, s.userData.life / 4);
+  }
+  // "+5" popups follow their world position
+  const w = innerWidth, h = innerHeight;
+  for (const p of popups) {
+    if (p.life <= 0) continue;
+    p.life -= dt;
+    if (p.life <= 0) { p.el.style.opacity = '0'; continue; }
+    const k = 1 - p.life / p.max;
+    _pv.set(p.x, p.y + k * 1.4, p.z).project(camera);
+    p.el.style.transform = `translate(${((_pv.x + 1) / 2 * w).toFixed(1)}px, ${((1 - _pv.y) / 2 * h).toFixed(1)}px) translate(-50%, -50%)`;
+    p.el.style.opacity = String(k < 0.6 ? 1 : 1 - (k - 0.6) / 0.4);
+  }
+}
+
+
+// =========================================================================
+// 10. UI — HUD, shop (with rotating 3D gun previews) and screens
+// =========================================================================
+const SCREENS = { title: 'screen-title', howto: 'screen-howto', shop: 'screen-shop', over: 'screen-over' };
+function setScreen(name) {
+  game.screen = name;
+  for (const k in SCREENS) $(SCREENS[k]).classList.toggle('hidden', k !== name);
+  $('screen-pause').classList.toggle('hidden', !(name === 'play' && game.paused));
+  $('hud').classList.toggle('hidden', name !== 'play');
+  if (name === 'title') {
+    $('title-coins').textContent = save.coins;
+    $('title-best').textContent = 'BEST WAVE ' + save.bestWave;
+    if (!titleZombies.length) initTitleZombies();
+  }
+  updateSoundLabels();
+}
+function updateSoundLabels() {
+  const t = Sound.muted ? 'Sound: Off' : 'Sound: On';
+  $('btn-mute').textContent = t;
+  $('pause-sound').textContent = t;
+}
+
+// ---------- banner & toast ----------
+let bannerT = 0, toastTimer = 0;
+function showBanner(title, sub, color) {
+  $('banner-title').textContent = title;
+  $('banner-title').style.color = color || '';
+  $('banner-sub').textContent = sub || '';
+  $('banner').classList.add('show');
+  bannerT = 2.4;
+}
+function showToast(text, color) {
+  const t = $('toast');
+  t.textContent = text;
+  t.style.color = color || 'var(--gold)';
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1700);
+}
+
+// ---------- HUD (DOM writes only when a value actually changes) ----------
+const H = {};
+for (const id of ['hp-fill', 'hp-num', 'ar-fill', 'ar-num', 'coin-num', 'wave-num', 'kills-num', 'left-num', 'boss', 'boss-fill',
+  'break', 'break-text', 'gun-name', 'gun-ammo', 'gun-res', 'reload', 'reload-fill', 'reload-btn', 'touch', 'slots']) H[id] = $(id);
+const lastUI = {};
+function uiText(id, v) { if (lastUI[id] !== v) { lastUI[id] = v; H[id].textContent = v; } }
+function uiWidth(id, f) { const v = (clamp(f, 0, 1) * 100).toFixed(1) + '%'; if (lastUI[id + 'w'] !== v) { lastUI[id + 'w'] = v; H[id].style.width = v; } }
+function uiHide(id, hidden) { if (lastUI[id + 'h'] !== hidden) { lastUI[id + 'h'] = hidden; H[id].classList.toggle('hidden', hidden); } }
+
+const slotEls = [];
+let gunIcons = {};
+function buildSlots() {
+  CONFIG.guns.forEach((g, i) => {
+    const b = document.createElement('button');
+    b.className = 'slot';
+    b.innerHTML = `<img alt="${g.name}" src="${gunIcons[g.id] || ''}"><span class="n">${i + 1}</span>`;
+    b.addEventListener('pointerdown', e => e.stopPropagation());
+    b.addEventListener('click', () => { Sound.init(); if (isPlaying()) selectGun(i); });
+    H.slots.appendChild(b);
+    slotEls.push(b);
+  });
+}
+
+function updateHUD() {
+  const playing = game.screen === 'play' && player;
+  document.body.classList.toggle('touch', input.touchMode);
+  uiHide('touch', !(playing && !game.paused && !player.dead && input.touchMode));
+  if (!playing) return;
+  const p = player;
+  uiWidth('hp-fill', p.hp / p.maxHp); uiText('hp-num', String(Math.ceil(p.hp)));
+  uiWidth('ar-fill', p.armor / p.maxArmor); uiText('ar-num', String(Math.ceil(p.armor)));
+  uiText('coin-num', String(save.coins));
+  uiText('wave-num', 'WAVE ' + game.wave);
+  uiText('kills-num', 'KILLS ' + game.kills);
+  const left = game.toSpawn + zombies.length + (game.bossPending ? 1 : 0);
+  uiText('left-num', game.phase === 'spawning' ? 'LEFT ' + left : '');
+  const boss = game.boss;
+  uiHide('boss', !(boss && !boss.dead));
+  if (boss && !boss.dead) uiWidth('boss-fill', boss.hp / boss.maxHp);
+  uiHide('break', game.phase !== 'break');
+  if (game.phase === 'break') uiText('break-text', 'NEXT WAVE IN ' + Math.max(0, Math.ceil(game.breakTimer)));
+  const g = currentGun(), st = gunState(g), stats = gunStats(g);
+  uiText('gun-name', g.name);
+  uiText('gun-ammo', st.mag + '/' + stats.magSize);
+  uiText('gun-res', g.maxReserve === Infinity ? '∞' : '+' + st.reserve);
+  const ammoCls = st.mag === 0 ? 'out' : st.mag <= stats.magSize * 0.25 ? 'low' : '';
+  if (lastUI.ammoCls !== ammoCls) { lastUI.ammoCls = ammoCls; H['gun-ammo'].className = ammoCls; }
+  uiHide('reload', !st.reloading);
+  if (st.reloading) uiWidth('reload-fill', st.reloadT / g.reloadTime);
+  uiHide('reload-btn', !(input.touchMode && !p.dead));
+  CONFIG.guns.forEach((gg, i) => {
+    const s = p.guns[gg.id];
+    const cls = 'slot' + (i === p.gunIndex ? ' sel' : '') + (save.owned[gg.id] ? '' : ' locked') + (s && s.mag + s.reserve <= 0 ? ' empty' : '');
+    if (slotEls[i].className !== cls) slotEls[i].className = cls;
+  });
+}
+
+// ---------- shop ----------
+const inRun = () => game.shopReturn === 'play' && player && !player.dead;
+const isEquipped = (g, run) => (run ? currentGun().id === g.id : save.equipped === g.id);
+const gemPrice = (n, ok = true) => `<span class="${ok ? 'price' : 'price no'}"><span class="gem sm"></span> ${n}</span>`;
+
+function btnHTML(label, act, id, o = {}) {
+  const ok = o.enabled !== false;
+  const price = o.price != null ? ` <span class="gem sm"></span> ${o.price}` : '';
+  return `<button class="btn small ${o.cls || ''} ${ok ? '' : 'disabled'}" data-act="${act}" data-id="${id}"` +
+    `${o.key ? ` data-key="${o.key}"` : ''}${o.deny ? ` data-deny="${o.deny}"` : ''}>${label}${price}</button>`;
+}
+
+function spend(price) {
+  if (save.coins < price) { Sound.play('deny'); showToast('NOT ENOUGH COINS', 'var(--red)'); return false; }
+  save.coins -= price;
+  Sound.play('buy');
+  return true;
+}
+function buyGun(g) {
+  if (save.owned[g.id] || !spend(g.price)) return;
+  save.owned[g.id] = true;
+  if (inRun()) gunState(g);
+  equipGun(g);
+  showToast(g.name + ' UNLOCKED!', 'var(--green)');
+  writeSave();
+}
+function equipGun(g) {
+  if (!save.owned[g.id]) return;
+  save.equipped = g.id;
+  if (inRun()) selectGun(CONFIG.guns.indexOf(g), true);
+  writeSave();
+}
+function buyUpgrade(g, key) {
+  const lvl = save.upgrades[g.id][key];
+  if (!save.owned[g.id] || lvl >= CONFIG.upgrades.maxLevel || !spend(g.upgradeCost[lvl])) return;
+  save.upgrades[g.id][key] = lvl + 1;
+  showToast(g.name + ' ' + CONFIG.upgrades[key].label + ' LV ' + (lvl + 1), 'var(--green)');
+  writeSave();
+}
+function buyAmmo(g) {
+  if (!inRun()) return;
+  const st = gunState(g);
+  if (st.reserve >= g.maxReserve || !spend(g.ammoPrice)) return;
+  st.reserve = Math.min(g.maxReserve, st.reserve + g.ammoPack);
+  writeSave();
+}
+function ammoCrateCost() {
+  if (!inRun()) return 0;
+  let cost = 0;
+  for (const g of CONFIG.guns) {
+    if (!save.owned[g.id] || g.maxReserve === Infinity) continue;
+    const missing = g.maxReserve - gunState(g).reserve;
+    if (missing > 0) cost += Math.ceil(missing / g.ammoPack) * g.ammoPrice;
+  }
+  return Math.ceil(cost * CONFIG.shop.ammoCrateDiscount);
+}
+function buySupply(kind) {
+  if (!inRun()) return;
+  const S = CONFIG.shop, p = player;
+  if (kind === 'ammo') {
+    const cost = ammoCrateCost();
+    if (cost <= 0 || !spend(cost)) return;
+    for (const g of CONFIG.guns) if (save.owned[g.id] && g.maxReserve !== Infinity) gunState(g).reserve = g.maxReserve;
+  } else if (kind === 'armor') {
+    if (p.armor >= p.maxArmor || !spend(S.armor.price)) return;
+    p.armor = Math.min(p.maxArmor, p.armor + S.armor.amount);
+  } else {
+    if (p.hp >= p.maxHp || !spend(S[kind].price)) return;
+    p.hp = Math.min(p.maxHp, p.hp + S[kind].amount);
+  }
+  writeSave();
+}
+
+let STAT_MAX = null;
+function statMax() {
+  if (STAT_MAX) return STAT_MAX;
+  const U = CONFIG.upgrades, top = l => 1 + l.perLevel * U.maxLevel;
+  STAT_MAX = { power: 1, rate: 1, mag: 1, range: 1 };
+  for (const g of CONFIG.guns) {
+    STAT_MAX.power = Math.max(STAT_MAX.power, (g.damage * g.pellets + (g.explosionDamage || 0)) * top(U.damage));
+    STAT_MAX.rate = Math.max(STAT_MAX.rate, g.fireRate * top(U.fireRate));
+    STAT_MAX.mag = Math.max(STAT_MAX.mag, g.magSize * top(U.magazine));
+    STAT_MAX.range = Math.max(STAT_MAX.range, g.range);
+  }
+  return STAT_MAX;
+}
+
+function renderShop() {
+  const run = inRun();
+  $('shop-coins').textContent = save.coins;
+  for (const t of document.querySelectorAll('[data-act="tab"]')) t.classList.toggle('sel', t.dataset.id === game.shopTab);
+  $('tab-armory').classList.toggle('hidden', game.shopTab !== 'armory');
+  $('tab-supplies').classList.toggle('hidden', game.shopTab !== 'supplies');
+  $('shop-close').textContent = run ? 'Close' : 'Back';
+  $('shop-next').classList.toggle('hidden', !run);
+  $('shop-timer').classList.toggle('hidden', !run);
+  if (game.shopTab === 'armory') renderArmory(run); else renderSupplies(run);
+  updateShopLive();
+}
+
+function renderArmory(run) {
+  $('gun-list').innerHTML = CONFIG.guns.map(g => {
+    const owned = !!save.owned[g.id], afford = save.coins >= g.price;
+    const status = owned ? (isEquipped(g, run) ? '<span class="equipped">EQUIPPED</span>' : '<span class="owned">OWNED</span>') : gemPrice(g.price, afford);
+    return `<div class="gun-item ${game.shopGun === g.id ? 'sel' : ''} ${owned || afford ? '' : 'cant'}" data-act="select" data-id="${g.id}">` +
+      `<img alt="" src="${gunIcons[g.id] || ''}"><div><div class="nm">${g.name}</div><div class="st">${status}</div></div></div>`;
+  }).join('');
+
+  const g = gunById(game.shopGun), owned = !!save.owned[g.id], st = gunStats(g), M = statMax(), U = CONFIG.upgrades;
+  let action;
+  if (!owned) action = btnHTML('Buy', 'buy', g.id, { price: g.price, cls: 'primary', enabled: save.coins >= g.price, deny: 'NOT ENOUGH COINS' });
+  else if (isEquipped(g, run)) action = btnHTML('Equipped', 'none', g.id, { cls: 'sel' });
+  else action = btnHTML('Equip', 'equip', g.id);
+
+  let dmgTxt = String(Math.round(st.damage));
+  if (g.pellets > 1) dmgTxt += ' ×' + g.pellets;
+  if (st.explosionDamage) dmgTxt += ' +' + Math.round(st.explosionDamage);
+  const rows = [
+    ['DAMAGE', Math.sqrt((st.damage * g.pellets + st.explosionDamage) / M.power), dmgTxt],
+    ['FIRE RATE', Math.sqrt(st.fireRate / M.rate), st.fireRate.toFixed(1) + '/s'],
+    ['MAGAZINE', Math.sqrt(st.magSize / M.mag), String(st.magSize)],
+    ['RELOAD', 1 - g.reloadTime / 3.2, g.reloadTime.toFixed(1) + 's'],
+    ['RANGE', Math.sqrt(g.range / M.range), g.range + (g.pierce ? ' · PIERCE' : '')],
+  ];
+  const stats = rows.map(([l, f, v]) => `<span>${l}</span><div class="stat-bar"><i style="width:${(clamp(f, 0.04, 1) * 100).toFixed(0)}%"></i></div><b>${v}</b>`).join('');
+  const upgs = ['damage', 'fireRate', 'magazine'].map(k => {
+    const lvl = save.upgrades[g.id][k], maxed = lvl >= U.maxLevel, cost = g.upgradeCost[lvl];
+    const pips = Array.from({ length: U.maxLevel }, (_, i) => `<i class="pip ${i < lvl ? 'on' : ''}"></i>`).join('');
+    const btn = maxed ? btnHTML('Maxed', 'none', g.id, { cls: 'sel' })
+      : btnHTML('Upgrade', 'up', g.id, { key: k, price: cost, enabled: owned && save.coins >= cost, deny: owned ? 'NOT ENOUGH COINS' : 'BUY THE GUN FIRST' });
+    return `<div class="upg"><span class="lbl">${U[k].label}</span><span class="pips">${pips}</span><span class="bonus">${lvl ? '+' + Math.round(lvl * U[k].perLevel * 100) + '%' : ''}</span>${btn}</div>`;
+  }).join('');
+  let ammo;
+  if (g.maxReserve === Infinity) ammo = 'AMMO: INFINITE';
+  else if (!owned) ammo = `COMES WITH ${g.startReserve} SPARE ROUNDS EACH RUN`;
+  else if (!run) ammo = 'AMMO REFILLS ARE SOLD BETWEEN WAVES';
+  else {
+    const s = gunState(g), full = s.reserve >= g.maxReserve;
+    ammo = `<span class="crate" style="width:18px;height:14px"></span> AMMO ${s.reserve} / ${g.maxReserve}` +
+      btnHTML('+' + g.ammoPack + ' rounds', 'ammo', g.id, { price: g.ammoPrice, enabled: !full && save.coins >= g.ammoPrice, deny: full ? 'AMMO ALREADY FULL' : 'NOT ENOUGH COINS' });
+  }
+  $('gun-detail-body').innerHTML =
+    `<div class="detail-head"><div><h3 style="color:${owned ? 'var(--gold)' : 'var(--text)'}">${g.name}</h3><div class="desc">${g.desc}</div></div>${action}</div>` +
+    `<div class="cols"><div class="stats">${stats}</div><div class="upgs">${upgs}</div></div>` +
+    `<div class="ammo-row">${ammo}</div>`;
+}
+
+function renderSupplies(run) {
+  const S = CONFIG.shop, p = player, crate = ammoCrateCost();
+  const items = [
+    { kind: 'healthPack', icon: 'heart', name: S.healthPack.name, desc: `+${S.healthPack.amount} health`, price: S.healthPack.price,
+      status: run ? `HP ${Math.ceil(p.hp)} / ${p.maxHp}` : '', full: run && p.hp >= p.maxHp, fullMsg: 'HEALTH ALREADY FULL' },
+    { kind: 'medkit', icon: 'medkit', name: S.medkit.name, desc: 'Restores full health', price: S.medkit.price,
+      status: run ? `HP ${Math.ceil(p.hp)} / ${p.maxHp}` : '', full: run && p.hp >= p.maxHp, fullMsg: 'HEALTH ALREADY FULL' },
+    { kind: 'armor', icon: 'shield', name: S.armor.name, desc: `+${S.armor.amount} armour, soaks ${Math.round(CONFIG.player.armorAbsorb * 100)}% of damage`, price: S.armor.price,
+      status: run ? `ARMOUR ${Math.ceil(p.armor)} / ${p.maxArmor}` : '', full: run && p.armor >= p.maxArmor, fullMsg: 'ARMOUR ALREADY FULL' },
+    { kind: 'ammo', icon: 'crate', name: 'AMMO CRATE', desc: 'Refill every owned gun (20% off)', price: run ? crate : null,
+      status: run ? (crate > 0 ? 'SOME GUNS NEED AMMO' : 'ALL GUNS FULL') : '', full: run && crate <= 0, fullMsg: 'NO GUNS NEED AMMO' },
+  ];
+  $('tab-supplies').innerHTML = (run ? '' : '<div class="supply-note">Supplies are sold between waves during a run.</div>') +
+    items.map(it => {
+      const enabled = run && !it.full && it.price !== null && save.coins >= it.price;
+      const deny = !run ? 'ONLY DURING A RUN' : it.full ? it.fullMsg : 'NOT ENOUGH COINS';
+      return `<div class="supply"><span class="icon ${it.icon}"></span><div><div class="nm">${it.name}</div><div class="ds">${it.desc}</div>` +
+        `<div class="stt ${it.full ? 'full' : ''}">${it.status}</div></div>` +
+        btnHTML('Buy', 'supply', it.kind, { price: it.price === null ? undefined : it.price, enabled, deny }) + '</div>';
+    }).join('');
+}
+
+/** Cheap per-frame shop updates: the break countdown. */
+function updateShopLive() {
+  if (!inRun()) return;
+  const s = Math.max(0, Math.ceil(game.breakTimer));
+  const el = $('shop-timer');
+  const txt = 'WAVE ' + (game.wave + 1) + ' IN ' + s;
+  if (el.textContent !== txt) { el.textContent = txt; el.classList.toggle('urgent', s <= 5); }
+}
+
+$('screen-shop').addEventListener('click', e => {
+  const t = e.target.closest('[data-act]');
+  if (!t) return;
+  Sound.init();
+  if (t.classList.contains('disabled')) { Sound.play('deny'); if (t.dataset.deny) showToast(t.dataset.deny, 'var(--red)'); return; }
+  const act = t.dataset.act, id = t.dataset.id;
+  if (act === 'none') return;
+  Sound.play('click');
+  switch (act) {
+    case 'tab': game.shopTab = id; break;
+    case 'select': game.shopGun = id; break;
+    case 'buy': buyGun(gunById(id)); break;
+    case 'equip': equipGun(gunById(id)); break;
+    case 'up': buyUpgrade(gunById(id), t.dataset.key); break;
+    case 'ammo': buyAmmo(gunById(id)); break;
+    case 'supply': buySupply(id); break;
+    case 'close': closeShop(); return;
+    case 'next': closeShop(); startNextWave(); return;
+  }
+  renderShop();
+});
+
+// ---------- 3D gun preview (a second small renderer) & HUD gun icons ----------
+let previewRenderer = null;
+const previewScene = new THREE.Scene(), previewCam = new THREE.PerspectiveCamera(32, 2, 0.1, 50), previewPivots = {};
+function buildPreview() {
+  try {
+    previewRenderer = new THREE.WebGLRenderer({ canvas: $('preview'), antialias: true, alpha: true, preserveDrawingBuffer: true });
+  } catch (e) { return; }
+  previewRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  previewRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+  previewScene.add(new THREE.HemisphereLight(0xfff0e0, 0x403048, 1.8));
+  const key = new THREE.DirectionalLight(0xffc890, 2.6);
+  key.position.set(2, 3, 2.5);
+  previewScene.add(key);
+  for (const id in GUN_GEO) {
+    const geo = GUN_GEO[id].geo;
+    geo.computeBoundingBox();
+    const size = geo.boundingBox.getSize(new THREE.Vector3()), center = geo.boundingBox.getCenter(new THREE.Vector3());
+    const mesh = new THREE.Mesh(geo, MAT.vc);
+    mesh.position.copy(center).negate();
+    const pivot = new THREE.Group();
+    pivot.add(mesh);
+    pivot.scale.setScalar(1.7 / Math.max(size.x, size.y, size.z));
+    pivot.visible = false;
+    previewScene.add(pivot);
+    previewPivots[id] = pivot;
+  }
+  previewCam.position.set(0, 0.55, 3.2);
+  previewCam.lookAt(0, 0, 0);
+}
+function showPreviewGun(id) { for (const k in previewPivots) previewPivots[k].visible = k === id; }
+
+/** Render each gun once, side-on, to an image for the HUD slots and the shop list. */
+function makeGunIcons() {
+  if (!previewRenderer) return;
+  previewRenderer.setPixelRatio(1);
+  previewRenderer.toneMappingExposure = 1.6;      // icons are small: render them a little brighter
+  previewRenderer.setSize(180, 108, false);
+  previewCam.aspect = 180 / 108; previewCam.updateProjectionMatrix();
+  for (const id in previewPivots) {
+    showPreviewGun(id);
+    previewPivots[id].rotation.set(0.12, PI / 2, 0);
+    previewRenderer.render(previewScene, previewCam);
+    gunIcons[id] = previewRenderer.domElement.toDataURL();
+  }
+  previewRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  previewRenderer.toneMappingExposure = 1.0;
+}
+
+let previewSize = '';
+function renderPreview(dt) {
+  if (!previewRenderer || game.shopTab !== 'armory') return;
+  const el = $('preview'), w = el.clientWidth, h = el.clientHeight;
+  if (!w || !h) return;
+  if (previewSize !== w + 'x' + h) {
+    previewSize = w + 'x' + h;
+    previewRenderer.setSize(w, h, false);
+    previewCam.aspect = w / h; previewCam.updateProjectionMatrix();
+  }
+  showPreviewGun(game.shopGun);
+  const pv = previewPivots[game.shopGun];
+  pv.rotation.y += dt * 0.7;                // slow turntable spin
+  pv.rotation.x = 0.15 + Math.sin(game.time * 0.8) * 0.06;
+  previewRenderer.render(previewScene, previewCam);
+}
+
+// ---------- screens: title / how-to / pause / game over ----------
+function initTitleZombies() {
+  titleZombies.length = 0;
+  const types = ['walker', 'walker', 'runner', 'walker', 'tank', 'runner', 'walker', 'walker', 'tank', 'runner'];
+  for (const t of types) {
+    const a = rand(0, PI * 2), r = rand(4, ARENA - 4);
+    const z = createZombie(t, Math.sin(a) * r, Math.cos(a) * r);
+    z.rise = 1; z.y = 0;
+    collideCircle(z, z.r);
+    titleZombies.push(z);
+  }
+}
+function fillHowTo() {
+  $('howto-zombies').innerHTML = ['walker', 'runner', 'tank', 'boss'].map(k => {
+    const z = CONFIG.zombies[k];
+    return `<div><span><b>${z.name}</b><br><small>${z.desc}</small></span><span class="price"><span class="gem sm"></span> ${z.coins}</span></div>`;
+  }).join('');
+}
+function gameOver() {
+  setScreen('over');
+  game.overT = 0;
+  $('res-wave').textContent = game.wave;
+  $('res-kills').textContent = game.kills;
+  $('res-coins').textContent = game.runCoins;
+  $('res-best').textContent = save.bestWave;
+  $('new-best').classList.toggle('hidden', !(game.wave > game.prevBest));
+}
+function wireButtons() {
+  const on = (id, fn) => $(id).addEventListener('click', () => { Sound.init(); Sound.play('click'); fn(); });
+  on('btn-play', startRun);
+  on('btn-shop', () => openShop('title'));
+  on('btn-howto', () => setScreen('howto'));
+  on('btn-mute', toggleMute);
+  on('howto-back', () => setScreen('title'));
+  on('pause-btn', () => setPaused(true));
+  on('pause-resume', () => setPaused(false));
+  on('pause-restart', () => { setPaused(false); startRun(); });
+  on('pause-sound', toggleMute);
+  on('pause-quit', () => { setPaused(false); toTitle(); });
+  on('over-restart', startRun);
+  on('over-shop', () => openShop('title'));
+  on('over-menu', toTitle);
+  on('break-shop', () => openShop('play'));
+  on('break-next', startNextWave);
+  on('reload-btn', () => requestReload(true));
+  for (const id of ['pause-btn', 'break-shop', 'break-next', 'reload-btn']) $(id).addEventListener('pointerdown', e => e.stopPropagation());
+}
+
+
+// =========================================================================
+// 11. MAIN LOOP & BOOT
+// =========================================================================
+function update(dt) {
+  game.time += dt;
+  game.shake = game.shake > 0.003 ? game.shake * Math.pow(0.003, dt) : 0;
+  if (bannerT > 0 && !(game.screen === 'play' && game.paused)) { bannerT -= dt; if (bannerT <= 0) $('banner').classList.remove('show'); }
+  const menu = game.screen === 'title' || game.screen === 'howto' || (game.screen === 'shop' && game.shopReturn !== 'play');
+  if (game.screen === 'play' && !game.paused) updateWorld(dt);
+  else if (game.screen === 'shop' && game.shopReturn === 'play') { if (game.phase === 'break') tickBreak(dt); updateShopLive(); }
+  else if (game.screen === 'over') { game.overT += dt; updateZombies(dt, zombies, true); resolveZombies(zombies); updateCoins(dt); }
+  if (menu) { updateZombies(dt, titleZombies, false); resolveZombies(titleZombies); }
+  saveTimer += dt;
+  if (saveDirty && saveTimer > 2) { saveTimer = 0; writeSave(); }
+}
+
+function updateWorld(rawDt) {
+  const dt = game.dying > 0 ? rawDt * 0.4 : rawDt;      // slow motion while you fall
+  game.runT += rawDt;
+  updatePlayer(dt);
+  updateZombies(dt, zombies, true);
+  resolveZombies(zombies);
+  updateBullets(dt);
+  pruneDead();
+  if (!player.dead) updateWaves(dt);
+  updateCoins(dt);
+  if (game.dying > 0) { game.dying -= rawDt; if (game.dying <= 0) gameOver(); }
+}
+
+function render(dt) {
+  const menu = game.screen === 'title' || game.screen === 'howto' || (game.screen === 'shop' && game.shopReturn !== 'play');
+  const frozen = (game.screen === 'play' && game.paused) || (game.screen === 'shop' && !menu);
+  if (!frozen) { shards.update(dt); fire.update(dt); updateFx(dt); }
+  drawZombies(menu ? titleZombies : zombies);
+  drawTracers();
+  drawCoins();
+  if (menu) { if (playerModel.group.visible) playerModel.group.visible = false; flashMesh.visible = false; }
+  else updatePlayerModel(dt);
+  updateDamageFlash();
+  updateCamera(dt);
+  updateEnvironment(dt, camFocus.x, camFocus.z);
+  renderer.render(scene, camera);
+  updateHUD();
+  if (game.screen === 'shop') renderPreview(dt);
+}
+
+let lastT = performance.now();
+function frame(now) {
+  let dt = (now - lastT) / 1000;
+  lastT = now;
+  if (!(dt > 0)) dt = 0;
+  if (dt > 0.05) dt = 0.05;       // avoid huge jumps after a tab switch
+  try { update(dt); render(dt); } catch (err) { console.error(err); }
+  requestAnimationFrame(frame);
+}
+
+function boot() {
+  loadSave();
+  Sound.muted = save.muted;
+  buildGunGeometries();
+  buildWorld();
+  buildRigs();
+  buildEffects();
+  playerModel = buildPlayerModel();
+  playerModel.group.visible = false;
+  buildPreview();
+  makeGunIcons();
+  buildSlots();
+  fillHowTo();
+  wireButtons();
+  resize();
+  window.addEventListener('resize', () => { resize(); releaseSticks(); });
+  initTitleZombies();
+  env.t = env.target = 0.12;
+  updateCamera(0);
+  updateEnvironment(0, 0, 0);
+  renderer.compile(scene, camera);          // compile every shader up front (no hitch on first zombie)
+  $('loading').classList.add('hidden');
+  setScreen('title');
+  requestAnimationFrame(frame);
+}
+
+// Small handle for debugging / automated testing from the browser console.
+window.__DF = {
+  CONFIG, game, save, env, zombies, coins, bullets, input, camera, renderer, scene, colliders,
+  get player() { return player; }, startRun, startWave, spawnZombie, killZombie, explode, openShop, closeShop,
+  buyGun, selectGun, setPaused, gunState: id => gunState(gunById(id)), gunStats: id => gunStats(gunById(id)),
+};
+
+boot();
+</script>
+</body>
+</html>
