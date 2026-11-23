@@ -62,7 +62,7 @@ There are three hues: paper, ink, and one editor's red. Chapters change **paper 
 
 | Role | Family | Axes used | Why |
 |---|---|---|---|
-| Display + body | **Fraunces Variable** (roman + italic) | `opsz` 9–144, `wght` 300–700, `SOFT` 0–50 | High-contrast "Old Style" serif. The optical-size axis lets one family do 200 px headlines and 18 px body copy crisply. Fewer families means faster and more fluent reading. |
+| Display + body | **Fraunces Variable** (roman + italic) | `opsz` 9–144, `wght` 300–700 | High-contrast "Old Style" serif. The optical-size axis lets one family do 200 px headlines and 18 px body copy crisply. Fewer families means faster and more fluent reading. |
 | UI, labels, folios | **Hanken Grotesk Variable** | `wght` 400–600 | A clean, slightly warm grotesk. It stays out of the way. |
 | Annotations | **Caveat Variable** | `wght` 400–700 | The most legible of the handwriting faces considered. Notes stay at 3–8 words. |
 
@@ -91,7 +91,7 @@ and `lining-nums tabular-nums` on the folio counter and years.
 
 | Token | Family | Size | Weight | Line-height | Tracking | Other |
 |---|---|---|---|---|---|---|
-| `display-name` | Fraunces | step-6 | 300 | 0.88 | -0.03em | `opsz 144`, `SOFT 50`; *Watson* in italic |
+| `display-name` | Fraunces | step-6 | 300 | 0.88 | -0.03em | `opsz 144`; *Watson* in italic |
 | `chapter-numeral` | Fraunces italic | step-5 | 300 | 1 | -0.02em | old-style roman numerals in red |
 | `chapter-title` | Fraunces | step-3 | 400 | 1.05 | -0.015em | `opsz 96` |
 | `pull-quote` | Fraunces | step-4 | 350 | 1.05 | -0.02em | `opsz 120` |
@@ -334,3 +334,14 @@ the bottom edge). Contents links play the same turn over 900 ms while Lenis jump
 | SVG "ink bleed" distortion instead of a WebGL ripple | It's on-concept (ink on paper), weighs a few hundred bytes, and degrades cleanly. |
 | A 96-page book | It's divisible into chapter ranges. Starting at p. 5 (front matter) gives honest endowed progress. |
 | Site lives in `marginalia/` inside this repo | The owner asked me to decide. A folder is reversible, and a new repository needs their explicit request. |
+
+### Decisions made during the build (Phase 3)
+
+| Decision | Why |
+|---|---|
+| Dropped the `SOFT` axis | The self-hostable `opsz` cut (67 KB) doesn't include it, and the full-axis file is nearly twice the size. |
+| The name's letters rise as the cover opens, then drift apart as you scroll | The brief wanted the name revealed on scroll, but an empty first screen fails the first-impression research (psychology.md §1 and §10). The letters are still split and scroll-driven; they just start visible. |
+| No font preload | With a preload, the font swapped while the cover was visible and caused 0.06 layout shift. Without one, layout shift is 0.005 and Performance stays at 90+. |
+| Below-the-fold chapters are wired up in idle time while the cover is showing | It cut Total Blocking Time from about 190 ms to 20–50 ms. |
+| Flip, Draggable and Inertia are lazy-loaded near their chapters | This keeps the initial JavaScript at 62 KB gzipped. |
+| The Voice photo is a marked placeholder | Wikimedia rate-limited the download. The CC BY-SA file and its credit are already in `images.ts`, ready to swap in. |
